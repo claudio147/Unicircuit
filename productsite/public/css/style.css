@@ -1,9 +1,9 @@
 @font-face { font-family: 'HelveticaNeueLTStd-Th';
-             src: url('/assets/fonts/HelveticaNeueLTStd-Th.otf') format('opentype'); }
+             src: url('../fonts/HelveticaNeueLTStd-Th.otf') format('opentype'); }
 @font-face { font-family: 'HelveticaNeueLTStd-Bd';
-             src: url('/assets/fonts/HelveticaNeueLTStd-Bd.otf') format('opentype'); }
+             src: url('../fonts/HelveticaNeueLTStd-Bd.otf') format('opentype'); }
 @font-face { font-family: 'HelveticaNeueLTStd-Hv';
-             src: url('/assets/fonts/HelveticaNeueLTStd-Hv.otf') format('opentype'); }
+             src: url('../fonts/HelveticaNeueLTStd-Hv.otf') format('opentype'); }
 
 /*!
  * Clean v2.0.0
