@@ -82,7 +82,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h2 {
 	font-size: 30px;
-	margin: 0 0 30px;
+	margin: 0 0 10px;
 }
 
 h3 {
@@ -234,7 +234,7 @@ textarea.form-control {
 /* ---------------------------------------------- */
 
 .pfblock {
-	padding: 120px 0 100px;
+	padding: 100px 0 300px;
 }
 
 .pfblock-gray {
@@ -263,7 +263,7 @@ textarea.form-control {
 
 .pfblock-header {
 	text-align: center;
-	margin: 0 0 60px;
+	margin: 0 0 15px;
 }
 
 .pfblock-header-left {
@@ -398,6 +398,31 @@ textarea.form-control {
 	margin-top: 40px;
 }
 
+
+/* ---------------------------------------------- /*
+ * Gallery
+/* ---------------------------------------------- */
+
+.slider{
+	width: 502px;
+	left: 50%;
+	top: 60px;
+	margin-left: -252px;
+	z-index: 2;
+}
+
+.imac{
+	position: absolute;
+	left: 50%;
+	margin: -300px;
+	z-index: 1;
+}
+
+.slider-desktop{
+	margin-top: 0px;
+}
+
+
 /* ---------------------------------------------- /*
  * Servise
 /* ---------------------------------------------- */
@@ -519,7 +544,7 @@ textarea.form-control {
 /* ---------------------------------------------- */
 
 .header {
-	position: relative;
+	position: absolute;
 	width: 100%;
 	z-index: 900;
 	height: 60px;
@@ -626,14 +651,13 @@ textarea.form-control {
 
 .scroll-down {
 	position: absolute;
-	left: 48%;
+	left: 50%;
+	margin-left: -25px;
 	bottom: 40px;
 	height: 50px;
 	width: 50px;
-	margin-left: auto;
 	display: block;
 	z-index: 10;
-    text-align: center;
 }
 
 .scroll-down span{
@@ -695,6 +719,15 @@ textarea.form-control {
  * Media
 /* ---------------------------------------------- */
 
+@media (min-width: 768px) and (max-width: 979px){
+	.navbar-custom .navbar-nav > li > a{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+}
+
+
+
 @media (max-width: 767px) {
 
 	.calltoaction {
@@ -716,18 +749,41 @@ textarea.form-control {
 		background: #f0f0f0;
 	}
 
-	div #custom-colapse{
+	div #custom-colapse .collapse .navbar-collapse{
 		background-color: #f0f0f0;
 	}
 
-	.navbar-colapse{
-		border-top-width: 0px !important;
+	.navbar-nav{
+		margin-top: 0px;
+	}
+
+	.navbar-collapse{
+		border-top: 0px;
 	}
 
 	.navbar-toggle{
 		padding: 0;
 		margin-top: 0;
 		color: #fff;
+		border-radius: 0px;
+	}
+
+	div .navbar-header{
+		margin-bottom: 16px;
+	}
+
+	.slider{
+		width: 374px;
+		left: 50%;
+		top: 52px;
+		margin-left: -188px;
+	}
+
+	.imac{
+		position: absolute;
+		width:448px;
+		left: 50%;
+		margin: -224px;
 	}
 
 }
@@ -744,8 +800,9 @@ textarea.form-control {
 		letter-spacing: 3px;
 	}
 
-	
-
+	.imac{
+		visibility: hidden;
+	}
 }
 
 

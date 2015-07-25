@@ -1,5 +1,6 @@
 (function($){
 
+	var winSize= $(window).width();
 	/* ---------------------------------------------- /*
 	 * Preloader
 	/* ---------------------------------------------- */
@@ -45,7 +46,46 @@
 			offset: 70
 		})
 
-        
+		 $(function(){ 
+     		var navMain = $("#custom-collapse");
+
+     		navMain.on("click", "a", null, function () {
+         	navMain.collapse('hide');
+     		});
+ 		});
+
+
+        /* ---------------------------------------------- /*
+		 * Gallery
+        /* ---------------------------------------------- */ 
+
+        	if(winSize < 768){
+        		$('.slider').slick({
+        			dots: true,
+        			infinite: true,
+        			arrows: false
+        		});
+        	}else{
+        		$('.slider').slick({
+        			dots: true,
+        			infinite: true,
+        			arrows: true
+        		});       		
+        	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /* ---------------------------------------------- /*
 		 * Skills
         /* ---------------------------------------------- */    
