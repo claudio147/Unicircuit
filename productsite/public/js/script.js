@@ -73,6 +73,28 @@
         		});       		
         	}
 
+        	window.onload= showDesktop;
+
+
+        	// Regelt die Sichtbarkeit von Mobile und Desktop Slider Imitation
+        	function showDesktop(){
+        		document.getElementById('sliderMobile').style.display='none';
+        		document.getElementById('sliderDesktop').style.display='block';
+				$('#btn-mobile').removeClass('active');
+				$('#btn-desktop').toggleClass('active');
+        	}
+
+        	function showMobile(){
+        		document.getElementById('sliderDesktop').style.display='none';
+        		document.getElementById('sliderMobile').style.display='block';
+        		$('#btn-desktop').removeClass('active');
+				$('#btn-mobile').toggleClass('active');
+        	}
+
+
+        	document.getElementById('btn-desktop').onclick = showDesktop;
+        	document.getElementById('btn-mobile').onclick = showMobile;
+
 
 
 
