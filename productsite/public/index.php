@@ -69,7 +69,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="index.html">UNICIRCUIT</a>
+					<a class="navbar-brand" href="index.php">UNICIRCUIT</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="custom-collapse">
@@ -85,7 +85,11 @@
 
 			</div><!-- .container -->
 
+			<a href="" class="disturber"><div class="disturber">Registration</div></a>
+		
 		</nav>
+		
+
 
 	</header>
 
@@ -199,16 +203,40 @@
 				</div>
 
 			</div><!-- .row -->
+                                                  
 
-			<div class="row slider-desktop">
-				<button type="button" class="slick-prev"><span class="glyphicon glyphicon-menu-right"></span></button>
+
+			<div class="row gallery-btn">
+
+					<div class="col-sm-2 col-sm-offset-4 col-xs-4 col-xs-offset-2">
+						<button type="button" class="btn btn-default gallery btn-block btn-sm btn-xs" id="btn-desktop">Desktop</button>
+					</div>
+					<div class="col-sm-2 col-sm-offset-0 col-xs-4 col-xs-offset-0">
+						<button type="button" class="btn btn-default gallery btn-block btn-sm btn-xs" id="btn-mobile">Mobile</button>
+					</div>
+
+			</div><!-- .row -->
+                        
+
+
+			<div class="row slider-desktop" id="sliderDesktop">
 				<div class="slider">
 					<div><img src="images/slider_1.jpg" alt=""></div>
 					<div><img src="images/slider_2.jpg" alt=""></div>
 					<div><img src="images/slider_3.jpg" alt=""></div>
 				</div>
 				<img src="images/imac.png" alt="" class="imac">
-            </div>
+           	</div>
+
+			<div class="row slider-mobile" id="sliderMobile">
+				<div class="slider">
+					<div><img src="images/m_slider_1.jpg" alt=""></div>
+					<div><img src="images/m_slider_2.jpg" alt=""></div>
+					<div><img src="images/m_slider_3.jpg" alt=""></div>
+				</div>
+				<img src="images/ipad.png" alt="" class="ipad">
+           	</div>
+
             
 
 
