@@ -1,8 +1,21 @@
 <?php
 
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Funktionsbibliothek mit allen Datenbank Abfragen und Änderungen.
  */
+
+
+$host = 'palmers.dynathome.net:8024/phpmyadmin';
+$user = 'user04websrv02' ;
+$password = 'cfADs12P' ;
+$database = 'user04websrv02';
+
+        
+function connectDB() {
+ $link = mysqli_connect($host, $user, $password, $database) or die ('Verbindung zur Datenbank nicht möglich.');
+ 
+ return $link;
+}
+
+
 
