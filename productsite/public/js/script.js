@@ -103,8 +103,10 @@
         /* ---------------------------------------------- */  
 
 
-        var cw = $('.col-sm-3').width();
-		$('.modulinhalt, .col-sm-3').css({'height':cw+'px'});
+        var cw = $('.col-sm-2').width();
+		$('.modulinhalt, .modulcontainer').css({'height':cw+'px'});
+
+		
 
 
 
