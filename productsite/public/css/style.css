@@ -36,6 +36,7 @@ a:hover {
 	color: #9fcd35;
 }
 
+
 /* ---------------------------------------------- /*
  * Transition elsements
 /* ---------------------------------------------- */
@@ -459,6 +460,87 @@ textarea.form-control {
 }
 
 
+
+/* ---------------------------------------------- /*
+ * Module
+/* ---------------------------------------------- */
+
+.modulinhalt{
+	background-color: #9fcd35;
+	padding-top: 30px;
+
+}
+
+.col-sm-3{
+	position: relative;
+}
+
+/*
+.modul{
+	padding: 15px;
+	position: relative;
+	background-color: red;
+}
+
+.modulinhalt{
+	position: absolute;
+	background-color: #9fcd35;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	padding-top: 30px;
+}
+
+/*icons*/
+.modulinhalt>div{
+	display: table;
+	margin: 0 auto;
+	color: #373D42;
+}
+
+/*Titel*/
+.modulinhalt>h3{
+	text-align: center;
+	margin-top: 40px;
+	color: #373D42;
+	font-size: 18px;
+}
+
+.modul-description{
+	z-index: 2;
+	opacity: 0;
+	height: 100%;
+	background-color: #373d42;
+	top: 0;
+	left: 15px;
+	right: 15px;
+	position: absolute;
+	color: #fff;
+	font-family: 'HelveticaNeueLTStd-Th';
+	text-align: center;
+	font-size: 14px;
+}
+
+.modul-description>p{
+	margin-top: 80px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.modul-description:hover{
+	opacity: 0.9;
+	transition: 0.6s;
+}
+
+.modulrow{
+	margin-bottom: 30px;
+	margin-top: 80px;
+}
+
+
+
+
+
 /* ---------------------------------------------- /*
  * Servise
 /* ---------------------------------------------- */
@@ -789,11 +871,47 @@ a:hover .disturber{
  * Media
 /* ---------------------------------------------- */
 
+@media (min-width: 980px) and (max-width: 1170px){
+
+	/*Titel Module*/
+	.modulinhalt>h3{
+		font-size: 14px;
+		margin-top: 20px;
+	}
+
+	.modul-description>p{
+		margin-top: 20px;
+	}
+
+
+
+}
+
+
+
 @media (min-width: 768px) and (max-width: 979px){
 	.navbar-custom .navbar-nav > li > a{
-	padding-left: 10px;
-	padding-right: 10px;
+		padding-left: 10px;
+		padding-right: 10px;
 	}
+
+	/*Titel Module*/
+	.modulinhalt>h3{
+		font-size: 11px;
+		margin-top: 15px;
+	}
+
+	.modulinhalt{
+		padding-top: 10px;
+	}
+
+	.modul-description>p{
+		margin-top: 5px;
+		font-size: 11px;
+	}
+
+	
+
 
 }
 
@@ -871,6 +989,23 @@ a:hover .disturber{
 		margin: -210px;
 		margin-top: -261px;
 	}
+
+	.modulcontainer{
+		margin-bottom: 30px;
+
+	}
+
+	.modulrow{
+		margin-bottom: 0px;
+		margin-top: 20px;
+	}
+
+	.modul-description:active{
+	opacity: 0.9;
+	transition: 0.6s;
+}
+
+
 
 }
 
