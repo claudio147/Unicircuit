@@ -465,13 +465,25 @@ textarea.form-control {
  * Module
 /* ---------------------------------------------- */
 
-.module>div{
+.modulinhalt{
+	background-color: green;
+
+}
+
+.col-sm-3{
+	position: relative;
+}
+
+/*
+.modul{
 	padding: 15px;
+	position: relative;
+	background-color: red;
 }
 
 .modulinhalt{
+	position: absolute;
 	background-color: #9fcd35;
-	display: block;
 	width: 100%;
 	height: 100%;
 	z-index: 1;
@@ -479,20 +491,39 @@ textarea.form-control {
 }
 
 /*icons*/
-.module>div>div>div{
+.modulinhalt>div{
 	display: table;
 	margin: 0 auto;
 	color: #373D42;
 }
 
 /*Titel*/
-.module>div>div>h3{
+.modulinhalt>h3{
 	text-align: center;
 	margin-top: 40px;
 	color: #373D42;
 	font-size: 16px;
 }
 
+.modul-description{
+	z-index: 2;
+	opacity: 0;
+	height: 100%;
+	background-color: #000;
+	top: 0;
+	left: 15px;
+	right: 15px;
+	position: absolute;
+}
+
+.modul-description:hover{
+	opacity: 0.8;
+	transition: 0.8s;
+}
+
+.modulrow{
+	margin-bottom: 30px;
+}
 
 
 
