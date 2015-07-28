@@ -104,7 +104,7 @@
 
 
         var cw = $('.col-sm-3').width();
-		$('.col-sm-3').css({'height':cw+'px'});
+		$('.modulinhalt, .col-sm-3').css({'height':cw+'px'});
 
 
 
