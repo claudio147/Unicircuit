@@ -20,22 +20,25 @@ function checkMailFormat($email) {
     
 }
 
-//Fehler Abfragen
-// Wurde Submit-Button angeklickt?
+/*
+ * Überprüfung ob Submit schon geklickt wurde.
+ * Fehler Abfrage
+ * Security: Bereinigung von möglichen falsch Eingaben.
+ */
 if (isset($_POST['submit'])) {
-  $fn = trim($_POST['firstname']);
-  $ln = trim($_POST['lastname']);
-  $co = trim($_POST['company']);
-  $a1 = trim($_POST['adressline1']);
-  $a2 = trim($_POST['adressline2']);
-  $zip = trim($_POST['zip']);
-  $ci = trim($_POST['city']);
-  $cn = trim($_POST['country']);
-  $pn = trim($_POST['PhoneNumber']);
-  $mn = trim($_POST['MobileNumber']);
-  $em = trim($_POST['email']);
-  $p1 = trim($_POST['password1']);
-  $p2 = trim($_POST['password2']);
+  $fn = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
+  $ln = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING);
+  $co = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING);
+  $a1 = filter_input(INPUT_POST, 'adressline1', FILTER_SANITIZE_STRING);
+  $a2 = filter_input(INPUT_POST, 'adressline2', FILTER_SANITIZE_STRING);
+  $zip = filter_input(INPUT_POST, 'zip', FILTER_SANITIZE_NUMBER_INT);
+  $ci = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
+  $cn = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_STRING);
+  $pn = filter_input(INPUT_POST, 'PhoneNumber', FILTER_SANITIZE_STRING);
+  $mn = filter_input(INPUT_POST, 'MobileNumber', FILTER_SANITIZE_STRING);
+  $em = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+  $p1 = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
+  $p2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
 
   // Fehler im Eingabefeld?
   if (empty($fn) || strlen($fn) < 2) {
@@ -139,7 +142,7 @@ if (isset($_POST['submit'])) {
       // Füge alle Daten zusammen und genereriere einen HASH-Wert
       $to = sha1($fn . $ln . $em . $da . $ti . $ra . $sa);
       // SQL-Statement zusammensetzen, um Datensatz in DB zu speichern
-      $sql = createArchitect($fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti);
+      $sql = createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti);
       // Anfrage an Datenbank senden
      
      
