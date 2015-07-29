@@ -63,13 +63,17 @@
         		$('.slider').slick({
         			dots: true,
         			infinite: true,
-        			arrows: false
+        			arrows: false,
+        			autoplay: true,
+        			autoplaySpeed: 4000
         		});
         	}else{
         		$('.slider').slick({
         			dots: true,
         			infinite: true,
-        			arrows: true
+        			arrows: true,
+        			autoplay: true,
+        			autoplaySpeed: 4000
         		});       		
         	}
 
