@@ -298,8 +298,7 @@ textarea.form-control {
 }
 
 .pfblock-subtitle {
-	font-family: 'Light', "Times New Roman", Times, sans-serif;
-	font-style: normal;
+	font-family: 'HelveticaNeueLTStd-Th', sans-serif;
 	font-size: 18px;
 }
 
@@ -556,13 +555,14 @@ textarea.form-control {
 .pricing>div>div{
 	height: 500px;
 	text-align: center;
-	border: 1px solid;
-	border-color: #373D42;
+	border: 2px solid;
+	border-color: #9fcd35;
 }
 
 .pricing>div>div>p{
 	margin-top: 15px;
 	margin-bottom: 15px;
+	color: #000;
 }
 
 .pricing{
@@ -577,21 +577,19 @@ textarea.form-control {
 .preiskopf>h3{
 	font-size: 28px;
 	padding-top: 15px;
+
 }
 
 .preiskopf>p{
 	font-size: 28px;
 	padding-top: 15px;
+	color: #000;
 }
 
 
 
 #preisA, #preisC{
 	margin-top: 80px;
-}
-
-#preisB{
-
 }
 
 .preis-line {
@@ -607,14 +605,44 @@ textarea.form-control {
 	margin-top: 30px;
 	height: 40px;
 	font-size: 14px;
+	background: #9fcd35;
 }
 
 
 
 
 
+/* ---------------------------------------------- /*
+ * Über Uns
+/* ---------------------------------------------- */
+
+.aboutUs{
+	margin-top: 30px;
+	font-size: 16px;
+}
 
 
+.portrait>img{
+	width: 100%;
+	margin-top: 30px;
+}
+
+.portrait-container{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.portrait>.name{
+	font-family: 'HelveticaNeueLTStd-Bd';
+	font-size: 16px;
+	color: #9fcd35;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.portrait>.function{
+	font-size: 14px;
+}
 
 
 
@@ -680,6 +708,14 @@ textarea.form-control {
 
 .ajax-response {
 	text-align: center;
+}
+
+.contact-form{
+	margin-top: 30px;
+}
+
+.btn-send{
+	background-color: #9fcd35;
 }
 
 /* ---------------------------------------------- /*
