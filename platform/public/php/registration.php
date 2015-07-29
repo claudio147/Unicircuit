@@ -119,16 +119,17 @@ if (isset($_POST['submit'])) {
      $link = connectDB();
     // Hole aus der Datebank ID von Benutzer/in, welche die eingegebene 
     // E-Mail Adresse besitzt
-    $sql2 = "SELECT User.IDUser FROM User WHERE Email='$em'";
+    $sql2 = "SELECT * FROM User WHERE Email='$em'";
     
-
+    $result = mysqli_query($link, $sql2);
     // Zähle alle Datensätze, welcher das SQL-Statement zurück gegeben hat
-    //$anzahl = mysqli_num_rows($result);
-    $anzahl = 0;
+    
+    $anzahl = mysqli_num_rows($result);
+    
 
     // Wenn die Anzahl 1 ist, dann ist die Person nicht in der Datenbank 
     // registiert
-    if ($anzahl < 1) {
+    if ($anzahl > 1) {
       // Beschaffe das aktuelle Datum (siehe php.net)
       $da = date('Y-m-d');
       // Beschaffe die aktuelle Uhrzeit 
@@ -157,6 +158,8 @@ if (isset($_POST['submit'])) {
     mysqli_close($link);
 
       
+  } else {
+      echo 'Sie sind schon angemeldet, warten Sie auf Ihre Freischaltung.';
   }
 }
 }
