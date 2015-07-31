@@ -129,7 +129,7 @@ if (isset($_POST['submit'])) {
 
     // Wenn die Anzahl 1 ist, dann ist die Person nicht in der Datenbank 
     // registiert
-    if ($anzahl > 1) {
+    if ($anzahl < 1) {
       // Beschaffe das aktuelle Datum (siehe php.net)
       $da = date('Y-m-d');
       // Beschaffe die aktuelle Uhrzeit 
