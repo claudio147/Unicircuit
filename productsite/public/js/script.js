@@ -65,7 +65,8 @@
         			infinite: true,
         			arrows: false,
         			autoplay: true,
-        			autoplaySpeed: 4000
+        			autoplaySpeed: 4000,
+        			lazyLoad: 'progressive'
         		});
         	}else{
         		$('.slider').slick({
@@ -73,7 +74,8 @@
         			infinite: true,
         			arrows: true,
         			autoplay: true,
-        			autoplaySpeed: 4000
+        			autoplaySpeed: 4000,
+        			lazyLoad: 'progressive'
         		});       		
         	}
 
@@ -86,10 +88,11 @@
         		document.getElementById('sliderDesktop').style.display='block';
 				$('#btn-mobile').removeClass('active');
 				$('#btn-desktop').toggleClass('active');
+
         	}
 
         	function showMobile(){
-        		document.getElementById('sliderDesktop').style.display='none';
+				document.getElementById('sliderDesktop').style.display='none';
         		document.getElementById('sliderMobile').style.display='block';
         		$('#btn-desktop').removeClass('active');
 				$('#btn-mobile').toggleClass('active');

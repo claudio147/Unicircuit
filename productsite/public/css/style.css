@@ -248,7 +248,7 @@ textarea.form-control {
 /* ---------------------------------------------- */
 
 .pfblock {
-	padding: 100px 0 300px;
+	padding: 100px 0 150px;
 }
 
 .pfblock-gray {
@@ -316,7 +316,7 @@ textarea.form-control {
     text-align: center;
 }
 .calltoaction {
-    background: url(../images/item-3.jpg);
+    background: url(../images/slider-background.jpg);
 	background-color: #222;
 	background-repeat: no-repeat;
 	background-position: 0 0;
@@ -456,6 +456,7 @@ textarea.form-control {
 }
 
 .slider-desktop{
+	height: 500px;
 	margin-top: 0px;
 }
 
@@ -718,60 +719,103 @@ textarea.form-control {
 	background-color: #9fcd35;
 }
 
+
+/* ---------------------------------------------- /*
+ * AGB's
+/* ---------------------------------------------- */
+
+.header-fix {
+	position: fixed;
+	width: 100%;
+	z-index: 900;
+	height: 60px;
+}
+
+.nav-titel{
+	margin-right: 100px;
+	color: #fff;
+}
+
+.agb>h1{
+	margin-top: 80px;
+	font-size: 24px;
+	color: #9fcd35;
+}
+
+.agb>h3{
+	margin-top: 30px;
+	margin-bottom: 0px;
+}
+
+.agb>p, .agb>ol>li{
+	font-size: 14px;
+
+}
+
+.biglist>li{
+	margin-top: 30px;
+	font-family: 'HelveticaNeueLTStd-Th';
+	color: #373d42;
+}
+
+
+
+ol {
+    counter-reset: item;
+}
+ol li {
+    display: block;
+    position: relative;
+}
+ol li:before {
+    content: counters(item, ".");
+    counter-increment: item;
+    position: absolute;
+    margin-right: 100%;
+    right: 10px; /* space between number and text */
+}
+
+
 /* ---------------------------------------------- /*
  * Footer
 /* ---------------------------------------------- */
 
 #footer {
-	background: #222;
-	text-align: center;
-	padding: 40px 0;
+	background: #373d42;
+	padding-top: 40px;
+	padding-bottom: 10px;
 	color: #FFF;
+	font-family: 'HelveticaNeueLTStd-Th';
+	font-size: 12px;
+	line-height: 8px;
 }
 
+.footer-title{
+	font-family: 'HelveticaNeueLTStd-Bd';
+	line-height: 22px;
+}
+
+#footer>div>div>div>p>a{
+	color: #fff;
+}
+
+#footer>div>div>div>p>a:hover{
+	color: #9fcd35;
+}
+
+
+
+
 .copyright {
-	margin: 0;
+	margin-top: 30px;
+	text-align: center;
 }
 
 .copyright a{
     border-bottom: 1px dotted #fff;
 }
 
-#footer span{
-    animation-iteration-count: infinite;
-    -webkit-animation-iteration-count: infinite;
-    color: #ff5252;
-}
 
-.social-links {
-	list-style: none;
-	padding: 0;
-	margin: 0 0 20px;
-}
-
-.social-links li {
-	display: inline-block;
-	margin: 5px;
-}
-
-.social-links a {
-	width: 36px;
-	height: 36px;
-	display: block;
-	line-height: 35px;
-	text-align: center;
-	border: 1px solid rgba(255, 255, 255, .1);
-	-webkit-border-radius: 3px;
-	   -moz-border-radius: 3px;
-			border-radius: 3px;
-	font-size: 14px;
-	color: rgba(255, 255, 255, .2);
-}
-
-.social-links a:hover {
-	border: 1px solid rgba(255, 255, 255, .5);
-	color: rgba(255, 255, 255, .8);
-}
 
 /* ---------------------------------------------- /*
  * Navigation
@@ -790,7 +834,7 @@ textarea.form-control {
 	margin: 0;
 	height: 60px;
 	text-transform: uppercase;
-	font-family: HelveticaNeueLTStd-Bd, sans-serif;
+	font-family: 'HelveticaNeueLTStd-Bd', sans-serif;
 	background: #373d42;
 	padding-top: 20px;
 }
@@ -823,7 +867,7 @@ textarea.form-control {
 .navbar-custom .navbar-brand {
 	font-weight: 700;
 	font-size: 22px;
-    font-family: HelveticaNeueLTStd-Bd;
+    font-family: 'HelveticaNeueLTStd-Bd';
     padding-top: 0px;
     height: 22px;
 }
@@ -1028,8 +1072,8 @@ textarea.form-control {
 	}
 
 	.modul-description>p{
-		margin-top: 5px;
-		font-size: 11px;
+		margin-top: 10px;
+		font-size: 14px;
 	}
 
 	.pricing>div>div{
@@ -1157,6 +1201,11 @@ textarea.form-control {
 		margin-bottom: 0px;
 		margin-top: 20px;
 	}
+	
+	.modul-description>p{
+		margin-top: 10px;
+		font-size: 14px;
+	}
 
 	.modul-description:active{
 	opacity: 0.9;
@@ -1174,7 +1223,7 @@ textarea.form-control {
 		font-size: 70%;
 		float: right;
 		margin-right: 40px;
-		margin-bottom: 17px;
+		margin-bottom: 15px;
 		margin-top: 15px;
 		position: relative;
 		display: block;
@@ -1183,6 +1232,8 @@ textarea.form-control {
 	#preisA, #preisB, #preisC{
 		margin-top: 20px;
 	}
+
+
 
 
 
