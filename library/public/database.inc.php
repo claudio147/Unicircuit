@@ -51,5 +51,11 @@ function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $t
     return $sql;
 }
 
+function userData() {
+    $sql = 'SELECT Firstname, Lastname, Company, ZIP, Country, PhoneNumber, 
+            MobileNumber, Email, RegCode, LastLoginDate, LastLoginTime, IdUser) FROM User';
+    return $sql;
+}
+
 
 
