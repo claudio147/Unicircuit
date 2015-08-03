@@ -1,5 +1,5 @@
-@font-face { font-family: 'HelveticaNeueLTStd-Th';
-             src: url('../fonts/HelveticaNeueLTStd-Th.otf') format('opentype'); }
+@font-face { font-family: 'HelveticaNeueLTStd-Lt';
+             src: url('../fonts/HelveticaNeueLTStd-Lt.otf') format('opentype'); }
 @font-face { font-family: 'HelveticaNeueLTStd-Bd';
              src: url('../fonts/HelveticaNeueLTStd-Bd.otf') format('opentype'); }
 @font-face { font-family: 'HelveticaNeueLTStd-Hv';
@@ -13,7 +13,8 @@
 */
 
 body {
-	font: 20px 'Light', sans-serif;
+	font: 20px 'HelveticaNeueLTStd-Lt', sans-serif;
+	letter-spacing: 1px;
 	color: #666;
 	overflow-x: hidden;
 	width: 100%;
@@ -37,7 +38,7 @@ a:hover {
 }
 
 p, div{
-	font-family: 'HelveticaNeueLTStd-Th';
+	font-family: 'HelveticaNeueLTStd-Lt';
 }
 
 
@@ -298,7 +299,7 @@ textarea.form-control {
 }
 
 .pfblock-subtitle {
-	font-family: 'HelveticaNeueLTStd-Th', sans-serif;
+	font-family: 'HelveticaNeueLTStd-Lt', sans-serif;
 	font-size: 18px;
 }
 
@@ -409,7 +410,7 @@ textarea.form-control {
 }
 
 .start {
-	font-family: HelveticaNeueLTStd-Th;
+	font-family: HelveticaNeueLTStd-Lt;
 	font-size: 16px;
 	margin: 0px 0;
 	margin-top: 40px;
@@ -525,7 +526,7 @@ textarea.form-control {
 	right: 15px;
 	position: absolute;
 	color: #fff;
-	font-family: 'HelveticaNeueLTStd-Th';
+	font-family: 'HelveticaNeueLTStd-Lt';
 	text-align: center;
 	font-size: 14px;
 }
@@ -754,8 +755,12 @@ textarea.form-control {
 
 .biglist>li{
 	margin-top: 30px;
-	font-family: 'HelveticaNeueLTStd-Th';
+	font-family: 'HelveticaNeueLTStd-Lt';
 	color: #373d42;
+}
+
+.impressum-address>p{
+	margin-bottom: 0px;
 }
 
 
@@ -785,9 +790,10 @@ ol li:before {
 	padding-top: 40px;
 	padding-bottom: 10px;
 	color: #FFF;
-	font-family: 'HelveticaNeueLTStd-Th';
+	font-family: 'HelveticaNeueLTStd-Lt';
 	font-size: 12px;
 	line-height: 8px;
+	margin-top: 20px;
 }
 
 .footer-title{
