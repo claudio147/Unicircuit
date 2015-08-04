@@ -115,8 +115,7 @@
         var cw = $('.col-sm-2').width();
 		$('.modulinhalt, .modulcontainer').css({'height':cw+'px'});
 
-		
-
+	
 
 
 
