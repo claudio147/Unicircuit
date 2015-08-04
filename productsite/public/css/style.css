@@ -1065,7 +1065,7 @@ ol li:before {
  * Media
 /* ---------------------------------------------- */
 
-@media (min-width: 992px) and (max-width: 1170px){
+@media (min-width: 993px) and (max-width: 1170px){
 
 	/*Titel Module*/
 	.modulinhalt>h3{
@@ -1083,7 +1083,7 @@ ol li:before {
 
 
 
-@media (min-width: 769px) and (max-width: 992px){
+@media (min-width: 768px) and (max-width: 992px){
 	.navbar-custom .navbar-nav > li > a{
 		padding-left: 10px;
 		padding-right: 10px;
@@ -1140,7 +1140,7 @@ ol li:before {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
 	.calltoaction {
 		text-align: center;
