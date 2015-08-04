@@ -1083,7 +1083,7 @@ ol li:before {
 
 
 
-@media (min-width: 768px) and (max-width: 992px){
+@media (min-width: 769px) and (max-width: 992px){
 	.navbar-custom .navbar-nav > li > a{
 		padding-left: 10px;
 		padding-right: 10px;
@@ -1140,7 +1140,7 @@ ol li:before {
 
 
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
 
 	.calltoaction {
 		text-align: center;
