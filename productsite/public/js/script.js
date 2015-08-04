@@ -66,7 +66,7 @@
         			arrows: false,
         			autoplay: true,
         			autoplaySpeed: 4000,
-        			lazyLoad: 'progressive'
+        			lazyLoad: 'ondemand'
         		});
         	}else{
         		$('.slider').slick({
@@ -75,7 +75,7 @@
         			arrows: true,
         			autoplay: true,
         			autoplaySpeed: 4000,
-        			lazyLoad: 'progressive'
+        			lazyLoad: 'ondemand'
         		});       		
         	}
 
@@ -86,6 +86,7 @@
         	function showDesktop(){
         		document.getElementById('sliderMobile').style.display='none';
         		document.getElementById('sliderDesktop').style.display='block';
+        		$('.slider').slick('setPosition'); 
 				$('#btn-mobile').removeClass('active');
 				$('#btn-desktop').toggleClass('active');
 
@@ -94,6 +95,7 @@
         	function showMobile(){
 				document.getElementById('sliderDesktop').style.display='none';
         		document.getElementById('sliderMobile').style.display='block';
+        		$('.slider').slick('setPosition'); 
         		$('#btn-desktop').removeClass('active');
 				$('#btn-mobile').toggleClass('active');
         	}
@@ -207,13 +209,13 @@
 
 			if (( c_name== '' || c_email == '' || c_message == '') || (!isValidEmailAddress(c_email) )) {
 				response.fadeIn(500);
-				response.html('<i class="fa fa-warning"></i>Bitte Eingaben überprüfen und erneut versuchen.');
+				response.html('<i class="fa fa-warning"></i> Bitte Eingaben überprüfen und erneut versuchen.');
 			}
 
 			else {
 					 $.ajax({
 							type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-							url         : '../php/contact.php', // the url where we want to POST
+							url         : './php/contact.php', // the url where we want to POST
 							data        : formData, // our data object
 							dataType    : 'json', // what type of data do we expect back from the server
 							encode      : true,
