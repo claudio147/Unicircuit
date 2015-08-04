@@ -469,6 +469,18 @@ textarea.form-control {
 	margin-top: 20px;
 }
 
+.slider-mobile>.slider>.slick-next, .slider-mobile>.slider>.slick-prev {
+	margin-top: -45px;
+	width: 30px;
+	height: 80px;
+}
+
+.slider-desktop>.slider>.slick-next, .slider-desktop>.slider>.slick-prev {
+	margin-top: -35px;
+	width: 30px;
+	height: 80px;
+}
+
 
 
 /* ---------------------------------------------- /*

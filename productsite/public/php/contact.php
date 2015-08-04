@@ -6,6 +6,10 @@ if(isset($_POST['message'])){
 	$email = $_POST['email'];
 	$message = $_POST['message'];
 
+	//Email Absenderadresse (Archconsulting)
+	$email2 = 'info@unicircuit.ch';
+	
+	//Nachricht für Archconsulting
 	$messageForm= 
 		'<html>
 		<head>
@@ -17,13 +21,13 @@ if(isset($_POST['message'])){
 		<h3>Kontaktanfrage Unicircuit</h3>
 		<br />
 		<p><b>Name:</b> '.$name.' </p>
-		<br /><br />		 
+		<br />		 
 		<p><b>Nachricht:</b><br />'.$message.'</p>
 		 
 		</body>
 		</html>';
 		
-
+	//Autoantwort für Kunde
 	$messageBack= 
 		'<html>
 		<head>
@@ -45,6 +49,7 @@ if(isset($_POST['message'])){
 		</html>';
    
 	
+	//Email für Archconsulting
 	$to      = 'claudio.schaepper@gmail.com';
 	$subject = 'Anfrage Unicircuit';
 
@@ -57,20 +62,22 @@ if(isset($_POST['message'])){
 	$header .= "X-Mailer: PHP/". phpversion();
 
 
+	//Email für Kunde (Autoantwort)
 	$to2      = $email;
 	$subject2 = 'Anfrage Unicircuit';
 
 	$header2  = "MIME-Version: 1.0\r\n";
 	$header2 .= "Content-type: text/html; charset=iso-8859-1\r\n";
 	 
-	$header2 .= 'From: "noreply@unicircuit.ch"\r\n';
-	$header2 .= 'Reply-To: "info@unicircuit.ch"\r\n';
+	$header .= 'From: '.$email2."\r\n";
+	$header .= 'Reply-To: '.$email2."\r\n";
 	// $header .= "Cc: $cc\r\n";  // falls an CC gesendet werden soll
 	$header2 .= "X-Mailer: PHP/". phpversion();
 
-
+	//Send Email für Kunde (Autoantwort)
 	mail($to2, $subject2, $messageBack, $header);
 
+	//Send Email für Archconsutling mit Kontaktanfrage
 	$status = mail($to, $subject, $messageForm, $header);
 
 	if($status == TRUE){	
@@ -78,16 +85,6 @@ if(isset($_POST['message'])){
 	
 		//Edit your message here
 		$res['message'] = 'Ihre Kontaktanfrage wird so schnell wie möglich beantwortet.';
-
-	//Auto Antwort an Kunden	
-	/*$to2      = $email;
-	$subject2 = 'Vielen Dank für Ihr Interesse an Unicircuit';
-
-	$headers2 = 'From: noreply@unicircuit.ch' "\r\n" .
-    'Reply-To: noreply@unicircuit.ch' . "\r\n" .
-    'X-Mailer: PHP/' . phpversion();
-
-	$status = mail($to2, $subject2, $messageBack, $headers2);*/
     }
 	else{
 		$res['message'] = 'Senden fehlgeschlagen. Bitte senden Sie Ihre Nachricht an info@unicircuit.ch';

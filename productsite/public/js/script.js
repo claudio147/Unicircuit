@@ -209,7 +209,7 @@
 
 			if (( c_name== '' || c_email == '' || c_message == '') || (!isValidEmailAddress(c_email) )) {
 				response.fadeIn(500);
-				response.html('<i class="fa fa-warning"></i>Bitte Eingaben überprüfen und erneut versuchen.');
+				response.html('<i class="fa fa-warning"></i> Bitte Eingaben überprüfen und erneut versuchen.');
 			}
 
 			else {
