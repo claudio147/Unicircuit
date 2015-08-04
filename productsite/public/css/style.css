@@ -710,6 +710,7 @@ textarea.form-control {
 
 .ajax-response {
 	text-align: center;
+	margin-top: 20px;
 }
 
 .contact-form{
@@ -748,6 +749,7 @@ textarea.form-control {
 	margin-bottom: 0px;
 }
 
+
 .agb>p, .agb>ol>li{
 	font-size: 14px;
 
@@ -755,12 +757,20 @@ textarea.form-control {
 
 .biglist>li{
 	margin-top: 30px;
-	font-family: 'HelveticaNeueLTStd-Lt';
+	font-family: 'HelveticaNeueLTStd-Bd';
+	font-size: 14px;
 	color: #373d42;
+	text-transform: uppercase;
+	letter-spacing: normal;
 }
 
-.impressum-address>p{
+.biglist>li>p, .biglist>li>ol>li{
+	font-family: 'HelveticaNeueLTStd-Lt';
 	margin-bottom: 0px;
+	margin-top: 5px;
+	font-size: 14px;
+	letter-spacing: 1px;
+	text-transform: none;
 }
 
 
@@ -1065,6 +1075,7 @@ ol li:before {
 	.navbar-custom .navbar-nav > li > a{
 		padding-left: 10px;
 		padding-right: 10px;
+		letter-spacing: 1px;
 	}
 
 	/*Titel Module*/
