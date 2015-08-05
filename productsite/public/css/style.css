@@ -546,7 +546,7 @@ textarea.form-control {
 }
 
 .modul-description>p{
-	margin-top: 60px;
+	margin-top: 40px;
 	margin-left: 5px;
 	margin-right: 5px;
 	letter-spacing: 1px;
@@ -1083,7 +1083,7 @@ ol li:before {
  * Media
 /* ---------------------------------------------- */
 
-@media (min-width: 993px) and (max-width: 1170px){
+@media (min-width: 993px) and (max-width: 1200px){
 
 	/*Titel Module*/
 	.modulinhalt>h3{
@@ -1110,8 +1110,8 @@ ol li:before {
 
 	/*Titel Module*/
 	.modulinhalt>h3{
-		font-size: 11px;
-		margin-top: 15px;
+		font-size: 14px;
+		margin-top: 40px;
 	}
 
 	.modulinhalt{
@@ -1119,16 +1119,16 @@ ol li:before {
 	}
 
 	.modul-description>p{
-		margin-top: 10px;
+		margin-top: 30px;
 		font-size: 14px;
 	}
 
 	.pricing>div>div{
-		height: 400px;
+		height: 450px;
 	}
 
 	.preiskopf>h3{
-		font-size: 22px;
+		font-size: 20px;
 	}
 
 	.preiskopf>p{
@@ -1137,7 +1137,7 @@ ol li:before {
 	}
 
 	.btn-preis{
-		margin-top: 5px;
+		margin-top: 15px;
 		height: 35px;
 	}
 
@@ -1257,8 +1257,12 @@ ol li:before {
 	}
 	
 	.modul-description>p{
-		margin-top: 10px;
-		font-size: 14px;
+		margin-top: 40px;
+		font-size: 18px;
+	}
+
+	.modulinhalt>h3{
+		margin-top: 60px;
 	}
 
 	.modul-description:active{
@@ -1333,7 +1337,11 @@ ol li:before {
 	/*Titel Module*/
 	.modulinhalt>h3{
 		font-size: 11px;
-		margin-top: 15px;
+		margin-top: 20px;
+	}
+
+	.modul-description>p{
+		font-size: 12px;
 	}
 
 
