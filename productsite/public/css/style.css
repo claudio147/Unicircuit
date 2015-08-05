@@ -1124,11 +1124,11 @@ ol li:before {
 	}
 
 	.pricing>div>div{
-		height: 400px;
+		height: 450px;
 	}
 
 	.preiskopf>h3{
-		font-size: 22px;
+		font-size: 20px;
 	}
 
 	.preiskopf>p{
@@ -1137,7 +1137,7 @@ ol li:before {
 	}
 
 	.btn-preis{
-		margin-top: 5px;
+		margin-top: 15px;
 		height: 35px;
 	}
 
