@@ -69,13 +69,13 @@ if(isset($_POST['message'])){
 	$header2  = "MIME-Version: 1.0\r\n";
 	$header2 .= "Content-type: text/html; charset=iso-8859-1\r\n";
 	 
-	$header .= 'From: '.$email2."\r\n";
-	$header .= 'Reply-To: '.$email2."\r\n";
+	$header2 .= 'From: '.$email2."\r\n";
+	$header2 .= 'Reply-To: '.$email2."\r\n";
 	// $header .= "Cc: $cc\r\n";  // falls an CC gesendet werden soll
 	$header2 .= "X-Mailer: PHP/". phpversion();
 
 	//Send Email für Kunde (Autoantwort)
-	mail($to2, $subject2, $messageBack, $header);
+	mail($to2, $subject2, $messageBack, $header2);
 
 	//Send Email für Archconsutling mit Kontaktanfrage
 	$status = mail($to, $subject, $messageForm, $header);
