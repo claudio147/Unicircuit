@@ -9,6 +9,7 @@
 //Einbindung Librarys
 
 require_once ('../../../library/public/database.inc.php');
+require_once ('../../../library/public/mail.inc.php');
 
 //check mail
 function checkMailFormat($email) {
@@ -151,6 +152,7 @@ if (isset($_POST['submit'])) {
     
     if($status == true){
         header('location:registration.php');
+        createArchRegMail($fn, $ln, $em);
     }else
     {
     echo '<p> Datensatz konnte nicht erzeugt werden</p>';
@@ -177,7 +179,7 @@ if (isset($_POST['submit'])) {
    <td>&nbsp;</td>
   </tr>
   <tr>
-   <td width="200">Nachnae: </td>
+   <td width="200">Nachname: </td>
    <td width="200"><input type="text" name="lastname" value="<?php echo $ln; ?>"></td>
    <td>&nbsp;</td>
   </tr>
@@ -227,12 +229,12 @@ if (isset($_POST['submit'])) {
    <td>&nbsp;</td>
   </tr>
   <td>Passwort: </td>
-   <td><input type="text" name="password1" id="p1" value="<?php echo $p1; ?>"></td>
+  <td><input type="password" name="password1" id="p1" value="<?php echo $p1; ?>"></td>
    <td>&nbsp;</td>
   </tr> 
   <tr>
    <td>Passwort erneut eingeben: </td>
-   <td><input type="text" name="password2" id="p2" value="<?php echo $p2; ?>"></td>
+   <td><input type="password" name="password2" id="p2" value="<?php echo $p2; ?>"></td>
    <td></td>
   </tr>
   <tr>
