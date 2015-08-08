@@ -10,12 +10,13 @@
         
 function connectDB() {
     $host = 'localhost';
-    $user = 'user04websrv02' ;
-    $password = 'cfADs12P' ;
-    $database = 'user04websrv02';
+    $user = 'root' ;
+    $password = 'root' ;
+    $database = 'unicircuit';
  // Stellt die Datenbank verbindung her
  $link = mysqli_connect($host, $user, $password, $database);
- 
+ //Codiert zeichen in UTF-8
+ mysqli_set_charset($link, 'utf8');
  
  //Prüft die Datenbank Verbindung
  if (mysqli_connect_errno()) {
@@ -77,4 +78,15 @@ function setActive3($reg) {
     
     return $sql;
 }
+
+
+/*
+ * Productsite
+ */
+function allContentProductsite(){
+    $sql = 'SELECT Title, Content FROM Productsite';
+    return $sql;
+}
+
+
 
