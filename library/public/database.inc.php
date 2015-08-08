@@ -27,6 +27,7 @@ function connectDB() {
  return $link;
 }
 
+// Erstellung Architekt User in DB
 function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti) {
     
     //Escapen der Variablen, Verhinderung von SQL Injections.
@@ -46,25 +47,37 @@ function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $t
     
     //Datenbank INSERT, fixe FK_IdUserType, hier handelt es sich immer um Architekt.
     $sql =  "INSERT INTO User (Firstname, Lastname, Company, ZIP, City, Country, 
-              PhoneNumber, MobileNumber, Email, RegCode, Password, LastLoginDate, LastLoginTime, Fk_IdUserType) 
-              VALUES('$fn', '$ln','$co',$zip,'$ci','$cn','$pn','$mn', '$em','$to', '$p1', '$da', '$ti', 2)";
+              PhoneNumber, MobileNumber, Email, RegCode, Password, LastLoginDate, LastLoginTime, Fk_IdUserType, Active) 
+              VALUES('$fn', '$ln','$co',$zip,'$ci','$cn','$pn','$mn', '$em','$to', '$p1', '$da', '$ti', 2, 1)";
 
     return $sql;
 }
-
+// Holt alle Daten der User in der Datenbank
 function allUserData() {
     $sql = 'SELECT Firstname, Lastname, Company, ZIP, Country, PhoneNumber, 
-            MobileNumber, Email, RegCode, LastLoginDate, LastLoginTime, IdUser FROM User';
+            MobileNumber, Email, RegCode, LastLoginDate, LastLoginTime, IdUser, Active FROM User';
     return $sql;
 }
-
+// Holt Daten eines spezifischen Users anhand der ID
 function userData($id) {
      $sql = 'SELECT Firstname, Lastname, Email, RegCode FROM User WHERE IdUser = '. $id;
      
      return $sql;
 }
 
+// Setzt Aktivierungsstand des gewählten Users auf 2(Aktivierungsmail verschickt)
+function setActive($id) {
+    $sql = 'UPDATE User SET Active = 2 WHERE IdUser = '. $id;
+    
+    return $sql;
+}
 
+// Setzt Aktivierungsstand des gewählten Users auf 3(Aktiviert)
+function setActive3($reg) {
+    $sql = 'UPDATE User SET Active = 3 WHERE RegCode = '. $reg;
+    
+    return $sql;
+}
 
 
 /*
