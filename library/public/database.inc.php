@@ -89,4 +89,17 @@ function allContentProductsite(){
 }
 
 
+/*
+ * Redaktionssystem
+ */
+function allContentOfIdHTML($id){
+    $sql='SELECT Title, Content, InputType FROM Productsite WHERE IdHTML='.$id;
+    return $sql;
+}
+
+function saveToDB($title, $content){
+    $sql= 'UPDATE Productsite SET Content ="'.$content.'" WHERE Title= "'.$title.'"';
+    return $sql;
+}
+
 
