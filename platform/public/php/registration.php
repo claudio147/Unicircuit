@@ -12,14 +12,7 @@ require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/mail.inc.php');
 
 //check mail
-function checkMailFormat($email) {
-  if (preg_match("/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+\.([a-zA-Z]{2,4})$/", $email)) {
-    return true;
-  } else {
-  return false;
-  }
-    
-}
+checkMailFormat($email);
 
 /*
  * Überprüfung ob Submit schon geklickt wurde.
@@ -143,6 +136,8 @@ if (isset($_POST['submit'])) {
       $sa = 'FB8w?xn!Ju.j+Dk“YcG1EHpPFWc_!"*';
       // Füge alle Daten zusammen und genereriere einen HASH-Wert
       $to = sha1($fn . $ln . $em . $da . $ti . $ra . $sa);
+      //  Passwort Verschlüsseln
+      $p1 = hash('sha256', $p1);
       // SQL-Statement zusammensetzen, um Datensatz in DB zu speichern
       $sql = createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti);
       // Anfrage an Datenbank senden

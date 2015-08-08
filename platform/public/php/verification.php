@@ -15,7 +15,9 @@ if (mysqli_num_rows($result) == 1) {
   echo '<p>Sie haben sich erfolgreich auf der Plattform <i>personenverwaltung</i>'
   . ' registriert. <a href="http://palmers.dynathome.net:8045/login/login.php">'
   . 'Bitte melden Sie sich an</a>. Wir wünschen viel Vergnügen</p>';
-
+  
+  $set = setActive3($reg);
+  $result = mysqli_query($link, $set);
 } else {
   
   echo '<p>Es tut uns leid, aber die Registration auf unserer Plattform ist aus'
