@@ -70,7 +70,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
 					<a href="" class="disturber-btn"><i class="fa fa-shopping-cart fa-2x"></i></a>
 
-					<a class="navbar-brand" href="index.html"><?php echo $NA_productName ?></a>
+					<a class="navbar-brand" href="index.php"><?php echo $NA_productName ?></a>
 				</div>
 				<div class="collapse navbar-collapse" id="custom-collapse">
 					<ul class="nav navbar-nav navbar-right">
@@ -487,8 +487,8 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 				</div>
 				<div class="col-sm-3">
 					<p class="footer-title">Rechtliches</p>
-					<p><a href="agb.html">AGB</a></p>
-					<p><a href="impressum.html">Impressum</a></p>
+					<p><a href="agb.php">AGB</a></p>
+					<p><a href="impressum.php">Impressum</a></p>
 				</div>
 			</div><!-- End row -->
 

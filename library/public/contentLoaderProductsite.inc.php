@@ -118,3 +118,13 @@ $FO_2_contentLine1= $data['FO_2_contentLine1'];
 $FO_2_contentLine2= $data['FO_2_contentLine2'];
 $FO_2_contentLine3= $data['FO_2_contentLine3'];
 $FO_copyright= $data['FO_copyright'];
+
+//Impressum
+$IP_content= $data['IP_content'];
+
+//Impressum
+$AG_title= $data['AG_title'];
+$AG_subtitle= $data['AG_subtitle'];
+$AG_introductionTitle= $data['AG_introductionTitle'];
+$AG_introductionSubtitle= $data['AG_introductionSubtitle'];
+$AG_content= $data['AG_content'];
