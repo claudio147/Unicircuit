@@ -5,7 +5,11 @@
  */
 
 
-
+/*
+ * BN: user04websrv02
+ * PW: cfADs12P
+ * DB: user04websrv02
+ */
 
         
 function connectDB() {

@@ -23,7 +23,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 	<!-- CSS Custom -->
 	        <style>
             #home {
-                background: url(../images/<?php
+                background: url(images/<?php
                         $link= connectDB();
                         $sql= selectImages(1);
                         $result = mysqli_query($link, $sql);
