@@ -21,10 +21,23 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 	<link href="css/slick-theme.css" rel="stylesheet">
     
 	<!-- CSS Custom -->
+	        <style>
+            #home {
+                background: url(../images/<?php
+                        $link= connectDB();
+                        $sql= selectImages(1);
+                        $result = mysqli_query($link, $sql);
+                        while($row= mysqli_fetch_array($result)){
+                            echo $row['Filename'];
+                        }
+                        ?>);
+            }
+        </style>
+        
 	<link href="css/style.css" rel="stylesheet" media="screen">
 
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-    
+        
 	<!-- JS 3rd Party-->
         <script src="js/modernizr.custom.js"></script>
 
@@ -272,18 +285,28 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
                         
 			<div class="row slider-desktop" id="sliderDesktop">			
 				<div class="slider">
-					<div><img src="images/slider_1.jpg" alt=""></div>
-					<div><img src="images/slider_2.jpg" alt=""></div>
-					<div><img src="images/slider_3.jpg" alt=""></div>
+                                    <?php
+                                    $link= connectDB();
+                                    $sql= selectImages(3);
+                                    $result = mysqli_query($link, $sql);
+                                    while($row= mysqli_fetch_array($result)){
+                                        echo'<div><img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'"></div>';
+                                    }
+                                    ?>
 				</div>	
 				<img src="images/imac.png" alt="" class="imac">
-           	</div>
+                        </div>
 
 			<div class="row slider-mobile" id="sliderMobile">
 				<div class="slider">
-					<div><img src="images/m_slider_1.jpg" alt=""></div>
-					<div><img src="images/m_slider_2.jpg" alt=""></div>
-					<div><img src="images/m_slider_3.jpg" alt=""></div>
+                                    <?php
+                                    $link= connectDB();
+                                    $sql= selectImages(2);
+                                    $result = mysqli_query($link, $sql);
+                                    while($row= mysqli_fetch_array($result)){
+                                        echo'<div><img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'"></div>';
+                                    }
+                                    ?>
 				</div>
 				<img src="images/ipad.png" alt="" class="ipad">
            	</div>
@@ -411,12 +434,26 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
             <div class="row portrait-container">          	
             	<div class="col-sm-4 col-sm-offset-2 portrait">
-            		<img src="images/client-1.jpg">
+            		<?php
+                        $link= connectDB();
+                        $sql= selectImages(4);
+                        $result = mysqli_query($link, $sql);
+                        while($row= mysqli_fetch_array($result)){
+                            echo'<img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'">';
+                        }
+                        ?>
             		<p class="name"><?php echo $AU_personLeftName ?></p>
             		<p class="function"><?php echo $AU_personLeftFunction ?></p>
             	</div>
             	<div class="col-sm-4 col-sm-offset-0 portrait">
-            		<img src="images/client-2.jpg">
+            		<?php
+                        $link= connectDB();
+                        $sql= selectImages(5);
+                        $result = mysqli_query($link, $sql);
+                        while($row= mysqli_fetch_array($result)){
+                            echo'<img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'">';
+                        }
+                        ?>
             		<p class="name"><?php echo $AU_personRightName ?></p>
             		<p class="function"><?php echo $AU_personRightFunction ?></p>
             	</div>

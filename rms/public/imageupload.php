@@ -3,8 +3,8 @@
 //Einbindung Librarys
 require_once ('../../library/public/database.inc.php');
 
-$sections= array(1=>'Landing page', 2=>'Slider Mobile', 3=>'Slider Desktop', 
-        4=>'Über Uns Links', 5=>'Über Uns Rechts');
+$sections= array(1=>'Landing page (2365 x 1744px)', 2=>'Slider Mobile (483 x 353px)', 3=>'Slider Desktop (502 x 301px)', 
+        4=>'Über Uns Links (210 x 140px)', 5=>'Über Uns Rechts (210 x 140px)');
 
 
 if (isset($_POST['Selection'])) {
@@ -62,6 +62,59 @@ if(isset($_POST['upload'])){
         }else{
             echo'<p>Datei konnte nicht hochgeladen werden!</p>';
     }
+}
+
+
+//Löschfunktion
+if(isset($_POST['delete'])){
+    if(!empty($_POST['id'])){
+        $id=$_POST['id'];
+            $link= connectDB();
+            $sql= selectFilename($id);
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_array($result);
+            $fina=$row['Filename'];
+            $path= $row['Path'];
+            
+            if(unlink($path.$fina)){
+                $sql2= deleteImage($id);
+                $status= mysqli_query($link, $sql2);
+                if($status == true){
+                    echo '<p>Datensatz erfolgreich gelöscht</p>';
+                }else{
+                    echo '<p>Datensatz konnte nicht gelöscht werden</p>';
+                }
+            }else{
+                echo'<p>Löschen fehlgeschlagen</p>';
+            }
+    }
+}
+
+//Speicherfunktion
+if(isset($_POST['save'])){
+    $idHTML= $_POST['idHTML'];
+    if($idHTML==2 || $idHTML==3){
+        $id= $_POST['active'];
+        $link= connectDB();
+        $sql1= setAllActiveNull($idHTML);
+        $result1 = mysqli_query($link, $sql1);
+        for($c=0; $c<count($id); $c++){
+            $sql2= updateImageStatus($id[$c]);
+            $result2 = mysqli_query($link, $sql2);
+        }
+        
+        
+    }else{
+        $id= $_POST['active'];
+        $link= connectDB();
+        $sql1= setAllActiveNull($idHTML);
+        $sql2= updateImageStatus($id);
+
+        $result1 = mysqli_query($link, $sql1);
+        $result2 = mysqli_query($link, $sql2);
+    }
+    
+    
 }
 ?>
 
@@ -127,27 +180,41 @@ if (isset($_POST['Selection'])){
    echo'<form action="imageupload.php" method="POST">';
    echo'<table>';
    echo'<tr>';
+   echo'<th>Aktiv</th>';
    echo'<th>Datum</th>';
    echo'<th>Zeit</th>';
    echo'<th>Originalname</th>';
    echo'<th>Bildvorschau</th>';
-   echo'<th>Löschen</th>';
+   echo'<th></th>';
    echo'</tr>';
     while($row= mysqli_fetch_array($result)){
+        if($row['Active']==1){
+            $check='checked="checked"';
+        }else{
+            $check='';
+        }
         echo'<tr>';
+        if($select==2 || $select==3){
+            echo'<td><input type="checkbox" name="active[]" value="'.$row['ID'].'" '.$check.'</td>';
+        }else{
+            echo'<td><input type="radio" name="active" value="'.$row['ID'].'" '.$check.'</td>';
+        }
+        echo'<form action="imageupload.php" method="POST">';
+        echo'<input type="hidden" name="id" value="'.$row['ID'].'"/>';
         echo'<td>'.$row['Date'].'</td>';
         echo'<td>'.$row['Time'].'</td>';
         echo'<td>'.$row['Orgname'].'</td>';
         echo'<td><img src="'.$row['Path'].$row['Filename'].'" alt="'.$row['Comment'].'"></td>';
-        echo'<td><input type="submit" name="delete" value="'.$row['ID'].'"/></td>';
+        echo'<td><input type="submit" name="delete" value="löschen"/></td>';
+        echo'</form>';
         echo'</tr>'; 
     }
     echo'</table>';
+    echo'<input type="hidden" name="idHTML" value="'.$select.'"/>';
     echo'<input type="submit" name="save" value="Speichern"/>';
     echo'</form>';
 }
     ?>
-    <img src="../log/client-1.jpg" alt="">
     
 </body>
 </html>

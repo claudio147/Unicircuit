@@ -88,6 +88,11 @@ function allContentProductsite(){
     return $sql;
 }
 
+function selectImages($idHTML){
+    $sql= 'SELECT Filename, Comment FROM ProductsiteImages WHERE IdHTML='.$idHTML.' AND Active= 1';
+    return $sql;
+}
+
 
 /*
  * Redaktionssystem
@@ -105,7 +110,7 @@ function saveToDB($title, $content){
 }
 
 function allImagesOfIdHTML($id){
-    $sql='SELECT Date, Time, Orgname, Path, ID, Filename, Comment FROM ProductsiteImages WHERE IdHTML='.$id;
+    $sql='SELECT Date, Time, Orgname, Path, ID, Filename, Comment, Active FROM ProductsiteImages WHERE IdHTML='.$id;
     return $sql;
 }
 
@@ -116,4 +121,25 @@ function saveImageToDB($orgname, $comment, $file, $uploaddir, $select){
                 ('$date', '$time', '$orgname', '$comment', '$file', '$uploaddir', '$select')";
     return $sql;
 }
+
+function deleteImage($id){
+    $sql= 'DELETE FROM ProductsiteImages WHERE ID='.$id;
+    return $sql;
+}
+
+function selectFilename($id){
+    $sql= 'SELECT Filename, Path FROM ProductsiteImages WHERE ID='.$id;
+    return $sql;
+}
+
+function updateImageStatus($id){
+    $sql='UPDATE ProductsiteImages SET Active= 1 WHERE ID= '.$id;
+    return $sql;
+}
+
+function setAllActiveNull($idHTML){
+    $sql= 'UPDATE ProductsiteImages SET Active= 0 WHERE IdHTML= '.$idHTML;
+    return $sql;
+}
+
 
