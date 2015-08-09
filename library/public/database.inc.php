@@ -93,13 +93,27 @@ function allContentProductsite(){
  * Redaktionssystem
  */
 function allContentOfIdHTML($id){
-    $sql='SELECT Title, Content, InputType FROM Productsite WHERE IdHTML='.$id;
+    $sql='SELECT Title, Content, InputType, Date, Time, Description FROM Productsite WHERE IdHTML='.$id;
     return $sql;
 }
 
 function saveToDB($title, $content){
-    $sql= 'UPDATE Productsite SET Content ="'.$content.'" WHERE Title= "'.$title.'"';
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+    $sql= 'UPDATE Productsite SET Content ="'.$content.'", Date="'.$date.'", Time="'.$time.'" WHERE Title= "'.$title.'"';
     return $sql;
 }
 
+function allImagesOfIdHTML($id){
+    $sql='SELECT Date, Time, Orgname, Path, ID, Filename, Comment FROM ProductsiteImages WHERE IdHTML='.$id;
+    return $sql;
+}
+
+function saveImageToDB($orgname, $comment, $file, $uploaddir, $select){
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+    $sql= "INSERT INTO productsiteImages(Date, Time, Orgname, Comment, Filename, Path, IdHTML) VALUES
+                ('$date', '$time', '$orgname', '$comment', '$file', '$uploaddir', '$select')";
+    return $sql;
+}
 

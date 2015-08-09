@@ -77,19 +77,20 @@ if(isset($_POST['save'])){
 <?php
 if (isset($_POST['Selection'])){
     while($row = mysqli_fetch_array($result)){
+        $date= $row['Date'];
+        $time= $row['Time'];
+        $description= $row['Description'];
         $title= $row['Title'];
         $content= $row['Content'];
         $inputType= $row['InputType'];
-        echo'<p>'.$title.'</p>';
+        echo'<h3>'.$description.'</h3>';
         if($inputType == 1){
-            echo'<textarea id="1" name="'.$title.'" cols="50" rows="5">'.$content.'</textarea>';
+            echo'<textarea id="1" name="'.$title.'" cols="50" rows="2">'.$content.'</textarea>';
         }else{
-            echo'<textarea id="2" name="'.$title.'" cols="50" rows="5">'.$content.'</textarea>';  
-        }
-        
-        
-        
+            echo'<textarea id="2" name="'.$title.'" cols="50" rows="2">'.$content.'</textarea>';  
+        } 
     }
+    echo'<p>Letzte Änderung: '.$date.', '.$time.'</p>';
 }
     
 ?>
