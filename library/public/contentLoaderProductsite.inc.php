@@ -122,7 +122,7 @@ $FO_copyright= $data['FO_copyright'];
 //Impressum
 $IP_content= $data['IP_content'];
 
-//Impressum
+//AGB
 $AG_title= $data['AG_title'];
 $AG_subtitle= $data['AG_subtitle'];
 $AG_introductionTitle= $data['AG_introductionTitle'];
