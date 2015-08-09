@@ -119,8 +119,9 @@ $FO_2_contentLine2= $data['FO_2_contentLine2'];
 $FO_2_contentLine3= $data['FO_2_contentLine3'];
 $FO_copyright= $data['FO_copyright'];
 
-//Impressum
+//AGB
 $IP_content= $data['IP_content'];
+$IP_title= $data['IP_title'];
 
 //AGB
 $AG_title= $data['AG_title'];

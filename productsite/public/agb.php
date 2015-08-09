@@ -43,15 +43,15 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
 	<div class="container" id="top">
 		<div class="row">
-			<div class="col-sm-8 col-sm-offset-2 agb">
+			<div class="col-sm-8 col-sm-offset-2 agb biglist">
 				<h1><?php echo $AG_title ?></h1>
 				<p><?php echo $AG_subtitle ?></p>
 				<h3><?php echo $AG_introductionTitle ?></h3>
 				<p><?php echo $AG_introductionSubtitle ?></p>
 
-				<ol class="biglist"><!-- ol start -->
+				<!-- ol start -->
 					<?php echo $AG_content ?>
-				</ol><!-- ol end -->
+				<!-- ol end -->
 			</div>
 		</div>
 	</div>
@@ -86,7 +86,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 			</div><!-- End row -->
 			<div class="row copyright">
 				<div class="col-sm-12">
-					<p>Copyright <i class="fa fa-copyright"></i> 2015 Archconsulting GmbH</p>
+					<p>Copyright <i class="fa fa-copyright"></i><?php echo $FO_copyright ?></p>
 				</div>
 			</div>
 		</div><!-- End container -->

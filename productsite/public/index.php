@@ -26,7 +26,8 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     
 	<!-- JS 3rd Party-->
-    <script src="js/modernizr.custom.js"></script>
+        <script src="js/modernizr.custom.js"></script>
+
        
 </head>
 <body>
@@ -99,7 +100,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 					<div class="pfblock-header wow fadeInUp">
 						<h2 class="pfblock-title"><?php echo $AN_title ?></h2>
 						<div class="pfblock-line"></div>
-						<div class="pfblock-subtitle">
+                                                <div class="pfblock-subtitle">                                    
 							<?php echo $AN_subtitle ?>
 						</div>
 					</div>
@@ -403,8 +404,8 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 			</div><!-- End row -->
 
             <div class="row">
-            	<div class="col-sm-8 col-sm-offset-2 aboutUs">
-            		<p><?php echo $AU_text ?></p>
+                <div class="col-sm-8 col-sm-offset-2 aboutUs">
+                    <p><?php echo $AU_text ?></p>
             	</div>
             </div><!-- End row -->
 

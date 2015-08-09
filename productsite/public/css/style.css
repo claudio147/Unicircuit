@@ -384,7 +384,7 @@ textarea.form-control {
     background-image: url("../images/pattern.png");
     background-repeat: repeat;
     height: 100%;
-    left: 0;y
+    left: 0;
     position: absolute;
     top: 0;
     width: 100%;
@@ -769,7 +769,7 @@ textarea.form-control {
 
 }
 
-.biglist>li{
+.biglist>ol>li{
 	margin-top: 30px;
 	font-family: 'HelveticaNeueLTStd-Bd';
 	font-size: 14px;
@@ -778,7 +778,7 @@ textarea.form-control {
 	letter-spacing: normal;
 }
 
-.biglist>li>p, .biglist>li>ol>li{
+.biglist>ol>li>p, .biglist>ol>li>ol>li{
 	font-family: 'HelveticaNeueLTStd-Lt';
 	margin-bottom: 0px;
 	margin-top: 5px;

@@ -34,8 +34,8 @@ $data = mysqli_fetch_array($result);
     // setze Active auf Stufe 2
      $set = setActive($id);
      $result = mysqli_query($link, $set);
-        
-    
+     
+     
 }
 
 
