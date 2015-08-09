@@ -20,6 +20,8 @@ checkMailFormat($email);
  * Security: Bereinigung von möglichen falsch Eingaben.
  */
 if (isset($_POST['submit'])) {
+    
+    
   $fn = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
   $ln = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING);
   $co = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING);

@@ -1,4 +1,23 @@
 <?php
+
+require_once('../class.phpmailer.php');
+
+$mail             = new PHPMailer(); // Erstellen eines Objektes PHPMailer
+$mail->IsSMTP();
+$mail->Host = 'lsgrafik@gmail.com'; // SMTP Server
+$mail->SMTPDebug  = 2; // Aktivierung Debug Informationen
+$mail->SMTPAuth   = true;  // SMTP Authentifierzung wird benötigt bei gmail Servern
+$mail->SMTPSecure = "tls"; // Server präfix
+$mail->Host       = "smtp.gmail.com"; // SMTP Server Adresse
+$mail->Port       = 587; // Gmail SMTP Server Port
+
+$mail->Username   = "lsgrafik@gmail.com"; // Gmail username
+$mail->Password   = "yourpassword";  // Gmail password
+
+$mail->SetFrom('lsgrafik@gmail.com', 'Archconsulting'); // Absenderadresse
+
+
+
 // prueft Mail Format
 function checkMailFormat($email) {
   if (preg_match("/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+\.([a-zA-Z]{2,4})$/", $email)) {
@@ -9,22 +28,17 @@ function checkMailFormat($email) {
     
 }
 
-// sendet Email ab.
-function sendMail($empfaenger, $absender, $head, $message) {
-  $header = 'MIME-Version: 1.0' . "\r\n";
-  $header.= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-  $header.= 'To: ' . $empfaenger . "\r\n";
-  $header.= 'From: ' . $absender . "\r \n";
-  $header.= 'X-Mailer: PHP/' . phpversion() . "\r\n";
-
-  mail($empfaenger, $head, $message, $header);
-}
 
 
-function createRegMail ($em, $fn ,$ln, $to) {
-          $head = 'Registrationsfreischaltung auf Unicircuit';
-      // Nachricht zusammenbauen
-      $message = "
+
+
+
+function createRegMail ($mail, $em, $fn ,$ln, $to) {
+    //Subject des E-Mails
+    $mail->Subject ='Registrationsfreischaltung auf Unicircuit';
+    $mail->AddAdress($em, $fn.' '.$ln);      
+      // Nachricht zusammenbauen als HTML Dokument
+      $mail->MsgHTML = ("
 	<html><head>
 	<title>Anmledung bei Archconsulting Unicircuit</title>
 	</head><body><p>Hallo $fn $ln</p>
@@ -33,16 +47,22 @@ function createRegMail ($em, $fn ,$ln, $to) {
     folgenden Link: <br />
     <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/".
     "platform/public/php/verification.php?regcode=$to\">Registration abschliessen</a>".
-    "</p><p>Es gr&uuml;sst das Team von Archconsulting</p></body></html>";
+    "</p><p>Es gr&uuml;sst das Team von Archconsulting</p></body></html>");
 
       // Mail an Benutzer/in senden. 
-      sendMail($em, 'noreply@archconsulting.net', $head, $message);
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        } else {
+        echo "Message sent!";
+
+}
 }
 
-function createArchRegMail($fn, $ln, $em) {
-    $head = 'Registrierung auf Unicircuit';
+function createArchRegMail($mail, $fn, $ln, $em) {
+    $mail ->Subject = 'Registrierung auf Unicircuit';
+    $mail->AddAdress($em, $fn.' '.$ln);
       // Nachricht zusammenbauen
-      $message = "
+      $mail->MsgHTML = "
 	<html><head>
 	<title>Anmledung bei Archconsulting Unicircuit</title>
 	</head><body><p>Hallo $fn $ln</p>
@@ -50,5 +70,10 @@ function createArchRegMail($fn, $ln, $em) {
     registiert. Nach erfolgreicher Prüfung erhalten Sie ihr aktivierungs Mail.</body></html>";
 
       // Mail an Benutzer/in senden. 
-      sendMail($em, 'noreply@archconsulting.net', $head, $message);
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        } else {
+        echo "Message sent!";
+
+}
 }
