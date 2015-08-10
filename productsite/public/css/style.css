@@ -192,7 +192,7 @@ textarea.form-control {
 /* ---------------------------------------------- */
 
 .btn {
-	font-family: HelveticaNeueLTStd-Bd, sans-serif;
+	font-family: 'HelveticaNeueLTStd-Bd', sans-serif;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	font-size: 13px;
@@ -200,7 +200,7 @@ textarea.form-control {
 	border: 1px solid;
 	border-color: lightgrey;
 	line-height: 1em;
-	background-color: #f0f0f0;
+	background-color: #9fcd35;
 	color: #000;
 	cursor: pointer;
 }
@@ -349,13 +349,13 @@ textarea.form-control {
 }
 
 .calltoaction-btn > .btn {
-    background: rgba(255, 255, 255, .8);
+    background: #f0f0f0;
     color: #111;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 .calltoaction-btn > .btn:hover{
-    background: #fff;
+    background: #9fcd35;
 }
 
 .long-down {
@@ -424,18 +424,30 @@ textarea.form-control {
 
 .slider-desktop >.slider{
 	width: 502px;
+	height: 301px;
 	left: 50%;
 	top: 60px;
 	margin-left: -252px;
 	z-index: 2;
 }
 
+.slider-desktop >.slider>div{
+	max-width: 502px;
+	max-height: 301px;
+}
+
 .slider-mobile >.slider{
 	width: 483px;
+	height: 353px;
 	left: 50%;
 	top: 60px;
 	margin-left: -241px;
 	z-index: 2;
+}
+
+.slider-mobile >.slider>div{
+	max-width: 483px;
+	max-height: 353px;
 }
 
 .slider-mobile > .slider > .slick-dots{

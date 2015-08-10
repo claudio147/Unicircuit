@@ -113,7 +113,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 					<div class="pfblock-header wow fadeInUp">
 						<h2 class="pfblock-title"><?php echo $AN_title ?></h2>
 						<div class="pfblock-line"></div>
-                                                <div class="pfblock-subtitle">                                    
+                        <div class="pfblock-subtitle">                                    
 							<?php echo $AN_subtitle ?>
 						</div>
 					</div>
@@ -295,7 +295,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
                                     ?>
 				</div>	
 				<img src="images/imac.png" alt="" class="imac">
-                        </div>
+            </div>
 
 			<div class="row slider-mobile" id="sliderMobile">
 				<div class="slider">

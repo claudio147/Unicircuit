@@ -121,7 +121,7 @@ function allImagesOfIdHTML($id){
 function saveImageToDB($orgname, $comment, $file, $uploaddir, $select){
     $date = date("Y-m-d");
     $time = date("H:i:s");
-    $sql= "INSERT INTO productsiteImages(Date, Time, Orgname, Comment, Filename, Path, IdHTML) VALUES
+    $sql= "INSERT INTO ProductsiteImages(Date, Time, Orgname, Comment, Filename, Path, IdHTML) VALUES
                 ('$date', '$time', '$orgname', '$comment', '$file', '$uploaddir', '$select')";
     return $sql;
 }
