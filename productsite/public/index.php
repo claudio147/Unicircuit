@@ -43,7 +43,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
        
 </head>
-<body>
+<body ontouchstart=""> <!--ontouchstart="" für hover effect auf iOS Geräten -->
 
 	<!-- Preloader -->
 	<div id="preloader">
