@@ -1235,6 +1235,11 @@ ol li:before {
 		margin-left: -188px;
 	}
 
+	.slider-desktop >.slider>div{
+		max-width: 374px;
+		max-height: 224px;
+	}
+
 	.imac{
 		position: absolute;
 		width:448px;
@@ -1247,6 +1252,11 @@ ol li:before {
 		left: 50%;
 		top: 60px;
 		margin-left: -169px;
+	}
+
+	.slider-mobile >.slider>div{
+		max-width: 338px;
+		max-height: 247px;
 	}
 
 	.ipad{
