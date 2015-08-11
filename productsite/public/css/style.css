@@ -1230,6 +1230,7 @@ ol li:before {
 
 	.slider-desktop >.slider{
 		width: 374px;
+		height: 224px;
 		left: 50%;
 		top: 52px;
 		margin-left: -188px;
@@ -1249,6 +1250,7 @@ ol li:before {
 
 	.slider-mobile >.slider{
 		width: 338px;
+		height: 247px;
 		left: 50%;
 		top: 60px;
 		margin-left: -169px;
