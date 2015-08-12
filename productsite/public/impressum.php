@@ -87,7 +87,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
 	<!-- Scroll to top Start-->
 	<div class="scroll-up">
-		<a href="#product"><i class="fa fa-angle-up"></i></a>
+		<a href="#top"><i class="fa fa-angle-up"></i></a>
 	</div>   
     <!-- Scroll to top end-->
 

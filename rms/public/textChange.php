@@ -58,7 +58,7 @@ if(isset($_POST['save'])){
 </head>
 <body>
     
-<form action="productsite.php" method="POST" >
+<form action="textChange.php" method="POST" >
   <p>Auswahl Selektion:</p>
   <select name="Selection" onchange="this.form.submit()">
     <?php
@@ -73,7 +73,7 @@ if(isset($_POST['save'])){
  </select>
 </form>
 
-<form action="productsite.php" method="POST">
+<form action="textChange.php" method="POST">
 <?php
 if (isset($_POST['Selection'])){
     while($row = mysqli_fetch_array($result)){

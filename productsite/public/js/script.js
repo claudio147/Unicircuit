@@ -55,11 +55,33 @@
  		});
 
 
+
+
+
+		/* ---------------------------------------------- /*
+		 * Module
+        /* ---------------------------------------------- */  
+
+		window.onresize= dynamicResizer;
+		window.onload= dynamicResizerStart;
+
+		function dynamicResizerStart(){
+			var cw = $('.col-sm-3').width();
+			$('.modulinhalt, .modulcontainer').css({'height':cw+'px'});
+			showDesktop();
+		}
+
+		function dynamicResizer(){
+			var cw = $('.col-sm-3').width();
+			$('.modulinhalt, .modulcontainer').css({'height':cw+'px'});
+		}
+
         /* ---------------------------------------------- /*
 		 * Gallery
         /* ---------------------------------------------- */ 
 
-        	if(winSize < 768){
+
+			if(winSize < 768){
         		$('.slider').slick({
         			dots: true,
         			infinite: true,
@@ -78,8 +100,6 @@
         			lazyLoad: 'ondemand'
         		});       		
         	}
-
-        	window.onload= showDesktop;
 
 
         	// Regelt die Sichtbarkeit von Mobile und Desktop Slider Imitation
@@ -108,14 +128,15 @@
 
 
         /* ---------------------------------------------- /*
-		 * Module
-        /* ---------------------------------------------- */  
+		 * Touchevents für iOS
+		/* ---------------------------------------------- */
+        
+        	$('.modulcontainer').on('touchstart', function(){
+    			$(this).addClass('select');
+			}).on('.modulcontainer', function(){
+    			$(this).removeClass('select');
+			});
 
-
-        var cw = $('.col-sm-3').width();
-		$('.modulinhalt, .modulcontainer').css({'height':cw+'px'});
-
-	
 
 
 
@@ -223,7 +244,8 @@
 											response.html(ret.message).fadeIn(500);
 							}
 						});
-				}           
+				}  
+
             	return false;
 			});
 

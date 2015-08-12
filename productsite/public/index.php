@@ -6,7 +6,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable= no">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 
@@ -21,12 +21,26 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 	<link href="css/slick-theme.css" rel="stylesheet">
     
 	<!-- CSS Custom -->
+	        <style>
+            #home {
+                background: url(images/<?php
+                        $link= connectDB();
+                        $sql= selectImages(1);
+                        $result = mysqli_query($link, $sql);
+                        while($row= mysqli_fetch_array($result)){
+                            echo $row['Filename'];
+                        }
+                        ?>);
+            }
+        </style>
+        
 	<link href="css/style.css" rel="stylesheet" media="screen">
 
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-    
+        
 	<!-- JS 3rd Party-->
         <script src="js/modernizr.custom.js"></script>
+
 
        
 </head>
@@ -59,7 +73,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
 	<!-- Navigation start -->
 	<header class="header">
-		<nav class="navbar navbar-custom" role="navigation">
+		<nav class="navbar navbar-custom">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
@@ -100,7 +114,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 					<div class="pfblock-header wow fadeInUp">
 						<h2 class="pfblock-title"><?php echo $AN_title ?></h2>
 						<div class="pfblock-line"></div>
-                                                <div class="pfblock-subtitle">                                    
+                        <div class="pfblock-subtitle">                                    
 							<?php echo $AN_subtitle ?>
 						</div>
 					</div>
@@ -110,17 +124,17 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 			<div class="row">
 				<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
   					<div class="animation800">
-  						<object type="text/html" data="Animation_800px.html" width="800px" height=	"500px" border="0">
+  						<object type="text/html" data="Animation_800px.html">
 						<p><code>object</code>-Element wird nicht unterstützt bzw. die <a href="	Animation_800px.html">Quelle</a> ist nicht verfügbar.</p>
 						</object>
 					</div>
 					<div class="animation600">
-						<object type="text/html" data="Animation_600px.html" width="600px" height="400px" border="0">
+						<object type="text/html" data="Animation_600px.html">
     					<p><code>object</code>-Element wird nicht unterstützt bzw. die <a href="Animation_600px.html">Quelle</a> ist nicht verfügbar.</p>
 						</object>
 					</div>
 					<div class="animation300">
-						<object type="text/html" data="Animation_300px.html" width="300px" height="500px" border="0">
+						<object type="text/html" data="Animation_300px.html">
     					<p><code>object</code>-Element wird nicht unterstützt bzw. die <a href="Animation_300px.html">Quelle</a> ist nicht verfügbar.</p>
 						</object>
 					</div>		
@@ -272,20 +286,30 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
                         
 			<div class="row slider-desktop" id="sliderDesktop">			
 				<div class="slider">
-					<div><img src="images/slider_1.jpg" alt=""></div>
-					<div><img src="images/slider_2.jpg" alt=""></div>
-					<div><img src="images/slider_3.jpg" alt=""></div>
+                                    <?php
+                                    $link= connectDB();
+                                    $sql= selectImages(3);
+                                    $result = mysqli_query($link, $sql);
+                                    while($row= mysqli_fetch_array($result)){
+                                        echo'<div><img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'"></div>';
+                                    }
+                                    ?>
 				</div>	
-				<img src="images/imac.png" alt="" class="imac">
-           	</div>
+				<img src="images/imac.png" alt="Bildrahmen Imac" class="imac">
+            </div>
 
 			<div class="row slider-mobile" id="sliderMobile">
 				<div class="slider">
-					<div><img src="images/m_slider_1.jpg" alt=""></div>
-					<div><img src="images/m_slider_2.jpg" alt=""></div>
-					<div><img src="images/m_slider_3.jpg" alt=""></div>
+                                    <?php
+                                    $link= connectDB();
+                                    $sql= selectImages(2);
+                                    $result = mysqli_query($link, $sql);
+                                    while($row= mysqli_fetch_array($result)){
+                                        echo'<div><img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'"></div>';
+                                    }
+                                    ?>
 				</div>
-				<img src="images/ipad.png" alt="" class="ipad">
+				<img src="images/ipad.png" alt="Bildrahmen Ipad" class="ipad">
            	</div>
 		</div><!-- End contaier -->
 	</section>
@@ -405,18 +429,32 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 aboutUs">
-                    <p><?php echo $AU_text ?></p>
+                    <?php echo $AU_text ?>
             	</div>
             </div><!-- End row -->
 
             <div class="row portrait-container">          	
             	<div class="col-sm-4 col-sm-offset-2 portrait">
-            		<img src="images/client-1.jpg">
+            		<?php
+                        $link= connectDB();
+                        $sql= selectImages(4);
+                        $result = mysqli_query($link, $sql);
+                        while($row= mysqli_fetch_array($result)){
+                            echo'<img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'">';
+                        }
+                        ?>
             		<p class="name"><?php echo $AU_personLeftName ?></p>
             		<p class="function"><?php echo $AU_personLeftFunction ?></p>
             	</div>
             	<div class="col-sm-4 col-sm-offset-0 portrait">
-            		<img src="images/client-2.jpg">
+            		<?php
+                        $link= connectDB();
+                        $sql= selectImages(5);
+                        $result = mysqli_query($link, $sql);
+                        while($row= mysqli_fetch_array($result)){
+                            echo'<img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'">';
+                        }
+                        ?>
             		<p class="name"><?php echo $AU_personRightName ?></p>
             		<p class="function"><?php echo $AU_personRightFunction ?></p>
             	</div>
@@ -441,7 +479,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
 			<div class="row contact-form">
 				<div class="col-sm-6 col-sm-offset-3">
-					<form id="contact-form" role="form">
+					<form id="contact-form">
 						<div class="ajax-hidden">
 							<div class="form-group wow fadeInUp">
 								<label class="sr-only" for="c_name">Name</label>
@@ -522,7 +560,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
     <script src="js/waypoints.min.js"></script>
     <script src="js/jquery.cbpQTRotator.js"></script>
     <script src="js/slick.js"></script>
-	<script src="js/script.js"></script>
+	<script src="js/script.js"></script>	
 
 </body>
 </html>		
