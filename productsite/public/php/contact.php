@@ -1,12 +1,33 @@
-<?php
-//require_once ('../../../library/public/mail.inc.php');
 
+<?php
+
+
+/**
+ * Send debug code to the Javascript console
+ */ 
+/*
+function debug_to_console($data) {
+    if(is_array($data) || is_object($data))
+	{
+		echo("<script>console.log('PHP: ".json_encode($data)."');</script>");
+	} else {
+		echo("<script>console.log('PHP: ".$data."');</script>");
+	}
+}
+	debug_to_console('test');
+
+
+
+
+require_once ('../../../library/public/mail.inc.php');
+*/
 if(isset($_POST['message'])){
 
 	$name = $_POST['name'];
 	$email = $_POST['email'];
 	$message = $_POST['message'];
 
+	
 /*
 	$email2 = 'claudio.schaepper@gmail.com';
 	$status1 = createContactMailCustomer($name, $email);
@@ -85,10 +106,10 @@ if(isset($_POST['message'])){
 	$header2 .= "X-Mailer: PHP/". phpversion();
 
 	//Send Email für Kunde (Autoantwort)
-	$status1 = mail($to2, $subject2, $messageBack, $header2);
+	$status2 = mail($to2, $subject2, $messageBack, $header2);
 
 	//Send Email für Archconsutling mit Kontaktanfrage
-	$status2 = mail($to, $subject, $messageForm, $header);
+	$status1 = mail($to, $subject, $messageForm, $header);
 
 	if($status1 == TRUE && $status2==TRUE){	
 		$res['sendstatus'] = 'done';

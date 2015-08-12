@@ -1,5 +1,5 @@
 <?php
-require_once '../../library/public/contentLoaderProductsite.inc.php';
+require_once ('../../library/public/contentLoaderProductsite.inc.php');
 
 ?>
 
