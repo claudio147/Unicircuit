@@ -41,6 +41,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 	<!-- JS 3rd Party-->
         <script src="js/modernizr.custom.js"></script>
 
+
        
 </head>
 <body>
@@ -560,6 +561,12 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
     <script src="js/jquery.cbpQTRotator.js"></script>
     <script src="js/slick.js"></script>
 	<script src="js/script.js"></script>
+	<script type="text/Javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+
+	<script src="../../rms/public/js/script.js"></script>
+
+
+	
 
 </body>
 </html>		
