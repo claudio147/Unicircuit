@@ -18,25 +18,6 @@ $result = mysqli_query($link, $sql);
 
 
 
-/*
- * Überprüft ob ein Aktivierungsbutton geklickt wurde
- * sendet ein E-Mail mit dem Aktivierungslink an den user.
- */
-if(isset($_GET['id'])) {
-    $id = $_GET['id'];
-    
-    $sql = userData($id);
-
-$result = mysqli_query($link, $sql);
-$data = mysqli_fetch_array($result);
-
-    createRegMail($em, $fn, $ln, $to);
-    // setze Active auf Stufe 2
-     $set = setActive($id);
-     $result = mysqli_query($link, $set);
-     
-     
-}
 
 
 
@@ -49,7 +30,7 @@ $data = mysqli_fetch_array($result);
 echo '<table border="1" width="600">';
 
  while ($row = mysqli_fetch_array($result)) {
-     echo '<tr>';
+     
       echo '<td>' . $row['Firstname'] . '</td>';
       echo '<td>' . $row['Lastname'] . '</td>';
       echo '<td>' . $row['Company'] . '</td>';
@@ -76,6 +57,33 @@ echo '<table border="1" width="600">';
       }
  }
  echo '</table>';
+ 
+ 
+ 
+ /*
+ * Überprüft ob ein Aktivierungsbutton geklickt wurde
+ * sendet ein E-Mail mit dem Aktivierungslink an den user.
+ */
+if(isset($_GET['id'])) {
+    $id = $_GET['id'];
+    
+    $sql = userData($id);
+
+$result = mysqli_query($link, $sql);
+$row = mysqli_fetch_array($result);
+$fn = $row['Firstname'];
+$ln = $row['Lastname'];
+$em = $row['Email'];
+$to = $row['RegCode'];
+
+    createRegMail($em, $fn, $ln, $to);
+    
+    // setze Active auf Stufe 2
+     $set = setActive($id);
+     $status = mysqli_query($link, $set);
+     
+
+}
  
 
 

@@ -148,8 +148,8 @@ if (isset($_POST['submit'])) {
       $status = mysqli_query($link, $sql);
     
     if($status == true){
-        header('location:registration.php');
         createArchRegMail($fn, $ln, $em);
+        header('location:registration.php');
     }else
     {
     echo '<p> Datensatz konnte nicht erzeugt werden</p>';
