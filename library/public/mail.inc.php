@@ -1,10 +1,10 @@
 <?php
 
-<<<<<<< HEAD
+
 require_once('/PHPMailerAutoload.php');
-=======
+
 require_once('class.phpmailer.php');
->>>>>>> a76aa802df7c7503838d2ab75ce420f53d28f29e
+
 
 $mail = new PHPMailer(); // Erstellen eines Objektes PHPMailer
 $mail->IsSMTP();
