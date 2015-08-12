@@ -1,6 +1,6 @@
 <?php
 
-require_once('../class.phpmailer.php');
+require_once('class.phpmailer.php');
 
 $mail             = new PHPMailer(); // Erstellen eines Objektes PHPMailer
 $mail->IsSMTP();
@@ -77,3 +77,75 @@ function createArchRegMail($mail, $fn, $ln, $em) {
 
 }
 }
+
+
+
+/*
+*Productsite Kontaktformular
+*/
+
+function createContactMailCustomer($mail, $name, $em) {
+    $mail ->Subject = 'Kontaktanfrage Unicircuit';
+    $mail->AddAdress($em, $fn.' '.$ln);
+      // Nachricht zusammenbauen
+      $mail->MsgHTML = '<html>
+    <head>
+        <title>Kontaktanfrage Unicircuit</title>
+    </head>
+     
+    <body>
+     
+    <h3>Kontaktanfrage Unicircuit</h3>
+    <br />
+    <p>Sehr geehrter '.$name.'</p>
+    <p>Besten Dank für Ihre Kontaktanfrage.</p>
+    <p>Wir werden uns schnellstmöglich mit Ihnen in Verbindung setzen.<p>
+    <br />
+    <p>Freundliche Grüsse</p>
+    <p>Ihr Unicircuit-Team</p>
+     
+    </body>
+    </html>';
+
+      // Mail an Benutzer/in senden. 
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        return false;
+        } else {
+        echo "Message sent!";
+        return true;
+}
+}
+
+
+function createContactMailArchconsulting($mail, $name , $em, $message) {
+    $mail ->Subject = 'Kontaktanfrage Unicircuit';
+    $mail->AddAdress($em, $fn.' '.$ln);
+      // Nachricht zusammenbauen
+      $mail->MsgHTML = '<html>
+    <head>
+        <title>Kontaktanfrage Unicircuit</title>
+    </head>
+     
+    <body>
+     
+    <h3>Kontaktanfrage Unicircuit</h3>
+    <br />
+    <p><b>Name:</b> '.$name.' </p>
+    <br />     
+    <p><b>Nachricht:</b><br />'.$message.'</p>
+     
+    </body>
+    </html>';;
+
+      // Mail an Benutzer/in senden. 
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        return false;
+        } else {
+        echo "Message sent!";
+        return true;
+
+}
+}
+

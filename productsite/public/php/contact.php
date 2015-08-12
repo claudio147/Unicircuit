@@ -1,10 +1,20 @@
 <?php
+require_once ('../../../library/public/mail.inc.php');
 
 if(isset($_POST['message'])){
 
 	$name = $_POST['name'];
 	$email = $_POST['email'];
 	$message = $_POST['message'];
+
+/*
+	$email2 = 'claudio.schaepper@gmail.com';
+	$status1 = createContactMailCustomer($name, $email);
+	$status2= createContactMailArchconsulting($name, $email2, $message);
+*/
+
+
+
 
 	//Email Absenderadresse (Archconsulting)
 	$email2 = 'info@unicircuit.ch';
@@ -75,12 +85,12 @@ if(isset($_POST['message'])){
 	$header2 .= "X-Mailer: PHP/". phpversion();
 
 	//Send Email für Kunde (Autoantwort)
-	mail($to2, $subject2, $messageBack, $header2);
+	$status1 = mail($to2, $subject2, $messageBack, $header2);
 
 	//Send Email für Archconsutling mit Kontaktanfrage
-	$status = mail($to, $subject, $messageForm, $header);
+	$status2 = mail($to, $subject, $messageForm, $header);
 
-	if($status == TRUE){	
+	if($status1 == TRUE && $status2==TRUE){	
 		$res['sendstatus'] = 'done';
 	
 		//Edit your message here

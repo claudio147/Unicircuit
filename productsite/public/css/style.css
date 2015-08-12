@@ -419,6 +419,30 @@ textarea.form-control {
 
 
 /* ---------------------------------------------- /*
+ * Animation
+/* ---------------------------------------------- */
+.animation800>object{
+	width: 800px;
+	height: 500px;
+	border: 0;
+}
+
+.animation600>object{
+	width: 600px;
+	height: 400px;
+	border: 0;
+}
+
+.animation300>object{
+	width: 300px;
+	height: 500px;
+	border: 0;
+}
+
+
+
+
+/* ---------------------------------------------- /*
  * Gallery
 /* ---------------------------------------------- */
 
@@ -475,6 +499,7 @@ textarea.form-control {
 }
 
 .slider-mobile{
+	height: 470px;
 	margin-top: 30px;
 }
 
@@ -1239,6 +1264,14 @@ ol li:before {
 	.slider-desktop >.slider>div{
 		max-width: 374px;
 		max-height: 224px;
+	}
+
+	.slider-desktop{
+	height: 300px;
+	}
+
+	.slider-mobile{
+	height: 270px;
 	}
 
 	.imac{

@@ -127,9 +127,15 @@
 
 
 
+        /* ---------------------------------------------- /*
+		 * Touchevents für iOS
+		/* ---------------------------------------------- */
         
-        
-
+        	$('.modulcontainer').on('touchstart', function(){
+    			$(this).addClass('select');
+			}).on('.modulcontainer', function(){
+    			$(this).removeClass('select');
+			});
 
 
 

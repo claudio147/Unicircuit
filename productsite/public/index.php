@@ -6,7 +6,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable= no">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 
@@ -43,7 +43,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
        
 </head>
-<body ontouchstart=""> <!--ontouchstart="" für hover effect auf iOS Geräten -->
+<body>
 
 	<!-- Preloader -->
 	<div id="preloader">
@@ -72,7 +72,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
 	<!-- Navigation start -->
 	<header class="header">
-		<nav class="navbar navbar-custom" role="navigation">
+		<nav class="navbar navbar-custom">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
@@ -123,17 +123,17 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 			<div class="row">
 				<div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
   					<div class="animation800">
-  						<object type="text/html" data="Animation_800px.html" width="800px" height=	"500px" border="0">
+  						<object type="text/html" data="Animation_800px.html">
 						<p><code>object</code>-Element wird nicht unterstützt bzw. die <a href="	Animation_800px.html">Quelle</a> ist nicht verfügbar.</p>
 						</object>
 					</div>
 					<div class="animation600">
-						<object type="text/html" data="Animation_600px.html" width="600px" height="400px" border="0">
+						<object type="text/html" data="Animation_600px.html">
     					<p><code>object</code>-Element wird nicht unterstützt bzw. die <a href="Animation_600px.html">Quelle</a> ist nicht verfügbar.</p>
 						</object>
 					</div>
 					<div class="animation300">
-						<object type="text/html" data="Animation_300px.html" width="300px" height="500px" border="0">
+						<object type="text/html" data="Animation_300px.html">
     					<p><code>object</code>-Element wird nicht unterstützt bzw. die <a href="Animation_300px.html">Quelle</a> ist nicht verfügbar.</p>
 						</object>
 					</div>		
@@ -294,7 +294,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
                                     }
                                     ?>
 				</div>	
-				<img src="images/imac.png" alt="" class="imac">
+				<img src="images/imac.png" alt="Bildrahmen Imac" class="imac">
             </div>
 
 			<div class="row slider-mobile" id="sliderMobile">
@@ -308,7 +308,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
                                     }
                                     ?>
 				</div>
-				<img src="images/ipad.png" alt="" class="ipad">
+				<img src="images/ipad.png" alt="Bildrahmen Ipad" class="ipad">
            	</div>
 		</div><!-- End contaier -->
 	</section>
@@ -420,15 +420,15 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
             <div class="row">
 				<div class="col-sm-8 col-sm-offset-2">
 					<div class="pfblock-header wow fadeInUp">
-						<h2 class="pfblock-title"><?php echo $AU_title ?></h2>
+						<h2 class="pfblock-title editable"><?php echo $AU_title ?></h2>
 						<div class="pfblock-line"></div>
 					</div>
 				</div>
 			</div><!-- End row -->
 
             <div class="row">
-                <div class="col-sm-8 col-sm-offset-2 aboutUs">
-                    <p><?php echo $AU_text ?></p>
+                <div class="col-sm-8 col-sm-offset-2 aboutUs editable">
+                    <?php echo $AU_text ?>
             	</div>
             </div><!-- End row -->
 
@@ -478,7 +478,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
 			<div class="row contact-form">
 				<div class="col-sm-6 col-sm-offset-3">
-					<form id="contact-form" role="form">
+					<form id="contact-form">
 						<div class="ajax-hidden">
 							<div class="form-group wow fadeInUp">
 								<label class="sr-only" for="c_name">Name</label>
@@ -560,6 +560,27 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
     <script src="js/jquery.cbpQTRotator.js"></script>
     <script src="js/slick.js"></script>
 	<script src="js/script.js"></script>
+
+	<script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+	<script type="text/javascript">
+		tinymce.init({
+		    selector: "h2.editable",
+		    inline: true,
+		    toolbar: "undo redo",
+		    menubar: false
+		});
+
+		tinymce.init({
+		    selector: "div.editable",
+		    inline: true,
+		    plugins: [
+		        "advlist autolink lists link image charmap print preview anchor",
+		        "searchreplace visualblocks code fullscreen",
+		        "insertdatetime media table contextmenu paste"
+		    ],
+		    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+		});
+	</script>
 
 </body>
 </html>		
