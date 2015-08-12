@@ -1,5 +1,5 @@
 <?php
-require_once '../../../library/public/mail.inc.php';
+//require_once ('../../../library/public/mail.inc.php');
 
 if(isset($_POST['message'])){
 
@@ -7,14 +7,14 @@ if(isset($_POST['message'])){
 	$email = $_POST['email'];
 	$message = $_POST['message'];
 
-
+/*
 	$email2 = 'claudio.schaepper@gmail.com';
 	$status1 = createContactMailCustomer($name, $email);
-	$status2= createContactMailArchconsulting($name, $email2, $message);
+	$status2 = createContactMailArchconsulting($name, $email2, $message);
+*/
 
 
 
-/*
 
 	//Email Absenderadresse (Archconsulting)
 	$email2 = 'info@unicircuit.ch';
@@ -89,7 +89,7 @@ if(isset($_POST['message'])){
 
 	//Send Email für Archconsutling mit Kontaktanfrage
 	$status2 = mail($to, $subject, $messageForm, $header);
-*/
+
 	if($status1 == TRUE && $status2==TRUE){	
 		$res['sendstatus'] = 'done';
 	

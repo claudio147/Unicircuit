@@ -3,8 +3,6 @@
 
 require_once('/PHPMailerAutoload.php');
 
-require_once('class.phpmailer.php');
-
 
 $mail = new PHPMailer(); // Erstellen eines Objektes PHPMailer
 $mail->IsSMTP();
@@ -98,9 +96,9 @@ function createArchRegMail($fn, $ln, $em) {
 *Productsite Kontaktformular
 */
 
-function createContactMailCustomer($mail, $name, $em) {
+function createContactMailCustomer($mail, $name, $email) {
     $mail ->Subject = 'Kontaktanfrage Unicircuit';
-    $mail->AddAdress($em, $fn.' '.$ln);
+    $mail->AddAdress($email, $name);
       // Nachricht zusammenbauen
       $mail->MsgHTML = '<html>
     <head>
@@ -123,18 +121,16 @@ function createContactMailCustomer($mail, $name, $em) {
 
       // Mail an Benutzer/in senden. 
       if(!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
         return false;
         } else {
-        echo "Message sent!";
         return true;
 }
 }
 
 
-function createContactMailArchconsulting($mail, $name , $em, $message) {
+function createContactMailArchconsulting($mail, $name , $email2, $message) {
     $mail ->Subject = 'Kontaktanfrage Unicircuit';
-    $mail->AddAdress($em, $fn.' '.$ln);
+    $mail->AddAdress($email2, $name);
       // Nachricht zusammenbauen
       $mail->MsgHTML = '<html>
     <head>
@@ -150,14 +146,12 @@ function createContactMailArchconsulting($mail, $name , $em, $message) {
     <p><b>Nachricht:</b><br />'.$message.'</p>
      
     </body>
-    </html>';;
+    </html>';
 
       // Mail an Benutzer/in senden. 
       if(!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
         return false;
         } else {
-        echo "Message sent!";
         return true;
 
 }
