@@ -421,14 +421,14 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
             <div class="row">
 				<div class="col-sm-8 col-sm-offset-2">
 					<div class="pfblock-header wow fadeInUp">
-						<h2 class="pfblock-title editable"><?php echo $AU_title ?></h2>
+						<h2 class="pfblock-title"><?php echo $AU_title ?></h2>
 						<div class="pfblock-line"></div>
 					</div>
 				</div>
 			</div><!-- End row -->
 
             <div class="row">
-                <div class="col-sm-8 col-sm-offset-2 aboutUs editable">
+                <div class="col-sm-8 col-sm-offset-2 aboutUs">
                     <?php echo $AU_text ?>
             	</div>
             </div><!-- End row -->
@@ -560,13 +560,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
     <script src="js/waypoints.min.js"></script>
     <script src="js/jquery.cbpQTRotator.js"></script>
     <script src="js/slick.js"></script>
-	<script src="js/script.js"></script>
-	<script type="text/Javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
-
-	<script src="../../rms/public/js/script.js"></script>
-
-
-	
+	<script src="js/script.js"></script>	
 
 </body>
 </html>		
