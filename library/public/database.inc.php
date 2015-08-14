@@ -84,6 +84,42 @@ function setActive3($reg) {
 }
 
 
+
+/*
+ * Handwerkerliste
+ */
+function allProjectAddress($projectID){
+    $sql= 'SELECT p.ProjectCoordinator, p.PhoneDirect, p. MobileNumber, p.EmailDirect, 
+        p.Description, g.BKP, g.Company, g.Addressline1, g.Addressline2, g.ZIP, g.City,
+        g.Country, g.Email, g.PhoneNumber, g.Homepage FROM ProjectAddresslist as p JOIN
+        GlobalAddresslist as g on p.Fk_IdGlobalAddress = g.IdGlobalAddress WHERE p.Fk_IdProject
+        ='.$projectID.' ORDER BY g.BKP, g.Company ASC';
+    return $sql;
+}
+
+function newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip, $city, $country, 
+        $email, $phoneNumber, $homepage){
+    $sql= 'INSERT INTO GlobalAddresslist (BKP, Company, Addressline1, Addressline2, ZIP, City,
+            Country, Email, PhoneNumber, Homepage) VALUES ('.$bkp.','.$company.','.$addressline1.','.
+            $addressline2.','.$zip.','.$city.','.$country.','.$email.','.$phoneNUmber.','.$homepage.')';
+    return $sql;
+}
+
+function newProjectAddress($projectID, $FKGlobal, $projectCoordinator, $phoneDirect, $mobile, 
+        $emailDirect, $description){
+    $sql= 'INSERT INTO ProjectAddresslist (Fk_IdProject, FK_IdGlobalAddress, ProjectCoordinator,
+        PhoneDirect, MobileNumber, EmailDirect, Description) VALUES ('.$projectID.','.$FKGlobal.','
+            .$projectCoordinator.','.$phoneDirect.','.$mobile.','.$emailDirect.','.$description.')';
+    return $sql;
+}
+
+function getIdGlobal($company, $addressline1){
+    $sql= 'SELECT IdGlobalAddress from GlobalAddresslist WHERE (Company='.$company.'AND Addressline1='.$addressline1.')';
+    return $sql;
+}
+
+
+
 /*
  * Productsite
  */

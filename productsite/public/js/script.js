@@ -74,6 +74,7 @@
 		function dynamicResizer(){
 			var cw = $('.col-sm-3').width();
 			$('.modulinhalt, .modulcontainer').css({'height':cw+'px'});
+			winSize= $(window).width();
 		}
 
         /* ---------------------------------------------- /*
@@ -81,7 +82,7 @@
         /* ---------------------------------------------- */ 
 
 
-			if(winSize < 768){
+        	if(winSize < 768){
         		$('.slider').slick({
         			dots: true,
         			infinite: true,
@@ -100,6 +101,8 @@
         			lazyLoad: 'ondemand'
         		});       		
         	}
+
+			
 
 
         	// Regelt die Sichtbarkeit von Mobile und Desktop Slider Imitation

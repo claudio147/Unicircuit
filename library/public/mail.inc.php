@@ -16,8 +16,8 @@ $mail->Port       = 587; // Gmail SMTP Server Port
 $mail->Username   = "archconsulting2@gmail.com"; // Gmail username
 $mail->Password   = "arch!consulting";  // Gmail password
 
-$mail->SetFrom('lsgrafik@gmail.com', 'Archconsulting'); // Absenderadresse
-$mail->addReplyTo('lsgrafik@gmail.com','Archconsulting');
+$mail->SetFrom('archconsulting2@gmail.com', 'Archconsulting'); // Absenderadresse
+$mail->addReplyTo('archconsulting2@gmail.com','Archconsulting');
 
 
 
@@ -96,7 +96,8 @@ function createArchRegMail($fn, $ln, $em) {
 *Productsite Kontaktformular
 */
 
-function createContactMailCustomer($mail, $name, $email) {
+function MailCustomer($name, $email) {
+    global $mail;
     $mail ->Subject = 'Kontaktanfrage Unicircuit';
     $mail->AddAdress($email, $name);
       // Nachricht zusammenbauen
@@ -128,7 +129,8 @@ function createContactMailCustomer($mail, $name, $email) {
 }
 
 
-function createContactMailArchconsulting($mail, $name , $email2, $message) {
+function MailArchconsulting($name , $email2, $message) {
+    global $mail;
     $mail ->Subject = 'Kontaktanfrage Unicircuit';
     $mail->AddAdress($email2, $name);
       // Nachricht zusammenbauen

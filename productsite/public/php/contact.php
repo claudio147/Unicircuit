@@ -19,8 +19,9 @@ function debug_to_console($data) {
 
 
 
-require_once ('../../../library/public/mail.inc.php');
+require '../../../library/public/mail.inc.php';
 */
+
 if(isset($_POST['message'])){
 
 	$name = $_POST['name'];
@@ -30,10 +31,10 @@ if(isset($_POST['message'])){
 	
 /*
 	$email2 = 'claudio.schaepper@gmail.com';
-	$status1 = createContactMailCustomer($name, $email);
-	$status2 = createContactMailArchconsulting($name, $email2, $message);
-*/
+	$status1 = MailCustomer($name, $email);
+	$status2 = MailArchconsulting($name, $email2, $message);
 
+*/
 
 
 
