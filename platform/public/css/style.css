@@ -1,0 +1,7 @@
+.modal .modal-body {
+    height: 480px;
+    overflow-y: auto;
+}
+table{
+    font-size: 12px;
+}

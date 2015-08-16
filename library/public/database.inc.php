@@ -100,21 +100,32 @@ function allProjectAddress($projectID){
 function newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip, $city, $country, 
         $email, $phoneNumber, $homepage){
     $sql= 'INSERT INTO GlobalAddresslist (BKP, Company, Addressline1, Addressline2, ZIP, City,
-            Country, Email, PhoneNumber, Homepage) VALUES ('.$bkp.','.$company.','.$addressline1.','.
-            $addressline2.','.$zip.','.$city.','.$country.','.$email.','.$phoneNUmber.','.$homepage.')';
+            Country, Email, PhoneNumber, Homepage) VALUES ('.$bkp.',"'.$company.'","'.$addressline1.'","'.
+            $addressline2.'",'.$zip.',"'.$city.'","'.$country.'","'.$email.'","'.$phoneNumber.'","'.$homepage.'")';
     return $sql;
 }
 
 function newProjectAddress($projectID, $FKGlobal, $projectCoordinator, $phoneDirect, $mobile, 
         $emailDirect, $description){
     $sql= 'INSERT INTO ProjectAddresslist (Fk_IdProject, FK_IdGlobalAddress, ProjectCoordinator,
-        PhoneDirect, MobileNumber, EmailDirect, Description) VALUES ('.$projectID.','.$FKGlobal.','
-            .$projectCoordinator.','.$phoneDirect.','.$mobile.','.$emailDirect.','.$description.')';
+        PhoneDirect, MobileNumber, EmailDirect, Description) VALUES ('.$projectID.','.$FKGlobal.',"'
+            .$projectCoordinator.'","'.$phoneDirect.'","'.$mobile.'","'.$emailDirect.'","'.$description.'")';
     return $sql;
 }
 
 function getIdGlobal($company, $addressline1){
-    $sql= 'SELECT IdGlobalAddress from GlobalAddresslist WHERE (Company='.$company.'AND Addressline1='.$addressline1.')';
+    $sql= 'SELECT IdGlobalAddress from GlobalAddresslist WHERE Company="'.$company.'"';
+    return $sql;
+}
+
+function allGlobalAddress(){
+    $sql= 'SELECT IdGlobalAddress, BKP, Company, ZIP, City, PhoneNumber from GlobalAddresslist';
+    return $sql;
+}
+
+function getGlobalAddress($id){
+    $sql= 'SELECT BKP, Company, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, Homepage
+        from GlobalAddresslist WHERE IdGlobalAddress='.$id;
     return $sql;
 }
 
