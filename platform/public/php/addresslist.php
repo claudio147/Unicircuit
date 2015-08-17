@@ -264,6 +264,7 @@ echo'<th>Kontaktperson</th>';
 echo'<th>Tel. Direkt</th>';
 echo'<th>Mobil</th>';
 echo'<th>Email Direkt</th>';
+echo'<th></th>';
 echo'</tr>';
 echo'</thead>';
 echo'<tbody>';
@@ -276,6 +277,7 @@ while($row= mysqli_fetch_array($result)){
     echo'<td>'.$row['PhoneDirect'].'</td>';
     echo'<td>'.$row['MobileNumber'].'</td>';
     echo'<td>'.$row['EmailDirect'].'</td>';
+    echo'<td><button type="button" class="btn btn-default btn_edit" data-toggle="modal" data-target="#modalSearch" value="'.$row['IdProjectAddress'].'">bearbeiten</button></td>';
     echo'</tr>';
 }
 echo'</tbody>';

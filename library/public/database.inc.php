@@ -89,7 +89,7 @@ function setActive3($reg) {
  * Handwerkerliste
  */
 function allProjectAddress($projectID){
-    $sql= 'SELECT p.ProjectCoordinator, p.PhoneDirect, p. MobileNumber, p.EmailDirect, 
+    $sql= 'SELECT p.IdProjectAddress, p.ProjectCoordinator, p.PhoneDirect, p. MobileNumber, p.EmailDirect, 
         p.Description, g.BKP, g.Company, g.Addressline1, g.Addressline2, g.ZIP, g.City,
         g.Country, g.Email, g.PhoneNumber, g.Homepage FROM ProjectAddresslist as p JOIN
         GlobalAddresslist as g on p.Fk_IdGlobalAddress = g.IdGlobalAddress WHERE p.Fk_IdProject
