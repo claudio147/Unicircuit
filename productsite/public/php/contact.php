@@ -46,6 +46,9 @@ if(isset($_POST['message'])){
 		'<html>
 		<head>
 		    <title>Kontaktanfrage Unicircuit</title>
+		    <style>
+		    	font-family: "Arial", sans-serif;
+		    </style>
 		</head>
 		 
 		<body>
@@ -64,6 +67,9 @@ if(isset($_POST['message'])){
 		'<html>
 		<head>
 		    <title>Kontaktanfrage Unicircuit</title>
+		    <style>
+		    	font-family: "Arial", sans-serif;
+		    </style>
 		</head>
 		 
 		<body>
