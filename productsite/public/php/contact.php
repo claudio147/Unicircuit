@@ -70,7 +70,7 @@ if(isset($_POST['message'])){
 		 
 		<h3>Kontaktanfrage Unicircuit</h3>
 		<br />
-		<p>Sehr geehrter '.$name.'</p>
+		<p>Guten Tag '.$name.'</p>
 		<p>Besten Dank für Ihre Kontaktanfrage.</p>
 		<p>Wir werden uns schnellstmöglich mit Ihnen in Verbindung setzen.<p>
 		<br />
@@ -86,7 +86,7 @@ if(isset($_POST['message'])){
 	$subject = 'Anfrage Unicircuit';
 
 	$header  = "MIME-Version: 1.0\r\n";
-	$header .= "Content-type: text/html; charset=iso-8859-1\r\n";
+	$header .= "Content-type: text/html; charset=utf-8\r\n";
 	 
 	$header .= 'From: '.$email."\r\n";
 	$header .= 'Reply-To: '.$email."\r\n";
@@ -99,7 +99,7 @@ if(isset($_POST['message'])){
 	$subject2 = 'Anfrage Unicircuit';
 
 	$header2  = "MIME-Version: 1.0\r\n";
-	$header2 .= "Content-type: text/html; charset=iso-8859-1\r\n";
+	$header2 .= "Content-type: text/html; charset=utf-8\r\n";
 	 
 	$header2 .= 'From: '.$email2."\r\n";
 	$header2 .= 'Reply-To: '.$email2."\r\n";
