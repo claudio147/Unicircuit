@@ -11,7 +11,7 @@ require_once('class.phpmailer.php');
 
 
 require_once('PHPMailerAutoload.php');
-
+//bkaaa
 
 
 $mail = new PHPMailer(); // Erstellen eines Objektes PHPMailer
