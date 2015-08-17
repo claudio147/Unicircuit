@@ -73,7 +73,6 @@ function createRegMail ($em, $fn ,$ln, $to) {
         } else {
         header('Location: userverwaltung.php');
         
-//Test 233
 }
 }
 
