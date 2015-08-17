@@ -5,7 +5,7 @@
 
 
 //Einbindung Librarys
-require_once('PHPMailerAutoload.php');
+require_once('PHPMailerload.php');
 
 require_once('class.phpmailer.php');
 
