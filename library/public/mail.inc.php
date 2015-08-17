@@ -12,7 +12,7 @@ require_once('class.phpmailer.php');
 
 require_once('PHPMailerAutoload.php');
 
-//TEST
+
 
 $mail = new PHPMailer(); // Erstellen eines Objektes PHPMailer
 $mail->IsSMTP();
