@@ -3,10 +3,15 @@
  * Library mit allen Funktionen für E-Mail Versand und Überprüfung
  */
 
+<<<<<<< HEAD
 //Einbindung Librarys
 require_once('PHPMailerAutoload.php');
 
 require_once('class.phpmailer.php');
+=======
+
+require_once('PHPMailerAutoload.php');
+>>>>>>> faaa301984cd87394cec8a63afcf3c7821bee676
 
 
 $mail = new PHPMailer(); // Erstellen eines Objektes PHPMailer
@@ -21,8 +26,8 @@ $mail->Port       = 587; // Gmail SMTP Server Port
 $mail->Username   = "archconsulting2@gmail.com"; // Gmail username
 $mail->Password   = "arch!consulting";  // Gmail password
 
-$mail->SetFrom('lsgrafik@gmail.com', 'Archconsulting'); // Absenderadresse
-$mail->addReplyTo('lsgrafik@gmail.com','Archconsulting');
+$mail->SetFrom('archconsulting2@gmail.com', 'Archconsulting'); // Absenderadresse
+$mail->addReplyTo('archconsulting2@gmail.com','Archconsulting');
 
 
 
@@ -101,10 +106,14 @@ function createArchRegMail($fn, $ln, $em) {
 *Productsite Kontaktformular
 */
 
+<<<<<<< HEAD
 function createContactMailCustomer( $name, $em) {
+=======
+function MailCustomer($name, $email) {
+>>>>>>> faaa301984cd87394cec8a63afcf3c7821bee676
     global $mail;
     $mail ->Subject = 'Kontaktanfrage Unicircuit';
-    $mail->AddAdress($em, $fn.' '.$ln);
+    $mail->AddAdress($email, $name);
       // Nachricht zusammenbauen
       $mail->MsgHTML = '<html>
     <head>
@@ -127,18 +136,17 @@ function createContactMailCustomer( $name, $em) {
 
       // Mail an Benutzer/in senden. 
       if(!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
         return false;
         } else {
-        echo "Message sent!";
         return true;
 }
 }
 
 
-function createContactMailArchconsulting($mail, $name , $em, $message) {
+function MailArchconsulting($name , $email2, $message) {
+    global $mail;
     $mail ->Subject = 'Kontaktanfrage Unicircuit';
-    $mail->AddAdress($em, $fn.' '.$ln);
+    $mail->AddAdress($email2, $name);
       // Nachricht zusammenbauen
       $mail->MsgHTML = '<html>
     <head>
@@ -154,14 +162,12 @@ function createContactMailArchconsulting($mail, $name , $em, $message) {
     <p><b>Nachricht:</b><br />'.$message.'</p>
      
     </body>
-    </html>';;
+    </html>';
 
       // Mail an Benutzer/in senden. 
       if(!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
         return false;
         } else {
-        echo "Message sent!";
         return true;
 
 }

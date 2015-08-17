@@ -356,6 +356,7 @@ textarea.form-control {
 }
 .calltoaction-btn > .btn:hover{
     background: #9fcd35;
+    border-color: #9fcd35;
 }
 
 .long-down {
@@ -1386,6 +1387,25 @@ ol li:before {
 	}
 	.slider-mobile > .slider > .slick-dots{
 	bottom: -60px;
+	}
+
+
+	.slider-desktop >.slider{
+		width: 100%;
+		margin-left: -50%;
+	}
+
+	.slider-desktop >.slider>div{
+		max-width: 100%;
+	}
+
+	.slider-mobile >.slider{
+		width: 100%;
+		margin-left: -50%;
+	}
+
+	.slider-mobile >.slider>div{
+		max-width: 100%;
 	}
 
 

@@ -86,6 +86,53 @@ function setActive3($id) {
 }
 
 
+
+/*
+ * Handwerkerliste
+ */
+function allProjectAddress($projectID){
+    $sql= 'SELECT p.ProjectCoordinator, p.PhoneDirect, p. MobileNumber, p.EmailDirect, 
+        p.Description, g.BKP, g.Company, g.Addressline1, g.Addressline2, g.ZIP, g.City,
+        g.Country, g.Email, g.PhoneNumber, g.Homepage FROM ProjectAddresslist as p JOIN
+        GlobalAddresslist as g on p.Fk_IdGlobalAddress = g.IdGlobalAddress WHERE p.Fk_IdProject
+        ='.$projectID.' ORDER BY g.BKP, g.Company ASC';
+    return $sql;
+}
+
+function newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip, $city, $country, 
+        $email, $phoneNumber, $homepage){
+    $sql= 'INSERT INTO GlobalAddresslist (BKP, Company, Addressline1, Addressline2, ZIP, City,
+            Country, Email, PhoneNumber, Homepage) VALUES ('.$bkp.',"'.$company.'","'.$addressline1.'","'.
+            $addressline2.'",'.$zip.',"'.$city.'","'.$country.'","'.$email.'","'.$phoneNumber.'","'.$homepage.'")';
+    return $sql;
+}
+
+function newProjectAddress($projectID, $FKGlobal, $projectCoordinator, $phoneDirect, $mobile, 
+        $emailDirect, $description){
+    $sql= 'INSERT INTO ProjectAddresslist (Fk_IdProject, FK_IdGlobalAddress, ProjectCoordinator,
+        PhoneDirect, MobileNumber, EmailDirect, Description) VALUES ('.$projectID.','.$FKGlobal.',"'
+            .$projectCoordinator.'","'.$phoneDirect.'","'.$mobile.'","'.$emailDirect.'","'.$description.'")';
+    return $sql;
+}
+
+function getIdGlobal($company, $addressline1){
+    $sql= 'SELECT IdGlobalAddress from GlobalAddresslist WHERE Company="'.$company.'"';
+    return $sql;
+}
+
+function allGlobalAddress(){
+    $sql= 'SELECT IdGlobalAddress, BKP, Company, ZIP, City, PhoneNumber from GlobalAddresslist';
+    return $sql;
+}
+
+function getGlobalAddress($id){
+    $sql= 'SELECT BKP, Company, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, Homepage
+        from GlobalAddresslist WHERE IdGlobalAddress='.$id;
+    return $sql;
+}
+
+
+
 /*
  * Productsite
  */
