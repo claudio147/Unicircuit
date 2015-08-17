@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
       //  Passwort Verschlüsseln
       $p1 = hash('sha256', $p1);
       // SQL-Statement zusammensetzen, um Datensatz in DB zu speichern
-      $sql = createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti);
+      $sql = createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti, $a1, $a2);
       // Anfrage an Datenbank senden
      
      
@@ -149,7 +149,7 @@ if (isset($_POST['submit'])) {
     
     if($status == true){
         createArchRegMail($fn, $ln, $em);
-        header('location:registration.php');
+        // header('location:registration.php');
     }else
     {
     echo '<p> Datensatz konnte nicht erzeugt werden</p>';

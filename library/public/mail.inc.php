@@ -1,7 +1,10 @@
 <?php
+/*
+ * Library mit allen Funktionen für E-Mail Versand und Überprüfung
+ */
 
-
-require_once('/PHPMailerAutoload.php');
+//Einbindung Librarys
+require_once('PHPMailerAutoload.php');
 
 require_once('class.phpmailer.php');
 
@@ -36,8 +39,8 @@ function checkMailFormat($email) {
 
 
 
-
-
+//Erstellt und versendet Aktivierungsmail
+//Link steht auf Localhost! Muss noch geändert werden
 function createRegMail ($em, $fn ,$ln, $to) {
     global $mail;
     //Subject des E-Mails
@@ -53,8 +56,7 @@ function createRegMail ($em, $fn ,$ln, $to) {
 	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer 
     registiert. Um die Registration abzuschliessen, klicken Sie bitte auf 
     folgenden Link: <br />
-    <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/".
-    "platform/public/php/verification.php?regcode=$to\">Registration abschliessen</a>".
+    <a href=\"http://local-platform.int.ch/php/verification.php?regcode=$to\">Registration abschliessen</a>".
     "</p><p>Es gr&uuml;sst das Team von Archconsulting</p></body></html>");
 
       // Mail an Benutzer/in senden. 
@@ -70,11 +72,12 @@ function createRegMail ($em, $fn ,$ln, $to) {
 }
 }
 
+// Erstellt und versendet Registrationsmail
 function createArchRegMail($fn, $ln, $em) {
     global $mail;
     $mail ->Subject = 'Registrierung auf Unicircuit';
     $address = $em;
-    $mail->AddAdress($address, $fn.' '.$ln);
+   $mail->AddAddress($address, $fn.' '.$ln);
       // Nachricht zusammenbauen
       $mail->MsgHTML("
 	<html><head>
@@ -98,7 +101,8 @@ function createArchRegMail($fn, $ln, $em) {
 *Productsite Kontaktformular
 */
 
-function createContactMailCustomer($mail, $name, $em) {
+function createContactMailCustomer( $name, $em) {
+    global $mail;
     $mail ->Subject = 'Kontaktanfrage Unicircuit';
     $mail->AddAdress($em, $fn.' '.$ln);
       // Nachricht zusammenbauen

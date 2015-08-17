@@ -65,7 +65,8 @@ echo '<table border="1" width="600">';
  * sendet ein E-Mail mit dem Aktivierungslink an den user.
  */
 if(isset($_GET['id'])) {
-    $id = $_GET['id'];
+      $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+   // $id = $_GET['id'];
     
     $sql = userData($id);
 

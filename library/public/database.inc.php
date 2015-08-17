@@ -32,7 +32,7 @@ function connectDB() {
 }
 
 // Erstellung Architekt User in DB
-function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti) {
+function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti, $a1, $a2) {
     
     //Escapen der Variablen, Verhinderung von SQL Injections.
     $fn = mysqli_real_escape_string($link, $fn);
@@ -48,11 +48,13 @@ function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $t
     $p1 = mysqli_real_escape_string($link, $p1);
     $da = mysqli_real_escape_string($link, $da);
     $ti = mysqli_real_escape_string($link, $ti);
+    $a1 = mysqli_real_escape_string($link, $a1);
+    $a2 = mysqli_real_escape_string($link, $a2);
     
     //Datenbank INSERT, fixe FK_IdUserType, hier handelt es sich immer um Architekt.
     $sql =  "INSERT INTO User (Firstname, Lastname, Company, ZIP, City, Country, 
-              PhoneNumber, MobileNumber, Email, RegCode, Password, LastLoginDate, LastLoginTime, Fk_IdUserType, Active) 
-              VALUES('$fn', '$ln','$co',$zip,'$ci','$cn','$pn','$mn', '$em','$to', '$p1', '$da', '$ti', 2, 1)";
+              PhoneNumber, MobileNumber, Email, RegCode, Password, LastLoginDate, LastLoginTime, Fk_IdUserType, Active, Addressline1, Addressline2) 
+              VALUES('$fn', '$ln','$co',$zip,'$ci','$cn','$pn','$mn', '$em','$to', '$p1', '$da', '$ti', 2, 1,'$a1', '$a2')";
 
     return $sql;
 }
@@ -77,8 +79,8 @@ function setActive($id) {
 }
 
 // Setzt Aktivierungsstand des gewählten Users auf 3(Aktiviert)
-function setActive3($reg) {
-    $sql = 'UPDATE User SET Active = 3 WHERE RegCode = '. $reg;
+function setActive3($id) {
+    $sql = 'UPDATE User SET Active = 3 WHERE RegCode = '. $id;
     
     return $sql;
 }
