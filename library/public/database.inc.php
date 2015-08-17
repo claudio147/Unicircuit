@@ -121,13 +121,44 @@ function getIdGlobal($company, $addressline1){
 }
 
 function allGlobalAddress(){
-    $sql= 'SELECT IdGlobalAddress, BKP, Company, ZIP, City, PhoneNumber from GlobalAddresslist';
+    $sql= 'SELECT IdGlobalAddress, BKP, Company, ZIP, City, PhoneNumber, Homepage from GlobalAddresslist';
     return $sql;
 }
 
 function getGlobalAddress($id){
     $sql= 'SELECT BKP, Company, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, Homepage
         from GlobalAddresslist WHERE IdGlobalAddress='.$id;
+    return $sql;
+}
+
+function checkGlobalAddress($company){
+    $status=true;
+    $link= connectDB();
+    $sql= 'SELECT Company from GlobalAddresslist';
+    $result= mysqli_query($link, $sql);
+    while($row=  mysqli_fetch_array($result)){
+        if($company== $row['Company']){
+            return false;
+        }else{
+            $status=true;
+        }
+    }
+    return $status;
+}
+
+function getProjectAddress($id){
+    $sql= 'SELECT p.IdProjectAddress, p.ProjectCoordinator, p.PhoneDirect, p. MobileNumber, p.EmailDirect, 
+        p.Description, g.BKP, g.Company, g.Addressline1, g.Addressline2, g.ZIP, g.City,
+        g.Country, g.Email, g.PhoneNumber, g.Homepage FROM ProjectAddresslist as p JOIN
+        GlobalAddresslist as g on p.Fk_IdGlobalAddress = g.IdGlobalAddress WHERE p.IdProjectAddress
+        ='.$id;
+    return $sql;
+}
+
+function updateProjectAddress($id, $projectCoordinator, $phoneDirect, $mobileNumber, $emailDirect, $description){
+    $sql= 'UPDATE ProjectAddresslist SET Projectcoordinator= "'.$projectCoordinator.'", PhoneDirect="'.$phoneDirect.
+            '", MobileNumber="'.$mobileNumber.'", EmailDirect="'.$emailDirect.'", Description="'.$description.'" WHERE
+                IdProjectAddress="'.$id.'"';
     return $sql;
 }
 

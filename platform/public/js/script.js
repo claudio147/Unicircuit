@@ -6,6 +6,7 @@ $(document).ready(function(){
         "paging":         false,
     });
     
+    
     $('.btn_add').click(function(){
         var id= $(this).val();
         $.post('../php/ajax.php', {"id":id},function(data){
@@ -17,6 +18,13 @@ $(document).ready(function(){
         var id= 0;
         $.post('../php/ajax.php', {"new":id},function(data){
             $('#newAddress').html(data);
+        })
+    });
+    
+    $('.btn_edit').click(function(){
+        var id= $(this).val();
+        $.post('../php/ajax.php', {"edit":id},function(data){
+            $('#editAddress').html(data);
         })
     });
         

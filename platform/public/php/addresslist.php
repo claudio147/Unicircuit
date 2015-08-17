@@ -13,7 +13,7 @@ $result2= mysqli_query($link, $sql2);
         
 if(isset($_POST['submit'])){
     $error=false;
-    
+
     $bkp = filter_input(INPUT_POST, 'bkp', FILTER_SANITIZE_NUMBER_INT);
     $company = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING);
     $addressline1 = filter_input(INPUT_POST, 'addressline1', FILTER_SANITIZE_STRING);
@@ -95,28 +95,47 @@ if(isset($_POST['submit'])){
     
     //Datenbankbefehle wenn kein Error vorhanden ist.
     if(!$error){
-        if(!isset($_POST['id'])){
-            //Insert Into Globale Adressliste
-            $sql= newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip,
-            $city, $country, $email, $phoneNumber, $homepage);
-            $statusGlobal = mysqli_query($link, $sql);
+        //Überprüfe ob eine id übergeben wurde
+        if(!isset($_POST['idGlobalAddress']) && !isset($_POST['idProjectAddress'])){
+            if(checkGlobalAddress($company)){
+                //Insert Into Globale Adressliste
+                $sql= newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip,
+                $city, $country, $email, $phoneNumber, $homepage);
+                $statusGlobal = mysqli_query($link, $sql);
 
-            //Hole ID von Eintrag in globalen Adressliste
-            $sql= getIdGlobal($company, $addressline1);
-            $resultID= mysqli_query($link, $sql);
-            while($row=  mysqli_fetch_array($resultID)){
-                $idGlobal= $row['IdGlobalAddress'];
-            } 
+                //Hole ID von Eintrag in globalen Adressliste
+                $sql= getIdGlobal($company, $addressline1);
+                $resultID= mysqli_query($link, $sql);
+                while($row=  mysqli_fetch_array($resultID)){
+                    $idGlobal= $row['IdGlobalAddress'];
+                } 
+            }else{
+                $statusGlobal=false;
+                echo'<p>Firma exisitert bereits in globaler DB</p>';
+            }
+        }else if(isset($_POST['idGlobalAddress'])){      
+            $idGlobal = filter_input(INPUT_POST, 'idGlobalAddress', FILTER_SANITIZE_NUMBER_INT);
+            $statusGlobal=true;
         }else{
-            $idGlobal = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
             $statusGlobal=true;
         }
         
-    
-        //Insert Into Projekt- Adressliste
-        $sql= newProjectAddress($projectID, $idGlobal, $projectCoordinator, $phoneDirect, $mobileDirect,
-                $emailDirect, $description);
-        $statusProject= mysqli_query($link, $sql);
+        if(isset($_POST['idProjectAddress'])){
+            $idProjectAddress= filter_input(INPUT_POST, 'idProjectAddress', FILTER_SANITIZE_NUMBER_INT);
+            //Update Into Projekt- Adressliste (Eintrag wird bearbeitet)
+            $sql= updateProjectAddress($idProjectAddress, $projectCoordinator, $phoneDirect, $mobileDirect,
+            $emailDirect, $description);
+            $statusProject= mysqli_query($link, $sql);
+        }else{
+            //Insert Into Projekt- Adressliste (Neuer Eintrag wird erstellt)
+            $sql= newProjectAddress($projectID, $idGlobal, $projectCoordinator, $phoneDirect, $mobileDirect,
+            $emailDirect, $description);
+            $statusProject= mysqli_query($link, $sql);
+        }
+            
+        
+        
+        
     
         if($statusGlobal==true && $statusProject==true){
             header('Location: addresslist.php');
@@ -161,7 +180,7 @@ if(isset($_POST['submit'])){
   <!-- Trigger the modal with a button -->
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+ Hinzufügen</button>
 
-  <!-- Modal -->
+  <!-- Modal Global-->
   <div class="modal" id="myModal" role="dialog">
       <div class="modal-dialog">
     
@@ -192,7 +211,7 @@ if(isset($_POST['submit'])){
 
                     while($row= mysqli_fetch_array($result2)){
                         echo'<tr>';
-                        echo'<td><a href="addresslist.php?id='.$row['IdGlobalAddress'].'">'.$row['Company'].'</a></td>';
+                        echo'<td><a href="http://'.$row['Homepage'].'/" target="_blank">'.$row['Company'].'</a></td>';
                         echo'<td>'.$row['BKP'].'</td>';
                         echo'<td>'.$row['ZIP'].'</td>';
                         echo'<td>'.$row['City'].'</td>';
@@ -220,7 +239,7 @@ if(isset($_POST['submit'])){
   
   
   
-  <!-- Modal -->
+  <!-- Modal Hinzufügen-->
   <div class="modal" id="modalSearch" role="dialog">
     <div class="modal-dialog">
     
@@ -249,6 +268,39 @@ if(isset($_POST['submit'])){
       
     </div>
   </div>
+  <!-- Modal End -->
+  
+  
+   <!-- Modal Edit -->
+  <div class="modal" id="modalEdit" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+          <form action="addresslist.php" method="POST">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
+          <h4 class="modal-title">Handwerker bearbeiten</h4>
+        </div>
+              <div class="modal-body">
+            
+            <div id="editAddress">
+                
+                <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
+                
+            </div>     
+        </div>
+        <div class="modal-footer">
+            <input type="submit" name="submit" value="Speichern" class="btn btn-default">
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
+        </div>
+        </form>
+
+      </div>
+      
+    </div>
+  </div>
+  <!-- Modal End -->
   
 </div>
 
@@ -264,6 +316,7 @@ echo'<th>Kontaktperson</th>';
 echo'<th>Tel. Direkt</th>';
 echo'<th>Mobil</th>';
 echo'<th>Email Direkt</th>';
+echo'<th></th>';
 echo'</tr>';
 echo'</thead>';
 echo'<tbody>';
@@ -276,6 +329,7 @@ while($row= mysqli_fetch_array($result)){
     echo'<td>'.$row['PhoneDirect'].'</td>';
     echo'<td>'.$row['MobileNumber'].'</td>';
     echo'<td>'.$row['EmailDirect'].'</td>';
+    echo'<td><button type="button" class="btn btn-default btn_edit" data-toggle="modal" data-target="#modalEdit" value="'.$row['IdProjectAddress'].'">bearbeiten</button></td>';
     echo'</tr>';
 }
 echo'</tbody>';
