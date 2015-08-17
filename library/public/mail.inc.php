@@ -3,15 +3,15 @@
  * Library mit allen Funktionen für E-Mail Versand und Überprüfung
  */
 
-<<<<<<< HEAD
+
 //Einbindung Librarys
 require_once('PHPMailerAutoload.php');
 
 require_once('class.phpmailer.php');
-=======
+
 
 require_once('PHPMailerAutoload.php');
->>>>>>> faaa301984cd87394cec8a63afcf3c7821bee676
+
 
 
 $mail = new PHPMailer(); // Erstellen eines Objektes PHPMailer
@@ -101,75 +101,4 @@ function createArchRegMail($fn, $ln, $em) {
 }
 
 
-
-/*
-*Productsite Kontaktformular
-*/
-
-<<<<<<< HEAD
-function createContactMailCustomer( $name, $em) {
-=======
-function MailCustomer($name, $email) {
->>>>>>> faaa301984cd87394cec8a63afcf3c7821bee676
-    global $mail;
-    $mail ->Subject = 'Kontaktanfrage Unicircuit';
-    $mail->AddAdress($email, $name);
-      // Nachricht zusammenbauen
-      $mail->MsgHTML = '<html>
-    <head>
-        <title>Kontaktanfrage Unicircuit</title>
-    </head>
-     
-    <body>
-     
-    <h3>Kontaktanfrage Unicircuit</h3>
-    <br />
-    <p>Sehr geehrter '.$name.'</p>
-    <p>Besten Dank für Ihre Kontaktanfrage.</p>
-    <p>Wir werden uns schnellstmöglich mit Ihnen in Verbindung setzen.<p>
-    <br />
-    <p>Freundliche Grüsse</p>
-    <p>Ihr Unicircuit-Team</p>
-     
-    </body>
-    </html>';
-
-      // Mail an Benutzer/in senden. 
-      if(!$mail->Send()) {
-        return false;
-        } else {
-        return true;
-}
-}
-
-
-function MailArchconsulting($name , $email2, $message) {
-    global $mail;
-    $mail ->Subject = 'Kontaktanfrage Unicircuit';
-    $mail->AddAdress($email2, $name);
-      // Nachricht zusammenbauen
-      $mail->MsgHTML = '<html>
-    <head>
-        <title>Kontaktanfrage Unicircuit</title>
-    </head>
-     
-    <body>
-     
-    <h3>Kontaktanfrage Unicircuit</h3>
-    <br />
-    <p><b>Name:</b> '.$name.' </p>
-    <br />     
-    <p><b>Nachricht:</b><br />'.$message.'</p>
-     
-    </body>
-    </html>';
-
-      // Mail an Benutzer/in senden. 
-      if(!$mail->Send()) {
-        return false;
-        } else {
-        return true;
-
-}
-}
 
