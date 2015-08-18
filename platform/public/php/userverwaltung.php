@@ -47,11 +47,11 @@ echo '<table border="1" width="600">';
         
       } else if($reg == 2) {
           
-        echo 'Aktivierungs Mail verschickt';
+        echo '<td>Aktivierungs Mail verschickt</td>';
         
       } else if($reg == 3) {
         
-          echo 'User bereits Aktiviert';
+          echo '<td>User bereits Aktiviert</td>';
       } else {
           echo 'Fehler';
       }
