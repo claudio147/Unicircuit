@@ -2,36 +2,7 @@
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
-
-// Mail funktion
-function sendMail($empfaenger, $absender, $betreff, $message) {
-  $header = 'MIME-Version: 1.0' . "\r\n";
-  $header.= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-  $header.= 'To: ' . $empfaenger . "\r\n";
-  $header.= 'From: ' . $absender . "\r \n";
-  $header.= 'X-Mailer: PHP/' . phpversion() . "\r\n";
-
-  mail($empfaenger, $betreff, $message, $header);
-}
-
-function createMail ($em, $fn ,$ln) {
-          $betreff = 'Registrationsfreischaltung auf Unicircuit';
-      // Nachricht zusammenbauen
-      $nachricht = "
-	<html><head>
-	<title>Anmledung bei Archconsulting Unicircuit</title>
-	</head><body><p>Hallo $fn $ln</p>
-	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer 
-    registiert. Um die Registration abzuschliessen, klicken Sie bitte auf 
-    folgenden Link: <br />
-    <a href=\"http://palmers.dynathome.net:8045/personenverwaltung/".
-    "registration/verification.php?regcode=$to\">Registration abschliessen</a>".
-    "</p><p>Es gr&uuml;sst das Team von Archconsulting</p></body></html>";
-
-      // Mail an Benutzer/in senden. 
-      sendMail($em, 'noreply@palmers.dynathome.net', 'Registration', $nachricht);
-}
-
+require_once ('../../../library/public/mail.inc.php');
 
 /*
  * Herstellen der Datenbankverbindung und
@@ -40,10 +11,16 @@ function createMail ($em, $fn ,$ln) {
 //Datenbankverbindung
 $link = connectDB();
 
-$sql = 'SELECT Firstname, Lastname, Company, ZIP, Country, PhoneNumber, 
-            MobileNumber, Email, RegCode, LastLoginDate, LastLoginTime, IdUser FROM User';
+$sql = allUserData();
 
 $result = mysqli_query($link, $sql);
+
+
+
+
+
+
+
 
 
 
@@ -53,7 +30,7 @@ $result = mysqli_query($link, $sql);
 echo '<table border="1" width="600">';
 
  while ($row = mysqli_fetch_array($result)) {
-     echo '<tr>';
+     
       echo '<td>' . $row['Firstname'] . '</td>';
       echo '<td>' . $row['Lastname'] . '</td>';
       echo '<td>' . $row['Company'] . '</td>';
@@ -64,15 +41,23 @@ echo '<table border="1" width="600">';
       echo '<td>' . $row['Email'] . '</td>';
       
       //Ueberpruefung ob User bereits aktiviert ist und sich schon eingeloggt hat
-      if ($row['RegCode'] == 1) {
-        echo '<td>Bereits aktiviert.</td>';
-      } else {
-          
+      $reg = $row['Active'];
+      if ($reg == 1) {
         echo '<td><a href="userverwaltung.php?id=' . $row['IdUser'] . '">aktivieren</a></td>';
         
+      } else if($reg == 2) {
+          
+        echo 'Aktivierungs Mail verschickt';
+        
+      } else if($reg == 3) {
+        
+          echo 'User bereits Aktiviert';
+      } else {
+          echo 'Fehler';
       }
  }
  echo '</table>';
+ 
  
  
  /*
@@ -80,19 +65,26 @@ echo '<table border="1" width="600">';
  * sendet ein E-Mail mit dem Aktivierungslink an den user.
  */
 if(isset($_GET['id'])) {
-    $id = $_GET['id'];
+      $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+   // $id = $_GET['id'];
     
-    $sql = 'SELECT Firstname, Lastname, Email FROM User WHERE IdUser = '. $id;
+    $sql = userData($id);
 
 $result = mysqli_query($link, $sql);
-$result2 = mysqli_fetch_array($result);
+$row = mysqli_fetch_array($result);
+$fn = $row['Firstname'];
+$ln = $row['Lastname'];
+$em = $row['Email'];
+$to = $row['RegCode'];
 
-    echo $id ;
-    $em = $result2['Email'];
-    $fn = $result2['Firstname'];
-    $ln = $result2['lastname'];
-            
-    echo $em ;
-    createMail($em, $fn, $ln);
+    createRegMail($em, $fn, $ln, $to);
     
+    // setze Active auf Stufe 2
+     $set = setActive($id);
+     $status = mysqli_query($link, $set);
+     
+
 }
+ 
+
+

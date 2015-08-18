@@ -1,10 +1,42 @@
+
 <?php
+
+
+/**
+ * Send debug code to the Javascript console
+ */ 
+/*
+function debug_to_console($data) {
+    if(is_array($data) || is_object($data))
+	{
+		echo("<script>console.log('PHP: ".json_encode($data)."');</script>");
+	} else {
+		echo("<script>console.log('PHP: ".$data."');</script>");
+	}
+}
+	debug_to_console('test');
+
+
+
+
+require '../../../library/public/mail.inc.php';
+*/
 
 if(isset($_POST['message'])){
 
 	$name = $_POST['name'];
 	$email = $_POST['email'];
 	$message = $_POST['message'];
+
+	
+/*
+	$email2 = 'claudio.schaepper@gmail.com';
+	$status1 = MailCustomer($name, $email);
+	$status2 = MailArchconsulting($name, $email2, $message);
+
+*/
+
+
 
 	//Email Absenderadresse (Archconsulting)
 	$email2 = 'info@unicircuit.ch';
@@ -14,6 +46,9 @@ if(isset($_POST['message'])){
 		'<html>
 		<head>
 		    <title>Kontaktanfrage Unicircuit</title>
+		    <style>
+		    	font-family: "Arial", sans-serif;
+		    </style>
 		</head>
 		 
 		<body>
@@ -32,13 +67,16 @@ if(isset($_POST['message'])){
 		'<html>
 		<head>
 		    <title>Kontaktanfrage Unicircuit</title>
+		    <style>
+		    	font-family: "Arial", sans-serif;
+		    </style>
 		</head>
 		 
 		<body>
 		 
 		<h3>Kontaktanfrage Unicircuit</h3>
 		<br />
-		<p>Sehr geehrter '.$name.'</p>
+		<p>Guten Tag '.$name.'</p>
 		<p>Besten Dank für Ihre Kontaktanfrage.</p>
 		<p>Wir werden uns schnellstmöglich mit Ihnen in Verbindung setzen.<p>
 		<br />
@@ -54,7 +92,7 @@ if(isset($_POST['message'])){
 	$subject = 'Anfrage Unicircuit';
 
 	$header  = "MIME-Version: 1.0\r\n";
-	$header .= "Content-type: text/html; charset=iso-8859-1\r\n";
+	$header .= "Content-type: text/html; charset=utf-8\r\n";
 	 
 	$header .= 'From: '.$email."\r\n";
 	$header .= 'Reply-To: '.$email."\r\n";
@@ -67,7 +105,7 @@ if(isset($_POST['message'])){
 	$subject2 = 'Anfrage Unicircuit';
 
 	$header2  = "MIME-Version: 1.0\r\n";
-	$header2 .= "Content-type: text/html; charset=iso-8859-1\r\n";
+	$header2 .= "Content-type: text/html; charset=utf-8\r\n";
 	 
 	$header2 .= 'From: '.$email2."\r\n";
 	$header2 .= 'Reply-To: '.$email2."\r\n";
@@ -75,12 +113,12 @@ if(isset($_POST['message'])){
 	$header2 .= "X-Mailer: PHP/". phpversion();
 
 	//Send Email für Kunde (Autoantwort)
-	mail($to2, $subject2, $messageBack, $header2);
+	$status2 = mail($to2, $subject2, $messageBack, $header2);
 
 	//Send Email für Archconsutling mit Kontaktanfrage
-	$status = mail($to, $subject, $messageForm, $header);
+	$status1 = mail($to, $subject, $messageForm, $header);
 
-	if($status == TRUE){	
+	if($status1 == TRUE && $status2==TRUE){	
 		$res['sendstatus'] = 'done';
 	
 		//Edit your message here
@@ -94,4 +132,3 @@ if(isset($_POST['message'])){
 	echo json_encode($res);
 }
 
-?>
