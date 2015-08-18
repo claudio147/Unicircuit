@@ -25,12 +25,11 @@ if(isset($_POST['id'])){
         $homepage= $row['Homepage'];
         
         $data.= '<input type="hidden" name="idGlobalAddress" value="'.$id.'">
+                <h4>Firmendaten</h4>
                 <p>BKP*</p>
                 <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly">
                 <p>Firma*</p>
                 <input type="text" name="company" value="'.$company.'" readonly="readonly">
-                <p>Ansprechpartner</p>
-                <input type="text" name="projectCoordinator">
                 <p>Adresszeile 1*</p>
                 <input type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly">
                 <p>Adresszeile 2</p>
@@ -46,16 +45,20 @@ if(isset($_POST['id'])){
                 </select>
                 <p>Email (Hauptadresse)*</p>
                 <input type="email" name="email" value="'.$email.'" readonly="readonly">
-                <p>Email (Direkt)</p>
-                <input type="text" name="emailDirect">
                 <p>Telefon (Hauptnummer)*</p>
                 <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly">
+                <p>Homepage*</p>
+                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly">
+                <br /><br />
+                <h4>Direkte Kontaktdaten</h4>
+                <p>Ansprechpartner</p>
+                <input type="text" name="projectCoordinator">                
+                <p>Email (Direkt)</p>
+                <input type="text" name="emailDirect">
                 <p>Telefon (Direkt)</p>
                 <input type="text" name="phoneDirect">
                 <p>Mobile (Direkt)</p>
                 <input type="text" name="mobileDirect">
-                <p>Homepage*</p>
-                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly">
                 <p>Notizen</p>
                 <input type="textarea" name="description">';
                 echo $data;
@@ -66,12 +69,11 @@ if(isset($_POST['id'])){
 if(isset($_POST['new'])){
     $data= '';
             
-        $data.= '<p>BKP*</p>
+        $data.= '<h4>Firmendaten</h4>
+                <p>BKP*</p>
                 <input type="text" name="bkp">
                 <p>Firma*</p>
                 <input type="text" name="company">
-                <p>Ansprechpartner</p>
-                <input type="text" name="projectCoordinator">
                 <p>Adresszeile 1*</p>
                 <input type="text" name="addressline1">
                 <p>Adresszeile 2</p>
@@ -87,16 +89,21 @@ if(isset($_POST['new'])){
                 </select>
                 <p>Email (Hauptadresse)*</p>
                 <input type="email" name="email">
-                <p>Email (Direkt)</p>
-                <input type="text" name="emailDirect">
                 <p>Telefon (Hauptnummer)*</p>
                 <input type="text" name="phoneNumber">
+                <p>Homepage*</p>
+                <input type="text" name="homepage">
+
+                <br /><br />
+                <h4>Direkte Kontaktdaten</h4>
+                <p>Ansprechpartner</p>
+                <input type="text" name="projectCoordinator">
+                <p>Email (Direkt)</p>
+                <input type="text" name="emailDirect">
                 <p>Telefon (Direkt)</p>
                 <input type="text" name="phoneDirect">
                 <p>Mobile (Direkt)</p>
                 <input type="text" name="mobileDirect">
-                <p>Homepage*</p>
-                <input type="text" name="homepage">
                 <p>Notizen</p>
                 <input type="textarea" name="description">';
                 echo $data;
@@ -129,12 +136,11 @@ if(isset($_POST['edit'])){
         $description= $row['Description'];
         
         $data.= '<input type="hidden" name="idProjectAddress" value="'.$id.'">
+                <h4>Firmendaten</h4>
                 <p>BKP*</p>
                 <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly">
                 <p>Firma*</p>
                 <input type="text" name="company" value="'.$company.'" readonly="readonly">
-                <p>Ansprechpartner</p>
-                <input type="text" name="projectCoordinator" value="'.$projectCoordinator.'">
                 <p>Adresszeile 1*</p>
                 <input type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly">
                 <p>Adresszeile 2</p>
@@ -150,6 +156,13 @@ if(isset($_POST['edit'])){
                 </select>
                 <p>Email (Hauptadresse)*</p>
                 <input type="email" name="email" value="'.$email.'" readonly="readonly">
+                <p>Homepage*</p>
+                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly">
+
+                <br /><br />
+                <h4>Direkte Kontaktdaten</h4>
+                <p>Ansprechpartner</p>
+                <input type="text" name="projectCoordinator" value="'.$projectCoordinator.'">
                 <p>Email (Direkt)</p>
                 <input type="text" name="emailDirect" value="'.$emailDirect.'">
                 <p>Telefon (Hauptnummer)*</p>
@@ -158,8 +171,6 @@ if(isset($_POST['edit'])){
                 <input type="text" name="phoneDirect" value="'.$phoneDirect.'">
                 <p>Mobile (Direkt)</p>
                 <input type="text" name="mobileDirect" value="'.$mobileNumber.'">
-                <p>Homepage*</p>
-                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly">
                 <p>Notizen</p>
                 <input type="textarea" name="description" value="'.$description.'">';
                 echo $data;

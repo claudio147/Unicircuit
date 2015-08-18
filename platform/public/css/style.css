@@ -5,3 +5,9 @@
 table{
     font-size: 12px;
 }
+
+.modal p{
+	margin-bottom: 0px;
+	font-size: 12px;
+	margin-top: 10px;
+}

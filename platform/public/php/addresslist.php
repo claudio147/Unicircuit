@@ -174,8 +174,6 @@ if(isset($_POST['delete'])){
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="../css/style.css">
         
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         
         
         
@@ -334,22 +332,26 @@ echo'<tbody>';
 
 while($row= mysqli_fetch_array($result)){
     echo'<tr>';
-    echo'<td>'.$row['Company'].'</td>';
+    echo'<td><a href="http://'.$row['Homepage'].'/" target="_blank">'.$row['Company'].'</a></td>';
     echo'<td>'.$row['BKP'].'</td>';
     echo'<td>'.$row['ProjectCoordinator'].'</td>';
-    echo'<td>'.$row['PhoneDirect'].'</td>';
-    echo'<td>'.$row['MobileNumber'].'</td>';
-    echo'<td>'.$row['EmailDirect'].'</td>';
+    echo'<td><a href="tel:'.$row['PhoneDirect'].'">'.$row['PhoneDirect'].'</td>';
+    echo'<td><a href="tel:'.$row['MobileNumber'].'">'.$row['MobileNumber'].'</td>';
+    echo'<td><a href="mailto:'.$row['EmailDirect'].'">'.$row['EmailDirect'].'</td>';
     echo'<td><button type="button" class="btn btn-default btn_edit" data-toggle="modal" data-target="#modalEdit" value="'.$row['IdProjectAddress'].'">bearbeiten</button></td>';
     echo'</tr>';
 }
 echo'</tbody>';
 echo'</table>';
+
 ?>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
-<!--<script src="../../../productsite/public/bootstrap/js/bootstrap.min.js"></script>-->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="../js/script.js"></script>
+<!--<script src="../../../productsite/public/bootstrap/js/bootstrap.min.js"></script>-->
+
     </body>
 </html>
