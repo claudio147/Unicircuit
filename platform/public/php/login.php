@@ -31,9 +31,9 @@ if (isset($_POST['submit'])) {
       // Hier wird die Session das erste Mal initialisiert
       session_start();
       // Speichere den PK des Users in der Session
-      $_SESSION['idUser'] = $row['IdUser'];
+      $_SESSION['IdUser'] = $row['IdUser'];
       // Speicher den Username (email) in der Session
-      $_SESSION['userName'] = $email;
+      $_SESSION['UserName'] = $email;
       //Speichere den entsprechenden Usertype in der Session
       $_SESSION['UserType'] = $row['Fk_IdUserType'];
 
@@ -43,6 +43,9 @@ if (isset($_POST['submit'])) {
       $sessionId = session_id();
       $browserTyp = substr($_SERVER['HTTP_USER_AGENT'], 0, 250);
       $datensatz = $row['id'];
+      
+      //wieder auslöschen:
+      $_SESSION['SID'] = $sessionId;
       // Es wird ein Update durchgeführt, da die Benutzdaten stimmen
       $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',"
               . " SessionId='$sessionId', Browser='$browserTyp'"
