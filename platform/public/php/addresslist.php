@@ -182,7 +182,6 @@ if(isset($_POST['delete'])){
     <body>
  
 <!--Lightboxen (Modals)-->
-
 <div class="container">
 
   <!-- Trigger the modal with a button -->

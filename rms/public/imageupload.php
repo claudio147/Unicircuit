@@ -20,7 +20,7 @@ if (isset($_POST['Selection'])) {
 
 
 //Dateiupload
-if(isset($_POST['upload'])){
+if(!empty($_FILES)){
     $select= $_POST['select'];
     //Array mit Statusmeldungen
     $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',

@@ -11,3 +11,13 @@ table{
 	font-size: 12px;
 	margin-top: 10px;
 }
+
+textarea{
+    width: 30em;
+    height: 15em;
+}
+
+.post img{
+    width: 150px;
+    height: 150px;
+}

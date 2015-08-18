@@ -167,6 +167,22 @@ function deleteProjectAddress($id){
     return $sql;
 }
 
+/*
+ * Timeline
+ */
+function addPostwithIMG($idProject,$idVisible, $hashName, $orgName, $path, $title, $content, $date, $time){
+    $sql= "INSERT INTO Timeline (Fk_IdProject, Id_visible, HashName, OrgName, Path, Title, Date, Time, Description) VALUES
+        ('$idProject', '$idVisible', '$hashName', '$orgName', '$path', '$title', '$date', '$time', '$content')";
+    return $sql;
+}
+
+function selectPost($projectID){
+    $sql= 'SELECT IdTimeline, HashName, Path, Title, Date, Time, Description FROM Timeline WHERE Fk_IdProject="'.$projectID.'" ORDER BY Date, Time DESC';
+    return $sql;
+}
+
+
+
 
 
 /*
