@@ -4,6 +4,8 @@ require_once ('../../../library/public/mail.inc.php');
 
 $projectID=2;
 
+$idGLobal;
+
 $link= connectDB();
 $sql= allProjectAddress($projectID);
 $result = mysqli_query($link, $sql);
@@ -120,6 +122,8 @@ if(isset($_POST['submit'])){
             $statusGlobal=true;
         }
         
+
+
         if(isset($_POST['idProjectAddress'])){
             $idProjectAddress= filter_input(INPUT_POST, 'idProjectAddress', FILTER_SANITIZE_NUMBER_INT);
             //Update Into Projekt- Adressliste (Eintrag wird bearbeitet)
@@ -144,13 +148,19 @@ if(isset($_POST['submit'])){
         }
     }else{
         echo'<p>Error2</p>';
+    }   
+}
+
+if(isset($_POST['delete'])){
+    $idProjectAddress= filter_input(INPUT_POST, 'idProjectAddress', FILTER_SANITIZE_NUMBER_INT);
+
+    $sql= deleteProjectAddress($idProjectAddress);
+    $resultDel = mysqli_query($link, $sql);
+    if($resultDel){
+        header('Location: addresslist.php');
+    }else{
+        echo'<p>Löschen fehlgeschlagen</p>';
     }
-    
-    
-    
-    
-    
-    
 }
 
 ?>
@@ -292,6 +302,7 @@ if(isset($_POST['submit'])){
         </div>
         <div class="modal-footer">
             <input type="submit" name="submit" value="Speichern" class="btn btn-default">
+            <input type="submit" name="delete" value="Löschen" class="btn btn-default">
           <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
         </div>
         </form>
@@ -338,7 +349,7 @@ echo'</table>';
 
 
 <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
-<script src="../../../productsite/public/bootstrap/js/bootstrap.min.js"></script>
+<!--<script src="../../../productsite/public/bootstrap/js/bootstrap.min.js"></script>-->
 <script src="../js/script.js"></script>
     </body>
 </html>

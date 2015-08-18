@@ -162,6 +162,11 @@ function updateProjectAddress($id, $projectCoordinator, $phoneDirect, $mobileNum
     return $sql;
 }
 
+function deleteProjectAddress($id){
+    $sql= 'DELETE FROM ProjectAddresslist WHERE IdProjectAddress="'.$id.'"';
+    return $sql;
+}
+
 
 
 /*
