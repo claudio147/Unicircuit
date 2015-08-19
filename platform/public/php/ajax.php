@@ -176,3 +176,52 @@ if(isset($_POST['edit'])){
                 echo $data;
     }
 }
+
+if(isset($_POST['postEdit'])){
+    $data= '';
+
+    //Post ID
+    $id= filter_input(INPUT_POST, 'postEdit', FILTER_SANITIZE_NUMBER_INT);
+    $sql= selectPostbyID($id);
+    $result= mysqli_query($link, $sql);
+
+    while($row= mysqli_fetch_array($result)){
+        $postID= $row['IdTimeline'];
+        $visible= $row['Id_visible'];
+        $hashName= $row['HashName'];
+        $orgName= $row['OrgName'];
+        $path= $row['Path'];
+        $title= $row['Title'];
+        $date= $row['Date'];
+        $time= $row['Time'];
+        $content= $row['Description'];
+
+        if($visible==1){
+            $check1='checked="checked"';
+            $check2='';
+        }else if($visible==2){
+            $check2='checked="checked"';
+            $check1='';
+        }
+
+        $data.= '<input type="hidden" name="postID" value="'.$postID.'"/>
+                <input type="hidden" name="hash" value="'.$hashName.'"/>
+                <input type="hidden" name="path" value="'.$path.'"/>
+                <input type="hidden" name="orgName" value="'.$orgName.'"/>
+                <p>Titel*</p>
+                <input type="text" name="title" value="'.$title.'">
+                <p>Inhalt*</p>
+                <textarea name="content">'.$content.'</textarea>
+                <p>Sichtbarkeit*</p>
+                <p>
+                    <input type="radio" name="visible" value="1" '.$check1.'/>  Nur Architekt
+                    <input type="radio" name="visible" value="2" '.$check2.'/>  Architekt und Bauherr
+                </p>
+                <p>Bildupload</p>
+                <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
+                <input type="file" name="userfile"/>';
+
+                echo $data;
+    }
+
+}

@@ -176,10 +176,34 @@ function addPostwithIMG($idProject,$idVisible, $hashName, $orgName, $path, $titl
     return $sql;
 }
 
-function selectPost($projectID){
-    $sql= 'SELECT IdTimeline, HashName, Path, Title, Date, Time, Description FROM Timeline WHERE Fk_IdProject="'.$projectID.'" ORDER BY Date, Time DESC';
+function selectPosts($projectID){
+    $sql= 'SELECT IdTimeline, Id_visible, HashName, Path, Title, Date, Time, Description FROM Timeline WHERE Fk_IdProject="'.$projectID.'" ORDER BY Date DESC, Time DESC';
     return $sql;
 }
+
+function selectPostbyID($postID){
+    $sql= 'SELECT IdTimeline, Id_visible, HashName, OrgName, Path, Title, Date, Time, Description FROM Timeline WHERE IdTimeline="'.$postID.'"';
+    return $sql;
+}
+
+function updatePost($postID, $idVisible, $hashName, $orgName, $path, $title, $date, $time, $description){
+    $sql= 'UPDATE Timeline SET Id_visible="'.$idVisible.'", HashName="'.$hashName.'", Orgname="'.$orgname.'",
+     Path="'.$path.'", Title="'.$title.'", Date="'.$date.'", Time="'.$time.'", 
+     Description="'.$description.'" WHERE IdTimeline="'.$postID.'"';
+     return $sql;
+}
+
+function selectPostIMG($id){
+    $sql= 'SELECT HashName, Path FROM Timeline WHERE IdTimeline='.$id;
+    return $sql;
+}
+
+function deletePost($id){
+    $sql= 'DELETE FROM Timeline WHERE IdTimeline='.$id;
+    return $sql;
+}
+
+
 
 
 

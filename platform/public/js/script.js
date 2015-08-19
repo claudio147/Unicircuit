@@ -1,11 +1,13 @@
 $(document).ready(function(){
 
+
+    //Adressliste
     $('.table').DataTable( {
         "scrollY":        "300px",
         "scrollCollapse": true,
         "paging":         false,
     });
-    
+
     
     $('.btn_add').click(function(){
         var id= $(this).val();
@@ -27,7 +29,33 @@ $(document).ready(function(){
             $('#editAddress').html(data);
         })
     });
-        
+
+
+    //Timeline
+    $('.btn_postEdit').click(function(){
+        var id= $(this).val();
+        $.post('../php/ajax.php', {"postEdit":id},function(data){
+            $('#editContainer').html(data);
+        }) 
+    });   
+
+    window.onresize= dynamicResizer;
+    window.onload= dynamicResizer;
+
+        function dynamicResizer(){
+            var cw = $('.col-sm-2').width();
+            cw +=30;
+            $('.imgLiquid').css({'height':cw+'px'});
+        } 
+
+
+        $(".imgLiquidFill").imgLiquid({
+        fill: true,
+        horizontalAlign: "center",
+        verticalAlign: "top"
+        });
+
+  
         
 
 

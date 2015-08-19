@@ -2,6 +2,7 @@
     height: 480px;
     overflow-y: auto;
 }
+
 table{
     font-size: 12px;
 }
@@ -17,7 +18,18 @@ textarea{
     height: 15em;
 }
 
-.post img{
-    width: 150px;
-    height: 150px;
+.post>h3{
+	margin-top: 50px;
+	margin-bottom: 5px;
+}
+
+.btn_postEdit{
+	background: transparent;
+	border: none;
+	margin-right: 10px;
+	padding-left: 0px;
+}
+
+.fa-lock{
+	margin-left: 10px;
 }
