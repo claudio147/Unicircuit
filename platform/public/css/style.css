@@ -1,5 +1,5 @@
 .modal .modal-body {
-    height: 480px;
+    height: 520px;
     overflow-y: auto;
 }
 
@@ -32,4 +32,8 @@ textarea{
 
 .fa-lock{
 	margin-left: 10px;
+}
+
+.dt-button{
+	margin-right: 10px;
 }
