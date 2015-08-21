@@ -156,6 +156,8 @@ if(isset($_POST['edit'])){
                 </select>
                 <p>Email (Hauptadresse)*</p>
                 <input type="email" name="email" value="'.$email.'" readonly="readonly">
+                <p>Telefon (Hauptnummer)*</p>
+                <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly">
                 <p>Homepage*</p>
                 <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly">
 
@@ -165,8 +167,6 @@ if(isset($_POST['edit'])){
                 <input type="text" name="projectCoordinator" value="'.$projectCoordinator.'">
                 <p>Email (Direkt)</p>
                 <input type="text" name="emailDirect" value="'.$emailDirect.'">
-                <p>Telefon (Hauptnummer)*</p>
-                <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly">
                 <p>Telefon (Direkt)</p>
                 <input type="text" name="phoneDirect" value="'.$phoneDirect.'">
                 <p>Mobile (Direkt)</p>

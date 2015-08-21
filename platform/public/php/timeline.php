@@ -5,6 +5,9 @@ require_once ('../../../library/public/database.inc.php');
 $projectID=2;
 $uploaddir= '../img/architect1/project1/img/';
 
+//Standard-Bild als Platzhalter wenn keines ausgewählt wird
+
+
 
 $link= connectDB();
 
@@ -18,7 +21,7 @@ if(isset($_POST['submit'])){
     $time = date("H:i:s");
    
     //Bildupload
-    if(!empty($_FILES)){
+    if(!empty($file)){
 
     //Array mit Statusmeldungen
     $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
@@ -46,8 +49,19 @@ if(isset($_POST['submit'])){
             echo'<p>Fehlerstatus: '.$errorstatus[$code].'</p>';
         }else{
             echo'<p>Datei konnte nicht hochgeladen werden!</p>';
+        }
+    }else{
+        $uploaddir= '../img/';
+        $file= 'placeholder.png';
+        $orgname= 'placeholder.jpg';
+
+        $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
+        $status= mysqli_query($link, $sql);
+        if(!$status){
+            echo'<p>Fehlgeschlagen</p>';
+        }
     }
-}}
+}
 
 //Updated einen bestehenden Eintrag in DB
 if(isset($_POST['edit'])){
@@ -111,7 +125,8 @@ if(isset($_POST['delete'])){
             $fina=$row['HashName'];
             $path= $row['Path'];
             
-            if(unlink($path.$fina)){
+            //Überprüfung ob das Platzhalter Bild eingestzt ist
+            if($fina == 'placeholder.png'){
                 $sql2= deletePost($id);
                 $status= mysqli_query($link, $sql2);
                 if($status == true){
@@ -120,8 +135,19 @@ if(isset($_POST['delete'])){
                     echo '<p>Datensatz konnte nicht gelöscht werden</p>';
                 }
             }else{
-                echo'<p>Löschen fehlgeschlagen</p>';
+                if(unlink($path.$fina)){
+                    $sql2= deletePost($id);
+                    $status= mysqli_query($link, $sql2);
+                    if($status == true){
+                        echo '<p>Datensatz erfolgreich gelöscht</p>';
+                    }else{
+                        echo '<p>Datensatz konnte nicht gelöscht werden</p>';
+                    }
+                }else{
+                    echo'<p>Löschen fehlgeschlagen</p>';
+                }
             }
+                
     }
 }
 
