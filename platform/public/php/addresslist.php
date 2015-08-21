@@ -267,7 +267,7 @@ if(isset($_POST['delete'])){
         </div>
         <div class="modal-footer">
             <input type="submit" name="submit" value="Speichern" class="btn btn-default">
-          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">Schliessen</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">Zurück</button>
         </div>
         </form>
 
