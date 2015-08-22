@@ -24,6 +24,7 @@ if(isset($_POST['submit'])){
     //Variablen Definitionen
     $date= $_POST['date'];
     $present= $_POST['present'];
+    $notes= iconv('UTF-8', 'windows-1252', $_POST['notes']);
     $title;
     $prNr;
     
@@ -168,19 +169,30 @@ if(isset($_POST['submit'])){
         $exist=false;
         $img;
         while($row= mysqli_fetch_array($result)){
-            $exist=true;
-            if($count==1){
-                $img=$row['Path'].$row['HashName'];
-                $pdf->Image($img,50,$y,65);
-                $count++;
-            }else{
-                $img= $row['Path'].$row['HashName'];
-                $pdf->Image($img,125,$y,65);
-                $pdf->ln();
-                $a = $pdf->GetNewImageSize($row['Path'].$row['HashName'], 65, 0); 
-                $image_height = $a["height"];
-                $y= $y+$image_height+10;
-                $count=1;
+            if($row[HashName]!='placeholder.png'){
+                $exist=true;
+                if($count==1){
+                    if($y<215){
+                        $img=$row['Path'].$row['HashName'];
+                        $pdf->Image($img,50,$y,65);
+                        $count++;
+                    }else{
+                        $pdf->AddPage();
+                        $y= $pdf->GetY();
+                        $img=$row['Path'].$row['HashName'];
+                        $pdf->Image($img,50,$y,65);
+                        $count++;
+                    }
+                    
+                }else{
+                    $img= $row['Path'].$row['HashName'];
+                    $pdf->Image($img,125,$y,65);
+                    $pdf->ln();
+                    $a = $pdf->GetNewImageSize($row['Path'].$row['HashName'], 65, 0); 
+                    $image_height = $a["height"];
+                    $y= $y+$image_height+10;
+                    $count=1;
+                }
             }
         }
         if(!$exist){
@@ -189,10 +201,13 @@ if(isset($_POST['submit'])){
             $pdf->MultiCell(140,8,$error,0,1,'');
             $y= $y+15;
         }
-        $pdf->ln();
-        $a = $pdf->GetNewImageSize($img, 65, 0); 
-        $image_height = $a["height"];
-        $y= $y+$image_height+15;
+        if($count==2){
+            $pdf->ln();
+            $a = $pdf->GetNewImageSize($img, 65, 0); 
+            $image_height = $a["height"];
+            $y= $y+$image_height+15;
+        }
+        
 
     }else{
         $error = iconv('UTF-8', 'windows-1252', 'kein Datum ausgewählt');
@@ -243,12 +258,24 @@ if(isset($_POST['submit'])){
 
     //7. Abschnitt - Notizen
     $pdf->SetFont($font,'B',12);
-    $pdf->Cell(30,8,'Notizen:',0,0,'L');
+    $pdf->Cell(30,5,'Notizen:',0,0,'L');
     $pdf->SetFont($font,'',12);
-    $pdf->MultiCell(140,5,'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',0,1,'');
+    if(!empty($notes)){
+        $pdf->MultiCell(140,5, $notes ,0,1,'');
+    }else{
+        $error = iconv('UTF-8', 'windows-1252', 'keine Notizen');
+        $pdf->SetFont($font,'I',12);
+        $pdf->MultiCell(140,5,$error,0,1,'');
+    }
+    
 
-
-    $pdf->Output();
+    //Download
+    if(!empty($date)){
+        $pdf->Output('Baujournal_'.$date.'.pdf', 'D');
+    }else{
+        $pdf->Output('Baujournal.pdf', 'D');
+    }
+    
 }
 
 
@@ -284,7 +311,7 @@ if(isset($_POST['submit'])){
             <p>Notizen</p>
             <textarea name="notes" placeholder="Bitte hier Kommentar eingeben..."></textarea>
             <br />
-            <input class="btn btn-default createPDF" type="submit" name="submit" value="SIA Baujournal erzeugen"/>
+            <input class="btn btn-default createPDF" type="submit" name="submit" value="SIA Baujournal herunterladen"/>
         </form>
         
         

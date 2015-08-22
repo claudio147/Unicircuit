@@ -21,7 +21,7 @@ if(isset($_POST['submit'])){
     $time = date("H:i:s");
    
     //Bildupload
-    if(!empty($file)){
+    if(!empty($_FILES['userfile']['name'])){
 
     //Array mit Statusmeldungen
     $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
@@ -53,7 +53,7 @@ if(isset($_POST['submit'])){
     }else{
         $uploaddir= '../img/';
         $file= 'placeholder.png';
-        $orgname= 'placeholder.jpg';
+        $orgname= 'placeholder.png';
 
         $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
         $status= mysqli_query($link, $sql);
