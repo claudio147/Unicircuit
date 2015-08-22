@@ -4,9 +4,20 @@ require('../../../library/public/fpdf17/fpdf.php');
 require_once ('../../../library/public/database.inc.php');
 
 $projectID=2;
+$zip;
+$country;
 
 $link=connectDB();
 
+//Alle Projektdaten holen
+    $sql=getProjectDates($projectID);
+    $result= mysqli_query($link, $sql);
+    while ($row = mysqli_fetch_array($result)) {
+        $zip= $row['ZIP'];
+        $country= $row['Country'];
+    }
+    
+    
 //PDF Generator
 if(isset($_POST['submit'])){
     
@@ -15,8 +26,7 @@ if(isset($_POST['submit'])){
     $present= $_POST['present'];
     $title;
     $prNr;
-    $zip;
-    $country;
+    
     
     
     //Alle Projektdaten holen
@@ -38,7 +48,7 @@ if(isset($_POST['submit'])){
     $font='Times';
     $font2='Arial';
 
-
+    
     //Generator PDF
     $pdf = new FPDF();
     $pdf->AliasNbPages();
@@ -254,9 +264,11 @@ if(isset($_POST['submit'])){
     </head>
     <body>
         
-        <form method="POST" action="sia.php">
+        <form method="POST" action="sia.php" id="pdf">
+            <input id="zip" type="hidden" name="zip" value="<?php echo $zip; ?>">
+            <input id="country" type="hidden" name="country" value="<?php echo $country; ?>">
             <p>Datum des gewünschten Baujournal- Eintrags</p>
-            <input type="date" name="date">
+            <input type="date" name="date" id="date">
             <p>Anwesende Handwerker</p>
             <select name="present[]" size="10" multiple="multiple">
                 <?php
