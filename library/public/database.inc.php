@@ -204,6 +204,22 @@ function deletePost($id){
 }
 
 
+/*
+ * SIA Baujournal
+ */
+function getProjectDates($id){
+    $sql= 'SELECT Fk_IdArchitect, Fk_IdBauherr, ProjectNumber, Title, Addressline1, Addressline2, ZIP, City,
+            Country, Description, Picture FROM Project WHERE IdProject='.$id;
+    return $sql;
+}
+
+function selectPostbyDate($projectID, $date){
+    $sql= 'SELECT IdTimeline, Id_visible, HashName, OrgName, Path, Title, Date, Time, Description FROM Timeline WHERE Fk_IdProject="'.$projectID.'" AND Date="'.$date.'"';
+    return $sql;
+}
+
+
+
 
 
 

@@ -102,8 +102,11 @@ $(document).ready(function(){
     });
 
   
-        
+    /*
+     ******************** SIA Baujournal
+     */ 
 
+ 
 
 
 

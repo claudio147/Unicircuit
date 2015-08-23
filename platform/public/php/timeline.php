@@ -21,7 +21,7 @@ if(isset($_POST['submit'])){
     $time = date("H:i:s");
    
     //Bildupload
-    if(!empty($file)){
+    if(!empty($_FILES['userfile']['name'])){
 
     //Array mit Statusmeldungen
     $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
@@ -53,7 +53,7 @@ if(isset($_POST['submit'])){
     }else{
         $uploaddir= '../img/';
         $file= 'placeholder.png';
-        $orgname= 'placeholder.jpg';
+        $orgname= 'placeholder.png';
 
         $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
         $status= mysqli_query($link, $sql);
@@ -287,6 +287,8 @@ echo'</div>';
 <script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/imgLiquid-min.js"></script>
 <script src="../js/script.js"></script>
+
+
 
 
 </body>
