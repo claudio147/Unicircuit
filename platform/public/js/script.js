@@ -127,7 +127,28 @@ $(document).ready(function(){
     /*
      ******************** MAINPAGE ******
      */ 
+    var el = document.getElementById('home');
+    el.onclick = showFoo;
 
+
+    function showFoo() {
+        document.getElementById("homeli").className= "active";
+        document.getElementById("timeline_li").className = "";
+    }
+    
+    $('#termingroup').click(function(){
+        document.getElementById("home_li").className = "";
+        document.getElementById("timeline_li").className = "";
+        document.getElementById("addresslist_li").className = "";
+        document.getElementById("gallery_li").className = "";
+        document.getElementById("contact_li").className = "";
+        document.getElementById("sia_li").className = "";
+    })
+    
+    $('#timeline').click(function(){
+        document.getElementById("home_li").className = "";
+        document.getElementById("timeline_li").classList.add("active");
+    })
  
 
 
