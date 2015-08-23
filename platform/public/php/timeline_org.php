@@ -1,14 +1,19 @@
 <?php
 require_once ('../../../library/public/database.inc.php');
+
+//Platzhalter für Projekt ID aus Session
 $projectID=2;
 $uploaddir= '../img/architect1/project1/img/';
+
+//Standard-Bild als Platzhalter wenn keines ausgewählt wird
+
 
 
 $link= connectDB();
 
 //Speichert einen neuen Eintrag in DB
 if(isset($_POST['submit'])){
-
+    
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
     $visible = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_NUMBER_INT);
@@ -56,12 +61,10 @@ if(isset($_POST['submit'])){
             echo'<p>Fehlgeschlagen</p>';
         }
     }
-    header("Location: index.php?id=2");
 }
 
 //Updated einen bestehenden Eintrag in DB
 if(isset($_POST['edit'])){
-
     $postID= filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_NUMBER_INT);
     $title= filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $content= filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
@@ -107,13 +110,12 @@ if(isset($_POST['edit'])){
             echo'<p>Fehlgeschlagen</p>';
         }
     }
-    header("Location: index.php?id=2");
+    
 }
 
 
 //Löschfunktion
 if(isset($_POST['delete'])){
-
     if(!empty($_POST['postID'])){
         $id=$_POST['postID'];
             $link= connectDB();
@@ -147,7 +149,6 @@ if(isset($_POST['delete'])){
             }
                 
     }
-    header("Location: index.php?id=2");
 }
 
 
@@ -157,7 +158,17 @@ if(isset($_POST['delete'])){
 ?>
 
 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />       
+<!-- CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+<link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css"/>
 
+</head>
+<body>
 
 <!--Lightboxen (Modals)-->
 <div class="container">
@@ -267,3 +278,17 @@ echo'</div>';
 ?>
 
 
+
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/imgLiquid-min.js"></script>
+<script src="../js/script.js"></script>
+
+
+
+
+</body>
+</html>

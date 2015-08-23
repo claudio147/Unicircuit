@@ -142,7 +142,7 @@ if(isset($_POST['submit'])){
         
     
         if($statusGlobal==true && $statusProject==true){
-            header('Location: index.php?id=6');
+            header('Location: addresslist.php');
         }else{
             echo'<p>Error1</p>';
         }
@@ -157,13 +157,29 @@ if(isset($_POST['delete'])){
     $sql= deleteProjectAddress($idProjectAddress);
     $resultDel = mysqli_query($link, $sql);
     if($resultDel){
-        header('Location: index.php?id=6');
+        header('Location: addresslist.php');
     }else{
         echo'<p>Löschen fehlgeschlagen</p>';
     }
 }
 
 ?>
+
+<html>
+    <head>
+        <title>Adressliste Architekt</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="../css/style.css">
+        
+        
+        
+        
+        
+    </head>
+    <body>
  
 <!--Lightboxen (Modals)-->
 <div class="container">
@@ -330,3 +346,18 @@ echo'</table>';
 ?>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Scripts für Tabellendarstellung und Tabellenexport -->
+<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>
+<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="../js/script.js"></script>
+<!--<script src="../../../productsite/public/bootstrap/js/bootstrap.min.js"></script>-->
+
+    </body>
+</html>

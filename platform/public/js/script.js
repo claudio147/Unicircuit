@@ -1,3 +1,19 @@
+/*
+*** Timeline
+*/
+window.onresize= dynamicResizer;
+window.onload= dynamicResizer;
+
+function dynamicResizer(){
+    var cw = $('.col-sm-2').width();
+    cw +=30;
+    $('.imgLiquid').css({'height':cw+'px'});
+    console.log(cw);
+} 
+
+
+// DOCUMENT READY
+        
 $(document).ready(function(){
 
     //Aktuelles Datum
@@ -73,10 +89,10 @@ $(document).ready(function(){
 
 
     /*
-    ******************* Timeline
+    ******************* Timeline *******
     */
 
-    //Ajax Loader für INhalt in Lightbox bei bearbeiten
+    //Ajax Loader für Inhalt in Lightbox bei bearbeiten
     $('.btn_postEdit').click(function(){
         var id= $(this).val();
         $.post('../php/ajax.php', {"postEdit":id},function(data){
@@ -84,15 +100,21 @@ $(document).ready(function(){
         }) 
     });   
 
+
+
     //Anzeige von Vorschau- Bildern in Timneline
-    window.onresize= dynamicResizer;
-    window.onload= dynamicResizer;
+    
 
         function dynamicResizer(){
             var cw = $('.col-sm-2').width();
             cw +=30;
             $('.imgLiquid').css({'height':cw+'px'});
+            console.log(cw);
         } 
+
+        window.onresize= dynamicResizer;
+        window.onload= dynamicResizer;
+
 
     //Anzeige der Vorschaubilder mittig ohne Verzerrung
     $(".imgLiquidFill").imgLiquid({
@@ -103,7 +125,7 @@ $(document).ready(function(){
 
   
     /*
-     ******************** SIA Baujournal
+     ******************** MAINPAGE ******
      */ 
 
  

@@ -280,16 +280,7 @@ if(isset($_POST['submit'])){
 
 
 ?>
-<html>
-    <head>  
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />       
-        <!-- CSS -->
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
 
-        <link rel="stylesheet" href="../css/style.css"/>
-    </head>
-    <body>
         
         <form method="POST" action="sia.php" id="pdf">
             <input id="zip" type="hidden" name="zip" value="<?php echo $zip; ?>">
@@ -313,20 +304,4 @@ if(isset($_POST['submit'])){
             <br />
             <input class="btn btn-default createPDF" type="submit" name="submit" value="SIA Baujournal herunterladen"/>
         </form>
-        
-        
-        
-        
-        
-        
-        
-        
-        <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-        <script src="../js/script.js"></script>
-        <script src="../js/weather.js"></script>
-        
-    </body>
-</html>
