@@ -246,6 +246,7 @@ $result = mysqli_query($link, $sql);
 
 
 echo'<div class="container">';
+// Ausgabe Timeline
 while($row= mysqli_fetch_array($result)){
     if($row['Id_visible']==1){
         $lock='<i class="fa fa-lock"></i>';

@@ -6,6 +6,14 @@
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
 
+//Zerstörung Cookie
+if (isset($_COOKIE[session_name()])) {
+  session_start(); // Reinitialisiere Session
+  setcookie(session_name(), '', time() - 42000, '/');  // Setze Cookie ungültig
+  session_destroy(); // Zerstöre Session
+  header('Location: login.php'); // Spring zurück auf login.php
+}
+
 
 if (isset($_POST['submit'])) {
   // Es wird untersucht, ob in der Datenbank ein entsprechender User eingetragen ist, ansonsten wird eine Fehlermeldung 
@@ -17,8 +25,7 @@ if (isset($_POST['submit'])) {
 
     
     $link = connectDB();
-    $sql = "SELECT IdUser, Fk_IdUserType, Active FROM User WHERE email='" . $email . "' "
-            . "AND password='" . hash('sha256', $pw) . "'";
+    $sql = selectUser($email, $pw);
     $result = mysqli_query($link, $sql);
     $row = mysqli_fetch_array($result);
     if($row['Active'] != 3 && !empty($row['IdUser'])) {
@@ -44,12 +51,9 @@ if (isset($_POST['submit'])) {
       $browserTyp = substr($_SERVER['HTTP_USER_AGENT'], 0, 250);
       $datensatz = $row['id'];
       
-      //wieder auslöschen:
-      $_SESSION['SID'] = $sessionId;
+
       // Es wird ein Update durchgeführt, da die Benutzdaten stimmen
-      $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',"
-              . " SessionId='$sessionId', Browser='$browserTyp'"
-              . " WHERE id =$datensatz";
+      $sql = updateUser($date, $time, $sessionId, $browserTyp, $datensatz);
       $result = mysqli_query($link, $sql);
 
 

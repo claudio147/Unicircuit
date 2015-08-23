@@ -287,4 +287,20 @@ function setAllActiveNull($idHTML){
     return $sql;
 }
 
+/*
+ * Login 
+ */
 
+//User aus Datenbank auslesen, anhand übereinstimmung und passwort
+function selectUser($email, $pw) {
+   $sql = "SELECT IdUser, Fk_IdUserType, Active FROM User WHERE email='" . $email . "' "
+            . "AND password='" . hash('sha256', $pw) . "'";
+    return $sql;
+}
+//nach session eröffnung userDaten anpassen 
+function updateUser($date, $time, $sessionId, $browserTyp, $datensatz) {
+   $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',"
+              . " SessionId='$sessionId', Browser='$browserTyp'"
+              . " WHERE id =$datensatz";
+   return $sql;
+}
