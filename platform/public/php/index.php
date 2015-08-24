@@ -54,7 +54,7 @@ if(isset($_GET['id'])){
 
     <!-- CSS 3rd Party -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
 
