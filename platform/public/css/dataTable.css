@@ -76,7 +76,7 @@ table.dataTable {
     table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected {
       background-color: #d7d7d7; }
   table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
-    background-color: #9fcd35; }
+    background-color: whitesmoke; }
     table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
       background-color: #d5d5d5; }
   table.dataTable.order-column tbody tr > .sorting_1,

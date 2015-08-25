@@ -181,7 +181,7 @@ if(isset($_POST['delete'])){
         </div>
               <div class="modal-body">
 
-            <div id="input_container">
+            <div id="input_container testXY">
             <h3>Adressdatenbank</h3>
                 <?php
 
