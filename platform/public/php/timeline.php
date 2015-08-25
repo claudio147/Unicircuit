@@ -160,10 +160,10 @@ if(isset($_POST['delete'])){
 
 
 <!--Lightboxen (Modals)-->
-<div class="container">
+<div class="container modalgroup">
 
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#newPost">+ hinzufügen</button>
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">+ hinzufügen</button>
 
     <!-- Modal Global-->
     <div class="modal" id="newPost" role="dialog">
@@ -180,20 +180,28 @@ if(isset($_POST['delete'])){
                             <div id="input_container">
 
                                 <p>Titel*</p>
-                                <input type="text" name="title">
+                                <input type="text" name="title" class="form-control">
                                 <p>Inhalt*</p>
-                                <textarea name="content"></textarea>
+                                <textarea name="content" class="form-control" rows="8"></textarea>
+                                <div class="radio">
                                 <p>Sichtbarkeit*</p>
-                                <p>
-                                    <input type="radio" name="visible" value="1" checked="checked"/>  Nur Architekt
-                                    <input type="radio" name="visible" value="2"/>  Architekt und Bauherr
-                                </p>
+                                    <label>
+                                        <input type="radio" name="visible" value="1" checked="checked"/>
+                                        Nur Architekt
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="visible" value="2"/>
+                                        Architekt und Bauherr
+                                    </label>
+                                </div>
                                 <p>Bildupload</p>
                                 <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
                                 <input type="file" name="userfile"/>
 
 
-                            </div>       
+                            </div>
                         </div>
                     <div class="modal-footer">
                         <input type="submit" name="submit" value="Speichern" class="btn btn-default"/>
@@ -245,7 +253,7 @@ $sql= selectPosts($projectID);
 $result = mysqli_query($link, $sql);
 
 
-echo'<div class="container">';
+echo'<div class="container timeline-container">';
 // Ausgabe Timeline
 while($row= mysqli_fetch_array($result)){
     if($row['Id_visible']==1){

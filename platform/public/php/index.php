@@ -57,6 +57,7 @@ if(isset($_GET['id'])){
     <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
+    <link href="../css/dataTable.css" rel="stylesheet">
 
     <!-- CSS spezifisch -->
     <link href="../css/style.css" rel="stylesheet">
@@ -181,11 +182,11 @@ if(isset($_GET['id'])){
                         default:
                             echo'<p>Error Loading Content</p>';
                     }
-                    
+
                 }else{
                     echo'<p>HOME SEITE</p>';
                 }
-                
+
                 ?>
 
             </div>
@@ -214,7 +215,7 @@ if(isset($_GET['id'])){
 
     <script src="../js/script.js"></script>
     <script src="../js/weather.js"></script>
-	
+
 
 </body>
 

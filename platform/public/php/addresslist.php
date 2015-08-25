@@ -12,7 +12,7 @@ $result = mysqli_query($link, $sql);
 
 $sql2=allGlobalAddress();
 $result2= mysqli_query($link, $sql2);
-        
+
 if(isset($_POST['submit'])){
     $error=false;
 
@@ -31,70 +31,70 @@ if(isset($_POST['submit'])){
     $mobileDirect = filter_input(INPUT_POST, 'mobileDirect', FILTER_SANITIZE_STRING);
     $emailDirect = filter_input(INPUT_POST, 'emailDirect', FILTER_SANITIZE_STRING);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
-    
+
     // Fehler im Eingabefeld?
     if (empty($bkp) || strlen($bkp) > 3) {
         $errorBKP = true;
         $error = true;
         echo $bkp;
     }
-    
+
     // Fehler im Eingabefeld?
     if (empty($company) || strlen($company) < 4) {
         $errorCompany = true;
-        $error = true;   
+        $error = true;
         echo'2';
     }
-    
+
     // Fehler im Eingabefeld?
     if (empty($addressline1) || strlen($addressline1) < 5) {
         $errorAddressline1 = true;
         $error = true;
         echo '3';
     }
-    
+
     // Fehler im Eingabefeld?
     if (empty($zip) || strlen($zip) < 4) {
         $errorZIP = true;
         $error = true;
         echo'4';
     }
-    
+
     // Fehler im Eingabefeld?
     if (empty($city) || strlen($city) < 4) {
         $errorCity = true;
         $error = true;
         echo'5';
     }
-    
+
     // Fehler im Eingabefeld?
     if (empty($country)) {
         $errorCountry = true;
         $error = true;
         echo'6';
     }
-    
+
     // Mailadresse korrekt?
     if (!checkMailFormat($email)) {
         $errorEmail = true;
         $error = true;
         echo'7';
     }
-    
+
     // Fehler im Eingabefeld?
     if (empty($phoneNumber) || strlen($phoneNumber) < 10) {
         $errorPhoneNumber = true;
         $error = true;
         echo'8';
     }
-    
+
     // Fehler im Eingabefeld?
     if (empty($homepage) || strlen($homepage) < 10) {
         $errorHomepage = true;
         $error = true;
         echo'9';
     }
-    
+
     //Datenbankbefehle wenn kein Error vorhanden ist.
     if(!$error){
         //Überprüfe ob eine id übergeben wurde
@@ -110,18 +110,18 @@ if(isset($_POST['submit'])){
                 $resultID= mysqli_query($link, $sql);
                 while($row=  mysqli_fetch_array($resultID)){
                     $idGlobal= $row['IdGlobalAddress'];
-                } 
+                }
             }else{
                 $statusGlobal=false;
                 echo'<p>Firma exisitert bereits in globaler DB</p>';
             }
-        }else if(isset($_POST['idGlobalAddress'])){      
+        }else if(isset($_POST['idGlobalAddress'])){
             $idGlobal = filter_input(INPUT_POST, 'idGlobalAddress', FILTER_SANITIZE_NUMBER_INT);
             $statusGlobal=true;
         }else{
             $statusGlobal=true;
         }
-        
+
 
 
         if(isset($_POST['idProjectAddress'])){
@@ -136,11 +136,8 @@ if(isset($_POST['submit'])){
             $emailDirect, $description);
             $statusProject= mysqli_query($link, $sql);
         }
-            
-        
-        
-        
-    
+
+
         if($statusGlobal==true && $statusProject==true){
             header('Location: index.php?id=6');
         }else{
@@ -148,7 +145,7 @@ if(isset($_POST['submit'])){
         }
     }else{
         echo'<p>Error2</p>';
-    }   
+    }
 }
 
 if(isset($_POST['delete'])){
@@ -164,17 +161,17 @@ if(isset($_POST['delete'])){
 }
 
 ?>
- 
+
 <!--Lightboxen (Modals)-->
-<div class="container">
+<div class="container modalgroup">
 
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+ Hinzufügen</button>
+  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" id="btn_new_address">+ Hinzufügen</button>
 
   <!-- Modal Global-->
   <div class="modal" id="myModal" role="dialog">
       <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
           <form action="addresslist.php" method="POST">
@@ -183,19 +180,19 @@ if(isset($_POST['delete'])){
           <h4 class="modal-title">Handwerker hinzufügen</h4>
         </div>
               <div class="modal-body">
-            
+
             <div id="input_container">
-                
+            <h3>Adressdatenbank</h3>
                 <?php
 
-                    echo'<table class="table table-striped table-bordered" id="globalAddress">';
+                    echo'<table class="table order hover" id="globalAddress">';
                     echo'<thead>';
                     echo'<tr>';
                     echo'<th>Firma</th>';
                     echo'<th>BKP</th>';
                     echo'<th>PLZ</th>';
                     echo'<th>Ort</th>';
-                    echo'<th></th>';
+                    echo'<th> </th>';
                     echo'</tr>';
                     echo'</thead>';
                     echo'<tbody>';
@@ -212,11 +209,8 @@ if(isset($_POST['delete'])){
                     echo'</tbody>';
                     echo'</table>';
                     ?>
-                
-                
-                
                 <button type="button" class="btn btn-default btn_new" data-toggle="modal" data-target="#modalSearch" data-dismiss="modal">Neue Adresse</button>
-            </div>       
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
@@ -224,16 +218,15 @@ if(isset($_POST['delete'])){
         </form>
 
       </div>
-      
+
     </div>
   </div>
-  
-  
-  
+
+
   <!-- Modal Hinzufügen-->
   <div class="modal" id="modalSearch" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
           <form action="addresslist.php" method="POST">
@@ -242,12 +235,12 @@ if(isset($_POST['delete'])){
           <h4 class="modal-title">Handwerker hinzufügen</h4>
         </div>
               <div class="modal-body">
-            
+
             <div id="newAddress">
-                
+
                 <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
-                
-            </div>     
+
+            </div>
         </div>
         <div class="modal-footer">
             <input type="submit" name="submit" value="Speichern" class="btn btn-default">
@@ -256,16 +249,16 @@ if(isset($_POST['delete'])){
         </form>
 
       </div>
-      
+
     </div>
   </div>
   <!-- Modal End -->
-  
-  
+
+
    <!-- Modal Edit -->
   <div class="modal" id="modalEdit" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
           <form action="addresslist.php" method="POST">
@@ -274,12 +267,12 @@ if(isset($_POST['delete'])){
           <h4 class="modal-title">Handwerker bearbeiten</h4>
         </div>
               <div class="modal-body">
-            
+
             <div id="editAddress">
-                
+
                 <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
-                
-            </div>     
+
+            </div>
         </div>
         <div class="modal-footer">
             <input type="submit" name="submit" value="Speichern" class="btn btn-default">
@@ -289,17 +282,17 @@ if(isset($_POST['delete'])){
         </form>
 
       </div>
-      
+
     </div>
   </div>
   <!-- Modal End -->
-  
+
 </div>
 
 
 <?php
 
-echo'<table class="table table-striped table-bordered" id="localAddress">';
+echo'<table class="table order hover" id="localAddress">';
 echo'<thead>';
 echo'<tr>';
 echo'<th>Firma</th>';

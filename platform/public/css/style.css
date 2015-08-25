@@ -7,7 +7,7 @@ table{
     font-size: 12px;
 }
 
-.modal p{
+.modal p, form>p{
 	margin-bottom: 0px;
 	font-size: 12px;
 	margin-top: 10px;
@@ -36,6 +36,9 @@ textarea{
 
 .dt-button{
 	margin-right: 10px;
+}
+body{
+    background-color: #f0f0f0;
 }
 
 /*
@@ -229,3 +232,34 @@ body {
 .imgLiquid{
 	min-height: 20px;
 }
+
+.modalgroup{
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+.modal-content{
+    margin-top: 70px;
+}
+
+.timeline-container{
+    margin-left: 0px;
+}
+
+
+/*
+****** SIA Baujournal
+*/
+.sia-group{
+    padding-left: 0px;
+}
+
+
+
+
+
+
+
+
+
+

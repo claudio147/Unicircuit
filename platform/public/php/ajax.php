@@ -9,7 +9,7 @@ if(isset($_POST['id'])){
     $data= '';
     //ID aus globaler Adressliste
     $id= filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
-    
+
     $sql3=getGlobalAddress($id);
     $result3= mysqli_query($link, $sql3);
     while($row= mysqli_fetch_array($result3)){
@@ -23,44 +23,52 @@ if(isset($_POST['id'])){
         $email= $row['Email'];
         $phoneNumber= $row['PhoneNumber'];
         $homepage= $row['Homepage'];
-        
+
         $data.= '<input type="hidden" name="idGlobalAddress" value="'.$id.'">
                 <h4>Firmendaten</h4>
                 <p>BKP*</p>
-                <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly">
+                <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly" class="form-control">
                 <p>Firma*</p>
-                <input type="text" name="company" value="'.$company.'" readonly="readonly">
+                <input type="text" name="company" value="'.$company.'" readonly="readonly" class="form-control">
                 <p>Adresszeile 1*</p>
-                <input type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly">
+                <input type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly" class="form-control">
                 <p>Adresszeile 2</p>
-                <input type="text" name="addressline2" value="'.$addressline2.'" readonly="readonly">
-                <p>PLZ* / Ort*</p>
-                <input type="text" name="zip" value="'.$zip.'" readonly="readonly"><input type="text" name="city" value="'.$city.'" readonly="readonly">
+                <input type="text" name="addressline2" value="'.$addressline2.'" readonly="readonly" class="form-control">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <p>PLZ*</p>
+                        <input type="text" name="zip" value="'.$zip.'" readonly="readonly" class="form-control">
+                    </div>
+                    <div class="col-xs-10">
+                        <p>Ort*</p>
+                        <input type="text" name="city" value="'.$city.'" readonly="readonly" class="form-control">
+                    </div>
+                </div>
                 <p>Land*</p>
-                <select name="country">
+                <select name="country" class="form-control" readonly="readonly">
                 <option value="Schweiz" selected="selected">Schweiz</option>
                 <option value="Deutschland">Deutschland</option>
                 <option value="Österreich">Österreich</option>
                 <option value="Lichtenstein">Lichtenstein</option>
                 </select>
                 <p>Email (Hauptadresse)*</p>
-                <input type="email" name="email" value="'.$email.'" readonly="readonly">
+                <input type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
                 <p>Telefon (Hauptnummer)*</p>
-                <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly">
+                <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly" class="form-control">
                 <p>Homepage*</p>
-                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly">
+                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly" class="form-control">
                 <br /><br />
                 <h4>Direkte Kontaktdaten</h4>
                 <p>Ansprechpartner</p>
-                <input type="text" name="projectCoordinator">                
+                <input type="text" name="projectCoordinator" class="form-control">
                 <p>Email (Direkt)</p>
-                <input type="text" name="emailDirect">
+                <input type="text" name="emailDirect" class="form-control">
                 <p>Telefon (Direkt)</p>
-                <input type="text" name="phoneDirect">
+                <input type="text" name="phoneDirect" class="form-control">
                 <p>Mobile (Direkt)</p>
-                <input type="text" name="mobileDirect">
+                <input type="text" name="mobileDirect" class="form-control">
                 <p>Notizen</p>
-                <input type="textarea" name="description">';
+                <textarea name="description" class="form-control" rows="3"></textarea>';
                 echo $data;
     }
 }
@@ -68,54 +76,62 @@ if(isset($_POST['id'])){
 //Leeres Formular um neue Adresse hinzuzufügen
 if(isset($_POST['new'])){
     $data= '';
-            
+
         $data.= '<h4>Firmendaten</h4>
                 <p>BKP*</p>
-                <input type="text" name="bkp">
+                <input type="text" name="bkp" class="form-control" maxlength="3">
                 <p>Firma*</p>
-                <input type="text" name="company">
+                <input type="text" name="company" class="form-control">
                 <p>Adresszeile 1*</p>
-                <input type="text" name="addressline1">
+                <input type="text" name="addressline1" class="form-control">
                 <p>Adresszeile 2</p>
-                <input type="text" name="addressline2">
-                <p>PLZ* / Ort*</p>
-                <input type="text" name="zip"><input type="text" name="city">
+                <input type="text" name="addressline2" class="form-control">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <p>PLZ*</p>
+                        <input type="text" name="zip" class="form-control" maxlength="4">
+                    </div>
+                    <div class="col-xs-10">
+                        <p>Ort*</p>
+                        <input type="text" name="city" class="form-control">
+                    </div>
+                </div>
                 <p>Land*</p>
-                <select name="country">
+                <select name="country" class="form-control">
                 <option value="Schweiz" selected="selected">Schweiz</option>
                 <option value="Deutschland">Deutschland</option>
                 <option value="Österreich">Österreich</option>
                 <option value="Lichtenstein">Lichtenstein</option>
                 </select>
                 <p>Email (Hauptadresse)*</p>
-                <input type="email" name="email">
+                <input type="email" name="email" class="form-control">
                 <p>Telefon (Hauptnummer)*</p>
-                <input type="text" name="phoneNumber">
+                <input type="text" name="phoneNumber" class="form-control">
                 <p>Homepage*</p>
-                <input type="text" name="homepage">
+                <input type="text" name="homepage" class="form-control">
 
                 <br /><br />
                 <h4>Direkte Kontaktdaten</h4>
                 <p>Ansprechpartner</p>
-                <input type="text" name="projectCoordinator">
+                <input type="text" name="projectCoordinator" class="form-control">
                 <p>Email (Direkt)</p>
-                <input type="text" name="emailDirect">
+                <input type="text" name="emailDirect" class="form-control">
                 <p>Telefon (Direkt)</p>
-                <input type="text" name="phoneDirect">
+                <input type="text" name="phoneDirect" class="form-control">
                 <p>Mobile (Direkt)</p>
-                <input type="text" name="mobileDirect">
+                <input type="text" name="mobileDirect" class="form-control">
                 <p>Notizen</p>
-                <input type="textarea" name="description">';
+                <textarea name="description" class="form-control" rows="3"></textarea>';
                 echo $data;
 }
 
 //Formular mit Platzhaltern um einen bestehenden Projekt-Adress-Eintrag zu bearbeiten
 if(isset($_POST['edit'])){
     $data= '';
-    
+
     //Projektadresse ID
     $id= filter_input(INPUT_POST, 'edit', FILTER_SANITIZE_NUMBER_INT);
-    
+
     $sql4= getProjectAddress($id);
     $result4= mysqli_query($link, $sql4);
     while($row= mysqli_fetch_array($result4)){
@@ -134,49 +150,58 @@ if(isset($_POST['edit'])){
         $mobileNumber= $row['MobileNumber'];
         $emailDirect= $row['EmailDirect'];
         $description= $row['Description'];
-        
+
         $data.= '<input type="hidden" name="idProjectAddress" value="'.$id.'">
                 <h4>Firmendaten</h4>
                 <p>BKP*</p>
-                <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly">
+                <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly" class="form-control">
                 <p>Firma*</p>
-                <input type="text" name="company" value="'.$company.'" readonly="readonly">
+                <input type="text" name="company" value="'.$company.'" readonly="readonly" class="form-control">
                 <p>Adresszeile 1*</p>
-                <input type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly">
+                <input type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly" class="form-control">
                 <p>Adresszeile 2</p>
-                <input type="text" name="addressline2" value="'.$addressline2.'" readonly="readonly">
-                <p>PLZ* / Ort*</p>
-                <input type="text" name="zip" value="'.$zip.'" readonly="readonly"><input type="text" name="city" value="'.$city.'" readonly="readonly">
+                <input type="text" name="addressline2" value="'.$addressline2.'" readonly="readonly" class="form-control">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <p>PLZ*</p>
+                        <input type="text" name="zip" value="'.$zip.'" readonly="readonly" class="form-control">
+                    </div>
+                    <div class="col-xs-10">
+                        <p>Ort*</p>
+                        <input type="text" name="city" value="'.$city.'" readonly="readonly" class="form-control">
+                    </div>
+                </div>
                 <p>Land*</p>
-                <select name="country">
+                <select name="country" readonly="readonly" class="form-control">
                 <option value="Schweiz" selected="selected">Schweiz</option>
                 <option value="Deutschland">Deutschland</option>
                 <option value="Österreich">Österreich</option>
                 <option value="Lichtenstein">Lichtenstein</option>
                 </select>
                 <p>Email (Hauptadresse)*</p>
-                <input type="email" name="email" value="'.$email.'" readonly="readonly">
+                <input type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
                 <p>Telefon (Hauptnummer)*</p>
-                <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly">
+                <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly" class="form-control">
                 <p>Homepage*</p>
-                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly">
+                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly" class="form-control">
 
                 <br /><br />
                 <h4>Direkte Kontaktdaten</h4>
                 <p>Ansprechpartner</p>
-                <input type="text" name="projectCoordinator" value="'.$projectCoordinator.'">
+                <input type="text" name="projectCoordinator" value="'.$projectCoordinator.'" class="form-control">
                 <p>Email (Direkt)</p>
-                <input type="text" name="emailDirect" value="'.$emailDirect.'">
+                <input type="text" name="emailDirect" value="'.$emailDirect.'" class="form-control">
                 <p>Telefon (Direkt)</p>
-                <input type="text" name="phoneDirect" value="'.$phoneDirect.'">
+                <input type="text" name="phoneDirect" value="'.$phoneDirect.'" class="form-control">
                 <p>Mobile (Direkt)</p>
-                <input type="text" name="mobileDirect" value="'.$mobileNumber.'">
+                <input type="text" name="mobileDirect" value="'.$mobileNumber.'" class="form-control">
                 <p>Notizen</p>
-                <input type="textarea" name="description" value="'.$description.'">';
+                <textarea name="description" class="form-control" rows="3">'.$description.'</textarea>';
                 echo $data;
     }
 }
 
+//Formular mit Platzhaltern für das Editieren eines CHronik-Beitrags
 if(isset($_POST['postEdit'])){
     $data= '';
 
@@ -209,14 +234,22 @@ if(isset($_POST['postEdit'])){
                 <input type="hidden" name="path" value="'.$path.'"/>
                 <input type="hidden" name="orgName" value="'.$orgName.'"/>
                 <p>Titel*</p>
-                <input type="text" name="title" value="'.$title.'">
+                <input type="text" name="title" value="'.$title.'" class="form-control">
                 <p>Inhalt*</p>
-                <textarea name="content">'.$content.'</textarea>
-                <p>Sichtbarkeit*</p>
-                <p>
-                    <input type="radio" name="visible" value="1" '.$check1.'/>  Nur Architekt
-                    <input type="radio" name="visible" value="2" '.$check2.'/>  Architekt und Bauherr
-                </p>
+                <textarea name="content" class="form-control" rows="8">'.$content.'</textarea>
+                <div class="radio">
+                    <p>Sichtbarkeit*</p>
+                    <label>
+                        <input type="radio" name="visible" value="1" '.$check1.'/>
+                        Nur Architekt
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="visible" value="2" '.$check2.'/>
+                        Architekt und Bauherr
+                    </label>
+                </div>
                 <p>Bildupload</p>
                 <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
                 <input type="file" name="userfile"/>';
