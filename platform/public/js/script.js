@@ -39,7 +39,7 @@ $(document).ready(function(){
 
     //Lokale Adressliste (mit Export-Funktion)
     $('#localAddress').DataTable({
-        "scrollY":        "500px",
+        "scrollY":        "450px",
         "scrollCollapse": true,
         "paging":         false,
         dom: 'Bfrtip',

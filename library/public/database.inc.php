@@ -304,3 +304,20 @@ function updateUser($date, $time, $sessionId, $browserTyp, $datensatz) {
               . " WHERE id =$datensatz";
    return $sql;
 }
+
+
+/*
+ * Kontaktformular - Plattform
+ */
+
+function getMailArch($projectID){
+    $sql= "SELECT u.Email, p.ProjectNumber, p.Title FROM User as u JOIN Project as p on u.IdUser = p.Fk_IdArchitect WHERE p.IdProject=".$projectID;
+    return $sql;
+}
+
+function getNameCust($projectID){
+    $sql= "SELECT u.Email, u.Firstname, u.Lastname, p.ProjectNumber, p.Title FROM User as u JOIN Project as p on u.IdUser = p.Fk_IdBauherr WHERE p.IdProject=".$projectID;
+    return $sql;
+}
+
+

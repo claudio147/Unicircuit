@@ -95,7 +95,41 @@ function createArchRegMail($fn, $ln, $em) {
         } else {
         echo "Message sent!";
 
+        }
 }
+
+
+// Erstellt und versendet Kontaktmail von Plattform
+function sendMailtoArch($emArch, $emCust, $fnCust, $lnCust, $subject, $message, $projectNr, $projectName) {
+    global $mail;
+    $mail ->Subject = $projectNr.' '.$projectName.': '.$subject;
+    $address = $emArch;
+    $mail->AddAddress($address);
+      // Nachricht zusammenbauen
+      $mail->MsgHTML('
+	<html>
+        <head>
+        <meta charset="UTF-8">
+	<title>Kontaktanfrage über Unicircuit-Plattform</title>
+	</head>
+        <body>
+        <p><strong>Projektnummer:</strong><br/>'.$projectNr.'</p>
+        <p><strong>Projekt:</strong><br/>'.$projectName.'</p>
+        <p><strong>Absender:</strong><br/>'.$fnCust.' '.$lnCust.'</p>
+        <p><strong>Antworten an:</strong><br/>'.$emCust.'</p>
+	<p><strong>Nachricht:</strong><br/>'.$message.'</p>
+        <br/><br/>
+        <p><i>Nachricht gesendet über Archconsulting - Unicircuit</i></p>
+    </body>
+    </html>');
+
+      // Mail an Benutzer/in senden. 
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        return false;
+        } else {
+        return true;
+        }
 }
 
 
