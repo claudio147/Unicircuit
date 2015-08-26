@@ -37,7 +37,6 @@ function checkMailFormat($email) {
   } else {
   return false;
   }
-    
 }
 
 
@@ -50,28 +49,26 @@ function createRegMail ($em, $fn ,$ln, $to) {
     //Subject des E-Mails
     $mail->Subject ='Registrationsfreischaltung auf Unicircuit';
     $address = $em;
-    
-    $mail->AddAddress($address, $fn.' '.$ln);   
+
+    $mail->AddAddress($address, $fn.' '.$ln);
       // Nachricht zusammenbauen als HTML Dokument
       $mail->MsgHTML("
 	<html><head>
 	<title>Anmledung bei Archconsulting Unicircuit</title>
 	</head><body><p>Hallo $fn $ln</p>
-	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer 
-    registiert. Um die Registration abzuschliessen, klicken Sie bitte auf 
+	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
+    registiert. Um die Registration abzuschliessen, klicken Sie bitte auf
     folgenden Link: <br />
     <a href=\"http://local-platform.int.ch/php/verification.php?regcode=$to\">Registration abschliessen</a>".
     "</p><p>Es gr&uuml;sst das Team von Archconsulting</p></body></html>");
 
-      // Mail an Benutzer/in senden. 
+      // Mail an Benutzer/in senden.
       if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
         echo 'Email:'.$em;
-        
-        
         } else {
         header('Location: userverwaltung.php');
-        
+
 }
 }
 
@@ -86,16 +83,50 @@ function createArchRegMail($fn, $ln, $em) {
 	<html><head>
 	<title>Anmledung bei Archconsulting Unicircuit</title>
 	</head><body><p>Hallo $fn $ln</p>
-	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer 
+	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
     registiert. Nach erfolgreicher Prüfung erhalten Sie ihr aktivierungs Mail.</body></html>");
 
-      // Mail an Benutzer/in senden. 
+      // Mail an Benutzer/in senden.
       if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
         } else {
         echo "Message sent!";
 
+        }
 }
+
+
+// Erstellt und versendet Kontaktmail von Plattform
+function sendMailtoArch($emArch, $emCust, $fnCust, $lnCust, $subject, $message, $projectNr, $projectName) {
+    global $mail;
+    $mail ->Subject = $projectNr.' '.$projectName.': '.$subject;
+    $address = $emArch;
+    $mail->AddAddress($address);
+      // Nachricht zusammenbauen
+      $mail->MsgHTML('
+	<html>
+        <head>
+        <meta charset="UTF-8">
+	<title>Kontaktanfrage über Unicircuit-Plattform</title>
+	</head>
+        <body>
+        <p><strong>Projektnummer:</strong><br/>'.$projectNr.'</p>
+        <p><strong>Projekt:</strong><br/>'.$projectName.'</p>
+        <p><strong>Absender:</strong><br/>'.$fnCust.' '.$lnCust.'</p>
+        <p><strong>Antworten an:</strong><br/>'.$emCust.'</p>
+	<p><strong>Nachricht:</strong><br/>'.$message.'</p>
+        <br/><br/>
+        <p><i>Nachricht gesendet über Archconsulting - Unicircuit</i></p>
+    </body>
+    </html>');
+
+      // Mail an Benutzer/in senden.
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        return false;
+        } else {
+        return true;
+        }
 }
 
 

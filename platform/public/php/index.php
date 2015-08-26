@@ -1,4 +1,61 @@
 <?php
+require_once ('../../../library/public/database.inc.php');
+
+$projectID=2;
+
+$prNr;
+$prNa;
+$fnCust;
+$lnCust;
+
+
+if(isset($_GET['id'])){
+    switch($_GET['id']){
+        case 1:
+            $active1= 'active';
+            break;
+        case 2:
+            $active2= 'active';
+            break;
+        case 3:
+            $active3= 'active';
+            break;
+        case 4:
+            $active3= 'active';
+            break;
+        case 5:
+            $active3= 'active';
+            break;
+        case 6:
+            $active6= 'active';
+            break;
+        case 7:
+            $active7= 'active';
+            break;
+        case 8:
+            $active8= 'active';
+            break;
+        case 9:
+            $active9= 'active';
+            break;
+        default:
+            $active1= 'active';
+    }
+}else{
+    $active1= 'active';
+}
+
+
+
+$link= connectDB();
+$sql= getNameCust($projectID);
+$result= mysqli_query($link, $sql);
+while($row= mysqli_fetch_array($result)){
+    $prNr= $row['ProjectNumber'];
+    $prNa= $row['Title'];
+    $fnCust= $row['Firstname'];
+    $lnCust= $row['Lastname'];
+}
 
 
 
@@ -19,16 +76,14 @@
 
     <!-- CSS 3rd Party -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-	<link href="../css/sb-admin.css" rel="stylesheet">
-    <link href="../css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
+    <link href="../css/dataTable.css" rel="stylesheet">
 
     <!-- CSS spezifisch -->
-	<link href="../css/style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 
-
- 
 
 </head>
 
@@ -47,21 +102,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="../img/architect1/personal/logo.gif" alt="Logo"></a>
-                <h2 class="navbar-text">EFH Mustermann</h2>
+                <a class="navbar-brand" href="index.html" target="_blank"><img src="../img/architect1/personal/logo.gif" alt="Logo"></a>
+                <h1 class="navbar-text"><?php echo $prNr.'&nbsp;&nbsp;&nbsp;&nbsp;'.$prNa;?></h1>
             </div>
 
             <!-- Top Menu -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>Max Muster<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="#"><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Abmelden</a>
                         </li>
                     </ul>
                 </li>
@@ -70,40 +125,43 @@
             <!-- Sidebar Menü (Element klappen ein bei kleinem Viewport) -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a href="index.php?id=1"><i class="fa fa-home"></i>Home</a>
+                    <li id="home_li" class="<?php echo $active1; ?>">
+                        <a href="index.php?id=1" id="home"><i class="fa fa-home"></i>Home</a>
                     </li>
-                    <li>
-                        <a href="index.php?id=2"><i class="fa fa-tachometer"></i>Chronik</a>
+                    <li id="timeline_li" class="<?php echo $active2; ?>">
+                        <a href="index.php?id=2" id="timeline"><i class="fa fa-tachometer"></i>Chronik</a>
                     </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-calendar"></i>Termine <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
+                    <li id="termine_li">
+                        <a id="termingroup" href="javascript:;" data-toggle="collapse" data-target="#termine" class="<?php echo $active3; ?>"><i class="fa fa-calendar"></i>Termine<i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="termine" class="collapse">
                             <li>
-                                <a href="index.php?id=3">Terminplan</a>
+                                <a href="index.php?id=3" id="terminplan" >Terminplan</a>
                             </li>
                             <li>
-                                <a href="index.php?id=4">Events</a>
+                                <a href="index.php?id=4" id="events">Events</a>
                             </li>
                             <li>
-                                <a href="index.php?id=5">Deadlines</a>
+                                <a href="index.php?id=5" id="deadlines">Deadlines</a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="index.php?id=6"><i class="fa fa-list-ul"></i>Adressliste</a>
+                    <li id="addresslist_li" class="<?php echo $active6; ?>">
+                        <a href="index.php?id=6" id="addresslist"><i class="fa fa-list-ul"></i>Adressliste</a>
                     </li>
-                    <li>
-                        <a href="index.php?id=7"><i class="fa fa-camera"></i>Fotogalerie</a>
+                    <li id="gallery_li" class="<?php echo $active7; ?>">
+                        <a href="index.php?id=7" id="gallery"><i class="fa fa-camera"></i>Fotogalerie</a>
                     </li>
-                    <li>
-                        <a href="index.php?id=8"><i class="fa fa-comments"></i>Kontakt</a>
+                    <li id="contact_li" class="<?php echo $active8; ?>">
+                        <a href="index.php?id=8" id="contact"><i class="fa fa-comments"></i>Kontakt</a>
                     </li>
-                    <li>
-                        <a href="index.php?id=9"><i class="fa fa-cloud-download"></i>SIA Baujournal</a>
+                    <li id="sia_li" class="<?php echo $active9; ?>">
+                        <a href="index.php?id=9" id="sia"><i class="fa fa-cloud-download"></i>SIA Baujournal</a>
                     </li>
+                    <p class="navbar-text unicircuit"><a class="noStyleLink" href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/" target="_blank">UNICIRCUIT</a></p>
                 </ul>
+                
             </div>
+            
             <!-- /.navbar-collapse -->
         </nav>
 
@@ -115,28 +173,28 @@
                 if(isset($_GET['id'])){
                     switch($_GET['id']){
                         case 1:
-                            echo'<p>HOME SEITE</p>';
+                            echo'<h2>HOME SEITE</h2>';
                             break;
                         case 2:
                             include ('timeline.php');
                             break;
                         case 3:
-                            echo'<p>TERMINPLAN</p>';
+                            echo'<h2>TERMINPLAN</h2>';
                             break;
                         case 4:
-                            echo'<p>EVENTS</p>';
+                            echo'<h2>EVENTS</h2>';
                             break;
                         case 5:
-                            echo'<p>DEADLINES</p>';
+                            echo'<h2>DEADLINES</h2>';
                             break;
                         case 6:
                             include ('addresslist.php');
                             break;
                         case 7:
-                            echo'<p>FOTOGALERIE</p>';
+                            echo'<h2>FOTOGALERIE</h2>';
                             break;
                         case 8:
-                            echo'<p>KONTAKT</p>';
+                            include ('contact.php');
                             break;
                         case 9:
                             include ('sia.php');
@@ -144,9 +202,11 @@
                         default:
                             echo'<p>Error Loading Content</p>';
                     }
-                    
+
+                }else{
+                    echo'<h2>HOME SEITE</h2>';
                 }
-                
+
                 ?>
 
             </div>
@@ -160,11 +220,11 @@
 
     <!-- JS 3rd Party -->
     <script src="../js/jquery-1.11.1.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<!-- Timeline -->
-	<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
-	<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/imgLiquid-min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- Timeline -->
+    <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/imgLiquid-min.js"></script>
     <!-- Adressliste -->
     <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>
@@ -173,9 +233,9 @@
     <script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
 
-	<script src="../js/script.js"></script>
+    <script src="../js/script.js"></script>
     <script src="../js/weather.js"></script>
-	
+
 
 </body>
 

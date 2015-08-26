@@ -39,10 +39,17 @@ $(document).ready(function(){
 
     //Lokale Adressliste (mit Export-Funktion)
     $('#localAddress').DataTable({
-        "scrollY":        "500px",
+        "scrollY":        "450px",
         "scrollCollapse": true,
         "paging":         false,
         dom: 'Bfrtip',
+        ordering: true,
+        language: {
+            search: "Suche",
+            zeroRecords: "Keine Adressen gefunden",
+            info: "Anzahl Adressen: _TOTAL_",
+            infoFiltered: "(Adressen gesamt: _MAX_)"
+        },
         buttons: [
             'excelHtml5',
             'csvHtml5',
@@ -56,9 +63,18 @@ $(document).ready(function(){
 
     //Globale Adressliste (ohne Export-Funktion)
     $('#globalAddress').DataTable({
-        "scrollY":        "300px",
+        "scrollY":        "290px",
         "scrollCollapse": true,
         "paging":         false,
+        ordering: true,
+        fixedHeader: true,
+        responsive: true,
+        language: {
+            search: "Suche",
+            zeroRecords: "Keine Adressen gefunden",
+            info: "Anzahl Adressen: _TOTAL_",
+            infoFiltered: "(Adressen gesamt: _MAX_)"
+        },
     });
 
     //Styling Tabellen Buttons (PDF,Excel, CSV)
@@ -85,7 +101,6 @@ $(document).ready(function(){
             $('#editAddress').html(data);
         })
     });
-
 
 
     /*
@@ -127,7 +142,28 @@ $(document).ready(function(){
     /*
      ******************** MAINPAGE ******
      */ 
+    var el = document.getElementById('home');
+    el.onclick = showFoo;
 
+
+    function showFoo() {
+        document.getElementById("homeli").className= "active";
+        document.getElementById("timeline_li").className = "";
+    }
+    
+    $('#termingroup').click(function(){
+        document.getElementById("home_li").className = "";
+        document.getElementById("timeline_li").className = "";
+        document.getElementById("addresslist_li").className = "";
+        document.getElementById("gallery_li").className = "";
+        document.getElementById("contact_li").className = "";
+        document.getElementById("sia_li").className = "";
+    })
+    
+    $('#timeline').click(function(){
+        document.getElementById("home_li").className = "";
+        document.getElementById("timeline_li").classList.add("active");
+    })
  
 
 

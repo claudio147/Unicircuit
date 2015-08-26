@@ -282,13 +282,15 @@ if(isset($_POST['submit'])){
 ?>
 
         
+    <div class="col-xs-12 col-md-6">
+        <h2 class="modul-title">Generation SIA Baujournal</h2>
         <form method="POST" action="sia.php" id="pdf">
             <input id="zip" type="hidden" name="zip" value="<?php echo $zip; ?>">
             <input id="country" type="hidden" name="country" value="<?php echo $country; ?>">
-            <p>Datum des gewünschten Baujournal- Eintrags</p>
-            <input type="date" name="date" id="date">
-            <p>Anwesende Handwerker</p>
-            <select name="present[]" size="10" multiple="multiple">
+            <label for="date">Datum des gewünschten Baujournal- Eintrags</label>
+            <input type="date" name="date" id="date" class="form-control">
+            <label for="handwerker">Anwesende Handwerker</label>
+            <select name="present[]" size="10" multiple="multiple" class="form-control" id="handwerker">
                 <?php
                     $sql= allProjectAddress($projectID);
                     $result= mysqli_query($link, $sql);
@@ -299,9 +301,9 @@ if(isset($_POST['submit'])){
                     }
                 ?>
             </select>
-            <p>Notizen</p>
-            <textarea name="notes" placeholder="Bitte hier Kommentar eingeben..."></textarea>
+            <label for="notes">Notizen</label>
+            <textarea id="notes" name="notes" placeholder="Bitte hier Kommentar eingeben..." class="form-control" rows="5"></textarea>
             <br />
             <input class="btn btn-default createPDF" type="submit" name="submit" value="SIA Baujournal herunterladen"/>
         </form>
-
+    </div>
