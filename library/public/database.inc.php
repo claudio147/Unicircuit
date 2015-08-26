@@ -299,8 +299,20 @@ function selectUser($email, $pw) {
 }
 //nach session eröffnung userDaten anpassen 
 function updateUser($date, $time, $sessionId, $browserTyp, $datensatz) {
-   $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',"
-              . " SessionId='$sessionId', Browser='$browserTyp'"
-              . " WHERE id =$datensatz";
+   $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',
+              SessionId='$sessionId', Browser='$browserTyp'
+              WHERE IdUser ='$datensatz' ";
    return $sql;
+}
+
+/*
+ * Projektverwaltung
+ */
+
+//erstellt einen Bauherr in der Datenbank
+function createBauherr($fnBh, $lnBh, $BhAddressline1, $BhZIP, $BhCity, $BhEmail, $BhPhNu, $pwHash) {
+    $sql= "INSERT INTO user (Firstname, Lastname, Addressline1, ZIP, City, Email, PhoneNumber,
+             Password, Fk_IdUserType, Active) VALUES
+             ('$fnBh', '$lnBh', '$BhAddressline1', '$BhZIP', '$BhCity', '$BhEmail', '$BhPhNu', '$pwHash', 3, 3)";
+    return $sql;
 }
