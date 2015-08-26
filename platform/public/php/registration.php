@@ -53,42 +53,42 @@ if (isset($_POST['submit'])) {
   // Fehler im Eingabefeld?
   if (empty($co) || strlen($co) < 2) {
     echo 'error company';
-    $errorLN = true;
+    $errorCO = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($a1) || strlen($a1) < 5) {
     echo 'error adressline1';
-    $errorLN = true;
+    $errorA1 = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($zip) || strlen($zip) < 4) {
     echo 'error zip';
-    $errorLN = true;
+    $errorZIP = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($ci) || strlen($ci) < 4) {
     echo 'error city';
-    $errorLN = true;
+    $errorCi = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($cn) || strlen($cn) < 2) {
     echo 'error country';
-    $errorLN = true;
+    $errorCn = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($pn) || strlen($pn) < 2) {
     echo 'error PhoneNumber';
-    $errorLN = true;
+    $errorPN = true;
     $error = true;
   }
 

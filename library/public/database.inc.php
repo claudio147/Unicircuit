@@ -322,14 +322,14 @@ function getNameCust($projectID){
 
 
 /*
- * Gallerie
+ * Projektverwaltung
  */
 
-function saveIMG($idProject, $hashNameL, $hashNameS, $orgName, $path, $comment){
-    $date = date("Y-m-d");
-    $time = date("H:i:s");
-    $sql= "INSERT INTO Pictures(Fk_IdProject, HashNameL, HashNameS, Orgname, Path, Date, Time, Comment) VALUES
-                ('$idProject', '$hashNameL', '$hashNameS', '$orgName', '$path', '$date', '$time', '$comment')";
+//erstellt einen Bauherr in der Datenbank
+function createBauherr($fnBh, $lnBh, $BhAddressline1, $BhZIP, $BhCity, $BhEmail, $BhPhNu, $pwHash) {
+    $sql= "INSERT INTO user (Firstname, Lastname, Addressline1, ZIP, City, Email, PhoneNumber,
+             Password, Fk_IdUserType, Active) VALUES
+             ('$fnBh', '$lnBh', '$BhAddressline1', '$BhZIP', '$BhCity', '$BhEmail', '$BhPhNu', '$pwHash', 3, 3)";
     return $sql;
 }
 

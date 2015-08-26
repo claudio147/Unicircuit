@@ -49,13 +49,12 @@ if (isset($_POST['submit'])) {
       $time = date("G:i:s");
       $sessionId = session_id();
       $browserTyp = substr($_SERVER['HTTP_USER_AGENT'], 0, 250);
-      $datensatz = $row['id'];
+      $datensatz = $row['IdUser'];
       
 
       // Es wird ein Update durchgeführt, da die Benutzdaten stimmen
       $sql = updateUser($date, $time, $sessionId, $browserTyp, $datensatz);
       $result = mysqli_query($link, $sql);
-
 
       // Anhand des UserTyps auf die entsprechende Seite weiterleinten.
       switch($row['Fk_IdUserType']) {
@@ -72,10 +71,10 @@ if (isset($_POST['submit'])) {
       }
       
     } else {
-
+   
       echo '<p style="font-color:red; font-weight:bold">Falscher Benutzername '
       . 'oder Password!</p>';
-    }
+    }  
   }
 }
 

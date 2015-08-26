@@ -9,30 +9,7 @@
     
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
-
-//generiert ein zufälliges Passwort
-function generatePassword(){
-
-   
-        $alpha = "abcdefghikmnopqrstuvqxyz";
-       
-        $alpha .= "23456789";
-       
-        $alpha .= "ABCDEFGHKLMNOPQRSTUVWXYZ";
-       
-        $alpha .= "!$%&/()=";
-
-        srand ((double)microtime()*1000000);
-       
-        for($index = 0; $index < 7; $index++)
-        {
-                   $password .= substr($alpha,(rand()%(strlen ($alpha))), 1);
-        }
-        return $password;
-   
-}
-
-
+require_once ('../../../library/public/security.inc.php');
 
 
 
@@ -66,26 +43,32 @@ if(isset($_POST['submit'])) {
      $projectNumb = filter_input(INPUT_POST, 'ProjectNumber', FILTER_SANITIZE_STRING);
      $title = filter_input(INPUT_POST, 'Title', FILTER_SANITIZE_STRING);
      $addressline1 = filter_input(INPUT_POST, 'Addressline1', FILTER_SANITIZE_STRING);
+     $addressline2 = filter_input(INPUT_POST, 'Addressline2', FILTER_SANITIZE_STRING);
      $zip = filter_input(INPUT_POST, 'ZIP', FILTER_SANITIZE_STRING);
      $city = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
+     $country = filter_input(INPUT_POST, 'Country', FILTER_SANITIZE_STRING);
      $description = filter_input(INPUT_POST, 'Description', FILTER_SANITIZE_STRING);
      //Bauherrendaten in Variablen Speichern
      $fnBh = filter_input(INPUT_POST, 'BhFirstname', FILTER_SANITIZE_STRING);
      $lnBh = filter_input(INPUT_POST, 'BhLastname', FILTER_SANITIZE_STRING);
-     $BhAddressline1 = filter_input(INPUT_POST, 'BhAddressline1', FILTER_SANITIZE_STRING);
-     $BhZIP = filter_input(INPUT_POST, 'BhZIP', FILTER_SANITIZE_STRING);
-     $BhCity = filter_input(INPUT_POST, 'BhCity', FILTER_SANITIZE_STRING);
-     $BhPhNu = filter_input(INPUT_POST, 'BhPhoneNumber', FILTER_SANITIZE_STRING);
-     $BhEmail = filter_input(INPUT_POST, 'BhEmail', FILTER_SANITIZE_STRING);
+     $bhAddressline1 = filter_input(INPUT_POST, 'BhAddressline1', FILTER_SANITIZE_STRING);
+     $bhAddressline2 = filter_input(INPUT_POST, 'BhAddressline2', FILTER_SANITIZE_STRING);
+     $bhZIP = filter_input(INPUT_POST, 'BhZIP', FILTER_SANITIZE_STRING);
+     $bhCity = filter_input(INPUT_POST, 'BhCity', FILTER_SANITIZE_STRING);
+     $bhCountry = filter_input(INPUT_POST, 'BhCountry', FILTER_SANITIZE_STRING);
+     $bhPhNu = filter_input(INPUT_POST, 'BhPhoneNumber', FILTER_SANITIZE_STRING);
+     $bhMoNu = filter_input(INPUT_POST, 'BhMobileNumber', FILTER_SANITIZE_STRING);
+     $bhEmail = filter_input(INPUT_POST, 'BhEmail', FILTER_SANITIZE_STRING);
      
      //PW erstellung für Bauherr
      $BhPw = generatePassword();
      $pwHash = hash('sha256', $BhPW);
      
      //Fügt Bauherr der Datenbank hinzu
-     $sql= "INSERT INTO user (Firstname, Lastname, Addressline1, ZIP, City, Email, PhoneNumber,
+     $sql= "INSERT INTO user (Firstname, Lastname, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, MobileNumber
              Password, Fk_IdUserType, Active) VALUES
-             ('$fnBh', '$lnBh', '$BhAddressline1', '$BhZIP', '$BhCity', '$BhEmail', '$BhPhNu', '$pwHash', 3, 3)";
+             ('$fnBh', '$lnBh', '$bhAddressline1', '$bhAddressline2', '$bhZIP', '$bhCity', '$bhCountry', '$bhEmail',
+             '$bhPhNu', '$bhMoNu', '$pwHash', 3, 3)";
      $status = mysqli_query($link, $sql);
      //Holt ID des zuvor hinzugefügten Bauherren um danach die Projektinformationen abzuspeichern
      $sql = 'SELECT IdUser FROM user WHERE Password="'.$pwHash.'"';   
@@ -95,8 +78,9 @@ if(isset($_POST['submit'])) {
      
      
      //Erstellt das Projekt mit allen benötigten Daten
-     $sql = "INSERT INTO project (Fk_IdArchitect, Fk_IdBauherr, ProjectNumber, Title, Addressline1, ZIP, City, Description)
-             VALUES ('$id', '$BhId', '$projectNumb', '$title', '$addressline1' ,'$zip' ,'$city' ,'$description')";
+     $sql = "INSERT INTO project (Fk_IdArchitect, Fk_IdBauherr, ProjectNumber, Title, Addressline1, Addressline2, ZIP,
+             City, Country, Description)
+             VALUES ('$id', '$BhId', '$projectNumb', '$title', '$addressline1' ,'$addressline2' ,'$zip' ,'$city' ,'$country' ,'$description')";
      $result = mysqli_query($link, $sql);
      
      
@@ -147,20 +131,25 @@ if(isset($_POST['submit'])) {
                     </div>
                         <div class="modal-body">
                             <div id="input_container">
-
+                               <!-- Projektspezifische Angaben -->     
                                 <p>Projektnummer*</p>
                                 <input type="text" name="ProjectNumber">
                                 <p>Projektbezeichnung</p>
                                 <input type="text" name="Title">
                                 <p>Strasse</p>
                                 <input type="text" name="Addressline1">
+                                <p>Addresszeile 2</p>
+                                <input type="text" name="Addressline2">
                                 <p>PLZ*/Ort*</p>
-                                <input type="text" name="ZIP"><input type="text" name="City">                           
+                                <input type="text" name="ZIP"><input type="text" name="City">
+                                <p>Land</p>
+                                <input type="text" name="Country">
                                 <p>Projektbeschrieb</p>
                                 <textarea name="Description"></textarea>
                                 <p>Projektbild</p>
                                 <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
                                 <input type="file" name="Picture"/>
+                                <!-- Bauherren Daten, zur erstellung Bauherr -->
                                 <h4>Daten Bauherr</h4>
                                 <p>Vorname</p>
                                 <input type="text" name="BhFirstname">
@@ -168,10 +157,16 @@ if(isset($_POST['submit'])) {
                                 <input type="text" name="BhLastname">
                                 <p>Strasse</p>
                                 <input type="text" name="BhAddressline1">
+                                <p>Adresszeile 2</p>
+                                <input type="text" name="BhAddressline2">
                                 <p>PLZ/Ort</p>
                                 <input type="text" name="BhZIP"><input type="text" name="BhCity">
+                                <p>Land</p>
+                                <input type="text" name="BhCountry">
                                 <p>Telefonnummer</p>
                                 <input type="text" name="BhPhoneNumber">
+                                <p>Mobile Nummer</p>
+                                <input type="text" name="BhMobileNumber">
                                 <p>Email</p>
                                 <input type="text" name="BhEmail">
                                 
@@ -181,6 +176,37 @@ if(isset($_POST['submit'])) {
                         </div>
                     <div class="modal-footer">
                         <input type="submit" name="submit" value="Projekt Erstellen" class="btn btn-default"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                    </div>
+              </form>
+
+            </div>
+
+        </div>
+    </div>
+    
+    <!-- Projekt bearbeiten -->
+    <!-- Modal Global-->
+    <div class="modal" id="editPost" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form enctype="multipart/form-data" action="timeline.php" method="POST">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Chronikbeitrag bearbeiten</h4>
+                    </div>
+                        <div class="modal-body">
+                            <div id="editContainer">
+
+                                <!-- Platzhalter für ajax Inhalt -->
+
+                            </div>       
+                        </div>
+                    <div class="modal-footer">
+                        <input type="submit" name="delete" value="Löschen" class="btn btn-default"/>
+                        <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
                     </div>
               </form>
