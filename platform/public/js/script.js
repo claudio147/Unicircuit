@@ -63,7 +63,7 @@ $(document).ready(function(){
 
     //Globale Adressliste (ohne Export-Funktion)
     $('#globalAddress').DataTable({
-        "scrollY":        "300px",
+        "scrollY":        "290px",
         "scrollCollapse": true,
         "paging":         false,
         ordering: true,

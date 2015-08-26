@@ -85,8 +85,6 @@ while($row= mysqli_fetch_array($result)){
     <link href="../css/style.css" rel="stylesheet">
 
 
- 
-
 </head>
 
 <body>
@@ -104,8 +102,8 @@ while($row= mysqli_fetch_array($result)){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="../img/architect1/personal/logo.gif" alt="Logo"></a>
-                <h2 class="navbar-text"><?php echo $prNr.' '.$prNa;?></h2>
+                <a class="navbar-brand" href="index.html" target="_blank"><img src="../img/architect1/personal/logo.gif" alt="Logo"></a>
+                <h1 class="navbar-text"><?php echo $prNr.'&nbsp;&nbsp;&nbsp;&nbsp;'.$prNa;?></h1>
             </div>
 
             <!-- Top Menu -->
@@ -114,11 +112,11 @@ while($row= mysqli_fetch_array($result)){
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i>Einstellungen</a>
+                            <a href="#"><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i>Abmelden</a>
+                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Abmelden</a>
                         </li>
                     </ul>
                 </li>
@@ -159,7 +157,7 @@ while($row= mysqli_fetch_array($result)){
                     <li id="sia_li" class="<?php echo $active9; ?>">
                         <a href="index.php?id=9" id="sia"><i class="fa fa-cloud-download"></i>SIA Baujournal</a>
                     </li>
-                    <p class="navbar-text unicircuit">UNICIRCUIT</p>
+                    <p class="navbar-text unicircuit"><a class="noStyleLink" href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/" target="_blank">UNICIRCUIT</a></p>
                 </ul>
                 
             </div>
@@ -175,25 +173,25 @@ while($row= mysqli_fetch_array($result)){
                 if(isset($_GET['id'])){
                     switch($_GET['id']){
                         case 1:
-                            echo'<p>HOME SEITE</p>';
+                            echo'<h2>HOME SEITE</h2>';
                             break;
                         case 2:
                             include ('timeline.php');
                             break;
                         case 3:
-                            echo'<p>TERMINPLAN</p>';
+                            echo'<h2>TERMINPLAN</h2>';
                             break;
                         case 4:
-                            echo'<p>EVENTS</p>';
+                            echo'<h2>EVENTS</h2>';
                             break;
                         case 5:
-                            echo'<p>DEADLINES</p>';
+                            echo'<h2>DEADLINES</h2>';
                             break;
                         case 6:
                             include ('addresslist.php');
                             break;
                         case 7:
-                            echo'<p>FOTOGALERIE</p>';
+                            echo'<h2>FOTOGALERIE</h2>';
                             break;
                         case 8:
                             include ('contact.php');
@@ -206,7 +204,7 @@ while($row= mysqli_fetch_array($result)){
                     }
 
                 }else{
-                    echo'<p>HOME SEITE</p>';
+                    echo'<h2>HOME SEITE</h2>';
                 }
 
                 ?>

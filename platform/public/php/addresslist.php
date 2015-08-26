@@ -162,6 +162,14 @@ if(isset($_POST['delete'])){
 
 ?>
 
+
+
+
+<?php
+echo'<div class="col-xs-12">';
+echo'<h2 class="modul-title">Adressliste</h2>';
+?>
+
 <!--Lightboxen (Modals)-->
 <div class="container modalgroup">
 
@@ -289,9 +297,7 @@ if(isset($_POST['delete'])){
 
 </div>
 
-
 <?php
-
 echo'<table class="table order hover" id="localAddress">';
 echo'<thead>';
 echo'<tr>';
@@ -319,6 +325,7 @@ while($row= mysqli_fetch_array($result)){
 }
 echo'</tbody>';
 echo'</table>';
+echo'</div>';
 
 ?>
 

@@ -79,7 +79,7 @@ if(isset($_POST['submit'])){
 
 
 <div class="col-xs-12 col-md-6">
-    <h3>Kontaktformular</h3>
+    <h2 class="modul-title">Kontaktformular</h2>
     <form method="POST" action="contact.php">
         <label for="subject">Betreff:</label>
         <input type="text" name="subject" id="subject" class="form-control" />

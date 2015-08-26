@@ -37,7 +37,6 @@ function checkMailFormat($email) {
   } else {
   return false;
   }
-    
 }
 
 
@@ -50,28 +49,26 @@ function createRegMail ($em, $fn ,$ln, $to) {
     //Subject des E-Mails
     $mail->Subject ='Registrationsfreischaltung auf Unicircuit';
     $address = $em;
-    
-    $mail->AddAddress($address, $fn.' '.$ln);   
+
+    $mail->AddAddress($address, $fn.' '.$ln);
       // Nachricht zusammenbauen als HTML Dokument
       $mail->MsgHTML("
 	<html><head>
 	<title>Anmledung bei Archconsulting Unicircuit</title>
 	</head><body><p>Hallo $fn $ln</p>
-	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer 
-    registiert. Um die Registration abzuschliessen, klicken Sie bitte auf 
+	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
+    registiert. Um die Registration abzuschliessen, klicken Sie bitte auf
     folgenden Link: <br />
     <a href=\"http://local-platform.int.ch/php/verification.php?regcode=$to\">Registration abschliessen</a>".
     "</p><p>Es gr&uuml;sst das Team von Archconsulting</p></body></html>");
 
-      // Mail an Benutzer/in senden. 
+      // Mail an Benutzer/in senden.
       if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
         echo 'Email:'.$em;
-        
-        
         } else {
         header('Location: userverwaltung.php');
-        
+
 }
 }
 
@@ -86,10 +83,10 @@ function createArchRegMail($fn, $ln, $em) {
 	<html><head>
 	<title>Anmledung bei Archconsulting Unicircuit</title>
 	</head><body><p>Hallo $fn $ln</p>
-	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer 
+	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
     registiert. Nach erfolgreicher Prüfung erhalten Sie ihr aktivierungs Mail.</body></html>");
 
-      // Mail an Benutzer/in senden. 
+      // Mail an Benutzer/in senden.
       if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
         } else {
@@ -123,7 +120,7 @@ function sendMailtoArch($emArch, $emCust, $fnCust, $lnCust, $subject, $message, 
     </body>
     </html>');
 
-      // Mail an Benutzer/in senden. 
+      // Mail an Benutzer/in senden.
       if(!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
         return false;
