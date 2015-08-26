@@ -299,11 +299,27 @@ function selectUser($email, $pw) {
 }
 //nach session eröffnung userDaten anpassen 
 function updateUser($date, $time, $sessionId, $browserTyp, $datensatz) {
-   $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',
-              SessionId='$sessionId', Browser='$browserTyp'
-              WHERE IdUser ='$datensatz' ";
+   $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',"
+              . " SessionId='$sessionId', Browser='$browserTyp'"
+              . " WHERE id =$datensatz";
    return $sql;
 }
+
+
+/*
+ * Kontaktformular - Plattform
+ */
+
+function getMailArch($projectID){
+    $sql= "SELECT u.Email, p.ProjectNumber, p.Title FROM User as u JOIN Project as p on u.IdUser = p.Fk_IdArchitect WHERE p.IdProject=".$projectID;
+    return $sql;
+}
+
+function getNameCust($projectID){
+    $sql= "SELECT u.Email, u.Firstname, u.Lastname, p.ProjectNumber, p.Title FROM User as u JOIN Project as p on u.IdUser = p.Fk_IdBauherr WHERE p.IdProject=".$projectID;
+    return $sql;
+}
+
 
 /*
  * Projektverwaltung
@@ -316,3 +332,4 @@ function createBauherr($fnBh, $lnBh, $BhAddressline1, $BhZIP, $BhCity, $BhEmail,
              ('$fnBh', '$lnBh', '$BhAddressline1', '$BhZIP', '$BhCity', '$BhEmail', '$BhPhNu', '$pwHash', 3, 3)";
     return $sql;
 }
+
