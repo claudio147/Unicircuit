@@ -321,3 +321,15 @@ function getNameCust($projectID){
 }
 
 
+/*
+ * Gallerie
+ */
+
+function saveIMG($idProject, $hashNameL, $hashNameS, $orgName, $path, $comment){
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+    $sql= "INSERT INTO Pictures(Fk_IdProject, HashNameL, HashNameS, Orgname, Path, Date, Time, Comment) VALUES
+                ('$idProject', '$hashNameL', '$hashNameS', '$orgName', '$path', '$date', '$time', '$comment')";
+    return $sql;
+}
+

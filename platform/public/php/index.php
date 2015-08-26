@@ -191,7 +191,7 @@ while($row= mysqli_fetch_array($result)){
                             include ('addresslist.php');
                             break;
                         case 7:
-                            echo'<h2>FOTOGALERIE</h2>';
+                            include ('gallery.php');
                             break;
                         case 8:
                             include ('contact.php');
