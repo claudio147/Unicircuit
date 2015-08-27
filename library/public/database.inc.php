@@ -344,3 +344,8 @@ function saveIMG($idProject, $hashNameL, $hashNameS, $orgName, $path, $comment){
     return $sql;
 }
 
+function showIMG($idProject){
+    $sql= "SELECT HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' ORDER BY Date DESC, Time DESC";
+    return $sql;
+}
+

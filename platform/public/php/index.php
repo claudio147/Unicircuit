@@ -80,6 +80,7 @@ while($row= mysqli_fetch_array($result)){
     <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
     <link href="../css/dataTable.css" rel="stylesheet">
+    <link href="../css/nanogallery/css/nanogallery.min.css" rel="stylesheet">
 
     <!-- CSS spezifisch -->
     <link href="../css/style.css" rel="stylesheet">
@@ -232,6 +233,8 @@ while($row= mysqli_fetch_array($result)){
     <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <!-- Gallery -->
+    <script src="../css/nanogallery/jquery.nanogallery.min.js"></script>
 
     <script src="../js/script.js"></script>
     <script src="../js/weather.js"></script>

@@ -204,7 +204,7 @@ if(isset($_POST['submit'])){
                                 <div id="input_container">
 
                                     <label for="imgupload">Bildupload</label>                                    
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="8100000"/>
+                                    <input type="hidden" name="MAX_FILE_SIZE" value="4100000"/>
                                     <input id="imgupload" type="file" name="my_file[]" multiple >
                                     <p>(Multi-upload möglich, max. 4mb/ Foto)</p><br/>
                                     <label for="comment">Kommentar</label>
@@ -239,7 +239,24 @@ if(isset($_POST['submit'])){
         }
     }
     ?>
-    
-        
-    
-</div>
+
+
+    <div id="nanoGallery3">
+    <?php
+        $sql=showIMG($projectID);
+        $result= mysqli_query($link, $sql);
+        while($row= mysqli_fetch_array($result)){
+            $imgL= $row['HashNameL'];
+            $imgS= $row['HashNameS'];
+            $com= $row['Comment'];
+            echo'<a href="'.$imgL.'" data-ngthumb="'.$imgS.'" data-ngdesc="'.$com.'"></a>';
+        }
+    ?>
+    <!--
+        <a href="../img/architect1/project1/img/test_1_L.jpg" data-ngthumb="../img/architect1/project1/img/test_1_S.jpg" data-ngdesc="Testbild 1">Title Image1</a>
+        <a href="../img/architect1/project1/img/test_2_L.jpg" data-ngthumb="../img/architect1/project1/img/test_2_S.jpg" data-ngdesc="Testbild 2">Title Image2</a>
+        <a href="../img/architect1/project1/img/test_3_L.jpg" data-ngthumb="../img/architect1/project1/img/test_3_S.jpg" data-ngdesc="Testbild 3">Title Image3</a>
+    -->
+    </div>
+
+</div><!-- END Include Gallery -->

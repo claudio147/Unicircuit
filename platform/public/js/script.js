@@ -165,7 +165,44 @@ $(document).ready(function(){
         document.getElementById("timeline_li").classList.add("active");
     })
  
+    /*
+    ***************** GALLERY ************
+     */
+    
+    var myColorScheme = {
+        navigationbar: {
+            background: '#fff',
+            border: '1px dotted #555',
+            color: '#ccc',
+            colorHover: '#fff'
+        },
+        thumbnail: {
+            background: '#fff',
+            border: '0px solid #000',
+            labelBackground: 'transparent',
+            labelOpacity: '0.8',
+            titleColor: '#fff',
+            descriptionColor: '#eee'
+        }
+    };
+    var myColorSchemeViewer = {
+        background: 'rgba(1, 1, 1, 0.75)',
+        imageBorder: '15px solid #f8f8f8',
+        imageBoxShadow: '#888 0px 0px 20px',
+        barBackground: '#222',
+        barBorder: '2px solid #111',
+        barColor: '#eee',
+        barDescriptionColor: '#aaa'
+    };
 
+     $("#nanoGallery3").nanoGallery({
+        thumbnailWidth: 'auto',
+        thumbnailHeight: 200,
+        locationHash: false,
+        thumbnailHoverEffect:'labelSlideUp',
+        itemsBaseURL:'',
+        colorScheme: myColorScheme
+      });
 
 
 })
