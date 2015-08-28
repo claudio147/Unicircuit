@@ -374,12 +374,12 @@ function saveIMG($idProject, $hashNameL, $hashNameS, $orgName, $path, $comment, 
 }
 
 function showIMG($idProject, $visibility){
-    $sql= "SELECT HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' AND Visibility= '$visibility' ORDER BY Date DESC, Time DESC";
+    $sql= "SELECT IdPicture, HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' AND Visibility= '$visibility' ORDER BY Date DESC, Time DESC";
     return $sql;
 }
 
 function showAllIMG($idProject){
-    $sql= "SELECT HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' ORDER BY Date DESC, Time DESC";
+    $sql= "SELECT IdPicture, HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' ORDER BY Date DESC, Time DESC";
     return $sql;
 }
 

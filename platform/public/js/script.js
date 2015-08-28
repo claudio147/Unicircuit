@@ -174,7 +174,7 @@ $(document).ready(function(){
         document.getElementById("gallery_li").className = "";
         document.getElementById("contact_li").className = "";
         document.getElementById("sia_li").className = "";
-    })
+    });
     
     $('#timeline').click(function(){
         document.getElementById("home_li").className = "";
@@ -187,15 +187,40 @@ $(document).ready(function(){
     /*
     ***************** GALLERY ************
      */
+    
+    function myImgToolbarCustDisplay($elements, item, data) {
+        // second custom element
+        $elements.html('<i id="delIMG" data-img="'+item.GetID()+'" class="fa fa-pencil-square-o fa-2x"></i>');
+        
+        $('#delIMG').click(function(){
+        alert($(this).attr('data-img'));
+        })
+        //var abc= this.getAttribute('id');
+        //var abc = $(this).attr('id');
+        //console.log(item.GetID());
+        //console.log(data);
+        
+    }
+    
+    
+    
+    
     $("#nanoGallery3").nanoGallery({
         colorScheme: 'none',
-          thumbnailHoverEffect: [{ name: 'labelAppear75', duration: 300 }],
-          theme: 'light',
-          thumbnailWidth: 'auto',
-          thumbnailHeight: 200,
-          i18n: { thumbnailImageDescription: '<i class="fa fa-search-plus fa-5x"></i>'},
-          thumbnailLabel: { display: true, position: 'overImageOnMiddle', align: 'center', hideIcons: true, }
+        thumbnailHoverEffect: [{ name: 'labelAppear75', duration: 300 }],
+        theme: 'light',
+        thumbnailWidth: 'auto',
+        thumbnailHeight: 200,
+        i18n: { thumbnailImageDescription: '<i class="fa fa-search-plus fa-5x"></i>'},
+        thumbnailLabel: { display: true, position: 'overImageOnMiddle', align: 'center', hideIcons: true, },
+        viewerToolbar: {
+            autoMinimize: 0,
+            standard: 'closeButton,previousButton,pageCounter,nextButton,label,custom2'
+        },
+        fnImgToolbarCustDisplay: myImgToolbarCustDisplay
     });
+    
+    
 
 
 })

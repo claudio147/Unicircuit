@@ -224,12 +224,16 @@ if(isset($_POST['submit'])){
         $pdf->Cell(30,8,'Wetter:',0,0,'L');
     
     if(!empty($date)){
-        $max= $_GET['maxTemp'];
-        $min= $_GET['minTemp'];
+        $max= $_POST['maxTemp'];
+        $min= $_POST['minTemp'];
+        $humidity= $_POST['humidity'];
+        $icon= $_POST['weatherIcon'];
+        $desc= $_POST['weatherDesc'];
         $maxTemp = iconv('UTF-8', 'windows-1252', $max.'°C');
         $minTemp = iconv('UTF-8', 'windows-1252', $min.'°C');
-        $humidity = iconv('UTF-8', 'windows-1252', '50%');
-        $icon = iconv('UTF-8', 'windows-1252', 'sonnig');
+        $humidity = iconv('UTF-8', 'windows-1252', $humidity.'%');
+        $desc = iconv('UTF-8', 'windows-1252', $desc);
+        //$icon = iconv('UTF-8', 'windows-1252', 'sonnig');
 
         
         $pdf->SetFont($font2,'B',18);
@@ -238,14 +242,14 @@ if(isset($_POST['submit'])){
         $pdf->Cell(30,4,$humidity,0,0,'C');
         $x= $pdf->getX();
         $y= $pdf->getY();
-        $pdf->Image('http://cdn.worldweatheronline.net/images/wsymbols01_png_64/wsymbol_0001_sunny.png',$x+10,$y-4,10,10);
+        $pdf->Image($icon ,$x+10,$y-4,10,10);
         $pdf->ln();
         $pdf->Cell(30,8,'',0,0,'L');
         $pdf->SetFont($font2,'',8);
         $pdf->Cell(30,8,'max. Temp',0,0,'C');
         $pdf->Cell(30,8,'min. Temp',0,0,'C');
         $pdf->Cell(30,8,'Luftfeuchtigkeit',0,0,'C');
-        $pdf->Cell(30,8,'sonnig',0,0,'C');
+        $pdf->Cell(30,8, $desc ,0,0,'C');
         $pdf->ln(20);
     }else{
         $error = iconv('UTF-8', 'windows-1252', 'kein Datum ausgewählt');
@@ -287,6 +291,13 @@ if(isset($_POST['submit'])){
         <form method="POST" action="sia.php" id="pdf">
             <input id="zip" type="hidden" name="zip" value="<?php echo $zip; ?>">
             <input id="country" type="hidden" name="country" value="<?php echo $country; ?>">
+            
+            <input id="maxTemp" type="hidden" name="maxTemp" value="">
+            <input id="minTemp" type="hidden" name="minTemp" value="">
+            <input id="humidity" type="hidden" name="humidity" value="">
+            <input id="weatherIcon" type="hidden" name="weatherIcon" value="">
+            <input id="weatherDesc" type="hidden" name="weatherDesc" value="">
+            
             <label for="date">Datum des gewünschten Baujournal- Eintrags</label>
             <input type="date" name="date" id="date" class="form-control">
             <label for="handwerker">Anwesende Handwerker</label>

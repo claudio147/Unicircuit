@@ -273,7 +273,8 @@ if(isset($_POST['submit'])){
             $imgS= $row['HashNameS'];
             $com= $row['Comment'];
             $date= $row['Date'];
-            echo'<a href="'.$imgL.'" data-ngthumb="'.$imgS.'" data-ngdesc="'.$date.'">'.$com.'</a>';
+            $id= $row['IdPicture'];
+            echo'<a href="'.$imgL.'" id="12" data-ngid="'.$id.'" data-ngthumb="'.$imgS.'" data-ngdesc="'.$date.'">'.$com.'</a>';
         }
     ?>
         
