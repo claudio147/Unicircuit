@@ -24,7 +24,7 @@ if (mysqli_num_rows($result) == 1) {
   //Erstellt Architekten Verzeichnis wenn der er User ein Architekt ist
   if($row['Fk_IdUserType'] == 2) {
       
-  $dir = mkdir('../../../architects/architekt'.$row['IdUser']);
+  $dir = mkdir('../architects/architekt'.$row['IdUser']);
   }
   
 } else {

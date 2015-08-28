@@ -7,26 +7,23 @@
 //Session starten oder wiederaufnehmen
  session_start();
     
+ if(!isset($_SESSION['IdUser']) || $_SESSION['UserType'] != 2) {
+    header('Location: denied.php');
+}
+
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/security.inc.php');
+require_once ('../../../library/public/mail.inc.php');
 
 
 
 
-if(!isset($_SESSION['IdUser']) || $_SESSION['UserType'] != 2) {
-    header('Location: denied.php');
-}
+
 //Holt Architekten User Daten
 $id = $_SESSION['IdUser'];
 
 $link = connectDB();
-$sql = 'SELECT Firstname, Lastname, Company, SessionId FROM User WHERE IdUser ='.$id;
-$result = mysqli_query($link, $sql);
-$row = mysqli_fetch_array($result);
-$fn = $row['Firstname'];
-$SID1 = $row['SessionId'];
-echo $fn;
 
 
 
@@ -42,9 +39,10 @@ if(isset($_POST['submit'])) {
      $city = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
      $country = filter_input(INPUT_POST, 'Country', FILTER_SANITIZE_STRING);
      $description = filter_input(INPUT_POST, 'Description', FILTER_SANITIZE_STRING);
+     
      //Bauherrendaten in Variablen Speichern
-     $fnBh = filter_input(INPUT_POST, 'BhFirstname', FILTER_SANITIZE_STRING);
-     $lnBh = filter_input(INPUT_POST, 'BhLastname', FILTER_SANITIZE_STRING);
+     $bhFn = filter_input(INPUT_POST, 'BhFirstname', FILTER_SANITIZE_STRING);
+     $bhLn = filter_input(INPUT_POST, 'BhLastname', FILTER_SANITIZE_STRING);
      $bhAddressline1 = filter_input(INPUT_POST, 'BhAddressline1', FILTER_SANITIZE_STRING);
      $bhAddressline2 = filter_input(INPUT_POST, 'BhAddressline2', FILTER_SANITIZE_STRING);
      $bhZIP = filter_input(INPUT_POST, 'BhZIP', FILTER_SANITIZE_STRING);
@@ -55,41 +53,41 @@ if(isset($_POST['submit'])) {
      $bhEmail = filter_input(INPUT_POST, 'BhEmail', FILTER_SANITIZE_STRING);
      
      //PW erstellung für Bauherr
-     $BhPw = generatePassword();
+     $bhPw = generatePassword();
+     // Verschickt Mail an Bauherren
+     $mail = createBauhMail($bhEmail, $bhFn, $bhLn, $bhPw, $title);
      
+     //macht weiter wenn Mail geschickt wurde
+     if($mail == TRUE) {
+     
+     //Verschlüsselt das Passwort
      $pwHash = hash('sha256', $BhPW);
      
      //Fügt Bauherr der Datenbank hinzu
-     $sql= "INSERT INTO user (Firstname, Lastname, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, MobileNumber
-             Password, Fk_IdUserType, Active) VALUES
-             ('$fnBh', '$lnBh', '$bhAddressline1', '$bhAddressline2', '$bhZIP', '$bhCity', '$bhCountry', '$bhEmail',
-             '$bhPhNu', '$bhMoNu', '$pwHash', 3, 3)";
+     $sql = createBauherr($bhFn, $bhLn, $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhEmail, $bhPhNu, $bhMoNu, $pwHash);
      $status = mysqli_query($link, $sql);
+     
      //Holt ID des zuvor hinzugefügten Bauherren um danach die Projektinformationen abzuspeichern
-     $sql = 'SELECT IdUser FROM user WHERE Password="'.$pwHash.'"';   
+     $sql = getIdBauherr($pwHash);   
      $result = mysqli_query($link, $sql);
      $row3 = mysqli_fetch_array($result);
-     $BhId = $row3['IdUser'];
+     $bhId = $row3['IdUser'];
      
      
      //Erstellt das Projekt mit allen benötigten Daten
-     $sql = "INSERT INTO project (Fk_IdArchitect, Fk_IdBauherr, ProjectNumber, Title, Addressline1, Addressline2, ZIP,
-             City, Country, Description)
-             VALUES ('$id', '$BhId', '$projectNumb', '$title', '$addressline1' ,'$addressline2' ,'$zip' ,'$city' ,'$country' ,'$description')";
+     $sql = createProject($id, $bhId, $projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description);
      $result = mysqli_query($link, $sql);
      
      
    
      //Verzeichnis erstellung für das Projekt
-     $sql = 'SELECT IdProject FROM project WHERE ProjectNumber ='.$projectNumb ;
+     $sql = getIdProject($projectNumb, $bhId);
      $result = mysqli_query($link, $sql);
      $row4 = mysqli_fetch_array($result);
      $proId = $row4['IdProject'];
-
- 
-     $dir = mkdir('../../../architects/architekt'.$id.'/project'.$proId);
+     $dir = mkdir('../architects/architekt'.$id.'/project'.$proId);
 }
-
+}
 ?>
 
 <html>
@@ -217,16 +215,14 @@ if(isset($_POST['submit'])) {
 
 // Ausgabe Projekte
 
-$sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
-        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM project as p JOIN user
-        as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id;
+$sql = getProjectsByArch($id);
 
 $result = mysqli_query($link, $sql);
 
 while($row= mysqli_fetch_array($result)){
    
     echo'<div class="post row">';
-    echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'</h3>';
+    echo'<h3><button type="button" class="btn_postEdit_pv" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'</h3>';
     echo '<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
     echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
    // echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';

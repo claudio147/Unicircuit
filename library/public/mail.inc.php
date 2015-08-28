@@ -81,7 +81,7 @@ function createArchRegMail($fn, $ln, $em) {
       // Nachricht zusammenbauen
       $mail->MsgHTML("
 	<html><head>
-	<title>Anmledung bei Archconsulting Unicircuit</title>
+	<title>Anmeldung bei Archconsulting Unicircuit</title>
 	</head><body><p>Hallo $fn $ln</p>
 	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
     registiert. Nach erfolgreicher Prüfung erhalten Sie ihr aktivierungs Mail.</body></html>");
@@ -127,6 +127,35 @@ function sendMailtoArch($emArch, $emCust, $fnCust, $lnCust, $subject, $message, 
         } else {
         return true;
         }
+}
+
+
+// Erstellt und versendet Aktivierungsmail für Bauherr
+function createBauhMail($bhEmail, $BhFn, $BhLn, $BhPw, $title) {
+    global $mail;
+    $mail ->Subject = 'Ihr Projekt wurde wurde erstellt';
+    $address = $bhEmail;
+    $mail ->addAddress($address, $BhFn.' '.$BhLn);
+        //Nachricht erstellen
+    $mail->msgHTML("
+            <html><head>
+            <title> Projekt wurde auf Unicircuit eröffnet</title>
+            </head>
+            <body>
+            <p> Guten Tag Herr $BhFn $BhLn</p>
+            <p> Ihr Architekt hat Ihr Projekt $title auf der Plattform Unicircuit eröffnet. </p>
+            <p> Sie können sich unter <a href=\"http://http://local-platform.int.ch/php/login.php\">Login</a> direkt einloggen</p>
+            <p> Ihr Passwort für den erstmaligen Login lautet: <b>$BhPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
+               <p> Viel Spass wünscht <b> Archconsulting</b> </p>");
+    
+    // Mail an Benutzer/in senden.
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        return false;
+        } else {
+        return true;
+        }
+    
 }
 
 

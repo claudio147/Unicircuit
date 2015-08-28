@@ -6,46 +6,86 @@ require_once ('../../../library/public/database.inc.php');
 $link = connectDB();
 
 //Formular mit Platzhaltern für das Editieren eines CHronik-Beitrags
-if(isset($_POST['postEdit'])){
-    $data= '';
+if (isset($_POST['postEdit'])) {
+    $data = '';
 
     //Post ID
-    $id= filter_input(INPUT_POST, 'postEdit', FILTER_SANITIZE_NUMBER_INT);
+    $id = filter_input(INPUT_POST, 'postEdit', FILTER_SANITIZE_NUMBER_INT);
     //$sql= selectProjectById($id);
+    $sql = 'SELECT p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname AS FirstnameBh, u.Lastname AS LastnameBh,
+        u.Addressline1 AS Addressline1Bh, u.Addressline2 AS Addressline2Bh, u.ZIP AS ZIPBh,
+        u.City AS CityBh, u.Country AS CountryBh, u.Email, u.PhoneNumber, u.MobileNumber FROM project as p JOIN user
+        as u on p.Fk_IdBauherr = u.IdUser WHERE IdProject = ' . $id;
+    $result = mysqli_query($link, $sql);
+    
+    while ($row = mysqli_fetch_array($result)) {
+        $postProject = $id;
+        $projectNumb = $row['ProjectNumber'];
+        $title = $row['Title'];
+        $addressline1 = $row['Addressline1'];
+        $addressline2 = $row['Addressline2'];
+        $zip = $row['ZIP'];
+        $city = $row['City'];
+        $country = $row['Country'];
+        $description = $row['Description'];
+        $picture = $row['Picture'];
+        $idUser = $row['IdUser'];
+        $bhFirstname = $row['FirstnameBh'];
+        $bhLastname = $row['LastnameBh'];
+        $bhAddressline1 = $row['Addressline1Bh'];
+        $bhAddressline2 = $row['Addressline2Bh'];
+        $bhZIP = $row['ZIPBh'];
+        $bhCity = $row['CityBh'];
+        $bhCountry = $row['CountryBh'];
+        $bhEmail = $row['Email'];
+        $bhPhNu = $row['PhoneNumber'];
+        $bhMoNu = $row['MobileNumber'];
 
 
-    while($row= mysqli_fetch_array($result)){
-        $postProject= $row['IdProject'];
-        
-        $
-        
-        
-        $data.= '<input type="hidden" name="postID" value="'.$postProject.'"/>
-                <input type="hidden" name="hash" value="'.$hashName.'"/>
-                <input type="hidden" name="path" value="'.$path.'"/>
-                <input type="hidden" name="orgName" value="'.$orgName.'"/>
-                <label for="title">Titel*</label>
-                <input id="title" type="text" name="title" value="'.$title.'" class="form-control">
-                <label for ="content">Inhalt*</label>
-                <textarea id="content" name="content" class="form-control" rows="8">'.$content.'</textarea>
-                <label for="visibility">Sichtbarkeit*</label>
-                <div id="visibility" class="radio near">
-                <label class="near">
-                <input type="radio" name="visible" value="1" '.$check1.'/>
-                Nur Architekt
-                </label>
-                </div>
-                <div class="radio">
-                <label class="near">
-                <input type="radio" name="visible" value="2" '.$check2.'/>
-                Architekt und Bauherr
-                </label>
-                </div>
-                <label for="upload">Bildupload</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
-                <input type="file" name="userfile"/>';
 
-                echo $data;
+
+
+
+        $data.= '<input type="hidden" name="postID" value="' . $postProject . '"/>
+                <p>Projektnummer*</p>
+                 <input type="text" name="ProjectNumber" value="'.$projectNumb.'">
+                <p>Projektbezeichnung</p>
+                 <input type="text" name="Title" value="'.$title.'">
+                 <p>Strasse</p>
+                 <input type="text" name="Addressline1" value="'.$addressline1.'">
+                 <p>Addresszeile 2</p>
+                 <input type="text" name="Addressline2" value="'.$addressline2.'">
+                 <p>PLZ*/Ort*</p>
+                 <input type="text" name="ZIP" value="'.$zip.'"><input type="text" name="City" value="'.$city.'">
+                 <p>Land</p>
+                 <input type="text" name="Country" value="'.$country.'">
+                 <p>Projektbeschrieb</p>
+                 <textarea name="Description">'.$description.'</textarea>
+                 <p>Projektbild</p>
+                 <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
+                 <input type="file" name="Picture"/>
+                 <!-- Bauherren Daten, zur erstellung Bauherr -->
+                 <h4>Daten Bauherr</h4>
+                 <p>Vorname</p>
+                 <input type="text" name="BhFirstname" value="'.$bhFirstname.'">
+                 <p>Nachname</p>
+                 <input type="text" name="BhLastname" value="'.$bhLastname.'">
+                 <p>Strasse</p>
+                 <input type="text" name="BhAddressline1" value="'.$bhAddressline1.'">
+                 <p>Adresszeile 2</p>
+                 <input type="text" name="BhAddressline2" value="'.$bhAddressline2.'">
+                 <p>PLZ/Ort</p>
+                 <input type="text" name="BhZIP" value="'.$bhZIP.'"><input type="text" name="BhCity" value="'.$bhCity.'">
+                 <p>Land</p>
+                 <input type="text" name="BhCountry" value="'.$bhCountry.'">
+                 <p>Telefonnummer</p>
+                 <input type="text" name="BhPhoneNumber" value="'.$bhPhNu.'">
+                 <p>Mobile Nummer</p>
+                 <input type="text" name="BhMobileNumber" value="'.$bhMoNu.'">
+                 <p>Email</p>
+                 <input type="text" name="BhEmail" value="'.$bhEmail.'">';
+
+        echo $data;
     }
-
 }

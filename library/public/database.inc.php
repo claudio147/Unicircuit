@@ -326,10 +326,39 @@ function getNameCust($projectID){
  */
 
 //erstellt einen Bauherr in der Datenbank
-function createBauherr($fnBh, $lnBh, $BhAddressline1, $BhZIP, $BhCity, $BhEmail, $BhPhNu, $pwHash) {
-    $sql= "INSERT INTO user (Firstname, Lastname, Addressline1, ZIP, City, Email, PhoneNumber,
+function createBauherr($bhFn, $bhLn, $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhEmail, $bhPhNu, $bhMoNu, $pwHash) {
+    $sql= "INSERT INTO user (Firstname, Lastname, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, MobileNumber,
              Password, Fk_IdUserType, Active) VALUES
-             ('$fnBh', '$lnBh', '$BhAddressline1', '$BhZIP', '$BhCity', '$BhEmail', '$BhPhNu', '$pwHash', 3, 3)";
+             ('$bhFn', '$bhLn', '$bhAddressline1', '$bhAddressline2', '$bhZIP', '$bhCity', '$bhCountry', '$bhEmail',
+             '$bhPhNu', '$bhMoNu', '$pwHash', 3, 3)";
+    return $sql;
+}
+
+//Holt ID eines spezifischen Bauherren
+function getIdBauherr($pwHash) {
+     $sql = 'SELECT IdUser FROM user WHERE Password="'.$pwHash.'"';
+     return $sql;
+}
+
+//Erstellt das Projekt mit allen benötigten Daten
+function createProject($id, $bhId, $projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description) {
+     $sql = "INSERT INTO project (Fk_IdArchitect, Fk_IdBauherr, ProjectNumber, Title, Addressline1, Addressline2, ZIP,
+             City, Country, Description)
+             VALUES ('$id', '$bhId', '$projectNumb', '$title', '$addressline1' ,'$addressline2' ,'$zip' ,'$city' ,'$country' ,'$description')";
+     return $sql;
+}
+
+//Holt ID eines spezifischen Projektes
+function getIdProject($projectNumb, $bhId){
+     $sql = "SELECT IdProject FROM project WHERE ProjectNumber ='$projectNumb'AND Fk_IdBauherr = '$bhId' " ;
+     return $sql;
+}
+
+//Gibt alle Projekte eines Architekten
+function getProjectsByArch($id) {
+    $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM project as p JOIN user
+        as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id;
     return $sql;
 }
 
