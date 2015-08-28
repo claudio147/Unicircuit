@@ -2,7 +2,7 @@
 require_once ('../../../library/public/database.inc.php');
 
 $projectID=2;
-$visibility=1;
+$usertyp=1;
 $uploaddir= '../img/architect1/project1/img/';
 
 $link= connectDB();
@@ -247,13 +247,17 @@ if(isset($_POST['submit'])){
     if(isset($_GET['status'])){
         $x=$_GET['status'];
         if($x==1){
-            echo'<br/><div class="alert alert-success" role="alert">Fotos erfolgreich hochgeladen</div>';
+            echo'<br/><div class="alert alert-success" role="alert">Foto(s) erfolgreich hochgeladen</div>';
         }else if($x==0){
             echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! - Bitte erneut versuchen</div>';
         }else if($x==2){
             echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! - Nur JPG, JPEG, PNG, GIF</div>';
         }else if($x==3){
             echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! max. 4 MB pro Foto</div>';
+        }else if($x==4){
+            echo'<br/><div class="alert alert-success" role="alert">Foto erfolgreich gelöscht</div>';
+        }else if($x==5){
+            echo'<br/><div class="alert alert-warning" role="alert">Löschen fehlgeschlagen! Bitte erneut versuchen</div>';
         }
     }
     ?>
@@ -261,10 +265,10 @@ if(isset($_POST['submit'])){
 
     <div id="nanoGallery3">
     <?php
-        if($visibility==1){
+        if($usertyp==1){
             $sql=showAllIMG($projectID);
         }else{
-            $sql=showIMG($projectID, $visibility);
+            $sql=showIMG($projectID, $usertyp);
         }
         
         $result= mysqli_query($link, $sql);
@@ -274,7 +278,7 @@ if(isset($_POST['submit'])){
             $com= $row['Comment'];
             $date= $row['Date'];
             $id= $row['IdPicture'];
-            echo'<a href="'.$imgL.'" id="12" data-ngid="'.$id.'" data-ngthumb="'.$imgS.'" data-ngdesc="'.$date.'">'.$com.'</a>';
+            echo'<a href="'.$imgL.'" data-ngid="'.$id.'" data-ngthumb="'.$imgS.'" data-ngdesc="'.$date.'">'.$com.'</a>';
         }
     ?>
         

@@ -383,3 +383,50 @@ function showAllIMG($idProject){
     return $sql;
 }
 
+function deleteImgGallery($idIMG){
+    $sql= 'Delete FROM Pictures WHERE IdPicture='.$idIMG;
+    return $sql;
+}
+
+function getIMGPath($idIMG){
+    $sql= 'SELECT HashNameL, HashNameS FROM Pictures WHERE IdPicture='.$idIMG;
+    return $sql;
+}
+
+
+/*
+ * ****** Events
+ */
+function newEvent($projectID, $date, $time, $title, $description, $location){
+    $sql= "INSERT INTO Events (Fk_IdProject, Date, Time, Title, Description, Location) VALUES
+            ('$projectID','$date','$time','$title','$description','$location')";
+    return $sql;
+}
+
+function updateEvent($eventID, $date, $time, $title, $description, $location){
+    $sql= "UPDATE Events SET Date='$date', Time='$time', Title='$title', Description='$description',"
+            . "Location='$location' WHERE IdEvent= ".$eventID;
+    return $sql;
+}
+
+
+function getAllEvents($projectID){
+    $sql= 'SELECT IdEvent, Date, Time, Title, Description, Location FROM Events WHERE Fk_IdProject='.$projectID.' ORDER BY Date ASC, Time ASC';
+    return $sql;
+}
+
+function selectEvent($eventID){
+    $sql= 'SELECT Date, Time, Title, Description, Location FROM Events WHERE IdEvent='.$eventID;
+    return $sql;
+}
+
+function deleteOld($projectID){
+    $sql= 'DELETE FROM Events WHERE Fk_IdProject='.$projectID.' AND date < CURDATE()';
+    return $sql;
+}
+
+function deleteEvent($eventID){
+    $sql= 'DELETE FROM Events WHERE IdEvent='.$eventID;
+    return $sql;
+}
+

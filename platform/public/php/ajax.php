@@ -258,3 +258,65 @@ if(isset($_POST['postEdit'])){
     }
 
 }
+
+//Löschen eines Bildes aus der Galerie
+if(isset($_POST['delIMG'])){
+    $id= $_POST['delIMG'];
+    
+    $sql= getIMGPath($id);
+    $result= mysqli_query($link, $sql);
+    while($row= mysqli_fetch_array($result)){
+        $imgS= $row['HashNameS'];
+        $imgL= $row['HashNameL'];
+    }
+
+    if(unlink($imgS) && unlink($imgL)){
+        $sql= deleteImgGallery($id);
+        $status= mysqli_query($link, $sql);
+        echo $status;
+    }else{
+        echo $status;
+    }
+    
+}
+
+//Ermittlung des Usertyps
+if(isset($_POST['getUserTyp'])){
+    //1= Architekt
+    //2= Bauherr
+    $usertyp=1;
+    echo $usertyp;
+}
+
+//Formular mit Platzhaltern für das Editieren eines Chronik-Beitrags
+if(isset($_POST['eventEdit'])){
+    $data= '';
+
+    //Post ID
+    $id= filter_input(INPUT_POST, 'eventEdit', FILTER_SANITIZE_NUMBER_INT);
+    $sql= selectEvent($id);
+    $result= mysqli_query($link, $sql);
+
+    while($row= mysqli_fetch_array($result)){
+        $date= $row['Date'];
+        $time= $row['Time'];
+        $title= $row['Title'];
+        $description= $row['Description'];
+        $location= $row['Location'];
+
+        $data.= '<input type="hidden" name="eventID" value="'.$id.'">
+                <label for="date">Datum*</label><br/>
+                <input id="date" type="date" name="date" value="'.$date.'"><br/>
+                <label for="time">Zeit*</label><br/>
+                <input id="time" type="time" name="time" value="'.$time.'"><br/>
+                <label for="title">Titel*</label>
+                <input id="title" type="text" name="title" class="form-control" value="'.$title.'">
+                <label for="description">Bemerkung</label>
+                <textarea id="description" name="description" class="form-control" rows="3" value="'.$description.'"></textarea>
+                <label for="location">Ort*</label>
+                <input id="location" type="text" name="location" class="form-control" value="'.$location.'">';
+
+                echo $data;
+    }
+
+}

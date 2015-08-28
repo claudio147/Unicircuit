@@ -40,10 +40,9 @@ if(isset($_POST['submit'])){
             //Errorcode der Übertragung abfragen
             $code= $_FILES['userfile']['error'];
 
-            //Übersetzer Error-Code in Worten (sh. Array) ausgeben
-            //echo'<p>Fehlerstatus: '.$errorstatus[$code].'</p>';
+            header("Location: index.php?id=2&status=0");
         }else{
-            echo'<p>Datei konnte nicht hochgeladen werden!</p>';
+            header("Location: index.php?id=2&status=3");
         }
     }else{
         $uploaddir= '../img/';
@@ -53,10 +52,12 @@ if(isset($_POST['submit'])){
         $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
         $status= mysqli_query($link, $sql);
         if(!$status){
-            echo'<p>Fehlgeschlagen</p>';
+            header("Location: index.php?id=2&status=3");
+        }else{
+            header("Location: index.php?id=2&status=0");
         }
     }
-    header("Location: index.php?id=2");
+    
 }
 
 //Updated einen bestehenden Eintrag in DB
@@ -86,7 +87,7 @@ if(isset($_POST['edit'])){
         //Dateipfad mit Dateinamen zusammensetzen
         $uploadfile= $uploaddir.basename($file);
         if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
-            echo'<p>Datei wurde erfolgreich hochgeladen.</p>';
+            
             $orgname= $_FILES['userfile']['name'];
 
 
@@ -96,18 +97,18 @@ if(isset($_POST['edit'])){
             //Errorcode der Übertragung abfragen
             $code= $_FILES['userfile']['error'];
 
-            //Übersetzer Error-Code in Worten (sh. Array) ausgeben
-            echo'<p>Fehlerstatus: '.$errorstatus[$code].'</p>';
+            header("Location: index.php?id=2&status=5");
         }else{
-            echo'<p>Datei konnte nicht hochgeladen werden!</p>';
+            header("Location: index.php?id=2&status=1");
     }}else{
         $sql= updatePost($postID, $visible, $hashName, $orgName, $path, $title, $date, $time, $content);
         $status= mysqli_query($link, $sql);
         if(!$status){
-            echo'<p>Fehlgeschlagen</p>';
+            header("Location: index.php?id=2&status=1");
+        }else{
+            header("Location: index.php?id=2&status=5");
         }
     }
-    header("Location: index.php?id=2");
 }
 
 
@@ -128,26 +129,26 @@ if(isset($_POST['delete'])){
                 $sql2= deletePost($id);
                 $status= mysqli_query($link, $sql2);
                 if($status == true){
-                    echo '<p>Datensatz erfolgreich gelöscht</p>';
+                    header("Location: index.php?id=2&status=4");
                 }else{
-                    echo '<p>Datensatz konnte nicht gelöscht werden</p>';
+                    header("Location: index.php?id=2&status=2");
                 }
             }else{
                 if(unlink($path.$fina)){
                     $sql2= deletePost($id);
                     $status= mysqli_query($link, $sql2);
                     if($status == true){
-                        echo '<p>Datensatz erfolgreich gelöscht</p>';
+                        header("Location: index.php?id=2&status=4");
                     }else{
-                        echo '<p>Datensatz konnte nicht gelöscht werden</p>';
+                        header("Location: index.php?id=2&status=2");
                     }
                 }else{
-                    echo'<p>Löschen fehlgeschlagen</p>';
+                    header("Location: index.php?id=2&status=2");
                 }
             }
                 
     }
-    header("Location: index.php?id=2");
+    
 }
 
 
@@ -162,8 +163,7 @@ if(isset($_POST['delete'])){
 
 
 <?php
-$sql= selectPosts($projectID);
-$result = mysqli_query($link, $sql);
+
 
 echo'<div class="col-xs-12 col-md-8">';
 echo'<h2 class="modul-title">Chronik</h2>';
@@ -258,7 +258,30 @@ echo'<h2 class="modul-title">Chronik</h2>';
 
 </div>
 
+<?php  
+    if(isset($_GET['status'])){
+        $x=$_GET['status'];
+        if($x==0){
+            echo'<br/><div class="alert alert-success" role="alert">Beitrag erfolgreich hochgeladen</div>';
+        }else if($x==1){
+            echo'<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen</div>';
+        }else if($x==2){
+            echo'<br/><div class="alert alert-danger" role="alert">Löschen fehlgeschlagen</div>';
+        }else if($x==3){
+            echo'<br/><div class="alert alert-danger" role="alert">Beitrag hinzufügen fehlgeschlagen</div>';
+        }else if($x==4){
+            echo'<br/><div class="alert alert-success" role="alert">Beitrag wurde erfolgreich gelöscht</div>';
+        }else if($x==5){
+            echo'<br/><div class="alert alert-success" role="alert">Beitrag wurde erfolgreich bearbeitet</div>';
+        }
+    }
+?>
+
 <?php
+
+$sql= selectPosts($projectID);
+$result = mysqli_query($link, $sql);
+
 echo'<div class="container timeline-container">';
 // Ausgabe Timeline
 while($row= mysqli_fetch_array($result)){

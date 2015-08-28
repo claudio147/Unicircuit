@@ -140,18 +140,17 @@ $(document).ready(function(){
             var cw = $('.col-sm-2').width();
             cw +=30;
             $('.imgLiquid').css({'height':cw+'px'});
-            console.log(cw);
         } 
 
-        window.onresize= dynamicResizer;
-        window.onload= dynamicResizer;
+        //window.onresize= dynamicResizer, dynamicResizerEvent;
+        //window.onload= dynamicResizer, dynamicResizerEvent;
 
 
     //Anzeige der Vorschaubilder mittig ohne Verzerrung
     $(".imgLiquidFill").imgLiquid({
-    fill: true,
-    horizontalAlign: "center",
-    verticalAlign: "top"
+        fill: true,
+        horizontalAlign: "center",
+        verticalAlign: "top"
     });
 
   
@@ -189,22 +188,31 @@ $(document).ready(function(){
      */
     
     function myImgToolbarCustDisplay($elements, item, data) {
-        // second custom element
-        $elements.html('<i id="delIMG" data-img="'+item.GetID()+'" class="fa fa-pencil-square-o fa-2x"></i>');
+        //Ermittlung Usertyp und anzeige von Löschfunktion bei Architekt
+        $.post('../php/ajax.php', {"getUserTyp":'1'},function(usertyp){
+                if(usertyp==1){
+                    // Custom Element mit Lösch-Button
+                    $elements.html('<i id="delIMG" data-img="'+item.GetID()+'" class="fa fa-trash-o fa-2x"></i>');
+                    
+                    //Funktion die Bilder löscht (in DB und in Verzeichnis
+                    $('#delIMG').click(function(){
+                        var id= $(this).attr('data-img');
+
+                        $.post('../php/ajax.php', {"delIMG":id},function(status){
+                            //Neuladen der Galerie-Seite
+                            window.location.replace("../php/index.php?id=7&status=4");
+                        }) 
+                    })
+                }
+            }) 
         
-        $('#delIMG').click(function(){
-        alert($(this).attr('data-img'));
-        })
-        //var abc= this.getAttribute('id');
-        //var abc = $(this).attr('id');
-        //console.log(item.GetID());
-        //console.log(data);
+        
         
     }
     
     
     
-    
+    //Darstellung Bildergalerie (Nanogallery- Plugin)
     $("#nanoGallery3").nanoGallery({
         colorScheme: 'none',
         thumbnailHoverEffect: [{ name: 'labelAppear75', duration: 300 }],
@@ -215,14 +223,41 @@ $(document).ready(function(){
         thumbnailLabel: { display: true, position: 'overImageOnMiddle', align: 'center', hideIcons: true, },
         viewerToolbar: {
             autoMinimize: 0,
-            standard: 'closeButton,previousButton,pageCounter,nextButton,label,custom2'
+            standard: 'closeButton,playPauseButton,previousButton,pageCounter,nextButton,fullscreenButton, label, custom'
         },
         fnImgToolbarCustDisplay: myImgToolbarCustDisplay
     });
     
     
+    /*
+     * ****** Events
+     */
+    function dynamicResizerEvent(){
+        var cw = $('.col-xs-4').width();
+        $('.event-container').css({'height':cw+'px'});
+    } 
+    
+    //Ajax Loader für Inhalt in Lightbox bei bearbeiten
+    $('.btn_event_edit').click(function(){
+        var id= $(this).val();
+        $.post('../php/ajax.php', {"eventEdit":id},function(data){
+            $('#eventEditContainer').html(data);
+        }) 
+    }); 
 
 
-})
+
+    // Diese Teil löst bei Resize und Onload mehrere Funktionen auf die Quadratische Darstellungen ermöglichen
+    window.onresize= resize;
+    window.onload= resize;
+    
+    function resize(){
+        dynamicResizerEvent();
+        dynamicResizer();
+    }
+    
+
+
+})//--> END document Ready
 
 
