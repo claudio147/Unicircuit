@@ -202,6 +202,20 @@ $(document).ready(function(){
     });
 
 
+    /*
+    ***************** GALLERY ************
+     */
+    $("#nanoGallery3").nanoGallery({
+        colorScheme: 'none',
+          thumbnailHoverEffect: [{ name: 'labelAppear75', duration: 300 }],
+          theme: 'light',
+          thumbnailWidth: 'auto',
+          thumbnailHeight: 200,
+          i18n: { thumbnailImageDescription: '<i class="fa fa-search-plus fa-5x"></i>'},
+          thumbnailLabel: { display: true, position: 'overImageOnMiddle', align: 'center', hideIcons: true, }
+    });
+
+
 })
 
 
