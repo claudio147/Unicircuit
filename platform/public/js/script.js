@@ -166,7 +166,42 @@ $(document).ready(function(){
     })
  
 
+    /*
+    ******************* Projektverwaltung *******
+    */
+   
+    //Ajax Loader für Inhalt in Lightbox bei bearbeiten
+    $('.btn_postEdit_pv').click(function(){
+        var id= $(this).val();
+        $.post('../php/ajax_pv.php', {"postEdit":id},function(data){
+            $('#editContainer_pv').html(data);
+        }) 
+    });   
+
+
+
+    //Anzeige von Vorschau- Bildern in Projektverwaltung
+    
+
+        function dynamicResizer(){
+            var cw = $('.col-sm-2').width();
+            cw +=30;
+            $('.imgLiquid').css({'height':cw+'px'});
+            console.log(cw);
+        } 
+
+        window.onresize= dynamicResizer;
+        window.onload= dynamicResizer;
+
+
+    //Anzeige der Vorschaubilder mittig ohne Verzerrung
+    $(".imgLiquidFill").imgLiquid({
+    fill: true,
+    horizontalAlign: "center",
+    verticalAlign: "top"
+    });
 
 
 })
+
 
