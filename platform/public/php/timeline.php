@@ -30,7 +30,7 @@ if(isset($_POST['submit'])){
     //Dateipfad mit Dateinamen zusammensetzen
     $uploadfile= $uploaddir.basename($file);
         if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
-            echo'<p>Datei wurde erfolgreich hochgeladen.</p>';
+            //echo'<p>Datei wurde erfolgreich hochgeladen.</p>';
             $orgname= $_FILES['userfile']['name'];
 
 
@@ -41,7 +41,7 @@ if(isset($_POST['submit'])){
             $code= $_FILES['userfile']['error'];
 
             //Übersetzer Error-Code in Worten (sh. Array) ausgeben
-            echo'<p>Fehlerstatus: '.$errorstatus[$code].'</p>';
+            //echo'<p>Fehlerstatus: '.$errorstatus[$code].'</p>';
         }else{
             echo'<p>Datei konnte nicht hochgeladen werden!</p>';
         }

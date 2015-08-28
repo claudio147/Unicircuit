@@ -336,15 +336,20 @@ function createBauherr($fnBh, $lnBh, $BhAddressline1, $BhZIP, $BhCity, $BhEmail,
 /*
  * Galerie - Plattform
  */
-function saveIMG($idProject, $hashNameL, $hashNameS, $orgName, $path, $comment){
+function saveIMG($idProject, $hashNameL, $hashNameS, $orgName, $path, $comment, $visible){
     $date = date("Y-m-d");
     $time = date("H:i:s");
-    $sql= "INSERT INTO Pictures(Fk_IdProject, HashNameL, HashNameS, Orgname, Path, Date, Time, Comment) VALUES
-                ('$idProject', '$hashNameL', '$hashNameS', '$orgName', '$path', '$date', '$time', '$comment')";
+    $sql= "INSERT INTO Pictures(Fk_IdProject, HashNameL, HashNameS, Orgname, Path, Date, Time, Comment, Visibility) VALUES
+                ('$idProject', '$hashNameL', '$hashNameS', '$orgName', '$path', '$date', '$time', '$comment', '$visible')";
     return $sql;
 }
 
-function showIMG($idProject){
+function showIMG($idProject, $visibility){
+    $sql= "SELECT HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' AND Visibility= '$visibility' ORDER BY Date DESC, Time DESC";
+    return $sql;
+}
+
+function showAllIMG($idProject){
     $sql= "SELECT HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' ORDER BY Date DESC, Time DESC";
     return $sql;
 }

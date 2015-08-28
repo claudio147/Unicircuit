@@ -2,6 +2,7 @@
 require_once ('../../../library/public/database.inc.php');
 
 $projectID=2;
+$visibility=1;
 $uploaddir= '../img/architect1/project1/img/';
 
 $link= connectDB();
@@ -79,6 +80,7 @@ if(isset($_POST['submit'])){
         $files= $_FILES['my_file'];
         $fileCount= count($files['name']);
         $comment= filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+        $visible= $_POST['visible'];
         
         //Schlaufe durch alle ausgewählten Files
         for($i=0; $i<$fileCount; $i++){
@@ -111,8 +113,12 @@ if(isset($_POST['submit'])){
             $imageFileTypeS = pathinfo($uploadfileS, PATHINFO_EXTENSION);
             $imageFileTypeL = pathinfo($uploadfileL, PATHINFO_EXTENSION);
             
-
-            // Allow certain file formats
+            if($size > 4100000){
+                header("Location: index.php?id=7&status=3");
+                exit();
+            }
+            
+            // Überprüfung von File- Format
             if($imageFileTypeS != "jpg" && $imageFileTypeS != "png" && $imageFileTypeS != "jpeg"
             && $imageFileTypeS != "gif" && $imageFileTypeS != "JPG" && $imageFileTypeS != "JPEG"
                && $imageFileTypeS != "PNG" && $imageFileTypeS != "GIF") {
@@ -120,7 +126,7 @@ if(isset($_POST['submit'])){
                 exit();
             }
             
-            // Allow certain file formats
+            // Überprüfung von File- Format
             if($imageFileTypeL != "jpg" && $imageFileTypeL != "png" && $imageFileTypeL != "jpeg"
             && $imageFileTypeL != "gif" && $imageFileTypeS != "JPG" && $imageFileTypeS != "JPEG"
                     && $imageFileTypeS != "PNG" && $imageFileTypeS != "GIF") {
@@ -162,7 +168,7 @@ if(isset($_POST['submit'])){
             }
             
             if($saveS && $saveL){
-                $sql= saveIMG($projectID, $uploadfileL, $uploadfileS, $na, $uploaddir, $comment);
+                $sql= saveIMG($projectID, $uploadfileL, $uploadfileS, $na, $uploaddir, $comment, $visible);
                 $status= mysqli_query($link, $sql);
                 if($status){
                     header("Location: index.php?id=7&status=1");
@@ -204,11 +210,23 @@ if(isset($_POST['submit'])){
                                 <div id="input_container">
 
                                     <label for="imgupload">Bildupload</label>                                    
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="4100000"/>
                                     <input id="imgupload" type="file" name="my_file[]" multiple >
                                     <p>(Multi-upload möglich, max. 4mb/ Foto)</p><br/>
+                                    <label for="visibility">Sichtbarkeit*</label>
+                                    <div id="visibility" class="radio near">
+                                        <label class="near">
+                                            <input type="radio" name="visible" value="1" checked="checked"/>
+                                            Nur Architekt
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label class="near">
+                                            <input type="radio" name="visible" value="2"/>
+                                            Architekt und Bauherr
+                                        </label>
+                                    </div>
                                     <label for="comment">Kommentar</label>
-                                    <textarea id="comment" rows="3" name="comment" class="form-control"></textarea>                              
+                                    <textarea id="comment" rows="3" name="comment" class="form-control" maxlength="20"></textarea>                              
 
                                 </div>
                             </div>
@@ -243,20 +261,22 @@ if(isset($_POST['submit'])){
 
     <div id="nanoGallery3">
     <?php
-        $sql=showIMG($projectID);
+        if($visibility==1){
+            $sql=showAllIMG($projectID);
+        }else{
+            $sql=showIMG($projectID, $visibility);
+        }
+        
         $result= mysqli_query($link, $sql);
         while($row= mysqli_fetch_array($result)){
             $imgL= $row['HashNameL'];
             $imgS= $row['HashNameS'];
             $com= $row['Comment'];
-            echo'<a href="'.$imgL.'" data-ngthumb="'.$imgS.'" data-ngdesc="'.$com.'"></a>';
+            $date= $row['Date'];
+            echo'<a href="'.$imgL.'" data-ngthumb="'.$imgS.'" data-ngdesc="'.$date.'">'.$com.'</a>';
         }
     ?>
-    <!--
-        <a href="../img/architect1/project1/img/test_1_L.jpg" data-ngthumb="../img/architect1/project1/img/test_1_S.jpg" data-ngdesc="Testbild 1">Title Image1</a>
-        <a href="../img/architect1/project1/img/test_2_L.jpg" data-ngthumb="../img/architect1/project1/img/test_2_S.jpg" data-ngdesc="Testbild 2">Title Image2</a>
-        <a href="../img/architect1/project1/img/test_3_L.jpg" data-ngthumb="../img/architect1/project1/img/test_3_S.jpg" data-ngdesc="Testbild 3">Title Image3</a>
-    -->
+        
     </div>
 
 </div><!-- END Include Gallery -->

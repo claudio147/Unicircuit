@@ -168,42 +168,17 @@ $(document).ready(function(){
     /*
     ***************** GALLERY ************
      */
-    
-    var myColorScheme = {
-        navigationbar: {
-            background: '#fff',
-            border: '1px dotted #555',
-            color: '#ccc',
-            colorHover: '#fff'
-        },
-        thumbnail: {
-            background: '#fff',
-            border: '0px solid #000',
-            labelBackground: 'transparent',
-            labelOpacity: '0.8',
-            titleColor: '#fff',
-            descriptionColor: '#eee'
-        }
-    };
-    var myColorSchemeViewer = {
-        background: 'rgba(1, 1, 1, 0.75)',
-        imageBorder: '15px solid #f8f8f8',
-        imageBoxShadow: '#888 0px 0px 20px',
-        barBackground: '#222',
-        barBorder: '2px solid #111',
-        barColor: '#eee',
-        barDescriptionColor: '#aaa'
-    };
 
-     $("#nanoGallery3").nanoGallery({
-        thumbnailWidth: 'auto',
-        thumbnailHeight: 200,
-        locationHash: false,
-        thumbnailHoverEffect:'labelSlideUp',
-        itemsBaseURL:'',
-        colorScheme: myColorScheme
-      });
 
+$("#nanoGallery3").nanoGallery({
+    colorScheme: 'none',
+      thumbnailHoverEffect: [{ name: 'labelAppear75', duration: 300 }],
+      theme: 'light',
+      thumbnailWidth: 'auto',
+      thumbnailHeight: 200,
+      i18n: { thumbnailImageDescription: '<i class="fa fa-search-plus fa-5x"></i>'},
+      thumbnailLabel: { display: true, position: 'overImageOnMiddle', align: 'center', hideIcons: true, }
+});
 
 })
 

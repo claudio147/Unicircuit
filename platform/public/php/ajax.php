@@ -201,7 +201,7 @@ if(isset($_POST['edit'])){
     }
 }
 
-//Formular mit Platzhaltern für das Editieren eines CHronik-Beitrags
+//Formular mit Platzhaltern für das Editieren eines Chronik-Beitrags
 if(isset($_POST['postEdit'])){
     $data= '';
 

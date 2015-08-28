@@ -81,6 +81,7 @@ while($row= mysqli_fetch_array($result)){
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
     <link href="../css/dataTable.css" rel="stylesheet">
     <link href="../css/nanogallery/css/nanogallery.min.css" rel="stylesheet">
+    <link href="../css/nanogallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet">
 
     <!-- CSS spezifisch -->
     <link href="../css/style.css" rel="stylesheet">
