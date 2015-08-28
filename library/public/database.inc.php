@@ -333,3 +333,19 @@ function createBauherr($fnBh, $lnBh, $BhAddressline1, $BhZIP, $BhCity, $BhEmail,
     return $sql;
 }
 
+/*
+ * Galerie - Plattform
+ */
+function saveIMG($idProject, $hashNameL, $hashNameS, $orgName, $path, $comment){
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+    $sql= "INSERT INTO Pictures(Fk_IdProject, HashNameL, HashNameS, Orgname, Path, Date, Time, Comment) VALUES
+                ('$idProject', '$hashNameL', '$hashNameS', '$orgName', '$path', '$date', '$time', '$comment')";
+    return $sql;
+}
+
+function showIMG($idProject){
+    $sql= "SELECT HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' ORDER BY Date DESC, Time DESC";
+    return $sql;
+}
+
