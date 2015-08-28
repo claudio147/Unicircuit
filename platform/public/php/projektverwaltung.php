@@ -29,12 +29,6 @@ $SID1 = $row['SessionId'];
 echo $fn;
 
 
-$sql2 = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
-        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM project as p JOIN user
-        as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id;
-
-$result2 = mysqli_query($link, $sql2);
-$row2 = mysqli_fetch_array($result2);
 
 
 
@@ -62,6 +56,7 @@ if(isset($_POST['submit'])) {
      
      //PW erstellung für Bauherr
      $BhPw = generatePassword();
+     
      $pwHash = hash('sha256', $BhPW);
      
      //Fügt Bauherr der Datenbank hinzu
@@ -86,7 +81,7 @@ if(isset($_POST['submit'])) {
      
    
      //Verzeichnis erstellung für das Projekt
-     $sql = 'SELECT IdProject FROM project WHERE ProjectNumber ='.$projectNumb;
+     $sql = 'SELECT IdProject FROM project WHERE ProjectNumber ='.$projectNumb ;
      $result = mysqli_query($link, $sql);
      $row4 = mysqli_fetch_array($result);
      $proId = $row4['IdProject'];
@@ -102,7 +97,8 @@ if(isset($_POST['submit'])) {
         <title>Projekt verwaltung</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/style.css">
         
         
@@ -192,13 +188,13 @@ if(isset($_POST['submit'])) {
 
             <!-- Modal content-->
             <div class="modal-content">
-                <form enctype="multipart/form-data" action="timeline.php" method="POST">
+                <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Chronikbeitrag bearbeiten</h4>
+                        <h4 class="modal-title">Projekt bearbeiten</h4>
                     </div>
                         <div class="modal-body">
-                            <div id="editContainer">
+                            <div id="editContainer_pv">
 
                                 <!-- Platzhalter für ajax Inhalt -->
 
@@ -217,6 +213,36 @@ if(isset($_POST['submit'])) {
     </div>
         </div>
          
+<?php
+
+// Ausgabe Projekte
+
+$sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM project as p JOIN user
+        as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id;
+
+$result = mysqli_query($link, $sql);
+
+while($row= mysqli_fetch_array($result)){
+   
+    echo'<div class="post row">';
+    echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'</h3>';
+    echo '<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
+    echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
+   // echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
+    echo'</div>';
+    echo'<div class="col-sm-6">';
+    echo'<p>'.$row['Description'].'</p>';
+    echo'</div>';
+    echo'</div>';
+}
+echo'</div>';
+echo'</div>';
+?>
+
+
+
+        
          
   <!-- JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

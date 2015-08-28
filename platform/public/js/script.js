@@ -39,7 +39,7 @@ $(document).ready(function(){
 
     //Lokale Adressliste (mit Export-Funktion)
     $('#localAddress').DataTable({
-        "scrollY":        "400px",
+        "scrollY":        "450px",
         "scrollCollapse": true,
         "paging":         false,
         dom: 'Bfrtip',
@@ -165,20 +165,43 @@ $(document).ready(function(){
         document.getElementById("timeline_li").classList.add("active");
     })
  
+
     /*
-    ***************** GALLERY ************
-     */
+    ******************* Projektverwaltung *******
+    */
+   
+    //Ajax Loader für Inhalt in Lightbox bei bearbeiten
+    $('.btn_postEdit_pv').click(function(){
+        var id= $(this).val();
+        $.post('../php/ajax_pv.php', {"postEdit":id},function(data){
+            $('#editContainer_pv').html(data);
+        }) 
+    });   
 
 
-$("#nanoGallery3").nanoGallery({
-    colorScheme: 'none',
-      thumbnailHoverEffect: [{ name: 'labelAppear75', duration: 300 }],
-      theme: 'light',
-      thumbnailWidth: 'auto',
-      thumbnailHeight: 200,
-      i18n: { thumbnailImageDescription: '<i class="fa fa-search-plus fa-5x"></i>'},
-      thumbnailLabel: { display: true, position: 'overImageOnMiddle', align: 'center', hideIcons: true, }
-});
+
+    //Anzeige von Vorschau- Bildern in Projektverwaltung
+    
+
+        function dynamicResizer(){
+            var cw = $('.col-sm-2').width();
+            cw +=30;
+            $('.imgLiquid').css({'height':cw+'px'});
+            console.log(cw);
+        } 
+
+        window.onresize= dynamicResizer;
+        window.onload= dynamicResizer;
+
+
+    //Anzeige der Vorschaubilder mittig ohne Verzerrung
+    $(".imgLiquidFill").imgLiquid({
+    fill: true,
+    horizontalAlign: "center",
+    verticalAlign: "top"
+    });
+
 
 })
+
 
