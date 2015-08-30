@@ -86,7 +86,120 @@ if(isset($_POST['submit'])) {
      $row4 = mysqli_fetch_array($result);
      $proId = $row4['IdProject'];
      $dir = mkdir('../architects/architekt'.$id.'/project'.$proId);
+     
+     $uploaddir = '../architects/architekt'.$id.'/project'.$proId.'/' ;
+     
+     //Bildupload für neues Projekt
+    if(!empty($_FILES['userfile']['name'])){
+
+    //Array mit Statusmeldungen
+    $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
+        'Nicht vollständig', 'Keine Datei hochgeladen');
+    
+
+    $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
+    $extension= strrchr($_FILES['userfile']['name'],'.');
+    $file= $filename.$extension;
+    
+    //Dateipfad mit Dateinamen zusammensetzen
+    $uploadfile= $uploaddir.basename($file);
+        if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
+            //echo'<p>Datei wurde erfolgreich hochgeladen.</p>';
+            $orgname= $_FILES['userfile']['name'];
+
+
+            $sql= "UPDATE project SET picture = '$uploadfile' WHERE IdProject = '$proId'";
+            $status= mysqli_query($link, $sql);
+
+            //Errorcode der Übertragung abfragen
+            $code= $_FILES['userfile']['error'];
+
+            //Übersetzer Error-Code in Worten (sh. Array) ausgeben
+            
+        }else{
+            echo'<p>Datei konnte nicht hochgeladen werden!</p>';
+            
+        }
+    }else{
+       // $uploaddirAlt= '../img/';
+       // $file= 'placeholder.png';
+       // $orgname= 'placeholder.png';
+
+        //$sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
+        $status= mysqli_query($link, $sql);
+        if(!$status){
+            echo'<p>Fehlgeschlagen</p>';
+        }
+    }
 }
+}
+
+if(isset($_POST['edit'])) {
+    //Projektdaten in Variablen Speichern
+     $proId2 = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_STRING);
+     $projectNumb = filter_input(INPUT_POST, 'ProjectNumber', FILTER_SANITIZE_STRING);
+     $title = filter_input(INPUT_POST, 'Title', FILTER_SANITIZE_STRING);
+     $addressline1 = filter_input(INPUT_POST, 'Addressline1', FILTER_SANITIZE_STRING);
+     $addressline2 = filter_input(INPUT_POST, 'Addressline2', FILTER_SANITIZE_STRING);
+     $zip = filter_input(INPUT_POST, 'ZIP', FILTER_SANITIZE_STRING);
+     $city = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
+     $country = filter_input(INPUT_POST, 'Country', FILTER_SANITIZE_STRING);
+     $description = filter_input(INPUT_POST, 'Description', FILTER_SANITIZE_STRING);
+     
+     //Bauherrendaten in Variablen Speichern
+     $bhFn = filter_input(INPUT_POST, 'BhFirstname', FILTER_SANITIZE_STRING);
+     $bhLn = filter_input(INPUT_POST, 'BhLastname', FILTER_SANITIZE_STRING);
+     $bhAddressline1 = filter_input(INPUT_POST, 'BhAddressline1', FILTER_SANITIZE_STRING);
+     $bhAddressline2 = filter_input(INPUT_POST, 'BhAddressline2', FILTER_SANITIZE_STRING);
+     $bhZIP = filter_input(INPUT_POST, 'BhZIP', FILTER_SANITIZE_STRING);
+     $bhCity = filter_input(INPUT_POST, 'BhCity', FILTER_SANITIZE_STRING);
+     $bhCountry = filter_input(INPUT_POST, 'BhCountry', FILTER_SANITIZE_STRING);
+     $bhPhNu = filter_input(INPUT_POST, 'BhPhoneNumber', FILTER_SANITIZE_STRING);
+     $bhMoNu = filter_input(INPUT_POST, 'BhMobileNumber', FILTER_SANITIZE_STRING);
+     $bhEmail = filter_input(INPUT_POST, 'BhEmail', FILTER_SANITIZE_STRING);
+     
+     
+    //Update wenn auch ein neues Bild hochgeladen wurde
+     if(!empty($_FILES['userfile']['name'])){
+
+    //Array mit Statusmeldungen
+    $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
+        'Nicht vollständig', 'Keine Datei hochgeladen');
+    
+    $uploaddir = '../architects/architekt'.$id.'/project'.$proId2.'/' ;
+    $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
+    $extension= strrchr($_FILES['userfile']['name'],'.');
+    $file= $filename.$extension;
+    
+    
+    
+    //Dateipfad mit Dateinamen zusammensetzen
+    $uploadfile= $uploaddir.basename($file);
+        if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
+            //echo'<p>Datei wurde erfolgreich hochgeladen.</p>';
+            $orgname= $_FILES['userfile']['name'];
+
+                $sql= "UPDATE project AS p, user AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
+                    p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
+                    p.Country = '$country', p.Description = '$description', p.Picture= '$uploadfile' ,
+                    u.Firstname = '$bhFn' , u.Lastname = '$bhLn' , u.Addressline1 = '$bhAddressline1' ,
+                    u.Addressline2 = '$bhAddressline2', u.ZIP = '$bhZIP' , u.City = '$bhCity' , u.Country = '$bhCountry' ,
+                    u.PhoneNumber = '$bhPhNu' , u.MobileNumber = '$bhMoNu', u.Email = '$bhEmail' 
+                    WHERE p.Fk_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+            
+            
+            $status= mysqli_query($link, $sql);
+
+            //Errorcode der Übertragung abfragen
+            $code= $_FILES['userfile']['error'];
+
+            //Übersetzer Error-Code in Worten (sh. Array) ausgeben
+            
+        }else{
+            echo'<p>Datei konnte nicht hochgeladen werden!</p>';
+            
+        }
+    }
 }
 ?>
 
@@ -141,8 +254,9 @@ if(isset($_POST['submit'])) {
                                 <p>Projektbeschrieb</p>
                                 <textarea name="Description"></textarea>
                                 <p>Projektbild</p>
+                                <label for="upload">Bildupload</label>
                                 <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
-                                <input type="file" name="Picture"/>
+                                <input id="upload" type="file" name="userfile"/>
                                 <!-- Bauherren Daten, zur erstellung Bauherr -->
                                 <h4>Daten Bauherr</h4>
                                 <p>Vorname</p>
@@ -225,7 +339,7 @@ while($row= mysqli_fetch_array($result)){
     echo'<h3><button type="button" class="btn_postEdit_pv" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'</h3>';
     echo '<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
     echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
-   // echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
+   echo'<a href="#" data-featherlight="'.$row['Picture'].'"><img alt="" src="'.$row['Picture'].'"/></a>';
     echo'</div>';
     echo'<div class="col-sm-6">';
     echo'<p>'.$row['Description'].'</p>';

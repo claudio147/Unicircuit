@@ -47,7 +47,7 @@ if (isset($_POST['postEdit'])) {
 
 
 
-        $data.= '<input type="hidden" name="postID" value="' . $postProject . '"/>
+        $data.= '<input type="hidden" name="postID" value="'.$postProject.'"/>
                 <p>Projektnummer*</p>
                  <input type="text" name="ProjectNumber" value="'.$projectNumb.'">
                 <p>Projektbezeichnung</p>
@@ -64,7 +64,7 @@ if (isset($_POST['postEdit'])) {
                  <textarea name="Description">'.$description.'</textarea>
                  <p>Projektbild</p>
                  <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
-                 <input type="file" name="Picture"/>
+                 <input type="file" name="userfile"/>
                  <!-- Bauherren Daten, zur erstellung Bauherr -->
                  <h4>Daten Bauherr</h4>
                  <p>Vorname</p>
