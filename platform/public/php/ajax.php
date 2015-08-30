@@ -1,6 +1,6 @@
 <?php
 require_once ('../../../library/public/database.inc.php');
-
+$projectID=2;
 
 $link= connectDB();
 
@@ -288,7 +288,7 @@ if(isset($_POST['getUserTyp'])){
     echo $usertyp;
 }
 
-//Formular mit Platzhaltern für das Editieren eines Chronik-Beitrags
+//Formular mit Platzhaltern für das Editieren eines Events
 if(isset($_POST['eventEdit'])){
     $data= '';
 
@@ -312,9 +312,108 @@ if(isset($_POST['eventEdit'])){
                 <label for="title">Titel*</label>
                 <input id="title" type="text" name="title" class="form-control" value="'.$title.'">
                 <label for="description">Bemerkung</label>
-                <textarea id="description" name="description" class="form-control" rows="3" value="'.$description.'"></textarea>
+                <textarea id="description" name="description" class="form-control" rows="3">'.$description.'</textarea>
                 <label for="location">Ort*</label>
                 <input id="location" type="text" name="location" class="form-control" value="'.$location.'">';
+
+                echo $data;
+    }
+
+}
+
+//Formular mit Platzhaltern für das Editieren einer Deadline
+if(isset($_POST['deadlineEdit'])){
+    $data= '';
+    
+    //Post ID
+    $id= filter_input(INPUT_POST, 'deadlineEdit', FILTER_SANITIZE_NUMBER_INT);
+    $sql= selectDeadlines($id);
+    $result= mysqli_query($link, $sql);
+
+    while($row= mysqli_fetch_array($result)){
+        $date= $row['DeadlineDate'];
+        $idCraftsman= $row['IdCraftsman'];
+        $title= $row['DeadlineTitle'];
+        $description= $row['DeadlineDescription'];
+        $sql2= allProjectAddress($projectID);
+        $result2= mysqli_query($link, $sql2);
+        $craftsman='';
+        while($row2= mysqli_fetch_array($result2)){
+            if($idCraftsman== $row2['IdProjectAddress']){
+                $sel= 'selected="selected"';
+            }else{
+                $sel='';
+            }
+            $craftsman.='<option value="'.$row2['IdProjectAddress'].'" '.$sel.'>'.
+                            $row2['Company'].', '.$row2['ProjectCoordinator'].
+                            '</option>';
+        }
+
+        $data.= '<input type="hidden" name="deadlineID" value="'.$id.'"/>
+                <label for="title">Titel*</label>
+                <input id="title" type="text" name="title" class="form-control" maxlength="25" value="'.$title.'">
+                <label for="date">Datum*</label><br/>
+                <input id="date" type="date" name="date" value="'.$date.'"><br/>
+                <label for="craftsman">Partner</label>
+                <select name="craftsman" class="form-control" id="craftsman">
+                    <option value="">kein Handwerker</option>
+                    <option value="" disabled="disabled">—————————————————————</option>'
+                .$craftsman.
+                '</select>
+                <label for="description">Beschreibung</label>
+                <textarea id="description" name="description" class="form-control" rows="5">'.$description.'</textarea>';
+
+                echo $data;
+    }
+
+}
+
+//Formular mit Platzhaltern für das Anzeigen der Details einer Deadline
+if(isset($_POST['deadlineShow'])){
+    $data= '';
+    
+    //Post ID
+    $id= filter_input(INPUT_POST, 'deadlineShow', FILTER_SANITIZE_NUMBER_INT);
+    $sql= selectDeadlines($id);
+    $result= mysqli_query($link, $sql);
+
+    while($row= mysqli_fetch_array($result)){
+        $dateOrg= $row['DeadlineDate'];
+        $date = date("d.m.Y", strtotime($dateOrg));
+        $idCraftsman= $row['IdCraftsman'];
+        $title= $row['DeadlineTitle'];
+        $description= $row['DeadlineDescription'];
+        
+        $sql2= getProjectAddress($idCraftsman);
+        $result2= mysqli_query($link, $sql2);
+
+        while($row2= mysqli_fetch_array($result2)){
+            $cmCompany= $row2['Company'];
+            $cmAddressline1= $row2['Addressline1'];
+            $cmAddressline2= $row2['Addressline2'];
+            $cmZIP= $row2['ZIP'];
+            $cmCity= $row2['City'];
+            $cmCountry= $row2['Country'];
+            $cmPerson= $row2['ProjectCoordinator'];
+            $cmPhone= $row2['PhoneDirect'];
+            $cmEmail= $row2['EmailDirect'];  
+        }
+
+        $data.= '<label for="title">Titel</label>
+                <p id="title" class="deadline-detail">'.$title.'</p>
+                <label for="date">Datum</label><br/>
+                <p id="date" class="deadline-detail">'.$date.'</p>
+                <label for="craftsman">Partner</label>
+                <p id="craftsman" class="deadline-detail">'.$cmCompany.'</p>
+                <p class="deadline-detail">'.$cmAddressline1.'</p>
+                <p class="deadline-detail">'.$cmAddressline2.'</p>
+                <p class="deadline-detail">'.$cmZIP.' '.$cmCity.'</p>
+                <p class="deadline-detail">'.$cmCountry.'</p><br/>
+                <p class="deadline-detail">'.$cmPerson.'</p>
+                <p class="deadline-detail"><a href="tel:'.$cmPhone.'">'.$cmPhone.'</a></p>
+                <p class="deadline-detail"><a href="mailto:'.$cmEmail.'">'.$cmEmail.'</a></p>
+                <label for="description">Beschreibung</label>
+                <p id="description">'.$description.'</p>';
 
                 echo $data;
     }

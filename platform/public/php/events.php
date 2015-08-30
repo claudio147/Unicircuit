@@ -105,8 +105,11 @@ if(isset($_POST['delete'])){
 <div class="container modalgroup">
 
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newEvent">+ hinzufügen</button>
-    
+<?php
+    if($usertyp==1){
+        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newEvent">+ hinzufügen</button>';
+    }
+?>
     <!-- Modal Global-->
     <div class="modal" id="newEvent" role="dialog">
         <div class="modal-dialog">

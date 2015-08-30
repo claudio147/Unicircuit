@@ -256,6 +256,29 @@ $(document).ready(function(){
         dynamicResizer();
     }
     
+    
+    
+    
+    /*
+     * ******** Deadlines
+     */
+    
+    //Ajax Loader für Inhalt in Lightbox bei bearbeiten (Deadlines)
+    $('.deadline-btn-edit').click(function(){
+        var id= $(this).val();
+        $.post('../php/ajax.php', {"deadlineEdit":id},function(data){
+            $('#deadlineEditContainer').html(data);
+        }) 
+    }); 
+    
+    //Ajax Loader für Inhalt in Lightbox bei anzeigen (Bauherr) (Deadlines)
+    $('.deadline-btn-show').click(function(){
+        var id= $(this).val();
+        $.post('../php/ajax.php', {"deadlineShow":id},function(data){
+            $('#deadlineShowContainer').html(data);
+        }) 
+    }); 
+    
 
 
 })//--> END document Ready

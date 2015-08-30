@@ -279,6 +279,7 @@ div.modalgroup{
 ***** Events
 */
 .event-wrapper{
+    margin-top: 10px;
     margin-left: -6px;
     margin-right: -6px;
 }
@@ -351,4 +352,69 @@ div.modalgroup{
     bottom: 0px;
     right: 0px;
 }
+
+
+/*
+******* DEADLINES
+*/
+.deadline-row{
+    background-color: #f0f0f0;
+    height: 70px;
+    margin-bottom: 12px;
+    padding: 5px 15px;    
+}
+
+.deadline-row:hover{
+    box-shadow: 10px 10px 5px #888888;
+    transition: 0.3s;
+}
+
+.deadline-wrapper{
+    margin-top: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.deadline-row>div{
+    float: left;
+    margin-bottom: 0px;
+    line-height: 60px;
+}
+
+.deadline-row>.deadline-date{
+    margin-right: 40px;
+    font-size: 24px;
+}
+
+.deadline-row>.deadline-title{
+    margin-right: 40px;
+    width: 300px;
+}
+
+button.deadline-btn-edit,
+button.deadline-btn-edit:hover,
+button.deadline-btn-edit:active,
+button.deadline-btn-edit:focus,
+button.deadline-btn-show,
+button.deadline-btn-show:hover,
+button.deadline-btn-show:active,
+button.deadline-btn-show:focus{
+    border: none;
+    background: transparent;
+    float: right;
+    font-size: 24px;
+}
+
+.deadline-detail{
+    margin-top: 0px !important;
+}
+
+.deadline-row.deadline-red{
+    background-color: #F26241;
+}
+
+.deadline-row.deadline-orange{
+    background-color: #F2B33D;
+}
+
 

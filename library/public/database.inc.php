@@ -430,3 +430,37 @@ function deleteEvent($eventID){
     return $sql;
 }
 
+
+/*
+ ***** Deadlines
+ */
+function newDeadline($projectID, $deadlineDate, $title, $description, $idCraftsman){
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+    $sql= "INSERT INTO Deadlines (Fk_IdProject, IdCraftsman, Date, Time, DeadlineDate, DeadlineTitle, DeadlineDescription) VALUES
+            ('$projectID','$idCraftsman','$date','$time','$deadlineDate','$title','$description')";
+    return $sql;
+}
+
+function getAllDeadlines($projectID){
+    $sql= 'SELECT IdDeadlines, IdCraftsman, DeadlineDate, DeadlineTitle, DeadlineDescription FROM Deadlines WHERE Fk_IdProject='.$projectID.' ORDER BY DeadlineDate ASC';
+    return $sql;
+}
+
+function selectDeadlines($id){
+    $sql= 'SELECT IdCraftsman, DeadlineDate, DeadlineTitle, DeadlineDescription FROM Deadlines WHERE IdDeadlines='.$id;
+    return $sql;
+}
+
+function updateDeadline($id, $deadlineDate, $title, $description, $idCraftsman){
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+    $sql= "UPDATE Deadlines SET IdCraftsman='$idCraftsman', Date='$date', Time='$time', DeadlineDate='$deadlineDate', DeadlineTitle='$title', "
+            . "DeadlineDescription='$description' WHERE IdDeadlines=".$id;
+    return $sql;
+}
+
+function deleteDeadline($id){
+    $sql= 'DELETE FROM Deadlines WHERE IdDeadlines='.$id;
+    return $sql;
+}

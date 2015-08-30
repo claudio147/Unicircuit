@@ -187,7 +187,7 @@ while($row= mysqli_fetch_array($result)){
                             include ('events.php');
                             break;
                         case 5:
-                            echo'<h2>DEADLINES</h2>';
+                            include ('deadlines.php');
                             break;
                         case 6:
                             include ('addresslist.php');
