@@ -22,13 +22,12 @@ $link=connectDB();
 if(isset($_POST['submit'])){
     
     //Variablen Definitionen
-    $date= $_POST['date'];
+    $dateOrg= $_POST['date'];
+    $date = date('Y-m-d', strtotime($dateOrg));
     $present= $_POST['present'];
     $notes= iconv('UTF-8', 'windows-1252', $_POST['notes']);
     $title;
     $prNr;
-    
-    
     
     //Alle Projektdaten holen
     $sql=getProjectDates($projectID);
@@ -299,7 +298,7 @@ if(isset($_POST['submit'])){
             <input id="weatherDesc" type="hidden" name="weatherDesc" value="">
             
             <label for="date">Datum des gewünschten Baujournal- Eintrags</label>
-            <input type="date" name="date" id="date" class="form-control">
+            <input type="" name="date" id="date" class="form-control datepicker">
             <label for="handwerker">Anwesende Handwerker</label>
             <select name="present[]" size="10" multiple="multiple" class="form-control" id="handwerker">
                 <?php

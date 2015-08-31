@@ -82,6 +82,10 @@ while($row= mysqli_fetch_array($result)){
     <link href="../css/dataTable.css" rel="stylesheet">
     <link href="../css/nanogallery/css/nanogallery.min.css" rel="stylesheet">
     <link href="../css/nanogallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet">
+    <link href="../css/datepicker.css" rel="stylesheet">
+    <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
+    <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-clockpicker.min.css" rel="stylesheet">
 
     <!-- CSS spezifisch -->
     <link href="../css/style.css" rel="stylesheet">
@@ -223,6 +227,8 @@ while($row= mysqli_fetch_array($result)){
     <!-- JS 3rd Party -->
     <script src="../js/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../css/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap-clockpicker.min.js"></script>
     <!-- Timeline -->
     <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>

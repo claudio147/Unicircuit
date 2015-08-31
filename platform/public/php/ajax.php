@@ -298,17 +298,23 @@ if(isset($_POST['eventEdit'])){
     $result= mysqli_query($link, $sql);
 
     while($row= mysqli_fetch_array($result)){
-        $date= $row['Date'];
+        $dateOrg= $row['Date'];
+        $date = date('d.m.Y', strtotime($dateOrg));
         $time= $row['Time'];
         $title= $row['Title'];
         $description= $row['Description'];
         $location= $row['Location'];
 
         $data.= '<input type="hidden" name="eventID" value="'.$id.'">
-                <label for="date">Datum*</label><br/>
-                <input id="date" type="date" name="date" value="'.$date.'"><br/>
-                <label for="time">Zeit*</label><br/>
-                <input id="time" type="time" name="time" value="'.$time.'"><br/>
+                <label for="date">Datum*</label>
+                <input id="date" type="date" name="date" class="form-control datepicker" value="'.$dateOrg.'">
+                <label for="time">Zeit*</label>
+                <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
+                    <input type="text" name="time" class="form-control" value="'.$time.'">
+                    <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
                 <label for="title">Titel*</label>
                 <input id="title" type="text" name="title" class="form-control" value="'.$title.'">
                 <label for="description">Bemerkung</label>
@@ -331,7 +337,8 @@ if(isset($_POST['deadlineEdit'])){
     $result= mysqli_query($link, $sql);
 
     while($row= mysqli_fetch_array($result)){
-        $date= $row['DeadlineDate'];
+        $dateOrg= $row['DeadlineDate'];
+        $date = date('d.m.Y', strtotime($dateOrg));
         $idCraftsman= $row['IdCraftsman'];
         $title= $row['DeadlineTitle'];
         $description= $row['DeadlineDescription'];
@@ -352,8 +359,8 @@ if(isset($_POST['deadlineEdit'])){
         $data.= '<input type="hidden" name="deadlineID" value="'.$id.'"/>
                 <label for="title">Titel*</label>
                 <input id="title" type="text" name="title" class="form-control" maxlength="25" value="'.$title.'">
-                <label for="date">Datum*</label><br/>
-                <input id="date" type="date" name="date" value="'.$date.'"><br/>
+                <label for="date">Datum*</label>
+                <input id="date" type="date" name="date" class="form-control datepicker" value="'.$dateOrg.'">
                 <label for="craftsman">Partner</label>
                 <select name="craftsman" class="form-control" id="craftsman">
                     <option value="">kein Handwerker</option>

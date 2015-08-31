@@ -8,7 +8,8 @@ $link= connectDB();
 
 //Speichern eines neuen Events
 if(isset($_POST['submit'])){
-    $date= $_POST['date'];
+    $dateOrg= $_POST['date'];
+    $date = date('Y-m-d', strtotime($dateOrg));
     $time= $_POST['time'];
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
@@ -43,7 +44,8 @@ if(isset($_POST['submit'])){
 
 //Update eines bestehenden Events
 if(isset($_POST['update'])){
-    $date= $_POST['date'];
+    $dateOrg= $_POST['date'];
+    $date = date('Y-m-d', strtotime($dateOrg));
     $time= $_POST['time'];
     $eventID= $_POST['eventID'];
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
@@ -124,10 +126,15 @@ if(isset($_POST['delete'])){
                         <div class="modal-body">
                             <div id="input_container">
 
-                                <label for="date">Datum*</label><br/>
-                                <input id="date" type="date" name="date"><br/>
-                                <label for="time">Zeit*</label><br/>
-                                <input id="time" type="time" name="time"><br/>
+                                <label for="date">Datum*</label>
+                                <input id="date" name="date" class="form-control datepicker">
+                                <label for="time">Zeit*</label>
+                                <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
+                                    <input type="text" name="time" class="form-control" value="08:00">
+                                    <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
                                 <label for="title">Titel*</label>
                                 <input id="title" type="text" name="title" class="form-control">
                                 <label for="description">Bemerkung</label>

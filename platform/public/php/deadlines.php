@@ -8,7 +8,8 @@ $link= connectDB();
 
 //Speichern einer neuen Deadline
 if(isset($_POST['submit'])){
-    $date= $_POST['date'];
+    $dateOrg= $_POST['date'];
+    $date = date('Y-m-d', strtotime($dateOrg));
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
     $idCraftsman = filter_input(INPUT_POST, 'craftsman', FILTER_SANITIZE_NUMBER_INT);
@@ -36,7 +37,8 @@ if(isset($_POST['submit'])){
 
 //Update einer bestehenden Deadline
 if(isset($_POST['update'])){
-    $date= $_POST['date'];
+    $dateOrg= $_POST['date'];
+    $date = date('Y-m-d', strtotime($dateOrg));
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
     $idCraftsman = filter_input(INPUT_POST, 'craftsman', FILTER_SANITIZE_NUMBER_INT);
@@ -111,8 +113,8 @@ if(isset($_POST['delete'])){
 
                                 <label for="title">Titel*</label>
                                 <input id="title" type="text" name="title" class="form-control" maxlength="25">
-                                <label for="date">Datum*</label><br/>
-                                <input id="date" type="date" name="date"><br/>
+                                <label for="date">Datum*</label>
+                                <input id="date" type="" name="date" class="form-control datepicker">
                                 <label for="craftsman">Partner</label>
                                 <select name="craftsman" class="form-control" id="craftsman">
                                     <option value="">kein Handwerker</option>

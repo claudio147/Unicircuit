@@ -14,7 +14,7 @@ if(isset($_POST['submit'])){
     $visible = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_NUMBER_INT);
     $date = date("Y-m-d");
     $time = date("H:i:s");
-   
+
     //Bildupload
     if(!empty($_FILES['userfile']['name'])){
 
@@ -285,6 +285,8 @@ $result = mysqli_query($link, $sql);
 echo'<div class="container timeline-container">';
 // Ausgabe Timeline
 while($row= mysqli_fetch_array($result)){
+    $date = date('d.m.Y', strtotime($row['Date']));
+    $time= substr($row['Time'],0,5);
     if($row['Id_visible']==1){
         $lock='<i class="fa fa-lock"></i>';
     }else{
@@ -292,7 +294,7 @@ while($row= mysqli_fetch_array($result)){
     }
     echo'<div class="post row">';
     echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';
-    echo'<p class="date">'.$row['Date'].', '.$row['Time'].'</p>';
+    echo'<p class="date">'.$date.', '.$time.'</p>';
     echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
     echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
     echo'</div>';
