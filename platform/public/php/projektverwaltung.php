@@ -28,7 +28,7 @@ $link = connectDB();
 
 
 
-
+//Erstellung eines neuen Projektes
 if(isset($_POST['submit'])) {
     //Projektdaten in Variablen Speichern
      $projectNumb = filter_input(INPUT_POST, 'ProjectNumber', FILTER_SANITIZE_STRING);
@@ -53,15 +53,15 @@ if(isset($_POST['submit'])) {
      $bhEmail = filter_input(INPUT_POST, 'BhEmail', FILTER_SANITIZE_STRING);
      
      //PW erstellung für Bauherr
-     $bhPw = generatePassword();
+     $BhPw = generatePassword();
      // Verschickt Mail an Bauherren
-     $mail = createBauhMail($bhEmail, $bhFn, $bhLn, $bhPw, $title);
+     $mail = createBauhMail($bhEmail, $bhFn, $bhLn, $BhPw, $title);
      
      //macht weiter wenn Mail geschickt wurde
      if($mail == TRUE) {
      
      //Verschlüsselt das Passwort
-     $pwHash = hash('sha256', $BhPW);
+     $pwHash = hash('sha256',$BhPw);
      
      //Fügt Bauherr der Datenbank hinzu
      $sql = createBauherr($bhFn, $bhLn, $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhEmail, $bhPhNu, $bhMoNu, $pwHash);
@@ -124,8 +124,8 @@ if(isset($_POST['submit'])) {
        // $uploaddirAlt= '../img/';
        // $file= 'placeholder.png';
        // $orgname= 'placeholder.png';
-
-        //$sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
+        $uploadfile = '../img/placeholder.png' ;
+        $sql= "UPDATE project SET picture = '$uploadfile' WHERE IdProject = '$proId'";
         $status= mysqli_query($link, $sql);
         if(!$status){
             echo'<p>Fehlgeschlagen</p>';
@@ -134,6 +134,7 @@ if(isset($_POST['submit'])) {
 }
 }
 
+//Anpassung eines Projektes
 if(isset($_POST['edit'])) {
     //Projektdaten in Variablen Speichern
      $proId2 = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_STRING);
@@ -199,7 +200,35 @@ if(isset($_POST['edit'])) {
             echo'<p>Datei konnte nicht hochgeladen werden!</p>';
             
         }
+    } else {
+        $sql = "UPDATE project AS p, user AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
+                    p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
+                    p.Country = '$country', p.Description = '$description',
+                    u.Firstname = '$bhFn' , u.Lastname = '$bhLn' , u.Addressline1 = '$bhAddressline1' ,
+                    u.Addressline2 = '$bhAddressline2', u.ZIP = '$bhZIP' , u.City = '$bhCity' , u.Country = '$bhCountry' ,
+                    u.PhoneNumber = '$bhPhNu' , u.MobileNumber = '$bhMoNu', u.Email = '$bhEmail' 
+                    WHERE p.Fk_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+        $status = mysqli_query($link, $sql);
     }
+}
+
+//Archivierung eines Projektes
+if(isset($_POST['store'])) {
+     $store = filter_input(INPUT_POST, 'store', FILTER_SANITIZE_STRING); 
+     
+     if(!empty($_POST['postID'])) {
+         $proId2 = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_STRING);
+         
+         $sql = "UPDATE project AS P, user AS u SET p.Storage = 1 , u.Active = 4 WHERE p.FK_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+         $status2 = mysqli_query($link, $sql);
+         if(isset($status2)) {
+             echo 'Das Projekt wurde in Ihr Archiv verschoben, und der dazugehörige Bauherr wurde Deaktiviert.';
+         }
+         
+
+         
+         
+     }
 }
 ?>
 
@@ -313,7 +342,7 @@ if(isset($_POST['edit'])) {
                             </div>       
                         </div>
                     <div class="modal-footer">
-                        <input type="submit" name="delete" value="Löschen" class="btn btn-default"/>
+                        <input type="submit" name="store" value="Archivieren" class="btn btn-default"/>
                         <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
                     </div>
