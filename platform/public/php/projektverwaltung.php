@@ -230,6 +230,20 @@ if(isset($_POST['store'])) {
          
      }
 }
+
+//geht zum gewählten Projekt auf die Index Seite
+if(isset($_POST['goto'])) {
+    $IdProject = filter_input(INPUT_POST, 'goto', FILTER_SANITIZE_STRING);
+    
+     $_SESSION['IdProject'] = $IdProject;
+     
+     if(!empty($IdProject)) {
+          header('Location: index.php');
+     } else {
+         header('Locatuin: 404.php');
+     }
+
+}
 ?>
 
 <html>
@@ -365,7 +379,10 @@ $result = mysqli_query($link, $sql);
 while($row= mysqli_fetch_array($result)){
    
     echo'<div class="post row">';
-    echo'<h3><button type="button" class="btn_postEdit_pv" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'</h3>';
+    echo '<h3><button type="button" class="btn_postEdit_pv" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'
+           <form action="projektverwaltung.php" method="POST">
+            <button type="submit" name ="goto" class="btn_postEdit_pv" data-toggle="modal" value="'.$row['IdProject'].'"><i class="fa fa-share"></i></button> </h3>
+            </form>';
     echo '<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
     echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
    echo'<a href="#" data-featherlight="'.$row['Picture'].'"><img alt="" src="'.$row['Picture'].'"/></a>';
