@@ -321,13 +321,14 @@ $(document).ready(function(){
         
     //Gallery-mini
     $('.dash-slick-gallery').slick({
-        adaptiveHeight:true,
+                                slidesToShow: 3,
+                                slidesToScroll: 3,
         			dots: false,
-        			infinite: true,
+        			infinite: false,
         			arrows: false,
         			autoplay: true,
         			autoplaySpeed: 4000,
-        			lazyLoad: 'ondemand'
+        			lazyLoad: 'progressive'
         		});
 
     function dynamicResizerDashGallery(){

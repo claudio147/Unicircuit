@@ -432,6 +432,10 @@ button.deadline-btn-show:focus{
     padding-left: 10px;
     border-right: solid 5px #fff;
     color: #fff;
+    z-index: 999;
+    -webkit-box-shadow: 0px 12px 7px -5px rgba(0,0,0,0.48);
+    -moz-box-shadow: 0px 12px 7px -5px rgba(0,0,0,0.48);
+    box-shadow: 0px 12px 7px -5px rgba(0,0,0,0.48);
 }
 
 .dash-header>h2{
@@ -514,10 +518,45 @@ button.deadline-btn-show:focus{
     padding-right: 10px;
 }
 
+.deadline-row-dash{
+    height: 40px !important;
+    background-color: #fff;
+}
+
+.deadline-date-dash{
+    font-size: 18px !important;
+    line-height: 30px !important;
+}
+
+.deadline-title-dash{
+    width: auto !important;
+    line-height: 30px !important;
+    margin-right: 0px !important;
+}
+
 .dash-events{
     margin-right: -10px;
     background-color: #f0f0f0;
-    overflow-y:hidden;
+}
+.event-container-dash{
+    border-color: transparent !important;
+}
+
+.event-front-dash{
+    background-color: #373d42 !important;
+}
+
+.event-front-dash>.event-day{
+    font-size: 50px;
+    margin-bottom: 0px;
+    margin-top: -10px;
+    line-height: 1.4;
+}
+
+.event-front-dash>.event-month{
+    font-size: 14px;
+    margin-bottom: 0px;
+    color: #fff;
 }
 
 .row-dash-events{
@@ -529,4 +568,7 @@ button.deadline-btn-show:focus{
 
 /*
 **************** Terminplan
- */
+*/
+#schedule-pdf{
+    margin-top: 15px;
+}

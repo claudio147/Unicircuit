@@ -126,10 +126,9 @@
                                     $company='';
                                 }
 
-                                echo'<div class="col-xs-12 deadline-row '.$class.'">';
-                                    echo'<div class="deadline-date">'.$date.'</div>';
-                                    echo'<div class="deadline-title">'.$title.'</div>';
-                                    echo'<div class="deadline-description hidden-sm hidden-xs">'.$company.'</div>';
+                                echo'<div class="col-xs-12 deadline-row deadline-row-dash '.$class.'">';
+                                    echo'<div class="deadline-date deadline-date-dash">'.$date.'</div>';
+                                    echo'<div class="deadline-title deadline-title-dash">'.$title.'</div>';
                                 echo'</div> ';
                             }
 
@@ -222,35 +221,18 @@
                                             $m='???';
                                     }
                                     
-                                    echo'<div class="col-xs-4 col-md-3 event-container">';
-                                        echo'<div class="event-front">';
+                                    echo'<div class="col-xs-4 col-md-3 event-container event-container-dash">';
+                                        echo'<div class="event-front event-front-dash">';
                                             echo'<p class="event-day">'.$day.'</p>';
                                             echo'<p class="event-month">'.$m.'</p>';
-                                            echo'<p class="event-title">'.$title.'</p>';
                                         echo'</div>';
-                                        echo'<div class="event-back">';
+                                        echo'<div class="event-back event-back-dash">';
                                             echo'<p class="event-desc-title">'.$title.'</p>';
-                                            echo'<p class="event-desc-date">'.$day.'.'.$month.'.'.$year.', '.$time.' Uhr</p>';
-                                            echo'<p class="event-desc-address">'.$location.'</p>';
-                                            echo'<p class="event-desc-desc">'.$description.'</p>';
                                         echo'</div>';
                                     echo'</div>';
                                 }
                                 
 
-                            }
-                            
-                            //Anzeige von leeren, damit mind. 12 Kästchen angezeigt werden
-                            while($count<4){
-                                $count++;
-                                
-                                echo'<div class="col-xs-4 col-md-3 event-container">';
-                                    echo'<div class="event-front">';
-                                        echo'<p class="event-day"></p>';
-                                        echo'<p class="event-month"></p>';
-                                        echo'<p class="event-title"></p>';
-                                    echo'</div>';
-                                echo'</div>';
                             }
                             
                             echo'</div>';

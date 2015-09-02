@@ -464,3 +464,19 @@ function deleteDeadline($id){
     $sql= 'DELETE FROM Deadlines WHERE IdDeadlines='.$id;
     return $sql;
 }
+
+/*
+ ******* Schedule
+ */
+function saveSchedule($idProject, $hashName, $orgName, $path, $comment){
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+    $sql= "INSERT INTO Schedule(Fk_IdProject, HashName, Orgname, Path, Date, Time, Comment) VALUES
+                ('$idProject', '$hashName', '$orgName', '$path', '$date', '$time', '$comment')";
+    return $sql;
+}
+
+function showAllSchedule($idProject){
+    $sql= "SELECT IdSchedule, HashName, Orgname, Path, Comment, Date, Time FROM Schedule WHERE Fk_IdProject = '$idProject' ORDER BY Date DESC, Time DESC";
+    return $sql;
+}
