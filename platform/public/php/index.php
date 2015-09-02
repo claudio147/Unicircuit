@@ -214,7 +214,7 @@ while($row= mysqli_fetch_array($result)){
                     }
 
                 }else{
-                    echo'<h2>HOME SEITE</h2>';
+                    include ('dashboard.php');
                 }
 
                 ?>

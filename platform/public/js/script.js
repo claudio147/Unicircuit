@@ -247,17 +247,7 @@ $(document).ready(function(){
 
 
 
-    // Diese Teil löst bei Resize und Onload mehrere Funktionen auf die Quadratische Darstellungen ermöglichen
-    window.onresize= resize;
-    window.onload= resize;
     
-    function resize(){
-        dynamicResizerEvent();
-        dynamicResizer();
-        setheightSchedule();
-        dynamicResizerDashboard();
-        dynamicResizerDashTimeline();
-    }
     
     
     
@@ -313,9 +303,9 @@ $(document).ready(function(){
      */
     function dynamicResizerDashboard(){
         var height = $(window).height();
-        full=height-120;
-        half= full/2-30;
-        quat= height/5;
+        full=height-123;
+        half= full/2-110;
+        quat= height/4-40;
         $('.dash-timeline').css({'height':full+'px'});
         $('.dash-gallery').css({'height':half+'px'});
         $('.dash-deadlines').css({'height':quat+'px'});
@@ -340,6 +330,36 @@ $(document).ready(function(){
         			lazyLoad: 'ondemand'
         		});
 
+    function dynamicResizerDashGallery(){
+            var gw = $('.dash-gallery').width();
+            var gh = $('.dash-gallery').height();
+            gw=gw-30;
+            gh=gh-30;
+            $('.dash-slick-img').css({'height':gh+'px'});
+            $('.dash-slick-img').css({'width':gw+'px'});
+        }
+
+
+
+
+
+
+
+
+
+
+        // Diese Teil löst bei Resize und Onload mehrere Funktionen auf die Quadratische Darstellungen ermöglichen
+    window.onresize= resize;
+    window.onload= resize;
+    
+    function resize(){
+        dynamicResizerEvent();
+        dynamicResizer();
+        setheightSchedule();
+        dynamicResizerDashboard();
+        dynamicResizerDashTimeline();
+        dynamicResizerDashGallery();
+    }
 
     
 })//--> END document Ready

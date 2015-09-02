@@ -285,7 +285,6 @@ div.modalgroup{
 }
 
 .event-container{
-    height: 200px;
     border: 6px solid #fff; 
     padding-left: 0px;
     padding-right: 0px;
@@ -422,14 +421,35 @@ button.deadline-btn-show:focus{
 */
 
 .dash-wrapper{
+    margin-top: 15px;
     margin-left: 0px;
     margin-right: 0px;
 }
 
 .dash-header{
-    background-color: #9fcd35;
+    background-color: #373d42;
+    height: 35px;
     padding-left: 10px;
     border-right: solid 5px #fff;
+    color: #fff;
+}
+
+.dash-header>h2{
+    margin-top: 7px;
+    font-size: 20px;
+}
+
+.dash-header>h2>a,
+.dash-header>h2>a:active{
+    color: #fff;
+}
+
+.dash-header>h2>a:hover{
+    color: #9fcd35;
+}
+
+.dash-left{
+    border-right: 25px solid #fff;
 }
 
 .dash-link{
@@ -459,17 +479,12 @@ button.deadline-btn-show:focus{
 }
 
 .dash-gallery{
-    //border-left: solid 5px #fff;
-    //border-bottom: solid 5px #fff;
-    //margin-left: -15px;
     margin-right: -10px;
     background-color: #f0f0f0;
-    //overflow-y: auto;
 }
 
 .dash-slick-img{
-    //max-width: 300px;
-    max-height: 300px;
+    margin-top: 10px;
 }
 
 .dash-right{
@@ -485,18 +500,28 @@ button.deadline-btn-show:focus{
 }
 
 .dash-deadlines{
-    border-left: solid 5px #fff;
-    border-bottom: solid 5px #fff;
-    border-top: solid 5px #fff;
-    background-color: green;
-    overflow-y: auto;
+    margin-right: -10px;
+    background-color: #f0f0f0;
+    overflow-y:auto;
+}
+
+.row-dash-deadlines{
+    margin-right: -10px;
+}
+
+.dash-deadlines-container{
+    margin-top: 30px;
+    padding-right: 10px;
 }
 
 .dash-events{
-    border-left: solid 5px #fff;
-    border-top: solid 5px #fff;
-    background-color: blue;
-    overflow-y: auto;
+    margin-right: -10px;
+    background-color: #f0f0f0;
+    overflow-y:hidden;
+}
+
+.row-dash-events{
+    margin-right: -10px;
 }
 
 
