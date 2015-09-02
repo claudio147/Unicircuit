@@ -43,7 +43,9 @@ if (isset($_POST['submit'])) {
       $_SESSION['UserName'] = $email;
       //Speichere den entsprechenden Usertype in der Session
       $_SESSION['UserType'] = $row['Fk_IdUserType'];
-
+      //Vorbereitung für Speicherung der ProjektId
+      $_SESSION['IdProject'] = '';
+      
       // Beschaffen wir uns ein paar interessante Informationen
       $date = date("Y:m:d");
       $time = date("G:i:s");
@@ -65,7 +67,17 @@ if (isset($_POST['submit'])) {
               header('Location: projektverwaltung.php');
               break;
           case 3:
-              header('Location: projekt.php');
+              //Holt die entsprechende ProjektId des Bauherren
+              $sql = "SELECT IdProject FROM project WHERE Fk_IdBauherr = $datensatz ";
+              $result = mysqli_query($link, $sql);
+              $row = mysqli_fetch_array($result);
+              echo $sql;
+              //Fügt die Projekt ID der Session hinzu
+              $_SESSION['IdProject'] = $row['IdProject'];
+              
+              if(!empty($row['IdProject'])) {
+              header('Location: index.php');
+              }
               break;
           
       }

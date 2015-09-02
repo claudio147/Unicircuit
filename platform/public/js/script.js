@@ -255,6 +255,8 @@ $(document).ready(function(){
         dynamicResizerEvent();
         dynamicResizer();
         setheightSchedule();
+        dynamicResizerDashboard();
+        dynamicResizerDashTimeline();
     }
     
     
@@ -295,6 +297,7 @@ $(document).ready(function(){
 
 
 
+
     //Terminplan
     function setheightSchedule(){
         var height = $( window ).height();
@@ -303,7 +306,42 @@ $(document).ready(function(){
     } 
 
 
+    
+    
+    /*
+     * Dashboard
+     */
+    function dynamicResizerDashboard(){
+        var height = $(window).height();
+        full=height-120;
+        half= full/2-30;
+        quat= height/5;
+        $('.dash-timeline').css({'height':full+'px'});
+        $('.dash-gallery').css({'height':half+'px'});
+        $('.dash-deadlines').css({'height':quat+'px'});
+        $('.dash-events').css({'height':quat+'px'});
+    } 
+    
+    //Timeline-Mini
+    function dynamicResizerDashTimeline(){
+            var cw = $('.dash-timeline-img').width();
+            cw +=30;
+            $('.dash-timeline-img').css({'height':cw+'px'});
+        }
+        
+    //Gallery-mini
+    $('.dash-slick-gallery').slick({
+        adaptiveHeight:true,
+        			dots: false,
+        			infinite: true,
+        			arrows: false,
+        			autoplay: true,
+        			autoplaySpeed: 4000,
+        			lazyLoad: 'ondemand'
+        		});
 
+
+    
 })//--> END document Ready
 
 

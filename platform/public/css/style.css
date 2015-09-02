@@ -417,6 +417,90 @@ button.deadline-btn-show:focus{
     background-color: #F2B33D;
 }
 
+/*
+****** Dashboard
+*/
+
+.dash-wrapper{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.dash-header{
+    background-color: #9fcd35;
+    padding-left: 10px;
+    border-right: solid 5px #fff;
+}
+
+.dash-link{
+    float: right;
+    margin-right: 10px;
+}
+
+.dashboard-title{
+    margin-top: 10px;
+}
+
+.dash-timeline{
+    border-right: solid 5px #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #f0f0f0;
+    overflow-y: auto;
+}
+
+.post-dash{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.post-dash>h3{
+    margin-top: 30px;
+}
+
+.dash-gallery{
+    //border-left: solid 5px #fff;
+    //border-bottom: solid 5px #fff;
+    //margin-left: -15px;
+    margin-right: -10px;
+    background-color: #f0f0f0;
+    //overflow-y: auto;
+}
+
+.dash-slick-img{
+    //max-width: 300px;
+    max-height: 300px;
+}
+
+.dash-right{
+    margin-left: -10px;
+}
+
+.dash-gallery-container{
+    padding-right: 10px;
+}
+
+.row-dash-gallery{
+    margin-right: -10px;
+}
+
+.dash-deadlines{
+    border-left: solid 5px #fff;
+    border-bottom: solid 5px #fff;
+    border-top: solid 5px #fff;
+    background-color: green;
+    overflow-y: auto;
+}
+
+.dash-events{
+    border-left: solid 5px #fff;
+    border-top: solid 5px #fff;
+    background-color: blue;
+    overflow-y: auto;
+}
+
+
+
 
 /*
 **************** Terminplan

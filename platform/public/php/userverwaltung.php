@@ -30,7 +30,7 @@ $result = mysqli_query($link, $sql);
 echo '<table border="1" width="600">';
 
  while ($row = mysqli_fetch_array($result)) {
-     
+      echo '<tr>';
       echo '<td>' . $row['Firstname'] . '</td>';
       echo '<td>' . $row['Lastname'] . '</td>';
       echo '<td>' . $row['Company'] . '</td>';
@@ -39,6 +39,7 @@ echo '<table border="1" width="600">';
       echo '<td>' . $row['PhoneNumber'] . '</td>';
       echo '<td>' . $row['MobileNumber'] . '</td>';
       echo '<td>' . $row['Email'] . '</td>';
+      
       
       //Ueberpruefung ob User bereits aktiviert ist und sich schon eingeloggt hat
       $reg = $row['Active'];
@@ -52,9 +53,12 @@ echo '<table border="1" width="600">';
       } else if($reg == 3) {
         
           echo '<td>User bereits Aktiviert</td>';
+      } else if($reg == 4) {
+          echo 'User gesperrt';
       } else {
           echo 'Fehler';
       }
+      echo '</tr>';
  }
  echo '</table>';
  
