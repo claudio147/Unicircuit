@@ -185,7 +185,7 @@ while($row= mysqli_fetch_array($result)){
                             include ('timeline.php');
                             break;
                         case 3:
-                            echo'<h2>TERMINPLAN</h2>';
+                            include ('schedule.php');
                             break;
                         case 4:
                             include ('events.php');

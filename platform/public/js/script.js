@@ -254,6 +254,7 @@ $(document).ready(function(){
     function resize(){
         dynamicResizerEvent();
         dynamicResizer();
+        setheightSchedule();
     }
     
     
@@ -291,6 +292,16 @@ $(document).ready(function(){
     });
     
     $('.clockpicker').clockpicker();
+
+
+
+    //Terminplan
+    function setheightSchedule(){
+        var height = $( window ).height();
+        height= height-200;
+        $('#schedule-pdf').css({'height':height+'px'});
+    } 
+
 
 
 })//--> END document Ready
