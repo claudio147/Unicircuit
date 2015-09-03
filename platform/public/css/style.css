@@ -285,7 +285,6 @@ div.modalgroup{
 }
 
 .event-container{
-    height: 200px;
     border: 6px solid #fff; 
     padding-left: 0px;
     padding-right: 0px;
@@ -417,4 +416,159 @@ button.deadline-btn-show:focus{
     background-color: #F2B33D;
 }
 
+/*
+****** Dashboard
+*/
 
+.dash-wrapper{
+    margin-top: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.dash-header{
+    background-color: #373d42;
+    height: 35px;
+    padding-left: 10px;
+    border-right: solid 5px #fff;
+    color: #fff;
+    z-index: 999;
+    -webkit-box-shadow: 0px 12px 7px -5px rgba(0,0,0,0.48);
+    -moz-box-shadow: 0px 12px 7px -5px rgba(0,0,0,0.48);
+    box-shadow: 0px 12px 7px -5px rgba(0,0,0,0.48);
+}
+
+.dash-header>h2{
+    margin-top: 7px;
+    font-size: 20px;
+}
+
+.dash-header>h2>a,
+.dash-header>h2>a:active{
+    color: #fff;
+}
+
+.dash-header>h2>a:hover{
+    color: #9fcd35;
+}
+
+.dash-left{
+    border-right: 25px solid #fff;
+}
+
+.dash-link{
+    float: right;
+    margin-right: 10px;
+}
+
+.dashboard-title{
+    margin-top: 10px;
+}
+
+.dash-timeline{
+    border-right: solid 5px #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #f0f0f0;
+    overflow-y: auto;
+}
+
+.post-dash{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.post-dash>h3{
+    margin-top: 30px;
+}
+
+.dash-gallery{
+    margin-right: -10px;
+    background-color: #f0f0f0;
+}
+
+.dash-slick-img{
+    margin-top: 10px;
+}
+
+.dash-right{
+    margin-left: -10px;
+}
+
+.dash-gallery-container{
+    padding-right: 10px;
+}
+
+.row-dash-gallery{
+    margin-right: -10px;
+}
+
+.dash-deadlines{
+    margin-right: -10px;
+    background-color: #f0f0f0;
+    overflow-y:auto;
+}
+
+.row-dash-deadlines{
+    margin-right: -10px;
+}
+
+.dash-deadlines-container{
+    margin-top: 30px;
+    padding-right: 10px;
+}
+
+.deadline-row-dash{
+    height: 40px !important;
+    background-color: #fff;
+}
+
+.deadline-date-dash{
+    font-size: 18px !important;
+    line-height: 30px !important;
+}
+
+.deadline-title-dash{
+    width: auto !important;
+    line-height: 30px !important;
+    margin-right: 0px !important;
+}
+
+.dash-events{
+    margin-right: -10px;
+    background-color: #f0f0f0;
+}
+.event-container-dash{
+    border-color: transparent !important;
+}
+
+.event-front-dash{
+    background-color: #373d42 !important;
+}
+
+.event-front-dash>.event-day{
+    font-size: 50px;
+    margin-bottom: 0px;
+    margin-top: -10px;
+    line-height: 1.4;
+}
+
+.event-front-dash>.event-month{
+    font-size: 14px;
+    margin-bottom: 0px;
+    color: #fff;
+}
+
+.row-dash-events{
+    margin-right: -10px;
+}
+
+
+
+
+/*
+**************** Terminplan
+*/
+#schedule-pdf{
+    margin-top: 15px;
+}

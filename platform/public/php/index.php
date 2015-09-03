@@ -2,6 +2,7 @@
 require_once ('../../../library/public/database.inc.php');
 
 $projectID=2;
+$usertyp=1;
 
 $prNr;
 $prNa;
@@ -72,7 +73,8 @@ while($row= mysqli_fetch_array($result)){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>UNICIRCUIT</title>
+
+    <title>3021 EFH Muster</title>
 
     <!-- CSS 3rd Party -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -86,6 +88,8 @@ while($row= mysqli_fetch_array($result)){
     <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
     <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css" rel="stylesheet">
     <link href="../css/bootstrap-clockpicker.min.css" rel="stylesheet">
+    <link href="../css/slick.css" rel="stylesheet">
+    <link href="../css/slick-theme.css" rel="stylesheet">
 
     <!-- CSS spezifisch -->
     <link href="../css/style.css" rel="stylesheet">
@@ -179,13 +183,13 @@ while($row= mysqli_fetch_array($result)){
                 if(isset($_GET['id'])){
                     switch($_GET['id']){
                         case 1:
-                            echo'<h2>HOME SEITE</h2>';
+                            include ('dashboard.php');
                             break;
                         case 2:
                             include ('timeline.php');
                             break;
                         case 3:
-                            echo'<h2>TERMINPLAN</h2>';
+                            include ('schedule.php');
                             break;
                         case 4:
                             include ('events.php');
@@ -210,7 +214,7 @@ while($row= mysqli_fetch_array($result)){
                     }
 
                 }else{
-                    echo'<h2>HOME SEITE</h2>';
+                    include ('dashboard.php');
                 }
 
                 ?>
@@ -229,6 +233,7 @@ while($row= mysqli_fetch_array($result)){
     <script src="../js/bootstrap.min.js"></script>
     <script src="../css/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
     <script src="../js/bootstrap-clockpicker.min.js"></script>
+    <script src="../js/slick.js"></script>
     <!-- Timeline -->
     <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>

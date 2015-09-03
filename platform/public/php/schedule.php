@@ -1,0 +1,147 @@
+<?php
+require_once ('../../../library/public/database.inc.php');
+
+
+$uploaddir= '../img/architect1/project1/pdf/';
+$projectID=2;
+$usertyp=1;
+$link= connectDB();
+
+
+
+
+//Upload und Überprüfung ob es ein PDF ist
+if(isset($_POST['submit'])){
+    if($_FILES['schedule']['error']==0){
+        if(strtolower($_FILES['schedule']['type'])=='application/x-pdf' || strtolower($_FILES['schedule']['type'])== 'application/pdf'){
+            //Überprüfung Filegrösse (max. 8MB)
+            if($_FILES['schedule']['size']<8000000){
+                $file= $_FILES['schedule'];
+                
+                $orgname= $file['name'];        //Originalname
+                $tempname= $file['tmp_name'];   //Temp- Verzeichnis / Name
+                $comment= filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+
+                //Datei in kryptischen einzigartigen Namen umbenennen (Überschreibungen verhindern)
+                $filename= sha1(time().mt_rand().$orgname);
+                $extension= strrchr($orgname, '.');
+                
+                //Zusammensetzen des kryptischen Namens mit der Original Dateiendung
+                $pdf= $filename.$extension;
+                
+                //Uploadpfad inkli. Dateiname und Endung
+                $uploadfile= $uploaddir.basename($pdf);
+                
+                if(move_uploaded_file($tempname, $uploadfile)){
+                    //Speichert daten in DB
+                    $sql= saveSchedule($projectID, $uploadfile, $orgname, $uploaddir, $comment);
+                    $status= mysqli_query($link, $sql);
+                    if($status){
+                        //Erfolgreich hochgeladen
+                        header("Location: index.php?id=3&status=0");
+                    }else{
+                        //Übermittlungsfehler
+                        header("Location: index.php?id=3&status=1");
+                    }
+                }else{
+                    //Übermittlungsfehler
+                    header("Location: index.php?id=3&status=1");
+                }
+                
+                
+                
+                
+                
+                
+            }else{
+                //zu grosses PDF
+                header("Location: index.php?id=3&status=3");
+            }  
+        }else{
+            //kein PDF
+            header("Location: index.php?id=3&status=2");
+        }
+    }else{
+        //Übermittlungsfehler
+        header("Location: index.php?id=3&status=1");
+    }
+}
+?>
+
+<div class="col-xs-12">
+    <h2 class="modul-title">Terminplan</h2>
+    
+    <!--Lightboxen (Modals)-->
+    <div class="container modalgroup">
+
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newSchedule">Terminplan hochladen</button>
+
+        <!-- Modal Global-->
+        <div class="modal" id="newSchedule" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form enctype="multipart/form-data" action="schedule.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Terminplan hochladen</h4>
+                        </div>
+                            <div class="modal-body">
+                                <div id="input_container">
+
+                                    <label for="scheduleUpload">Terminplan</label>                                    
+                                    <input id="scheduleUpload" type="file" name="schedule" >
+                                    <p>(PDF Format)</p><br/>
+                                    <label for="comment">Kommentar</label>
+                                    <textarea id="comment" rows="3" name="comment" class="form-control"></textarea>                              
+
+                                </div>
+                            </div>
+                        <div class="modal-footer">
+                            <input type="submit" name="submit" value="Terminplan hochladen" class="btn btn-default"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                        </div>
+                  </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    
+    <?php  
+    if(isset($_GET['status'])){
+        $x=$_GET['status'];
+        if($x==0){
+            echo'<br/><div class="alert alert-success" role="alert">Foto(s) erfolgreich hochgeladen</div>';
+        }else if($x==1){
+            echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! - Bitte erneut versuchen</div>';
+        }else if($x==2){
+            echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! - Nur PDF und X-PDF erlaubt</div>';
+        }else if($x==3){
+            echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! max. 8 MB</div>';
+        }else if($x==4){
+            echo'<br/><div class="alert alert-success" role="alert">Foto erfolgreich gelöscht</div>';
+        }else if($x==5){
+            echo'<br/><div class="alert alert-warning" role="alert">Löschen fehlgeschlagen! Bitte erneut versuchen</div>';
+        }
+    }
+    
+    $sql= showAllSchedule($projectID);
+    $result= mysqli_query($link, $sql);
+    
+    $row= mysqli_fetch_array($result);
+    $pdfSchedule= $row['HashName'];
+    
+    
+    ?>
+        
+    <object id="schedule-pdf" data="<?php echo $pdfSchedule; ?>" type="application/pdf" style="width:100%; border: solid 1px"></object>
+
+
+
+
+</div>

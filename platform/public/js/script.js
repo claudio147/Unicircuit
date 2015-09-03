@@ -247,14 +247,7 @@ $(document).ready(function(){
 
 
 
-    // Diese Teil löst bei Resize und Onload mehrere Funktionen auf die Quadratische Darstellungen ermöglichen
-    window.onresize= resize;
-    window.onload= resize;
     
-    function resize(){
-        dynamicResizerEvent();
-        dynamicResizer();
-    }
     
     
     
@@ -293,6 +286,85 @@ $(document).ready(function(){
     $('.clockpicker').clockpicker();
 
 
+
+
+    //Terminplan
+    function setheightSchedule(){
+        var height = $( window ).height();
+        height= height-200;
+        $('#schedule-pdf').css({'height':height+'px'});
+    } 
+
+
+    
+    
+    /*
+     * Dashboard
+     */
+    function dynamicResizerDashboard(){
+        var height = $(window).height();
+        full=height-123;
+        half= full/2-110;
+        quat= height/4-40;
+        $('.dash-timeline').css({'height':full+'px'});
+        $('.dash-gallery').css({'height':half+'px'});
+        $('.dash-deadlines').css({'height':quat+'px'});
+        $('.dash-events').css({'height':quat+'px'});
+    } 
+    
+    //Timeline-Mini
+    function dynamicResizerDashTimeline(){
+            var cw = $('.dash-timeline-img').width();
+            cw +=30;
+            $('.dash-timeline-img').css({'height':cw+'px'});
+        }
+        
+    
+
+    function dynamicResizerDashGallery(){
+            var gw = $('.dash-gallery').width();
+            var gh = $('.dash-gallery').height();
+            gw=gw-30;
+            gh=gh-30;
+            $('.dash-slick-img').css({'height':gh+'px'});
+            $('.dash-slick-img').css({'width':gw+'px'});
+
+            //Gallery-mini
+            $('.dash-slick-gallery').slick({
+                                        slidesToShow: 3,
+                                        slidesToScroll: 3,
+                            dots: false,
+                            infinite: false,
+                            arrows: false,
+                            autoplay: true,
+                            autoplaySpeed: 4000,
+                            lazyLoad: 'progressive'
+                        });
+        }
+
+
+
+
+
+
+
+
+
+
+        // Diese Teil löst bei Resize und Onload mehrere Funktionen auf die Quadratische Darstellungen ermöglichen
+    window.onresize= resize;
+    window.onload= resize;
+    
+    function resize(){
+        dynamicResizerEvent();
+        dynamicResizer();
+        setheightSchedule();
+        dynamicResizerDashboard();
+        dynamicResizerDashTimeline();
+        dynamicResizerDashGallery();
+    }
+
+    
 })//--> END document Ready
 
 
