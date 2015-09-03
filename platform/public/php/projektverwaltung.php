@@ -108,7 +108,7 @@ if(isset($_POST['submit'])) {
             $orgname= $_FILES['userfile']['name'];
 
 
-            $sql= "UPDATE project SET picture = '$uploadfile' WHERE IdProject = '$proId'";
+            $sql= addPicToProject($uploadfile, $proId);
             $status= mysqli_query($link, $sql);
 
             //Errorcode der Übertragung abfragen
@@ -125,7 +125,7 @@ if(isset($_POST['submit'])) {
        // $file= 'placeholder.png';
        // $orgname= 'placeholder.png';
         $uploadfile = '../img/placeholder.png' ;
-        $sql= "UPDATE project SET picture = '$uploadfile' WHERE IdProject = '$proId'";
+        $sql= addPicToProject($uploadfile, $proId);
         $status= mysqli_query($link, $sql);
         if(!$status){
             echo'<p>Fehlgeschlagen</p>';
@@ -158,8 +158,7 @@ if(isset($_POST['edit'])) {
      $bhPhNu = filter_input(INPUT_POST, 'BhPhoneNumber', FILTER_SANITIZE_STRING);
      $bhMoNu = filter_input(INPUT_POST, 'BhMobileNumber', FILTER_SANITIZE_STRING);
      $bhEmail = filter_input(INPUT_POST, 'BhEmail', FILTER_SANITIZE_STRING);
-     
-     
+
     //Update wenn auch ein neues Bild hochgeladen wurde
      if(!empty($_FILES['userfile']['name'])){
 
@@ -171,23 +170,15 @@ if(isset($_POST['edit'])) {
     $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
     $extension= strrchr($_FILES['userfile']['name'],'.');
     $file= $filename.$extension;
-    
-    
-    
+        
     //Dateipfad mit Dateinamen zusammensetzen
     $uploadfile= $uploaddir.basename($file);
         if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
             //echo'<p>Datei wurde erfolgreich hochgeladen.</p>';
             $orgname= $_FILES['userfile']['name'];
 
-                $sql= "UPDATE project AS p, user AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
-                    p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
-                    p.Country = '$country', p.Description = '$description', p.Picture= '$uploadfile' ,
-                    u.Firstname = '$bhFn' , u.Lastname = '$bhLn' , u.Addressline1 = '$bhAddressline1' ,
-                    u.Addressline2 = '$bhAddressline2', u.ZIP = '$bhZIP' , u.City = '$bhCity' , u.Country = '$bhCountry' ,
-                    u.PhoneNumber = '$bhPhNu' , u.MobileNumber = '$bhMoNu', u.Email = '$bhEmail' 
-                    WHERE p.Fk_IdBauherr = u.IdUser AND IdProject = '$proId2'";
-            
+                $sql= updateProjectWithPic($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $uploadfile, $bhFn, $bhLn,
+        $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2);
             
             $status= mysqli_query($link, $sql);
 
@@ -201,13 +192,10 @@ if(isset($_POST['edit'])) {
             
         }
     } else {
-        $sql = "UPDATE project AS p, user AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
-                    p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
-                    p.Country = '$country', p.Description = '$description',
-                    u.Firstname = '$bhFn' , u.Lastname = '$bhLn' , u.Addressline1 = '$bhAddressline1' ,
-                    u.Addressline2 = '$bhAddressline2', u.ZIP = '$bhZIP' , u.City = '$bhCity' , u.Country = '$bhCountry' ,
-                    u.PhoneNumber = '$bhPhNu' , u.MobileNumber = '$bhMoNu', u.Email = '$bhEmail' 
-                    WHERE p.Fk_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+        //Projekt Upload wenn kein Bild hochgeladen wurde.
+        $sql = updateProjectWithout($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $bhFn, $bhLn,
+        $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2);
+        
         $status = mysqli_query($link, $sql);
     }
 }
@@ -219,7 +207,7 @@ if(isset($_POST['store'])) {
      if(!empty($_POST['postID'])) {
          $proId2 = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_STRING);
          
-         $sql = "UPDATE project AS P, user AS u SET p.Storage = 1 , u.Active = 4 WHERE p.FK_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+         $sql = storeProject($proId2);
          $status2 = mysqli_query($link, $sql);
          if(isset($status2)) {
              echo 'Das Projekt wurde in Ihr Archiv verschoben, und der dazugehörige Bauherr wurde Deaktiviert.';
@@ -233,17 +221,46 @@ if(isset($_POST['store'])) {
 
 //geht zum gewählten Projekt auf die Index Seite
 if(isset($_POST['goto'])) {
-    $IdProject = filter_input(INPUT_POST, 'goto', FILTER_SANITIZE_STRING);
+    $goto = filter_input(INPUT_POST, 'goto', FILTER_SANITIZE_STRING);
+    $IdProject = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_STRING);
     
      $_SESSION['IdProject'] = $IdProject;
      
      if(!empty($IdProject)) {
           header('Location: index.php');
      } else {
-         header('Locatuin: 404.php');
+         header('Location: 404.php');
      }
-
 }
+
+//Reset des Passwortes des Bauherren
+if(isset($_POST['pwReset'])) {
+    $IdProject = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_STRING);
+    
+    $bhFn = filter_input(INPUT_POST, 'BhFirstname', FILTER_SANITIZE_STRING);
+    $bhLn = filter_input(INPUT_POST, 'BhLastname', FILTER_SANITIZE_STRING);
+    $bhEmail = filter_input(INPUT_POST, 'BhEmail', FILTER_SANITIZE_STRING);
+    $title = filter_input(INPUT_POST, 'Title', FILTER_SANITIZE_STRING);
+    
+    //PW erstellung für Bauherr
+     $BhPw = generatePassword();
+     // Verschickt Mail an Bauherren
+     $mail = createBauhResetPw($bhEmail, $bhFn, $bhLn, $BhPw, $title);
+     
+      //macht weiter wenn Mail geschickt wurde
+     if($mail == TRUE) {
+     
+     //Verschlüsselt das Passwort
+     $pwHash = hash('sha256',$BhPw);
+     
+     //Fügt Bauherr der Datenbank hinzu
+     $sql = resetBauhPw($IdProject, $pwHash);
+     $status = mysqli_query($link, $sql);
+     echo '<div class="alert alert-success">Das Passwort des Bauherren '.$bhFn.' '.$bhLn.' wurde zurückgesetzt. Dem Bauherren wurde ein Mail mit dem neuen Passwort gesendet. </div>' ;
+     }
+    
+}
+
 ?>
 
 <html>
@@ -293,7 +310,15 @@ if(isset($_POST['goto'])) {
                                 <p>PLZ*/Ort*</p>
                                 <input type="text" name="ZIP"><input type="text" name="City">
                                 <p>Land</p>
-                                <input type="text" name="Country">
+                                <select name="Country">
+                                    <?php 
+                                    //Liste mit Ländern aus der Datenbank
+                                    $sql = "SELECT Country FROM countries";
+                                    $resultC = mysqli_query($link, $sql);
+                                        while($rowC= mysqli_fetch_array($resultC)){
+                                        echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
+                                    }?>
+                                </select>
                                 <p>Projektbeschrieb</p>
                                 <textarea name="Description"></textarea>
                                 <p>Projektbild</p>
@@ -358,6 +383,8 @@ if(isset($_POST['goto'])) {
                     <div class="modal-footer">
                         <input type="submit" name="store" value="Archivieren" class="btn btn-default"/>
                         <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
+                        <input type="submit" name="delete" value="Löschen" class="btn btn-default" />
+                        <input type="submit" name="pwReset" value="Passwort Reset" class="btn btn-default" />
                         <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
                     </div>
               </form>
@@ -371,6 +398,7 @@ if(isset($_POST['goto'])) {
 <?php
 
 // Ausgabe Projekte
+
 
 $sql = getProjectsByArch($id);
 
@@ -394,6 +422,7 @@ while($row= mysqli_fetch_array($result)){
 }
 echo'</div>';
 echo'</div>';
+
 ?>
 
 
