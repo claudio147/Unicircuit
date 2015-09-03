@@ -419,6 +419,17 @@ function resetBauhPw($IdProject, $pwHash) {
     $sql = "UPDATE User AS u JOIN project AS p ON u.IdUser = p.Fk_IdBauherr AND p.IdProject = '$IdProject' SET u.Password = '$pwHash'";
     return $sql;
 }
+
+/*
+ * Storage Projekte
+ */
+
+function getProjectsByArchStore($id) {
+    $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM project as p JOIN user
+        as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id.' AND Storage = 1 ';
+    return $sql;
+}
 /*
  * Galerie - Plattform
  */

@@ -221,12 +221,11 @@ if(isset($_POST['store'])) {
 
 //geht zum gewählten Projekt auf die Index Seite
 if(isset($_POST['goto'])) {
-    $goto = filter_input(INPUT_POST, 'goto', FILTER_SANITIZE_STRING);
-    $IdProject = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_STRING);
+    $idProject = filter_input(INPUT_POST, 'goto', FILTER_SANITIZE_STRING);
     
-     $_SESSION['IdProject'] = $IdProject;
+     $_SESSION['IdProject'] = $idProject;
      
-     if(!empty($IdProject)) {
+     if(!empty($idProject)) {
           header('Location: index.php');
      } else {
          header('Location: 404.php');

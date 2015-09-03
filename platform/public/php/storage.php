@@ -23,8 +23,29 @@ $sql = getProjectsByArchStore($id);
 
 $result = mysqli_query($link, $sql);
 
-while($row= mysqli_fetch_array($result)){
-   
+//Ausgabe Warnung
+echo'<div class="alert alert-danger" role="alert">Archivierte Projekte können nicht zurückgeholt werden. <br> 
+    Bauherren haben keinen Zugriff auf Archiv Projekte</div>';
+?>
+
+<html>
+    <head>
+        <title>Projekt verwaltung</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../css/style.css">
+        
+        
+        
+        
+        
+    </head>
+    <body>
+<?php
+    while($row= mysqli_fetch_array($result)){
+    
     echo'<div class="post row">';
     echo '<h3><button type="button" class="btn_postEdit_pv" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'
            <form action="projektverwaltung.php" method="POST">
@@ -41,3 +62,16 @@ while($row= mysqli_fetch_array($result)){
 }
 echo'</div>';
 echo'</div>';
+
+?>
+
+          <!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/imgLiquid-min.js"></script>
+<script src="../js/script.js"></script>
+
+    </body>
+</html>
