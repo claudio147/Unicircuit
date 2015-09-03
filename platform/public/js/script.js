@@ -319,17 +319,7 @@ $(document).ready(function(){
             $('.dash-timeline-img').css({'height':cw+'px'});
         }
         
-    //Gallery-mini
-    $('.dash-slick-gallery').slick({
-                                slidesToShow: 3,
-                                slidesToScroll: 3,
-        			dots: false,
-        			infinite: false,
-        			arrows: false,
-        			autoplay: true,
-        			autoplaySpeed: 4000,
-        			lazyLoad: 'progressive'
-        		});
+    
 
     function dynamicResizerDashGallery(){
             var gw = $('.dash-gallery').width();
@@ -338,6 +328,18 @@ $(document).ready(function(){
             gh=gh-30;
             $('.dash-slick-img').css({'height':gh+'px'});
             $('.dash-slick-img').css({'width':gw+'px'});
+
+            //Gallery-mini
+            $('.dash-slick-gallery').slick({
+                                        slidesToShow: 3,
+                                        slidesToScroll: 3,
+                            dots: false,
+                            infinite: false,
+                            arrows: false,
+                            autoplay: true,
+                            autoplaySpeed: 4000,
+                            lazyLoad: 'progressive'
+                        });
         }
 
 
