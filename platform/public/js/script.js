@@ -43,6 +43,7 @@ $(document).ready(function(){
         "scrollY":        "450px",
         "scrollCollapse": true,
         "paging":         false,
+        fixedHeader: false,
         dom: 'Bfrtip',
         ordering: true,
         language: {
@@ -67,9 +68,10 @@ $(document).ready(function(){
         "scrollY":        "290px",
         "scrollCollapse": true,
         "paging":         false,
+        //dom: 'Bfrtip',
         ordering: true,
-        fixedHeader: true,
-        responsive: true,
+        fixedHeader: false,
+        //responsive: true,
         language: {
             search: "Suche",
             zeroRecords: "Keine Adressen gefunden",
@@ -77,6 +79,8 @@ $(document).ready(function(){
             infoFiltered: "(Adressen gesamt: _MAX_)"
         },
     });
+    
+    
 
     //Styling Tabellen Buttons (PDF,Excel, CSV)
     $('.dt-button').addClass('btn btn-default');

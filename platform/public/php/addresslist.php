@@ -200,7 +200,7 @@ echo'<h2 class="modul-title">Adressliste</h2>';
                     echo'<th>BKP</th>';
                     echo'<th>PLZ</th>';
                     echo'<th>Ort</th>';
-                    echo'<th> </th>';
+                    echo'<th></th>';
                     echo'</tr>';
                     echo'</thead>';
                     echo'<tbody>';
