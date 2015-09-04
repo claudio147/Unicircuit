@@ -22,8 +22,11 @@ $mail->SMTPSecure = "tls"; // Server präfix
 $mail->Host       = "smtp.gmail.com"; // SMTP Server Adresse
 $mail->Port       = 587; // Gmail SMTP Server Port
 
+$mail->CharSet = 'utf-8';
+
 $mail->Username   = "archconsulting2@gmail.com"; // Gmail username
 $mail->Password   = "arch!consulting";  // Gmail password
+
 
 $mail->SetFrom('archconsulting2@gmail.com', 'Archconsulting'); // Absenderadresse
 $mail->addReplyTo('archconsulting2@gmail.com','Archconsulting');
@@ -144,7 +147,7 @@ function createBauhMail($bhEmail, $BhFn, $BhLn, $BhPw, $title) {
             <body>
             <p> Guten Tag Herr $BhFn $BhLn</p>
             <p> Ihr Architekt hat Ihr Projekt $title auf der Plattform Unicircuit eröffnet. </p>
-            <p> Sie können sich unter <a href=\"http://http://local-platform.int.ch/php/login.php\">Login</a> direkt einloggen</p>
+            <p> Sie können sich unter <a href=\"http://local-platform.int.ch/php/login.php\">Login</a> direkt einloggen</p>
             <p> Ihr Passwort für den erstmaligen Login lautet: <b>$BhPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
                <p> Viel Spass wünscht <b> Archconsulting</b> </p>");
     
@@ -156,6 +159,33 @@ function createBauhMail($bhEmail, $BhFn, $BhLn, $BhPw, $title) {
         return true;
         }
     
+}
+
+//Mail für Paswort Reset des Bauherren
+function createBauhResetPw($bhEmail, $bhFn, $bhLn, $BhPw, $title) {
+    global $mail;
+    $mail ->Subject = 'Passwort Reset ihres Unicircuit Accounts';
+    $address = $bhEmail;
+    $mail ->addAddress($address, $bhFn.' '.$bhLn);
+        //Nachricht erstellen
+    $mail->msgHTML("
+            <html><head>
+            <title> Passwort Rücksetzunh</title>
+            </head>
+            <body>
+            <p> Guten Tag Herr $bhFn $bhLn</p>
+            <p> Ihr Architekt hat Ihr Passwort für das Projekt $title zurückgesetzt. </p>
+            <p> Sie können sich unter <a href=\"http://local-platform.int.ch/php/login.php\">Login</a> direkt einloggen mit dem neuen Passwort</p>
+            <p> Ihr Passwort lautet: <b>$BhPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
+               <p> Viel Spass wünscht <b> Archconsulting</b> </p>");
+    
+    // Mail an Benutzer/in senden.
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        return false;
+        } else {
+        return true;
+        }
 }
 
 

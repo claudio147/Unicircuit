@@ -80,6 +80,7 @@ if (isset($_POST['postEdit'])) {
                  <p>Land</p>
                  <input type="text" name="BhCountry" value="'.$bhCountry.'">
                  <p>Telefonnummer</p>
+                 <input type="submit" name="pwReset" value="Passwort Reset" class="btn btn-default" />
                  <input type="text" name="BhPhoneNumber" value="'.$bhPhNu.'">
                  <p>Mobile Nummer</p>
                  <input type="text" name="BhMobileNumber" value="'.$bhMoNu.'">

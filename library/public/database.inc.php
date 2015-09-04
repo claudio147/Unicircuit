@@ -31,6 +31,18 @@ function connectDB() {
  return $link;
 }
 
+/*
+ * Allgemein
+ */
+
+function getCountriesDe() {
+    $sql = 'SELECT de FROM countries';
+    return $sql;
+}
+
+/*
+ * Userverwaltung
+ */
 // Erstellung Architekt User in DB
 function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti, $a1, $a2) {
     
@@ -362,6 +374,62 @@ function getProjectsByArch($id) {
     return $sql;
 }
 
+//Fügt Bild dem Projekt hinzu
+function addPicToProject($uploadfile, $proId){
+     $sql= "UPDATE project SET picture = '$uploadfile' WHERE IdProject = '$proId'";
+     return $sql;
+}
+
+//Projekt Update mit neuem Bild
+function updateProjectWithPic($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $uploadfile, $bhFn, $bhLn,
+        $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2) {
+    $sql= "UPDATE project AS p, user AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
+                    p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
+                    p.Country = '$country', p.Description = '$description', p.Picture= '$uploadfile' ,
+                    u.Firstname = '$bhFn' , u.Lastname = '$bhLn' , u.Addressline1 = '$bhAddressline1' ,
+                    u.Addressline2 = '$bhAddressline2', u.ZIP = '$bhZIP' , u.City = '$bhCity' , u.Country = '$bhCountry' ,
+                    u.PhoneNumber = '$bhPhNu' , u.MobileNumber = '$bhMoNu', u.Email = '$bhEmail' 
+                    WHERE p.Fk_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+                    
+    return $sql;
+}
+
+//Projekt Update ohne neues Bild
+function updateProjectWithout($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $bhFn, $bhLn,
+        $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2) {
+    
+   $sql = "UPDATE project AS p, user AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
+                    p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
+                    p.Country = '$country', p.Description = '$description',
+                    u.Firstname = '$bhFn' , u.Lastname = '$bhLn' , u.Addressline1 = '$bhAddressline1' ,
+                    u.Addressline2 = '$bhAddressline2', u.ZIP = '$bhZIP' , u.City = '$bhCity' , u.Country = '$bhCountry' ,
+                    u.PhoneNumber = '$bhPhNu' , u.MobileNumber = '$bhMoNu', u.Email = '$bhEmail' 
+                    WHERE p.Fk_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+    return $sql;
+}
+
+//Archivierung eines Projektes
+function storeProject($proId2) {
+     $sql = "UPDATE project AS P, user AS u SET p.Storage = 1 , u.Active = 4 WHERE p.FK_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+     return $sql;
+}
+
+//Passwort Update des Bauherren
+function resetBauhPw($IdProject, $pwHash) {
+    $sql = "UPDATE User AS u JOIN project AS p ON u.IdUser = p.Fk_IdBauherr AND p.IdProject = '$IdProject' SET u.Password = '$pwHash'";
+    return $sql;
+}
+
+/*
+ * Storage Projekte
+ */
+
+function getProjectsByArchStore($id) {
+    $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM project as p JOIN user
+        as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id.' AND Storage = 1 ';
+    return $sql;
+}
 /*
  * Galerie - Plattform
  */
