@@ -383,7 +383,7 @@ if(isset($_POST['pwReset'])) {
                         <input type="submit" name="store" value="Archivieren" class="btn btn-default"/>
                         <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
                         <input type="submit" name="delete" value="Löschen" class="btn btn-default" />
-                        <input type="submit" name="pwReset" value="Passwort Reset" class="btn btn-default" />
+                        
                         <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
                     </div>
               </form>
@@ -407,7 +407,7 @@ while($row= mysqli_fetch_array($result)){
    
     echo'<div class="post row">';
     echo '<h3><button type="button" class="btn_postEdit_pv" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'
-           <form action="projektverwaltung.php" method="POST">
+           <form action="index.php" method="POST">
             <button type="submit" name ="goto" class="btn_postEdit_pv" data-toggle="modal" value="'.$row['IdProject'].'"><i class="fa fa-share"></i></button> </h3>
             </form>';
     echo '<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
