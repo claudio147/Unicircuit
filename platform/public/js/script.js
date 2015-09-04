@@ -116,6 +116,16 @@ $(document).ready(function(){
         
         
     });
+    
+    //Ajax Loader für Inhalt in Lightbox auf Storage
+    $('.btn_postEdit_storage').click(function(){
+        var id= $(this).val();
+        $.post('../php/ajax_pv.php', {"postStorage":id},function(data){
+            $('#editContainer_storage').html(data);
+        }) 
+        
+        
+    });
 
    
 

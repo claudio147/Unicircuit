@@ -5,7 +5,7 @@ require_once ('../../../library/public/database.inc.php');
 
 $link = connectDB();
 
-//Formular mit Platzhaltern für das Editieren eines CHronik-Beitrags
+//Formular mit Platzhaltern für das Editieren eines Projekt-Beitrags
 if (isset($_POST['postEdit'])) {
     $data = '';
 
@@ -42,11 +42,20 @@ if (isset($_POST['postEdit'])) {
         $bhPhNu = $row['PhoneNumber'];
         $bhMoNu = $row['MobileNumber'];
 
+        //Auswahl Länderliste aus DB
+     $sql = "SELECT Country FROM countries";
+     $resultC = mysqli_query($link, $sql);
+ $countries = '';
+                while($rowC= mysqli_fetch_array($resultC)){
+                    if($rowC['Country'] == $country) {
+                    $countries .= '<option value="'.$rowC['Country'].'" selected = "selected">'.$rowC['Country'].'</option>';
+                    }else {
+                    $countries .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
+                    }
+                }
+               
 
-
-
-
-
+                
         $data.= '<input type="hidden" name="postID" value="'.$postProject.'"/>
                 <p>Projektnummer*</p>
                  <input type="text" name="ProjectNumber" value="'.$projectNumb.'">
@@ -59,7 +68,9 @@ if (isset($_POST['postEdit'])) {
                  <p>PLZ*/Ort*</p>
                  <input type="text" name="ZIP" value="'.$zip.'"><input type="text" name="City" value="'.$city.'">
                  <p>Land</p>
-                 <input type="text" name="Country" value="'.$country.'">
+                 <select name="Country" >';
+        $data .= $countries;    
+        $data .='</select>
                  <p>Projektbeschrieb</p>
                  <textarea name="Description">'.$description.'</textarea>
                  <p>Projektbild</p>
@@ -86,6 +97,89 @@ if (isset($_POST['postEdit'])) {
                  <input type="text" name="BhMobileNumber" value="'.$bhMoNu.'">
                  <p>Email</p>
                  <input type="text" name="BhEmail" value="'.$bhEmail.'">';
+
+        echo $data;
+    }
+}
+
+//Formular Ansicht für Projekte in Storage, nicht editierbar.
+if (isset($_POST['postStorage'])) {
+    $data = '';
+
+    //Post ID
+    $id = filter_input(INPUT_POST, 'postStorage', FILTER_SANITIZE_NUMBER_INT);
+    //$sql= selectProjectById($id);
+    $sql = 'SELECT p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname AS FirstnameBh, u.Lastname AS LastnameBh,
+        u.Addressline1 AS Addressline1Bh, u.Addressline2 AS Addressline2Bh, u.ZIP AS ZIPBh,
+        u.City AS CityBh, u.Country AS CountryBh, u.Email, u.PhoneNumber, u.MobileNumber FROM project as p JOIN user
+        as u on p.Fk_IdBauherr = u.IdUser WHERE IdProject = ' . $id;
+    $result = mysqli_query($link, $sql);
+    
+    while ($row = mysqli_fetch_array($result)) {
+        $postProject = $id;
+        $projectNumb = $row['ProjectNumber'];
+        $title = $row['Title'];
+        $addressline1 = $row['Addressline1'];
+        $addressline2 = $row['Addressline2'];
+        $zip = $row['ZIP'];
+        $city = $row['City'];
+        $country = $row['Country'];
+        $description = $row['Description'];
+        $picture = $row['Picture'];
+        $idUser = $row['IdUser'];
+        $bhFirstname = $row['FirstnameBh'];
+        $bhLastname = $row['LastnameBh'];
+        $bhAddressline1 = $row['Addressline1Bh'];
+        $bhAddressline2 = $row['Addressline2Bh'];
+        $bhZIP = $row['ZIPBh'];
+        $bhCity = $row['CityBh'];
+        $bhCountry = $row['CountryBh'];
+        $bhEmail = $row['Email'];
+        $bhPhNu = $row['PhoneNumber'];
+        $bhMoNu = $row['MobileNumber'];
+
+
+
+
+
+
+        $data.= '<input type="hidden" name="postID" value="'.$postProject.'" readonly="readonly"/>
+                <p>Projektnummer*</p>
+                 <input type="text" name="ProjectNumber" value="'.$projectNumb.'"readonly="readonly>
+                <p>Projektbezeichnung</p>
+                 <input type="text" name="Title" value="'.$title.' readonly="readonly" ">
+                 <p>Strasse</p>
+                 <input type="text" name="Addressline1" value="'.$addressline1.'" readonly="readonly">
+                 <p>Addresszeile 2</p>
+                 <input type="text" name="Addressline2" value="'.$addressline2.'" readonly="readonly">
+                 <p>PLZ*/Ort*</p>
+                 <input type="text" name="ZIP" value="'.$zip.'"><input type="text" name="City" value="'.$city.'" readonly="readonly">
+                 <p>Land</p>
+                 <input type="text" name="Country" value="'.$country.'" readonly="readonly">
+                 <p>Projektbeschrieb</p>
+                 <textarea name="Description" readonly="readonly" >'.$description.'</textarea>
+                 <p>Projektbild</p>
+                 
+                 <h4>Daten Bauherr</h4>
+                 <p>Vorname</p>
+                 <input type="text" name="BhFirstname" value="'.$bhFirstname.'" readonly="readonly">
+                 <p>Nachname</p>
+                 <input type="text" name="BhLastname" value="'.$bhLastname.'" readonly="readonly">
+                 <p>Strasse</p>
+                 <input type="text" name="BhAddressline1" value="'.$bhAddressline1.'" readonly="readonly">
+                 <p>Adresszeile 2</p>
+                 <input type="text" name="BhAddressline2" value="'.$bhAddressline2.'" readonly="readonly">
+                 <p>PLZ/Ort</p>
+                 <input type="text" name="BhZIP" value="'.$bhZIP.'"><input type="text" name="BhCity" value="'.$bhCity.'" readonly="readonly">
+                 <p>Land</p>
+                 <input type="text" name="BhCountry" value="'.$bhCountry.'" readonly="readonly">
+                 <p>Telefonnummer</p>
+                 <input type="text" name="BhPhoneNumber" value="'.$bhPhNu.'" readonly="readonly">
+                 <p>Mobile Nummer</p>
+                 <input type="text" name="BhMobileNumber" value="'.$bhMoNu.'" readonly="readonly">
+                 <p>Email</p>
+                 <input type="text" name="BhEmail" value="'.$bhEmail.'" readonly="readonly">';
 
         echo $data;
     }
