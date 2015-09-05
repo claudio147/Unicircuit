@@ -8,7 +8,7 @@
  session_start();
     
  if(!isset($_SESSION['IdUser']) || $_SESSION['UserType'] != 2) {
-    header('Location: denied.php');
+    header('Location: login.php?denied=1');
 }
 
 //Einbindung Librarys
@@ -85,9 +85,9 @@ if(isset($_POST['submit'])) {
      $result = mysqli_query($link, $sql);
      $row4 = mysqli_fetch_array($result);
      $proId = $row4['IdProject'];
-     $dir = mkdir('../architects/architekt'.$id.'/project'.$proId);
+     $dir = mkdir('../architects/architect_'.$id.'/project_'.$proId);
      
-     $uploaddir = '../architects/architekt'.$id.'/project'.$proId.'/' ;
+     $uploaddir = '../architects/architect_'.$id.'/project_'.$proId.'/' ;
      
      //Bildupload für neues Projekt
     if(!empty($_FILES['userfile']['name'])){
@@ -166,7 +166,7 @@ if(isset($_POST['edit'])) {
     $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
         'Nicht vollständig', 'Keine Datei hochgeladen');
     
-    $uploaddir = '../architects/architekt'.$id.'/project'.$proId2.'/' ;
+    $uploaddir = '../architects/architect_'.$id.'/project_'.$proId2.'/' ;
     $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
     $extension= strrchr($_FILES['userfile']['name'],'.');
     $file= $filename.$extension;
@@ -402,9 +402,9 @@ if(isset($_POST['pwReset'])) {
 $sql = getProjectsByArch($id);
 
 $result = mysqli_query($link, $sql);
-echo'<pre>';
-print_r($result);
-echo'</pre>';
+
+
+$projectsId = array();
 
 while($row= mysqli_fetch_array($result)){
    
@@ -413,6 +413,7 @@ while($row= mysqli_fetch_array($result)){
            <form action="index.php" method="POST">
             <button type="submit" name ="goto" class="btn_postEdit_pv" data-toggle="modal" value="'.$row['IdProject'].'"><i class="fa fa-share"></i></button> </h3>
             </form>';
+    $projectsId[] = $row['IdProject'];
     echo '<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
     echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
    echo'<a href="#" data-featherlight="'.$row['Picture'].'"><img alt="" src="'.$row['Picture'].'"/></a>';
@@ -424,6 +425,8 @@ while($row= mysqli_fetch_array($result)){
 }
 echo'</div>';
 echo'</div>';
+//Speichert alle ProjectIds in einer Session Array
+$_SESSION['IdProject'] = $projectsId;
 
 ?>
 
