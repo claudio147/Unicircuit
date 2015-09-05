@@ -18,22 +18,22 @@ if(isset($_SESSION['UserType'])){
             $projectID= $_SESSION['IdProject'];
         }else{
             //keine Projekt ID = kein Zugriff
-            header('Location: case1.php');
+            header('Location: login.php?denied=1');
         }
     }else if($usertyp==3){
         if(isset($_SESSION['IdProject'])){
             $projectID= $_SESSION['IdProject'];
         }else{
             //keine Projekt ID = kein Zugriff
-            header('Location: denied.php');
+            header('Location: login.php?denied=1');
         }
     }else{
         //Usertyp unbekannt
-        header('Location: denied.php');
+        header('Location: login.php?denied=1');
     }
 }else{
     //kein Usertyp = kein Zugriff
-    header('Location: denied.php');
+    header('Location: login.php?denied=1');
 }
 
 $prNr;
