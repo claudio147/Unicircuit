@@ -402,6 +402,9 @@ if(isset($_POST['pwReset'])) {
 $sql = getProjectsByArch($id);
 
 $result = mysqli_query($link, $sql);
+echo'<pre>';
+print_r($result);
+echo'</pre>';
 
 while($row= mysqli_fetch_array($result)){
    

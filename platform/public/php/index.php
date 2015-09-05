@@ -1,8 +1,40 @@
 <?php
+//Session starten oder wiederaufnehmen
+ session_start();
+
 require_once ('../../../library/public/database.inc.php');
 
-$projectID=2;
-$usertyp=1;
+//Usertyp wird ermittelt (falls vorhanden)
+if(isset($_SESSION['UserType'])){
+    $usertyp= $_SESSION['UserType']; //1= Archconsulting //2= Architekt //3= Bauherr
+    
+    if($usertyp==2){
+        if(isset($_POST['goto'])){
+            //Bei ersten Aufruf über Projektverwaltung
+            $projectID= $_POST['goto'];
+            $_SESSION['IdProject']= $projectID;
+        }else if(isset($_SESSION['IdProject'])){
+            //Wenn schon eine Session besteht
+            $projectID= $_SESSION['IdProject'];
+        }else{
+            //keine Projekt ID = kein Zugriff
+            header('Location: case1.php');
+        }
+    }else if($usertyp==3){
+        if(isset($_SESSION['IdProject'])){
+            $projectID= $_SESSION['IdProject'];
+        }else{
+            //keine Projekt ID = kein Zugriff
+            header('Location: denied.php');
+        }
+    }else{
+        //Usertyp unbekannt
+        header('Location: denied.php');
+    }
+}else{
+    //kein Usertyp = kein Zugriff
+    header('Location: denied.php');
+}
 
 $prNr;
 $prNa;
@@ -10,41 +42,12 @@ $fnCust;
 $lnCust;
 
 
-if(isset($_GET['id'])){
-    switch($_GET['id']){
-        case 1:
-            $active1= 'active';
-            break;
-        case 2:
-            $active2= 'active';
-            break;
-        case 3:
-            $active3= 'active';
-            break;
-        case 4:
-            $active3= 'active';
-            break;
-        case 5:
-            $active3= 'active';
-            break;
-        case 6:
-            $active6= 'active';
-            break;
-        case 7:
-            $active7= 'active';
-            break;
-        case 8:
-            $active8= 'active';
-            break;
-        case 9:
-            $active9= 'active';
-            break;
-        default:
-            $active1= 'active';
-    }
-}else{
-    $active1= 'active';
-}
+
+
+
+
+
+
 
 
 
