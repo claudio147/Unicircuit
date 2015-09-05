@@ -402,9 +402,9 @@ if(isset($_POST['pwReset'])) {
 $sql = getProjectsByArch($id);
 
 $result = mysqli_query($link, $sql);
-echo'<pre>';
-print_r($result);
-echo'</pre>';
+
+
+$projectsId = array();
 
 while($row= mysqli_fetch_array($result)){
    
@@ -413,6 +413,7 @@ while($row= mysqli_fetch_array($result)){
            <form action="index.php" method="POST">
             <button type="submit" name ="goto" class="btn_postEdit_pv" data-toggle="modal" value="'.$row['IdProject'].'"><i class="fa fa-share"></i></button> </h3>
             </form>';
+    $projectsId[] = $row['IdProject'];
     echo '<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
     echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
    echo'<a href="#" data-featherlight="'.$row['Picture'].'"><img alt="" src="'.$row['Picture'].'"/></a>';
@@ -424,6 +425,8 @@ while($row= mysqli_fetch_array($result)){
 }
 echo'</div>';
 echo'</div>';
+//Speichert alle ProjectIds in einer Session Array
+$_SESSION['IdProject'] = $projectsId;
 
 ?>
 

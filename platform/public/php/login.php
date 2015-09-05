@@ -59,6 +59,7 @@ if (isset($_POST['submit'])) {
       $result = mysqli_query($link, $sql);
 
       // Anhand des UserTyps auf die entsprechende Seite weiterleinten.
+      //1= Archconsulting //2= Architekt //3= Bauherr
       switch($row['Fk_IdUserType']) {
           case 1:
               header('Location: ../../../rms/public/index.php');
