@@ -8,7 +8,7 @@
  session_start();
     
  if(!isset($_SESSION['IdUser']) || $_SESSION['UserType'] != 2) {
-    header('Location: denied.php');
+    header('Location: login.php?denied=1');
 }
 
 //Einbindung Librarys
@@ -85,9 +85,9 @@ if(isset($_POST['submit'])) {
      $result = mysqli_query($link, $sql);
      $row4 = mysqli_fetch_array($result);
      $proId = $row4['IdProject'];
-     $dir = mkdir('../architects/architekt'.$id.'/project'.$proId);
+     $dir = mkdir('../architects/architect_'.$id.'/project_'.$proId);
      
-     $uploaddir = '../architects/architekt'.$id.'/project'.$proId.'/' ;
+     $uploaddir = '../architects/architect_'.$id.'/project_'.$proId.'/' ;
      
      //Bildupload für neues Projekt
     if(!empty($_FILES['userfile']['name'])){
@@ -166,7 +166,7 @@ if(isset($_POST['edit'])) {
     $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
         'Nicht vollständig', 'Keine Datei hochgeladen');
     
-    $uploaddir = '../architects/architekt'.$id.'/project'.$proId2.'/' ;
+    $uploaddir = '../architects/architect_'.$id.'/project_'.$proId2.'/' ;
     $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
     $extension= strrchr($_FILES['userfile']['name'],'.');
     $file= $filename.$extension;
