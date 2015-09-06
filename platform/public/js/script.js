@@ -130,6 +130,23 @@ $(document).ready(function(){
         
         
     });
+    
+    //Funktion zur Formularüberprüfung
+    function formCheck() {
+        alert('Test');
+      if (document.createProject.ProjectNumber.value == "") {
+          document.createProject.ProjectNumber.addClass('control-label');
+          return false;
+      }  
+      if (document.createProject.Title.value == "") {
+          document.createProject.Title.className= "control-label";
+          return false;
+      }
+      if (document.createProject.Addressline1.value == "") {
+          document.createProject.Addressline1.className= "control-label";
+          return false;
+      }
+    }
 
    
 

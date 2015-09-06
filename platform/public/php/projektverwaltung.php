@@ -271,7 +271,25 @@ if(isset($_POST['pwReset'])) {
         <link rel="stylesheet" href="../css/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/style.css">
         
+        <script>
         
+        function formCheck() {
+        
+      if (document.createProject.ProjectNumber.value === "") {
+          document.getElementById("proNumb").className = "form-control";
+          alert('Test');
+          return false;
+      }  
+      if (document.createProject.Title.value === "") {
+          document.createProject.Title.className= "control-label";
+          return false;
+      }
+      if (document.createProject.Addressline1.value === "") {
+          document.createProject.Addressline1.className= "control-label";
+          return false;
+      }
+    }</script>
+            
         
         
         
@@ -290,24 +308,24 @@ if(isset($_POST['pwReset'])) {
 
             <!-- Modal content-->
             <div class="modal-content">
-                <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
+                <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST" name="createProject" onsubmit="return formCheck()">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Projekt</h4>
                     </div>
                         <div class="modal-body">
-                            <div id="input_container">
+                            <div id="input_container" class="form-group has-error">
                                <!-- Projektspezifische Angaben -->     
                                 <p>Projektnummer*</p>
-                                <input type="text" name="ProjectNumber">
+                                <input type="text" name="ProjectNumber" id="proNumb" class="">
                                 <p>Projektbezeichnung</p>
-                                <input type="text" name="Title">
+                                <input type="text" name="Title" class="">
                                 <p>Strasse</p>
-                                <input type="text" name="Addressline1">
+                                <input type="text" name="Addressline1" class="">
                                 <p>Addresszeile 2</p>
-                                <input type="text" name="Addressline2">
+                                <input type="text" name="Addressline2" class="">
                                 <p>PLZ*/Ort*</p>
-                                <input type="text" name="ZIP"><input type="text" name="City">
+                                <input type="text" name="ZIP" class=""><input type="text" name="City" class="">
                                 <p>Land</p>
                                 <select name="Country">
                                     <?php 
@@ -327,23 +345,23 @@ if(isset($_POST['pwReset'])) {
                                 <!-- Bauherren Daten, zur erstellung Bauherr -->
                                 <h4>Daten Bauherr</h4>
                                 <p>Vorname</p>
-                                <input type="text" name="BhFirstname">
+                                <input type="text" name="BhFirstname" class="">
                                 <p>Nachname</p>
-                                <input type="text" name="BhLastname">
+                                <input type="text" name="BhLastname" class="">
                                 <p>Strasse</p>
-                                <input type="text" name="BhAddressline1">
+                                <input type="text" name="BhAddressline1" class="">
                                 <p>Adresszeile 2</p>
-                                <input type="text" name="BhAddressline2">
+                                <input type="text" name="BhAddressline2" class="">
                                 <p>PLZ/Ort</p>
-                                <input type="text" name="BhZIP"><input type="text" name="BhCity">
+                                <input type="text" name="BhZIP" class=""><input type="text" name="BhCity" class="">
                                 <p>Land</p>
                                 <input type="text" name="BhCountry">
                                 <p>Telefonnummer</p>
-                                <input type="text" name="BhPhoneNumber">
+                                <input type="text" name="BhPhoneNumber" class="">
                                 <p>Mobile Nummer</p>
-                                <input type="text" name="BhMobileNumber">
+                                <input type="text" name="BhMobileNumber" class="">
                                 <p>Email</p>
-                                <input type="text" name="BhEmail">
+                                <input type="text" name="BhEmail" class="">
                                 
                                    
 
@@ -440,7 +458,7 @@ $_SESSION['IdProject'] = $projectsId;
 <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
 <script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/imgLiquid-min.js"></script>
-<script src="../js/script.js"></script>
+<script type="text/javascript" src="../js/script.js"></script>
 
     </body>
 </html>
