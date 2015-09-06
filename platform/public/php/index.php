@@ -169,7 +169,6 @@ $lnCust=$row['Lastname'];
     <link href="../css/dataTable.css" rel="stylesheet">
     <link href="../css/nanogallery/css/nanogallery.min.css" rel="stylesheet">
     <link href="../css/nanogallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet">
-    <link href="../css/datepicker.css" rel="stylesheet">
     <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
     <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css" rel="stylesheet">
     <link href="../css/bootstrap-clockpicker.min.css" rel="stylesheet">
@@ -339,7 +338,7 @@ $lnCust=$row['Lastname'];
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/imgLiquid-min.js"></script>
     <!-- Adressliste -->
-    <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+    <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>-->
     <script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>
     <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
     <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
