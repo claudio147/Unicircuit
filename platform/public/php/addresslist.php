@@ -178,10 +178,12 @@ echo'<h2 class="modul-title">Adressliste</h2>';
 
 <!--Lightboxen (Modals)-->
 <div class="container modalgroup">
-
-  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" id="btn_new_address">+ Hinzufügen</button>
-
+    
+<?php
+    if($usertyp==2){
+        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" id="btn_new_address">+ Hinzufügen</button>';
+    } 
+?> 
   <!-- Modal Global-->
   <div class="modal" id="myModal" role="dialog">
       <div class="modal-dialog">
@@ -302,6 +304,38 @@ echo'<h2 class="modul-title">Adressliste</h2>';
   </div>
   <!-- Modal End -->
 
+  
+   <!-- Modal Details -->
+  <div class="modal" id="modalDetails" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+          
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
+          <h4 class="modal-title">Handwerker Details</h4>
+        </div>
+              <div class="modal-body">
+            
+            <div id="detailAddress">
+
+                <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
+
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
+        </div>
+       
+
+      </div>
+
+    </div>
+  </div>
+  <!-- Modal End -->
+  
+  
 </div>
 
 <?php
@@ -327,7 +361,12 @@ while($row= mysqli_fetch_array($result)){
     echo'<td><a href="tel:'.$row['PhoneDirect'].'">'.$row['PhoneDirect'].'</td>';
     echo'<td><a href="tel:'.$row['MobileNumber'].'">'.$row['MobileNumber'].'</td>';
     echo'<td><a href="mailto:'.$row['EmailDirect'].'">'.$row['EmailDirect'].'</td>';
-    echo'<td><button type="button" class="btn btn-default btn_edit" data-toggle="modal" data-target="#modalEdit" value="'.$row['IdProjectAddress'].'">bearbeiten</button></td>';
+    if($usertyp==2){
+        echo'<td><button type="button" class="btn btn-default btn_edit" data-toggle="modal" data-target="#modalEdit" value="'.$row['IdProjectAddress'].'">bearbeiten</button></td>';
+    }else{
+        echo'<td><button type="button" class="btn btn-default btn_details" data-toggle="modal" data-target="#modalDetails" value="'.$row['IdProjectAddress'].'">Details</button></td>';
+    }
+    
     echo'</tr>';
 }
 echo'</tbody>';

@@ -7,6 +7,7 @@ require_once ('../../../library/public/mail.inc.php');
 
 $link= connectDB();
 
+//Umwandlung der Get Requests
 if(isset($_GET['id'])){
     $_POST['nav']=$_GET['id'];
     $_POST['projectID']=$_GET['project'];
@@ -72,8 +73,8 @@ if(isset($_POST['goto'])){//Architekt (1. Aufruf)
     }
     
     
-    //Überprüf ob der User die berechtigung für dieses Projekt hat
-    if(in_array($projectID, $validprojects) || $_SESSION['IdProject']==$projectID){
+    //Überprüf welcher Menüpunkt ausgewählt ist
+    if(isset($_POST['nav'])){
         //Setzt angeklickten Menüpunkt als Aktiv (Grüner hintergrund)
         $active= $_POST['nav'];
         switch ($active) {
@@ -254,14 +255,19 @@ $lnCust=$row['Lastname'];
                             <button type="submit" id="gallery" name="nav" value="7" class="<?php echo $active7; ?>"><i class="fa fa-camera"></i>Fotogalerie</button>
                             <!--<a href="index.php?id=7" id="gallery"><i class="fa fa-camera"></i>Fotogalerie</a>-->
                         </li>
-                        <li id="contact_li">
-                            <button type="submit" id="contact" name="nav" value="8" class="<?php echo $active8; ?>"><i class="fa fa-comments"></i>Kontakt</button>
-                            <!--<a href="index.php?id=8" id="contact"><i class="fa fa-comments"></i>Kontakt</a>-->
-                        </li>
-                        <li id="sia_li">
-                            <button type="submit" id="sia" name="nav" value="9" class="<?php echo $active9; ?>"><i class="fa fa-cloud-download"></i>SIA Baujournal</button>
-                            <!--<a href="index.php?id=9" id="sia"><i class="fa fa-cloud-download"></i>SIA Baujournal</a>-->
-                        </li>
+                        <?php
+                        //User == Architekt
+                        if($usertyp==2){
+                            echo'<li id="sia_li">';
+                            echo'<button type="submit" id="sia" name="nav" value="9" class="'.$active9.'"><i class="fa fa-cloud-download"></i>SIA Baujournal</button>';
+                            echo'</li>';
+                        //User == Bauherr
+                        }else if($usertyp==3){
+                            echo'<li id="contact_li">';
+                            echo'<button type="submit" id="contact" name="nav" value="8" class="'.$active8.'"><i class="fa fa-comments"></i>Kontakt</button>';
+                            echo'</li>';
+                        } 
+                        ?>
                         <p class="navbar-text unicircuit"><a class="noStyleLink" href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/" target="_blank">UNICIRCUIT</a></p>
                     </ul>
                 </form>

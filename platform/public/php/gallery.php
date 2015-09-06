@@ -193,9 +193,12 @@ if(isset($_POST['submit'])){
     
         <!--Lightboxen (Modals)-->
     <div class="container modalgroup">
-
-        <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">Fotos hochladen</button>
+        
+        <?php
+            if($usertyp==2){
+                echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">Fotos hochladen</button>';
+            } 
+        ?>
 
         <!-- Modal Global-->
         <div class="modal" id="newPost" role="dialog">

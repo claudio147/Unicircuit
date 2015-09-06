@@ -107,6 +107,13 @@ $(document).ready(function(){
             $('#editAddress').html(data);
         })
     });
+    
+    $('.btn_details').click(function(){
+        var id= $(this).val();
+        $.post('../php/ajax.php', {"details":id},function(data){
+            $('#detailAddress').html(data);
+        })
+    });
 
  /*
     ******************* Projektverwaltung *******

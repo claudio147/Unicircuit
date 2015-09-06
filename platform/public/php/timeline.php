@@ -195,10 +195,11 @@ echo'<h2 class="modul-title">Chronik</h2>';
 
 <!--Lightboxen (Modals)-->
 <div class="container modalgroup">
-
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">+ hinzufügen</button>
-
+<?php
+    if($usertyp==2){ 
+        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">+ hinzufügen</button>';
+    } 
+?> 
     <!-- Modal Global-->
     <div class="modal" id="newPost" role="dialog">
         <div class="modal-dialog">
@@ -318,7 +319,11 @@ while($row= mysqli_fetch_array($result)){
         $lock='';
     }
     echo'<div class="post row">';
-    echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';
+    if($usertyp==2){
+        echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';
+    }else{
+        echo'<h3>'.$row['Title'].'</h3>';
+    }    
     echo'<p class="date">'.$date.', '.$time.'</p>';
     echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
     echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
