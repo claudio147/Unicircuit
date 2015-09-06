@@ -356,6 +356,7 @@ $lnCust=$row['Lastname'];
     <!-- Überschreibt URL -->
     <script>
         window.history.pushState('', '', '/php/index.php');
+        //window.history.pushState('', '', '/diplomarbeit/platform/public/php/index.php');
     </script>
     <script src="../js/script.js"></script>
     <script src="../js/weather.js"></script>
