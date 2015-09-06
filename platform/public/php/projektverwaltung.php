@@ -67,7 +67,7 @@ if(isset($_POST['submit'])) {
      $status = mysqli_query($link, $sql);
      
      //Holt ID des zuvor hinzugefügten Bauherren um danach die Projektinformationen abzuspeichern
-     $sql = getIdBauherr($pwHash);   
+     $sql = getIdBauherr($pwHash);
      $result = mysqli_query($link, $sql);
      $row3 = mysqli_fetch_array($result);
      $bhId = $row3['IdUser'];

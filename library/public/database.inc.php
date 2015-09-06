@@ -355,7 +355,7 @@ function getNameCust($projectID){
 
 //erstellt einen Bauherr in der Datenbank
 function createBauherr($bhFn, $bhLn, $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhEmail, $bhPhNu, $bhMoNu, $pwHash) {
-    $sql= "INSERT INTO user (Firstname, Lastname, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, MobileNumber,
+    $sql= "INSERT INTO User (Firstname, Lastname, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, MobileNumber,
              Password, Fk_IdUserType, Active) VALUES
              ('$bhFn', '$bhLn', '$bhAddressline1', '$bhAddressline2', '$bhZIP', '$bhCity', '$bhCountry', '$bhEmail',
              '$bhPhNu', '$bhMoNu', '$pwHash', 3, 3)";
@@ -364,13 +364,13 @@ function createBauherr($bhFn, $bhLn, $bhAddressline1, $bhAddressline2, $bhZIP, $
 
 //Holt ID eines spezifischen Bauherren
 function getIdBauherr($pwHash) {
-     $sql = 'SELECT IdUser FROM user WHERE Password="'.$pwHash.'"';
+     $sql = 'SELECT IdUser FROM User WHERE Password="'.$pwHash.'"';
      return $sql;
 }
 
 //Erstellt das Projekt mit allen benötigten Daten
 function createProject($id, $bhId, $projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description) {
-     $sql = "INSERT INTO project (Fk_IdArchitect, Fk_IdBauherr, ProjectNumber, Title, Addressline1, Addressline2, ZIP,
+     $sql = "INSERT INTO Project (Fk_IdArchitect, Fk_IdBauherr, ProjectNumber, Title, Addressline1, Addressline2, ZIP,
              City, Country, Description)
              VALUES ('$id', '$bhId', '$projectNumb', '$title', '$addressline1' ,'$addressline2' ,'$zip' ,'$city' ,'$country' ,'$description')";
      return $sql;
@@ -378,28 +378,28 @@ function createProject($id, $bhId, $projectNumb, $title, $addressline1, $address
 
 //Holt ID eines spezifischen Projektes
 function getIdProject($projectNumb, $bhId){
-     $sql = "SELECT IdProject FROM project WHERE ProjectNumber ='$projectNumb'AND Fk_IdBauherr = '$bhId' " ;
+     $sql = "SELECT IdProject FROM Project WHERE ProjectNumber ='$projectNumb'AND Fk_IdBauherr = '$bhId' " ;
      return $sql;
 }
 
 //Gibt alle Projekte eines Architekten
 function getProjectsByArch($id) {
     $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
-        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM project as p JOIN user
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM Project as p JOIN User
         as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id.' AND Storage IS NULL ';
     return $sql;
 }
 
 //Fügt Bild dem Projekt hinzu
 function addPicToProject($uploadfile, $proId){
-     $sql= "UPDATE project SET picture = '$uploadfile' WHERE IdProject = '$proId'";
+     $sql= "UPDATE Project SET picture = '$uploadfile' WHERE IdProject = '$proId'";
      return $sql;
 }
 
 //Projekt Update mit neuem Bild
 function updateProjectWithPic($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $uploadfile, $bhFn, $bhLn,
         $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2) {
-    $sql= "UPDATE project AS p, user AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
+    $sql= "UPDATE Project AS p, User AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
                     p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
                     p.Country = '$country', p.Description = '$description', p.Picture= '$uploadfile' ,
                     u.Firstname = '$bhFn' , u.Lastname = '$bhLn' , u.Addressline1 = '$bhAddressline1' ,
@@ -414,7 +414,7 @@ function updateProjectWithPic($projectNumb, $title, $addressline1, $addressline2
 function updateProjectWithout($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $bhFn, $bhLn,
         $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2) {
     
-   $sql = "UPDATE project AS p, user AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
+   $sql = "UPDATE Project AS p, User AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
                     p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
                     p.Country = '$country', p.Description = '$description',
                     u.Firstname = '$bhFn' , u.Lastname = '$bhLn' , u.Addressline1 = '$bhAddressline1' ,
@@ -426,13 +426,13 @@ function updateProjectWithout($projectNumb, $title, $addressline1, $addressline2
 
 //Archivierung eines Projektes
 function storeProject($proId2) {
-     $sql = "UPDATE project AS P, user AS u SET p.Storage = 1 , u.Active = 4 WHERE p.FK_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+     $sql = "UPDATE Project AS P, User AS u SET p.Storage = 1 , u.Active = 4 WHERE p.FK_IdBauherr = u.IdUser AND IdProject = '$proId2'";
      return $sql;
 }
 
 //Passwort Update des Bauherren
 function resetBauhPw($IdProject, $pwHash) {
-    $sql = "UPDATE User AS u JOIN project AS p ON u.IdUser = p.Fk_IdBauherr AND p.IdProject = '$IdProject' SET u.Password = '$pwHash'";
+    $sql = "UPDATE User AS u JOIN Project AS p ON u.IdUser = p.Fk_IdBauherr AND p.IdProject = '$IdProject' SET u.Password = '$pwHash'";
     return $sql;
 }
 
@@ -442,7 +442,7 @@ function resetBauhPw($IdProject, $pwHash) {
 
 function getProjectsByArchStore($id) {
     $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
-        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM project as p JOIN user
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM Project as p JOIN User
         as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id.' AND Storage = 1 ';
     return $sql;
 }
