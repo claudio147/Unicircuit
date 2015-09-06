@@ -78,6 +78,7 @@ function allUserData() {
 }
 // Holt Daten eines spezifischen Users anhand der ID
 function userData($id) {
+    $id = mysqli_real_escape_string($link, $id);
      $sql = 'SELECT Firstname, Lastname, Email, RegCode FROM User WHERE IdUser = '. $id;
      
      return $sql;
@@ -85,6 +86,7 @@ function userData($id) {
 
 // Setzt Aktivierungsstand des gewählten Users auf 2(Aktivierungsmail verschickt)
 function setActive($id) {
+    $id = mysqli_real_escape_string($link, $id);
     $sql = 'UPDATE User SET Active = 2 WHERE IdUser = '. $id;
     
     return $sql;
@@ -92,6 +94,7 @@ function setActive($id) {
 
 // Setzt Aktivierungsstand des gewählten Users auf 3(Aktiviert)
 function setActive3($id) {
+    $id = mysqli_real_escape_string($link, $id);
     $sql = 'UPDATE User SET Active = 3 WHERE RegCode = '. $id;
     
     return $sql;
@@ -103,6 +106,7 @@ function setActive3($id) {
  * Handwerkerliste
  */
 function allProjectAddress($projectID){
+    $projectID = mysqli_real_escape_string($link, $projectID);
     $sql= 'SELECT p.IdProjectAddress, p.ProjectCoordinator, p.PhoneDirect, p. MobileNumber, p.EmailDirect, 
         p.Description, g.BKP, g.Company, g.Addressline1, g.Addressline2, g.ZIP, g.City,
         g.Country, g.Email, g.PhoneNumber, g.Homepage FROM ProjectAddresslist as p JOIN
@@ -113,6 +117,17 @@ function allProjectAddress($projectID){
 
 function newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip, $city, $country, 
         $email, $phoneNumber, $homepage){
+    $bkp = mysqli_real_escape_string($link, $bkp);
+    $company = mysqli_real_escape_string($link, $company);
+    $addressline1 = mysqli_real_escape_string($link, $addressline1);
+    $addressline2 = mysqli_real_escape_string($link, $addressline2);
+    $zip = mysqli_real_escape_string($link, $zip);
+    $city = mysqli_real_escape_string($link, $city);
+    $country = mysqli_real_escape_string($link, $country);
+    $email = mysqli_real_escape_string($link, $email);
+    $phoneNumber = mysqli_real_escape_string($link, $phoneNumber);
+    $homepage = mysqli_real_escape_string($link, $homepage);
+    
     $sql= 'INSERT INTO GlobalAddresslist (BKP, Company, Addressline1, Addressline2, ZIP, City,
             Country, Email, PhoneNumber, Homepage) VALUES ('.$bkp.',"'.$company.'","'.$addressline1.'","'.
             $addressline2.'",'.$zip.',"'.$city.'","'.$country.'","'.$email.'","'.$phoneNumber.'","'.$homepage.'")';
@@ -121,6 +136,7 @@ function newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip, $c
 
 function newProjectAddress($projectID, $FKGlobal, $projectCoordinator, $phoneDirect, $mobile, 
         $emailDirect, $description){
+    
     $sql= 'INSERT INTO ProjectAddresslist (Fk_IdProject, FK_IdGlobalAddress, ProjectCoordinator,
         PhoneDirect, MobileNumber, EmailDirect, Description) VALUES ('.$projectID.','.$FKGlobal.',"'
             .$projectCoordinator.'","'.$phoneDirect.'","'.$mobile.'","'.$emailDirect.'","'.$description.'")';

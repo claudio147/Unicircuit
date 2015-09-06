@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
               break;
           case 3:
               //Holt die entsprechende ProjektId des Bauherren
-              $sql = "SELECT IdProject FROM project WHERE Fk_IdBauherr = $datensatz ";
+              $sql = "SELECT IdProject FROM Project WHERE Fk_IdBauherr = $datensatz ";
               $result = mysqli_query($link, $sql);
               $row = mysqli_fetch_array($result);
               //echo $sql;
