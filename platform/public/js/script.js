@@ -15,8 +15,6 @@ function dynamicResizer(){
 // DOCUMENT READY
         
 $(document).ready(function(){
-
-    
     
     //Aktuelles Datum
     var today = new Date();
@@ -115,17 +113,16 @@ $(document).ready(function(){
         })
     });
 
-    /*
+ /*
     ******************* Projektverwaltung *******
     */
    
     //Ajax Loader für Inhalt in Lightbox bei bearbeiten
     $('.btn_postEdit_pv').click(function(){
         var id= $(this).val();
-        alert(id);
         $.post('../php/ajax_pv.php', {"postEdit":id},function(data){
             $('#editContainer_pv').html(data);
-        })    
+        })      
     });
     
     //Ajax Loader für Inhalt in Lightbox auf Storage
@@ -135,6 +132,24 @@ $(document).ready(function(){
             $('#editContainer_storage').html(data);
         })  
     });
+    
+    //Funktion zur Formularüberprüfung
+    function formCheck() {
+        alert('Test');
+      if (document.createProject.ProjectNumber.value == "") {
+          document.createProject.ProjectNumber.addClass('control-label');
+          return false;
+      }  
+      if (document.createProject.Title.value == "") {
+          document.createProject.Title.className= "control-label";
+          return false;
+      }
+      if (document.createProject.Addressline1.value == "") {
+          document.createProject.Addressline1.className= "control-label";
+          return false;
+      }
+    }
+
    
 
     /*
