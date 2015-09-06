@@ -113,13 +113,13 @@ $(document).ready(function(){
         })
     });
 
- /*
+    /*
     ******************* Projektverwaltung *******
     */
    
     //Ajax Loader für Inhalt in Lightbox bei bearbeiten
     $('.btn_postEdit_pv').click(function(){
-        var id= $(this).val();
+        var id= $(this).val();alert('test');
         $.post('../php/ajax_pv.php', {"postEdit":id},function(data){
             $('#editContainer_pv').html(data);
         })      

@@ -1,5 +1,4 @@
 <?php
-
 /*
  *  Programmpunkt 1.1 Projektverwaltung
  */
