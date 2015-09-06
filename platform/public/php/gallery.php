@@ -172,9 +172,7 @@ if(isset($_POST['submit'])){
                 $sql= saveIMG($projectID, $uploadfileL, $uploadfileS, $na, $uploaddir, $comment, $visible);
                 $status= mysqli_query($link, $sql); 
                 //Prüfung ob Erfolgreich in DB geschrieben
-                if($status){
-                    //keine Aktion
-                }else{
+                if(!$status){
                     header('Location: index.php?id=7&status=0&project='.$projectID);
                 }
             }   
@@ -269,13 +267,13 @@ if(isset($_POST['submit'])){
 
 
     <div id="nanoGallery3">
-    <?php
+    <?php //$projectID=2;
         if($usertyp==2){
             $sql=showAllIMG($projectID);
-        }else if($usertyp==3){
+        }else{
             $sql=showIMG($projectID, 2);
         }
-        
+        //echo $sql;
         $result= mysqli_query($link, $sql);
         while($row= mysqli_fetch_array($result)){
             $imgL= $row['HashNameL'];
