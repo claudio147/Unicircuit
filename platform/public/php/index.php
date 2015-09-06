@@ -205,6 +205,13 @@ $lnCust=$row['Lastname'];
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        <?php
+                        if($usertyp==2){
+                            echo'<li>';
+                            echo'<a class="link-pv" href="projektverwaltung.php"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Projektverwaltung</a>';
+                            echo'</li>';   
+                        }
+                        ?>
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
                         </li>

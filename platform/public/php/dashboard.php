@@ -22,23 +22,40 @@
                     //echo'<div class="container">';
                     // Ausgabe Timeline
                     while($row= mysqli_fetch_array($result)){
-                        $date = date('d.m.Y', strtotime($row['Date']));
-                        $time= substr($row['Time'],0,5);
-                        if($row['Id_visible']==1 && $usertyp==2){
-                            $lock='<i class="fa fa-lock"></i>';
-                        }else{
-                            $lock='';
-                        }
-                        echo'<div class="post row post-dash">';
+                        //Architekt sieht alle
+                        if($usertyp==2){
+                            $date = date('d.m.Y', strtotime($row['Date']));
+                            $time= substr($row['Time'],0,5);
+                            if($row['Id_visible']==1 && $usertyp==2){
+                                $lock='<i class="fa fa-lock"></i>';
+                            }else{
+                                $lock='';
+                            }
+                            echo'<div class="post row post-dash">';
                             echo'<h3>'.$row['Title'].'  '.$lock.'</h3>';
                             echo'<p class="date">'.$date.', '.$time.'</p>';
                             echo'<div class="col-xs-3 imgLiquidFill imgLiquid dash-timeline-img">';
-                                echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
+                            echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
                             echo'</div>';
                             echo'<div class="col-xs-9">';
-                                echo'<p>'.$row['Description'].'</p>';
+                            echo'<p>'.$row['Description'].'</p>';
                             echo'</div>';
-                        echo'</div>';//End row
+                            echo'</div>';//End row
+                        }else if($usertyp==3 && $row['Id_visible']==2){
+                            $date = date('d.m.Y', strtotime($row['Date']));
+                            $time= substr($row['Time'],0,5);
+                            echo'<div class="post row post-dash">';
+                            echo'<h3>'.$row['Title'].'</h3>';
+                            echo'<p class="date">'.$date.', '.$time.'</p>';
+                            echo'<div class="col-xs-3 imgLiquidFill imgLiquid dash-timeline-img">';
+                            echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
+                            echo'</div>';
+                            echo'<div class="col-xs-9">';
+                            echo'<p>'.$row['Description'].'</p>';
+                            echo'</div>';
+                            echo'</div>';//End row
+                        }
+                        
                     }
                     //echo'</div>';//End container
                 echo'</div>';

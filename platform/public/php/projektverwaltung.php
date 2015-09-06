@@ -287,7 +287,7 @@ $lnCust=$row['Lastname'];
         <!-- CSS 3rd Party -->
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+        <!--<link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />-->
         <!--<link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
         <link href="../css/dataTable.css" rel="stylesheet">
         <link href="../css/nanogallery/css/nanogallery.min.css" rel="stylesheet">
@@ -295,9 +295,9 @@ $lnCust=$row['Lastname'];
         <link href="../css/datepicker.css" rel="stylesheet">
         <link href="../css/bootstrap-clockpicker.min.css" rel="stylesheet">
         <link href="../css/slick.css" rel="stylesheet">
-        <link href="../css/slick-theme.css" rel="stylesheet">-->
+        <link href="../css/slick-theme.css" rel="stylesheet">
         <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
-        <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css" rel="stylesheet">
+        <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css" rel="stylesheet">-->
         
         <!-- CSS spezifisch -->
         <link href="../css/style.css" rel="stylesheet">
@@ -349,23 +349,32 @@ $lnCust=$row['Lastname'];
                             <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Projekt</h4>
+                                    <h4 class="modal-title">Projekt erfassen</h4>
                                 </div>
                                     <div class="modal-body">
                                         <div id="input_container">
-                                           <!-- Projektspezifische Angaben -->     
-                                            <p>Projektnummer*</p>
-                                            <input type="text" name="ProjectNumber">
-                                            <p>Projektbezeichnung</p>
-                                            <input type="text" name="Title">
-                                            <p>Strasse</p>
-                                            <input type="text" name="Addressline1">
-                                            <p>Addresszeile 2</p>
-                                            <input type="text" name="Addressline2">
-                                            <p>PLZ*/Ort*</p>
-                                            <input type="text" name="ZIP"><input type="text" name="City">
-                                            <p>Land</p>
-                                            <select name="Country">
+                                           <!-- Projektspezifische Angaben --> 
+                                            <h4>Daten Projekt</h4>
+                                            <label for="1">Projektnummer*</label>
+                                            <input id="1" type="text" name="ProjectNumber" class="form-control">
+                                            <label for="2">Projektbezeichnung</label>
+                                            <input id="2" type="text" name="Title" class="form-control">
+                                            <label for="3">Strasse</label>
+                                            <input id="3" type="text" name="Addressline1" class="form-control">
+                                            <label for="4">Addresszeile 2</label>
+                                            <input id="4" type="text" name="Addressline2" class="form-control">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <label for="5">PLZ</label>
+                                                    <input id="5" type="text" name="ZIP" class="form-control">
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <label for="6">Ort</label>
+                                                    <input id="6" type="text" name="City" class="form-control">
+                                                </div>
+                                            </div>
+                                            <label for="7">Land</label>
+                                            <select id="7" name="Country" class="form-control">
                                                 <?php 
                                                 //Liste mit Ländern aus der Datenbank
                                                 $sql = "SELECT Country FROM countries";
@@ -374,35 +383,49 @@ $lnCust=$row['Lastname'];
                                                     echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
                                                 }?>
                                             </select>
-                                            <p>Projektbeschrieb</p>
-                                            <textarea name="Description"></textarea>
-                                            <p>Projektbild</p>
-                                            <label for="upload">Bildupload</label>
+                                            <label for="8">Projektbeschrieb</label>
+                                            <textarea id="8" name="Description" class="form-control"></textarea>
+                                            <label for="upload">Projektbild</label>
                                             <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
                                             <input id="upload" type="file" name="userfile"/>
                                             <!-- Bauherren Daten, zur erstellung Bauherr -->
+                                            <hr/>
                                             <h4>Daten Bauherr</h4>
-                                            <p>Vorname</p>
-                                            <input type="text" name="BhFirstname">
-                                            <p>Nachname</p>
-                                            <input type="text" name="BhLastname">
-                                            <p>Strasse</p>
-                                            <input type="text" name="BhAddressline1">
-                                            <p>Adresszeile 2</p>
-                                            <input type="text" name="BhAddressline2">
-                                            <p>PLZ/Ort</p>
-                                            <input type="text" name="BhZIP"><input type="text" name="BhCity">
-                                            <p>Land</p>
-                                            <input type="text" name="BhCountry">
-                                            <p>Telefonnummer</p>
-                                            <input type="text" name="BhPhoneNumber">
-                                            <p>Mobile Nummer</p>
-                                            <input type="text" name="BhMobileNumber">
-                                            <p>Email</p>
-                                            <input type="text" name="BhEmail">
-
-
-
+                                            <label for="9">Vorname</label>
+                                            <input id="9" type="text" name="BhFirstname" class="form-control">
+                                            <label for="10">Nachname</label>
+                                            <input id="10" type="text" name="BhLastname" class="form-control">
+                                            <label for="11">Strasse</label>
+                                            <input id="11" type="text" name="BhAddressline1" class="form-control">
+                                            <label for="12">Adresszeile 2</label>
+                                            <input id="12" type="text" name="BhAddressline2" class="form-control">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <label for="13">PLZ*</label>
+                                                    <input id="13" type="text" name="BhZIP" class="form-control">
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <label for="14">Ort*</label>
+                                                    <input id="14" type="text" name="BhCity" class="form-control">
+                                                </div>
+                                            </div>
+                                            <label for="15">Land</label>
+                                            <select id="15" name="BhCountry" class="form-control">
+                                                <?php 
+                                                //Liste mit Ländern aus der Datenbank
+                                                $sql = "SELECT Country FROM countries";
+                                                $resultC = mysqli_query($link, $sql);
+                                                    while($rowC= mysqli_fetch_array($resultC)){
+                                                    echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
+                                                }?>
+                                            </select>
+                                            <label for="16">Telefonnummer</label>
+                                            <input id="16" type="text" name="BhPhoneNumber" class="form-control">
+                                            <label for="17">Mobile Nummer</label>
+                                            <input id="17" type="text" name="BhMobileNumber" class="form-control">
+                                            <label for="18">Email</label>
+                                            <input id="18" type="email" name="BhEmail" class="form-control">
+                                            
                                         </div>       
                                     </div>
                                 <div class="modal-footer">
@@ -461,21 +484,30 @@ $result = mysqli_query($link, $sql);
 
 $projectsId = array();
 
-echo'<div class="post row">';
+echo'<div class="pv-row row">';
 while($row= mysqli_fetch_array($result)){
     $projectsId[] = $row['IdProject'];
-    echo'<div class="col-xs-3 pv-container">';
-        echo'<button type="button" class="btn_postEdit_pv" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>';
-        echo'<form action="index.php" method="POST">
-            <button type="submit" name ="goto" class="" value="'.$row['IdProject'].'"><i class="fa fa-share"></i></button>
-            </form>';
-        echo $row['Title'];
-        echo'<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
-        echo'<div class="imgLiquidFill imgLiquid ">';
-            echo'<a href="#" data-featherlight="'.$row['Picture'].'"><img alt="" src="'.$row['Picture'].'"/></a>';
+    echo'<div class="col-xs-4 col-md-3 pv-container">';
+        echo'<div class="pv-cont-content">';
+        echo'<div class="imgLiquidFill imgLiquid project-img-cont">';
+        echo'<img class="projectimage" alt="project-image" src="'.$row['Picture'].'"/>';
         echo'</div>';
-        echo'<div class="">';
-            echo'<p>'.$row['Description'].'</p>';
+        echo'<p class="pv-label">Projektnummer</p>';
+        echo'<p class="pv-bold">'.$row['ProjectNumber'].'</p>';
+        echo'<p class="pv-label">Bezeichnung</p>';
+        echo'<p class="pv-bold">'.$row['Title'].'</p>';
+        echo'<p class="pv-label">Bauherr</p>';
+        echo'<p class="pv-reg">'.$row['Firstname'].' '.$row['Lastname'].'</p>';
+        echo'<div class="row">';
+            echo'<div class="col-xs-6">';
+                echo'<button type="button" class="btn-pv btn_postEdit_pv btn btn-default" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i> Einstell.</button>';
+            echo'</div>';
+            echo'<div class="col-xs-6">';
+                echo'<form action="index.php" method="POST">
+                <button type="submit" name ="goto" class="btn-pv btn btn-default" value="'.$row['IdProject'].'"><i class="fa fa-share"></i> öffnen</button>
+                </form>';
+            echo'</div>';
+        echo'</div>';
         echo'</div>';
     echo'</div>';
 }
@@ -495,12 +527,12 @@ $_SESSION['IdProject'] = $projectsId;
     <!-- JS 3rd Party -->
     <script src="../js/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../css/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+    <!--<script src="../css/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>-->
     <!--<script src="../js/bootstrap-clockpicker.min.js"></script>
     <script src="../js/slick.js"></script>-->
     <!-- Timeline -->
     <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>-->
-    <script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>-->
     <script src="../js/imgLiquid-min.js"></script>
     <!-- Adressliste -->
     <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
@@ -512,7 +544,7 @@ $_SESSION['IdProject'] = $projectsId;
     <!-- Gallery -->
     <!--<script src="../css/nanogallery/jquery.nanogallery.min.js"></script>-->
 
-    <script src="../js/script.js"></script>
+    <script src="../js/script-pv.js"></script>
    <!-- <script src="../js/weather.js"></script>-->
 
     </body>
