@@ -24,7 +24,7 @@
                     while($row= mysqli_fetch_array($result)){
                         $date = date('d.m.Y', strtotime($row['Date']));
                         $time= substr($row['Time'],0,5);
-                        if($row['Id_visible']==1){
+                        if($row['Id_visible']==1 && $usertyp==2){
                             $lock='<i class="fa fa-lock"></i>';
                         }else{
                             $lock='';

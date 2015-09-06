@@ -16,7 +16,7 @@ function dynamicResizer(){
         
 $(document).ready(function(){
 
-    window.history.pushState('', '', '/php/index.php');
+    
     
     //Aktuelles Datum
     var today = new Date();
@@ -115,18 +115,17 @@ $(document).ready(function(){
         })
     });
 
- /*
+    /*
     ******************* Projektverwaltung *******
     */
    
     //Ajax Loader für Inhalt in Lightbox bei bearbeiten
     $('.btn_postEdit_pv').click(function(){
         var id= $(this).val();
+        alert(id);
         $.post('../php/ajax_pv.php', {"postEdit":id},function(data){
             $('#editContainer_pv').html(data);
-        }) 
-        
-        
+        })    
     });
     
     //Ajax Loader für Inhalt in Lightbox auf Storage
@@ -134,11 +133,8 @@ $(document).ready(function(){
         var id= $(this).val();
         $.post('../php/ajax_pv.php', {"postStorage":id},function(data){
             $('#editContainer_storage').html(data);
-        }) 
-        
-        
+        })  
     });
-
    
 
     /*

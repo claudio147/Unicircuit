@@ -43,7 +43,7 @@ if (isset($_POST['postEdit'])) {
         $bhMoNu = $row['MobileNumber'];
 
         //Auswahl Länderliste aus DB
-     $sql = "SELECT Country FROM countries";
+     $sql = "SELECT Country FROM Countries";
      $resultC = mysqli_query($link, $sql);
  $countries = '';
                 while($rowC= mysqli_fetch_array($resultC)){

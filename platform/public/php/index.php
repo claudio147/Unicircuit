@@ -36,7 +36,7 @@ if(isset($_SESSION['UserType'])){
         }   
     }else if($usertyp==3){
         if(isset($_SESSION['IdProject'])){
-            $projectIDx= $_SESSION['IdProject'];
+            $projectID= $_SESSION['IdProject'];
         }else{
             //keine Projekt ID = kein Zugriff
             header('Location: login.php?denied=1');
@@ -148,7 +148,7 @@ $lnCust=$row['Lastname'];
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
 
@@ -347,7 +347,10 @@ $lnCust=$row['Lastname'];
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
     <!-- Gallery -->
     <script src="../css/nanogallery/jquery.nanogallery.min.js"></script>
-
+    <!-- Überschreibt URL -->
+    <script>
+        window.history.pushState('', '', '/php/index.php');
+    </script>
     <script src="../js/script.js"></script>
     <script src="../js/weather.js"></script>
 

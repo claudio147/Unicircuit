@@ -260,140 +260,196 @@ if(isset($_POST['pwReset'])) {
     
 }
 
+
+
+//User Details
+$userID= $_SESSION['IdUser'];
+$sql=userData($userID);
+$result= mysqli_query($link, $sql);
+$row = mysqli_fetch_array($result);
+$fnCust=$row['Firstname'];
+$lnCust=$row['Lastname'];
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="de">
+
     <head>
-        <title>Projekt verwaltung</title>
+
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../css/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../css/style.css">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+
+        <title>Projektverwaltung</title>
+
+        <!-- CSS 3rd Party -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+        <!--<link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
+        <link href="../css/dataTable.css" rel="stylesheet">
+        <link href="../css/nanogallery/css/nanogallery.min.css" rel="stylesheet">
+        <link href="../css/nanogallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet">
+        <link href="../css/datepicker.css" rel="stylesheet">
+        <link href="../css/bootstrap-clockpicker.min.css" rel="stylesheet">
+        <link href="../css/slick.css" rel="stylesheet">
+        <link href="../css/slick-theme.css" rel="stylesheet">-->
+        <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
+        <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css" rel="stylesheet">
         
-        
-        
-        
-        
+        <!-- CSS spezifisch -->
+        <link href="../css/style.css" rel="stylesheet">
+
+
     </head>
     <body>
-        <h4>Projekte:</h4>
         
-        <div class="container">
+        <div id="wrapper wrapper-pv">
+        
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#newPost">+ hinzufügen</button>
+                <!-- Logo und "Toggle" -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html" target="_blank"><img src="../img/architect1/personal/logo.gif" alt="Logo"></a>
+                    <h1 class="navbar-text">Projektverwaltung</h1>
+                </div>
 
-    <!-- Modal Global-->
-    <div class="modal" id="newPost" role="dialog">
-        <div class="modal-dialog">
+                <!-- Top Menu -->
+                <ul class="nav navbar-right top-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-power-off"></i> Abmelden</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                
+            </nav>
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Projekt</h4>
-                    </div>
-                        <div class="modal-body">
-                            <div id="input_container">
-                               <!-- Projektspezifische Angaben -->     
-                                <p>Projektnummer*</p>
-                                <input type="text" name="ProjectNumber">
-                                <p>Projektbezeichnung</p>
-                                <input type="text" name="Title">
-                                <p>Strasse</p>
-                                <input type="text" name="Addressline1">
-                                <p>Addresszeile 2</p>
-                                <input type="text" name="Addressline2">
-                                <p>PLZ*/Ort*</p>
-                                <input type="text" name="ZIP"><input type="text" name="City">
-                                <p>Land</p>
-                                <select name="Country">
-                                    <?php 
-                                    //Liste mit Ländern aus der Datenbank
-                                    $sql = "SELECT Country FROM countries";
-                                    $resultC = mysqli_query($link, $sql);
-                                        while($rowC= mysqli_fetch_array($resultC)){
-                                        echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
-                                    }?>
-                                </select>
-                                <p>Projektbeschrieb</p>
-                                <textarea name="Description"></textarea>
-                                <p>Projektbild</p>
-                                <label for="upload">Bildupload</label>
-                                <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
-                                <input id="upload" type="file" name="userfile"/>
-                                <!-- Bauherren Daten, zur erstellung Bauherr -->
-                                <h4>Daten Bauherr</h4>
-                                <p>Vorname</p>
-                                <input type="text" name="BhFirstname">
-                                <p>Nachname</p>
-                                <input type="text" name="BhLastname">
-                                <p>Strasse</p>
-                                <input type="text" name="BhAddressline1">
-                                <p>Adresszeile 2</p>
-                                <input type="text" name="BhAddressline2">
-                                <p>PLZ/Ort</p>
-                                <input type="text" name="BhZIP"><input type="text" name="BhCity">
-                                <p>Land</p>
-                                <input type="text" name="BhCountry">
-                                <p>Telefonnummer</p>
-                                <input type="text" name="BhPhoneNumber">
-                                <p>Mobile Nummer</p>
-                                <input type="text" name="BhMobileNumber">
-                                <p>Email</p>
-                                <input type="text" name="BhEmail">
-                                
-                                   
+            <div class="container">
 
-                            </div>       
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">+ hinzufügen</button>
+
+                <!-- Modal Global-->
+                <div class="modal" id="newPost" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Projekt</h4>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="input_container">
+                                           <!-- Projektspezifische Angaben -->     
+                                            <p>Projektnummer*</p>
+                                            <input type="text" name="ProjectNumber">
+                                            <p>Projektbezeichnung</p>
+                                            <input type="text" name="Title">
+                                            <p>Strasse</p>
+                                            <input type="text" name="Addressline1">
+                                            <p>Addresszeile 2</p>
+                                            <input type="text" name="Addressline2">
+                                            <p>PLZ*/Ort*</p>
+                                            <input type="text" name="ZIP"><input type="text" name="City">
+                                            <p>Land</p>
+                                            <select name="Country">
+                                                <?php 
+                                                //Liste mit Ländern aus der Datenbank
+                                                $sql = "SELECT Country FROM countries";
+                                                $resultC = mysqli_query($link, $sql);
+                                                    while($rowC= mysqli_fetch_array($resultC)){
+                                                    echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
+                                                }?>
+                                            </select>
+                                            <p>Projektbeschrieb</p>
+                                            <textarea name="Description"></textarea>
+                                            <p>Projektbild</p>
+                                            <label for="upload">Bildupload</label>
+                                            <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
+                                            <input id="upload" type="file" name="userfile"/>
+                                            <!-- Bauherren Daten, zur erstellung Bauherr -->
+                                            <h4>Daten Bauherr</h4>
+                                            <p>Vorname</p>
+                                            <input type="text" name="BhFirstname">
+                                            <p>Nachname</p>
+                                            <input type="text" name="BhLastname">
+                                            <p>Strasse</p>
+                                            <input type="text" name="BhAddressline1">
+                                            <p>Adresszeile 2</p>
+                                            <input type="text" name="BhAddressline2">
+                                            <p>PLZ/Ort</p>
+                                            <input type="text" name="BhZIP"><input type="text" name="BhCity">
+                                            <p>Land</p>
+                                            <input type="text" name="BhCountry">
+                                            <p>Telefonnummer</p>
+                                            <input type="text" name="BhPhoneNumber">
+                                            <p>Mobile Nummer</p>
+                                            <input type="text" name="BhMobileNumber">
+                                            <p>Email</p>
+                                            <input type="text" name="BhEmail">
+
+
+
+                                        </div>       
+                                    </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="submit" value="Projekt Erstellen" class="btn btn-default"/>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                                </div>
+                          </form>
+
                         </div>
-                    <div class="modal-footer">
-                        <input type="submit" name="submit" value="Projekt Erstellen" class="btn btn-default"/>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+
                     </div>
-              </form>
-
-            </div>
-
-        </div>
-    </div>
+                </div>
     
-    <!-- Projekt bearbeiten -->
-    <!-- Modal Global-->
-    <div class="modal" id="editPost" role="dialog">
-        <div class="modal-dialog">
+                <!-- Projekt bearbeiten -->
+                <!-- Modal Global-->
+                <div class="modal" id="editPost" role="dialog">
+                    <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Projekt bearbeiten</h4>
-                    </div>
-                        <div class="modal-body">
-                            <div id="editContainer_pv">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Projekt bearbeiten</h4>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="editContainer_pv">
 
-                                <!-- Platzhalter für ajax Inhalt -->
+                                            <!-- Platzhalter für ajax Inhalt -->
 
-                            </div>       
+                                        </div>       
+                                    </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="store" value="Archivieren" class="btn btn-default"/>
+                                    <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
+                                    <input type="submit" name="delete" value="Löschen" class="btn btn-default" />
+
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                                </div>
+                          </form>
+
                         </div>
-                    <div class="modal-footer">
-                        <input type="submit" name="store" value="Archivieren" class="btn btn-default"/>
-                        <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
-                        <input type="submit" name="delete" value="Löschen" class="btn btn-default" />
-                        
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+
                     </div>
-              </form>
-
-            </div>
-
-        </div>
-    </div>
-        </div>
-         
+                </div>
+            
 <?php
 
 // Ausgabe Projekte
@@ -406,41 +462,59 @@ $result = mysqli_query($link, $sql);
 
 $projectsId = array();
 
+echo'<div class="post row">';
 while($row= mysqli_fetch_array($result)){
-   
-    echo'<div class="post row">';
-    echo '<h3><button type="button" class="btn_postEdit_pv" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'
-           <form action="index.php" method="POST">
-            <button type="submit" name ="goto" class="btn_postEdit_pv" data-toggle="modal" value="'.$row['IdProject'].'"><i class="fa fa-share"></i></button> </h3>
-            </form>';
     $projectsId[] = $row['IdProject'];
-    echo '<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
-    echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
-   echo'<a href="#" data-featherlight="'.$row['Picture'].'"><img alt="" src="'.$row['Picture'].'"/></a>';
-    echo'</div>';
-    echo'<div class="col-sm-6">';
-    echo'<p>'.$row['Description'].'</p>';
-    echo'</div>';
+    echo'<div class="col-xs-3 pv-container">';
+        echo'<button type="button" class="btn_postEdit_pv" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i></button>';
+        echo'<form action="index.php" method="POST">
+            <button type="submit" name ="goto" class="" value="'.$row['IdProject'].'"><i class="fa fa-share"></i></button>
+            </form>';
+        echo $row['Title'];
+        echo'<h2>Projektnummer:'.$row['ProjectNumber'].'</h2>';
+        echo'<div class="imgLiquidFill imgLiquid ">';
+            echo'<a href="#" data-featherlight="'.$row['Picture'].'"><img alt="" src="'.$row['Picture'].'"/></a>';
+        echo'</div>';
+        echo'<div class="">';
+            echo'<p>'.$row['Description'].'</p>';
+        echo'</div>';
     echo'</div>';
 }
 echo'</div>';
-echo'</div>';
+
 //Speichert alle ProjectIds in einer Session Array
 $_SESSION['IdProject'] = $projectsId;
 
 ?>
 
 
-
+            </div><!-- End Container--> 
+        
+        </div><!-- End #Wrapper--> 
         
          
-  <!-- JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
-<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="../js/imgLiquid-min.js"></script>
-<script src="../js/script.js"></script>
+    <!-- JS 3rd Party -->
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../css/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+    <!--<script src="../js/bootstrap-clockpicker.min.js"></script>
+    <script src="../js/slick.js"></script>-->
+    <!-- Timeline -->
+    <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>-->
+    <script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/imgLiquid-min.js"></script>
+    <!-- Adressliste -->
+    <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>-->
+    <!-- Gallery -->
+    <!--<script src="../css/nanogallery/jquery.nanogallery.min.js"></script>-->
+
+    <script src="../js/script.js"></script>
+   <!-- <script src="../js/weather.js"></script>-->
 
     </body>
 </html>
