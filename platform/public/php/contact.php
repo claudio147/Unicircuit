@@ -2,12 +2,12 @@
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/mail.inc.php');
 
-$projectID=2;
-
 $link= connectDB();
 
 
 if(isset($_POST['submit'])){
+    
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $subject= filter_input(INPUT_POST, 'subject', FILTER_SANITIZE_STRING);
     $message= filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
     $emArch;
@@ -19,7 +19,7 @@ if(isset($_POST['submit'])){
     
     //hole Email Architekt
     $sql= getMailArch($projectID);
-    $result= mysqli_query($link, $sql);
+    $result= mysqli_query($link,$sql);
     while($row= mysqli_fetch_array($result)){
         $emArch= $row['Email'];
         $projectNr= $row['ProjectNumber'];
@@ -28,7 +28,7 @@ if(isset($_POST['submit'])){
     
     //hole Email Bauherr
     $sql= getNameCust($projectID);
-    $result= mysqli_query($link, $sql); 
+    $result= mysqli_query($link,$sql); 
     while($row= mysqli_fetch_array($result)){
         $fnCust= $row['Firstname'];
         $lnCust= $row['Lastname'];
@@ -62,14 +62,14 @@ if(isset($_POST['submit'])){
     
     if(!isset($error)){
         if(sendMailtoArch($emArch, $emCust, $fnCust, $lnCust, $subject, $message, $projectNr, $projectName)){
-            header('Location: index.php?id=8&sent=1');
+            header('Location: index.php?id=8&sent=1&project='.$projectID);
             exit();
         }else{
-            header('Location: index.php?id=8&sent=2');
+            header('Location: index.php?id=8&sent=2&project='.$projectID);
             exit();
         }
     }else{
-        header('Location: index.php?id=8&sent=2');
+        header('Location: index.php?id=8&sent=2&project='.$projectID);
         exit();
     }
     
@@ -81,6 +81,7 @@ if(isset($_POST['submit'])){
 <div class="col-xs-12 col-md-6">
     <h2 class="modul-title">Kontaktformular</h2>
     <form method="POST" action="contact.php">
+        <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
         <label for="subject">Betreff:</label>
         <input type="text" name="subject" id="subject" class="form-control" />
         <label for="message">Nachricht:</label>

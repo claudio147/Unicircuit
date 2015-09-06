@@ -1,6 +1,7 @@
 <?php
+session_start();
 require_once ('../../../library/public/database.inc.php');
-$projectID=2;
+//$projectID=2;
 
 $link= connectDB();
 
@@ -268,23 +269,24 @@ if(isset($_POST['delIMG'])){
     while($row= mysqli_fetch_array($result)){
         $imgS= $row['HashNameS'];
         $imgL= $row['HashNameL'];
+        $projectID= $row['Fk_IdProject'];
     }
 
     if(unlink($imgS) && unlink($imgL)){
         $sql= deleteImgGallery($id);
         $status= mysqli_query($link, $sql);
-        echo $status;
+        echo $projectID;
     }else{
-        echo $status;
+        echo $projectID;
     }
     
 }
 
 //Ermittlung des Usertyps
 if(isset($_POST['getUserTyp'])){
-    //1= Architekt
-    //2= Bauherr
-    $usertyp=1;
+    //2= Architekt
+    //3= Bauherr
+    $usertyp= $_SESSION['UserType'];
     echo $usertyp;
 }
 
@@ -333,6 +335,7 @@ if(isset($_POST['deadlineEdit'])){
     
     //Post ID
     $id= filter_input(INPUT_POST, 'deadlineEdit', FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= selectDeadlines($id);
     $result= mysqli_query($link, $sql);
 
@@ -342,6 +345,7 @@ if(isset($_POST['deadlineEdit'])){
         $idCraftsman= $row['IdCraftsman'];
         $title= $row['DeadlineTitle'];
         $description= $row['DeadlineDescription'];
+        $projectID= $row['Fk_IdProject'];
         $sql2= allProjectAddress($projectID);
         $result2= mysqli_query($link, $sql2);
         $craftsman='';

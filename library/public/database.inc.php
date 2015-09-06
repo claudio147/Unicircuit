@@ -328,7 +328,7 @@ function getMailArch($projectID){
 }
 
 function getNameCust($projectID){
-    $sql= "SELECT u.Email, u.Firstname, u.Lastname, p.ProjectNumber, p.Title FROM User as u JOIN Project as p on u.IdUser = p.Fk_IdBauherr WHERE p.IdProject=".$projectID;
+    $sql= "SELECT u.Email, u.Firstname, u.Lastname, p.ProjectNumber, p.Title, p.Fk_IdArchitect FROM User as u JOIN Project as p on u.IdUser = p.Fk_IdBauherr WHERE p.IdProject=".$projectID;
     return $sql;
 }
 
@@ -457,7 +457,7 @@ function deleteImgGallery($idIMG){
 }
 
 function getIMGPath($idIMG){
-    $sql= 'SELECT HashNameL, HashNameS FROM Pictures WHERE IdPicture='.$idIMG;
+    $sql= 'SELECT Fk_IdProject, HashNameL, HashNameS FROM Pictures WHERE IdPicture='.$idIMG;
     return $sql;
 }
 
@@ -516,7 +516,7 @@ function getAllDeadlines($projectID){
 }
 
 function selectDeadlines($id){
-    $sql= 'SELECT IdCraftsman, DeadlineDate, DeadlineTitle, DeadlineDescription FROM Deadlines WHERE IdDeadlines='.$id;
+    $sql= 'SELECT IdCraftsman, DeadlineDate, DeadlineTitle, DeadlineDescription, Fk_IdProject FROM Deadlines WHERE IdDeadlines='.$id;
     return $sql;
 }
 

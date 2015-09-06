@@ -16,7 +16,8 @@ function dynamicResizer(){
         
 $(document).ready(function(){
 
-
+    window.history.pushState('', '', '/php/index.php');
+    
     //Aktuelles Datum
     var today = new Date();
     var dd = today.getDate();
@@ -147,7 +148,7 @@ $(document).ready(function(){
 
 
 
-    //Anzeige von Vorschau- Bildern in Timneline
+    //Anzeige von Vorschau- Bildern in Timeline
     
 
         function dynamicResizer(){
@@ -170,30 +171,8 @@ $(document).ready(function(){
   
     /*
      ******************** MAINPAGE ******
-     */ 
-    var el = document.getElementById('home');
-    el.onclick = showFoo;
-
-
-    function showFoo() {
-        document.getElementById("homeli").className= "active";
-        document.getElementById("timeline_li").className = "";
-    }
+     */
     
-    $('#termingroup').click(function(){
-        document.getElementById("home_li").className = "";
-        document.getElementById("timeline_li").className = "";
-        document.getElementById("addresslist_li").className = "";
-        document.getElementById("gallery_li").className = "";
-        document.getElementById("contact_li").className = "";
-        document.getElementById("sia_li").className = "";
-    });
-    
-    $('#timeline').click(function(){
-        document.getElementById("home_li").className = "";
-        document.getElementById("timeline_li").classList.add("active");
-    });
- 
 
    
 
@@ -203,18 +182,17 @@ $(document).ready(function(){
     
     function myImgToolbarCustDisplay($elements, item, data) {
         //Ermittlung Usertyp und anzeige von Löschfunktion bei Architekt
-        $.post('../php/ajax.php', {"getUserTyp":'1'},function(usertyp){
-                if(usertyp==1){
+        $.post('../php/ajax.php', {"getUserTyp":'2'},function(usertyp){
+                if(usertyp==2){
                     // Custom Element mit Lösch-Button
                     $elements.html('<i id="delIMG" data-img="'+item.GetID()+'" class="fa fa-trash-o fa-2x"></i>');
                     
                     //Funktion die Bilder löscht (in DB und in Verzeichnis
                     $('#delIMG').click(function(){
                         var id= $(this).attr('data-img');
-
-                        $.post('../php/ajax.php', {"delIMG":id},function(status){
+                        $.post('../php/ajax.php', {"delIMG":id},function(projectID){
                             //Neuladen der Galerie-Seite
-                            window.location.replace("../php/index.php?id=7&status=4");
+                            window.location.replace("../php/index.php?id=7&status=4&project="+projectID);
                         }) 
                     })
                 }
@@ -365,11 +343,12 @@ $(document).ready(function(){
 
 
 
-        // Diese Teil löst bei Resize und Onload mehrere Funktionen auf die Quadratische Darstellungen ermöglichen
+    // Diese Teil löst bei Resize und Onload mehrere Funktionen auf die Quadratische Darstellungen ermöglichen
     window.onresize= resize;
     window.onload= resize;
     
     function resize(){
+        
         dynamicResizerEvent();
         dynamicResizer();
         setheightSchedule();

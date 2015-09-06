@@ -1,28 +1,41 @@
 <?php
 //Session starten oder wiederaufnehmen
  session_start();
-
+ 
 require_once ('../../../library/public/database.inc.php');
+require_once ('../../../library/public/mail.inc.php');
+
+$link= connectDB();
+
+if(isset($_GET['id'])){
+    $_POST['nav']=$_GET['id'];
+    $_POST['projectID']=$_GET['project'];
+    
+}
 
 //Usertyp wird ermittelt (falls vorhanden)
 if(isset($_SESSION['UserType'])){
     $usertyp= $_SESSION['UserType']; //1= Archconsulting //2= Architekt //3= Bauherr
     
     if($usertyp==2){
-        if(isset($_POST['goto'])){
-            //Bei ersten Aufruf über Projektverwaltung
-            $projectID= $_POST['goto'];
-            $_SESSION['IdProject']= $projectID;
-        }else if(isset($_SESSION['IdProject'])){
-            //Wenn schon eine Session besteht
-            $projectID= $_SESSION['IdProject'];
+        if($_SESSION['IdProject']){
+            $validprojects= $_SESSION['IdProject'];//hole Array mit Projekten des Architekten (die er öffnen darf, sprich seine eigenen Projekte)
+            
+            //Speichert letzt geöffnetes Projekt in der Session (nur Architekt)
+            if(isset($_POST['projectID'])){
+                $_SESSION['LastProjectID']=$_POST['projectID'];
+            }
+            if(!isset($_POST['nav'])){//Bei einem Refresh über den Browser wird die Navigation 1 (Home) aufgerufen
+                $_POST['nav']=1;
+            }
+            
         }else{
-            //keine Projekt ID = kein Zugriff
+            //keine Projekt ID's = kein Zugriff
             header('Location: login.php?denied=1');
-        }
+        }   
     }else if($usertyp==3){
         if(isset($_SESSION['IdProject'])){
-            $projectID= $_SESSION['IdProject'];
+            $projectIDx= $_SESSION['IdProject'];
         }else{
             //keine Projekt ID = kein Zugriff
             header('Location: login.php?denied=1');
@@ -36,30 +49,98 @@ if(isset($_SESSION['UserType'])){
     header('Location: login.php?denied=1');
 }
 
+//Projekt ID wird ermittelt
+if(isset($_POST['goto'])){//Architekt (1. Aufruf)
+    $projectID= $_POST['goto'];
+    //Pürft ob das ausgewählte Projekt vom Architekten X ist
+    if(in_array($projectID, $validprojects)){
+        //Setzt Menüpunkt Home auf aktiv
+        $active1='active';
+    }else{
+        //kein Zugriff auf dieses Projekt
+        header('Location: login.php?denied=1');
+    }
+  
+}else if(isset($_POST['nav'])){
+    //Wenn eine ProjektID übergeben wird, nimm diese
+    if(isset($_POST['projectID'])){
+        $projectID= $_POST['projectID'];
+     
+        //Wenn keine übergeben wird,
+    }else if (isset($_SESSION['LastProjectID'])) {
+        $projectID=$_SESSION['LastProjectID'];
+    }
+    
+    
+    //Überprüf ob der User die berechtigung für dieses Projekt hat
+    if(in_array($projectID, $validprojects) || $_SESSION['IdProject']==$projectID){
+        //Setzt angeklickten Menüpunkt als Aktiv (Grüner hintergrund)
+        $active= $_POST['nav'];
+        switch ($active) {
+            case 1:
+                $active1='active';
+                break;
+            case 2:
+                $active2='active';
+                break;
+            case 3:
+                $active3='active';
+                break;
+            case 4:
+                $active4='active';
+                break;
+            case 5:
+                $active5='active';
+                break;
+            case 6:
+                $active6='active';
+                break;
+            case 7:
+                $active7='active';
+                break;
+            case 8:
+                $active8='active';
+                break;
+            case 9:
+                $active9='active';
+                break;
+            default:
+                break;
+        }
+    }else{
+        //kein Zugriff auf dieses Projekt
+        header('Location: login.php?denied=1');
+    }
+    
+    
+    
+}else if(isset ($projectIDx)){//Bauherr (1. Aufruf)
+    $projectID= $projectIDx;
+    //Setzt Menüpunkt Home auf aktiv
+    $active1='active';   
+}
+
+//Variablen Deklaration
 $prNr;
 $prNa;
 $fnCust;
 $lnCust;
 
-
-
-
-
-
-
-
-
-
-
-$link= connectDB();
+//Projekt Details
 $sql= getNameCust($projectID);
 $result= mysqli_query($link, $sql);
 while($row= mysqli_fetch_array($result)){
     $prNr= $row['ProjectNumber'];
     $prNa= $row['Title'];
-    $fnCust= $row['Firstname'];
-    $lnCust= $row['Lastname'];
 }
+
+//User Details
+$userID= $_SESSION['IdUser'];
+$sql=userData($userID);
+$result= mysqli_query($link, $sql);
+$row = mysqli_fetch_array($result);
+$fnCust=$row['Firstname'];
+$lnCust=$row['Lastname'];
 
 
 
@@ -77,7 +158,7 @@ while($row= mysqli_fetch_array($result)){
     <meta name="author" content="">
 
 
-    <title>3021 EFH Muster</title>
+    <title><?php echo $prNr.' '.$prNa;?></title>
 
     <!-- CSS 3rd Party -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -122,7 +203,7 @@ while($row= mysqli_fetch_array($result)){
             <!-- Top Menu -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
@@ -137,42 +218,53 @@ while($row= mysqli_fetch_array($result)){
 
             <!-- Sidebar Menü (Element klappen ein bei kleinem Viewport) -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li id="home_li" class="<?php echo $active1; ?>">
-                        <a href="index.php?id=1" id="home"><i class="fa fa-home"></i>Home</a>
-                    </li>
-                    <li id="timeline_li" class="<?php echo $active2; ?>">
-                        <a href="index.php?id=2" id="timeline"><i class="fa fa-tachometer"></i>Chronik</a>
-                    </li>
-                    <li id="termine_li">
-                        <a id="termingroup" href="javascript:;" data-toggle="collapse" data-target="#termine" class="<?php echo $active3; ?>"><i class="fa fa-calendar"></i>Termine<i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="termine" class="collapse">
-                            <li>
-                                <a href="index.php?id=3" id="terminplan" >Terminplan</a>
-                            </li>
-                            <li>
-                                <a href="index.php?id=4" id="events">Events</a>
-                            </li>
-                            <li>
-                                <a href="index.php?id=5" id="deadlines">Deadlines</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="addresslist_li" class="<?php echo $active6; ?>">
-                        <a href="index.php?id=6" id="addresslist"><i class="fa fa-list-ul"></i>Adressliste</a>
-                    </li>
-                    <li id="gallery_li" class="<?php echo $active7; ?>">
-                        <a href="index.php?id=7" id="gallery"><i class="fa fa-camera"></i>Fotogalerie</a>
-                    </li>
-                    <li id="contact_li" class="<?php echo $active8; ?>">
-                        <a href="index.php?id=8" id="contact"><i class="fa fa-comments"></i>Kontakt</a>
-                    </li>
-                    <li id="sia_li" class="<?php echo $active9; ?>">
-                        <a href="index.php?id=9" id="sia"><i class="fa fa-cloud-download"></i>SIA Baujournal</a>
-                    </li>
-                    <p class="navbar-text unicircuit"><a class="noStyleLink" href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/" target="_blank">UNICIRCUIT</a></p>
-                </ul>
-                
+                <form action="index.php" method="POST">
+                    <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                    <ul class="nav navbar-nav side-nav">
+                        <li id="home_li">
+                            <button type="submit" id="home" name="nav" value="1" class="<?php echo $active1; ?>"><i class="fa fa-home"></i>Home</button>
+                            <!--<a href="index.php?id=1" id="home"><i class="fa fa-home"></i>Home</a>-->
+                        </li>
+                        <li id="timeline_li">
+                            <button type="submit" id="timeline" name="nav" value="2" class="<?php echo $active2; ?>"><i class="fa fa-tachometer"></i>Chronik</button>
+                            <!--<a href="index.php?id=2" id="timeline"><i class="fa fa-tachometer"></i>Chronik</a>-->
+                        </li>
+                        <li id="termine_li">
+                            <a id="termingroup" href="javascript:;" data-toggle="collapse" data-target="#termine"><i class="fa fa-calendar"></i>Termine<i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="termine" class="collapse">
+                                <li>
+                                    <button type="submit" id="terminplan" name="nav" value="3"  class="<?php echo $active3; ?>">Terminplan</button>
+                                    <!--<a href="index.php?id=3" id="terminplan" >Terminplan</a>-->
+                                </li>
+                                <li>
+                                    <button type="submit" id="events" name="nav" value="4"  class="<?php echo $active4; ?>">Events</button>
+                                    <!--<a href="index.php?id=4" id="events">Events</a>-->
+                                </li>
+                                <li>
+                                    <button type="submit" id="deadlines" name="nav" value="5"  class="<?php echo $active5; ?>">Deadlines</button>
+                                    <!--<a href="index.php?id=5" id="deadlines">Deadlines</a>-->
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="addresslist_li">
+                            <button type="submit" id="addresslist" name="nav" value="6" class="<?php echo $active6; ?>"><i class="fa fa-list-ul"></i>Adressliste</button>
+                            <!--<a href="index.php?id=6" id="addresslist"><i class="fa fa-list-ul"></i>Adressliste</a>-->
+                        </li>
+                        <li id="gallery_li">
+                            <button type="submit" id="gallery" name="nav" value="7" class="<?php echo $active7; ?>"><i class="fa fa-camera"></i>Fotogalerie</button>
+                            <!--<a href="index.php?id=7" id="gallery"><i class="fa fa-camera"></i>Fotogalerie</a>-->
+                        </li>
+                        <li id="contact_li">
+                            <button type="submit" id="contact" name="nav" value="8" class="<?php echo $active8; ?>"><i class="fa fa-comments"></i>Kontakt</button>
+                            <!--<a href="index.php?id=8" id="contact"><i class="fa fa-comments"></i>Kontakt</a>-->
+                        </li>
+                        <li id="sia_li">
+                            <button type="submit" id="sia" name="nav" value="9" class="<?php echo $active9; ?>"><i class="fa fa-cloud-download"></i>SIA Baujournal</button>
+                            <!--<a href="index.php?id=9" id="sia"><i class="fa fa-cloud-download"></i>SIA Baujournal</a>-->
+                        </li>
+                        <p class="navbar-text unicircuit"><a class="noStyleLink" href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/" target="_blank">UNICIRCUIT</a></p>
+                    </ul>
+                </form>
             </div>
             
             <!-- /.navbar-collapse -->
@@ -183,8 +275,8 @@ while($row= mysqli_fetch_array($result)){
             <div class="container-fluid">
 
                 <?php
-                if(isset($_GET['id'])){
-                    switch($_GET['id']){
+                if(isset($_POST['nav'])){
+                    switch($_POST['nav']){
                         case 1:
                             include ('dashboard.php');
                             break;
@@ -215,7 +307,6 @@ while($row= mysqli_fetch_array($result)){
                         default:
                             echo'<p>Error Loading Content</p>';
                     }
-
                 }else{
                     include ('dashboard.php');
                 }

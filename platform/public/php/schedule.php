@@ -1,10 +1,6 @@
 <?php
 require_once ('../../../library/public/database.inc.php');
 
-
-$uploaddir= '../img/architect1/project1/pdf/';
-$projectID=2;
-$usertyp=1;
 $link= connectDB();
 
 
@@ -12,6 +8,16 @@ $link= connectDB();
 
 //Upload und Überprüfung ob es ein PDF ist
 if(isset($_POST['submit'])){
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
+    
+    //Erzeugt Pfad für Bildupload
+    $sql= getNameCust($projectID);
+    $result= mysqli_query($link, $sql);
+    $row= mysqli_fetch_array($result);
+    $idArch= $row['Fk_IdArchitect'];
+
+    $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/' ;
+    
     if($_FILES['schedule']['error']==0){
         if(strtolower($_FILES['schedule']['type'])=='application/x-pdf' || strtolower($_FILES['schedule']['type'])== 'application/pdf'){
             //Überprüfung Filegrösse (max. 8MB)
@@ -38,14 +44,14 @@ if(isset($_POST['submit'])){
                     $status= mysqli_query($link, $sql);
                     if($status){
                         //Erfolgreich hochgeladen
-                        header("Location: index.php?id=3&status=0");
+                        header('Location: index.php?id=3&status=0&project='.$projectID);
                     }else{
                         //Übermittlungsfehler
-                        header("Location: index.php?id=3&status=1");
+                        header('Location: index.php?id=3&status=1&project='.$projectID);
                     }
                 }else{
                     //Übermittlungsfehler
-                    header("Location: index.php?id=3&status=1");
+                    header('Location: index.php?id=3&status=1&project='.$projectID);
                 }
                 
                 
@@ -55,15 +61,15 @@ if(isset($_POST['submit'])){
                 
             }else{
                 //zu grosses PDF
-                header("Location: index.php?id=3&status=3");
+                header('Location: index.php?id=3&status=3&project='.$projectID);
             }  
         }else{
             //kein PDF
-            header("Location: index.php?id=3&status=2");
+            header('Location: index.php?id=3&status=2&project='.$projectID);
         }
     }else{
         //Übermittlungsfehler
-        header("Location: index.php?id=3&status=1");
+        header('Location: index.php?id=3&status=1&project='.$projectID);
     }
 }
 ?>
@@ -90,7 +96,7 @@ if(isset($_POST['submit'])){
                         </div>
                             <div class="modal-body">
                                 <div id="input_container">
-
+                                    <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                                     <label for="scheduleUpload">Terminplan</label>                                    
                                     <input id="scheduleUpload" type="file" name="schedule" >
                                     <p>(PDF Format)</p><br/>
@@ -116,7 +122,7 @@ if(isset($_POST['submit'])){
     if(isset($_GET['status'])){
         $x=$_GET['status'];
         if($x==0){
-            echo'<br/><div class="alert alert-success" role="alert">Foto(s) erfolgreich hochgeladen</div>';
+            echo'<br/><div class="alert alert-success" role="alert">Terminplan erfolgreich hochgeladen</div>';
         }else if($x==1){
             echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! - Bitte erneut versuchen</div>';
         }else if($x==2){
@@ -124,7 +130,7 @@ if(isset($_POST['submit'])){
         }else if($x==3){
             echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! max. 8 MB</div>';
         }else if($x==4){
-            echo'<br/><div class="alert alert-success" role="alert">Foto erfolgreich gelöscht</div>';
+            echo'<br/><div class="alert alert-success" role="alert">Terminplan erfolgreich gelöscht</div>';
         }else if($x==5){
             echo'<br/><div class="alert alert-warning" role="alert">Löschen fehlgeschlagen! Bitte erneut versuchen</div>';
         }

@@ -2,20 +2,23 @@
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/mail.inc.php');
 
-$projectID=2;
-
-$idGLobal;
 
 $link= connectDB();
-$sql= allProjectAddress($projectID);
-$result = mysqli_query($link, $sql);
 
-$sql2=allGlobalAddress();
-$result2= mysqli_query($link, $sql2);
+if(isset($projectID)){
+    $sql= allProjectAddress($projectID);
+    $result = mysqli_query($link, $sql);
+
+    $sql2=allGlobalAddress();
+    $result2= mysqli_query($link, $sql2);
+}
+
 
 if(isset($_POST['submit'])){
     $error=false;
-
+    
+    $idGlobal;
+    $projectID = filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $bkp = filter_input(INPUT_POST, 'bkp', FILTER_SANITIZE_NUMBER_INT);
     $company = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING);
     $addressline1 = filter_input(INPUT_POST, 'addressline1', FILTER_SANITIZE_STRING);
@@ -31,7 +34,7 @@ if(isset($_POST['submit'])){
     $mobileDirect = filter_input(INPUT_POST, 'mobileDirect', FILTER_SANITIZE_STRING);
     $emailDirect = filter_input(INPUT_POST, 'emailDirect', FILTER_SANITIZE_STRING);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
-
+    //echo $projectID;
     // Fehler im Eingabefeld?
     if (empty($bkp) || strlen($bkp) > 3) {
         $errorBKP = true;
@@ -117,6 +120,7 @@ if(isset($_POST['submit'])){
             }
         }else if(isset($_POST['idGlobalAddress'])){
             $idGlobal = filter_input(INPUT_POST, 'idGlobalAddress', FILTER_SANITIZE_NUMBER_INT);
+            //echo $idGlobal;
             $statusGlobal=true;
         }else{
             $statusGlobal=true;
@@ -134,12 +138,14 @@ if(isset($_POST['submit'])){
             //Insert Into Projekt- Adressliste (Neuer Eintrag wird erstellt)
             $sql= newProjectAddress($projectID, $idGlobal, $projectCoordinator, $phoneDirect, $mobileDirect,
             $emailDirect, $description);
+            //echo$sql;
+            //echo$statusGlobal;
             $statusProject= mysqli_query($link, $sql);
         }
 
 
         if($statusGlobal==true && $statusProject==true){
-            header('Location: index.php?id=6');
+            header('Location: index.php?id=6&project='.$projectID);
         }else{
             echo'<p>Error1</p>';
         }
@@ -149,20 +155,20 @@ if(isset($_POST['submit'])){
 }
 
 if(isset($_POST['delete'])){
+    $projectID = filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $idProjectAddress= filter_input(INPUT_POST, 'idProjectAddress', FILTER_SANITIZE_NUMBER_INT);
 
     $sql= deleteProjectAddress($idProjectAddress);
     $resultDel = mysqli_query($link, $sql);
     if($resultDel){
-        header('Location: index.php?id=6');
+        header('Location: index.php?id=6&project='.$projectID);
+        exit();
     }else{
         echo'<p>Löschen fehlgeschlagen</p>';
     }
 }
 
 ?>
-
-
 
 
 <?php
@@ -242,9 +248,10 @@ echo'<h2 class="modul-title">Adressliste</h2>';
           <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal">&times;</button>
           <h4 class="modal-title">Handwerker hinzufügen</h4>
         </div>
-              <div class="modal-body">
-
+        <div class="modal-body">
+            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
             <div id="newAddress">
+                
 
                 <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
 
@@ -275,7 +282,7 @@ echo'<h2 class="modul-title">Adressliste</h2>';
           <h4 class="modal-title">Handwerker bearbeiten</h4>
         </div>
               <div class="modal-body">
-
+            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
             <div id="editAddress">
 
                 <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
