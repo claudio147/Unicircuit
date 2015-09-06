@@ -1,13 +1,12 @@
 <?php
 require_once ('../../../library/public/database.inc.php');
 
-$projectID=2;
-$usertyp=1; //1= Architekt, 2=Bauherr
-
 $link= connectDB();
 
 //Speichern einer neuen Deadline
 if(isset($_POST['submit'])){
+    
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $dateOrg= $_POST['date'];
     $date = date('Y-m-d', strtotime($dateOrg));
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
@@ -26,17 +25,19 @@ if(isset($_POST['submit'])){
         $sql= newDeadline($projectID, $date, $title, $description, $idCraftsman);
         $status= mysqli_query($link, $sql);
         if($status){
-            header("Location: index.php?id=5&status=0");
+            header('Location: index.php?id=5&status=0&project='.$projectID);
         }else{
-            header("Location: index.php?id=5&status=1");
+            header('Location: index.php?id=5&status=1&project='.$projectID);
         }
     }else{
-        header("Location: index.php?id=5&status=1");
+        header('Location: index.php?id=5&status=1&project='.$projectID);
     }
 }
 
 //Update einer bestehenden Deadline
 if(isset($_POST['update'])){
+    
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $dateOrg= $_POST['date'];
     $date = date('Y-m-d', strtotime($dateOrg));
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
@@ -56,30 +57,32 @@ if(isset($_POST['update'])){
         $sql= updateDeadline($deadlineID, $date, $title, $description, $idCraftsman);
         $status= mysqli_query($link, $sql);
         if($status){
-            header("Location: index.php?id=5&status=2");
+            header('Location: index.php?id=5&status=2&project='.$projectID);
         }else{
-            header("Location: index.php?id=5&status=3");
+            header('Location: index.php?id=5&status=3&project='.$projectID);
         }
     }else{
-        header("Location: index.php?id=5&status=3");
+        header('Location: index.php?id=5&status=3&project='.$projectID);
     }
 }
 
 //Löschfunktion
 if(isset($_POST['delete'])){
-
+    
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
+    
     if(!empty($_POST['deadlineID'])){
         $id= filter_input(INPUT_POST, 'deadlineID', FILTER_SANITIZE_NUMBER_INT);
         
         $sql= deleteDeadline($id);
         $status = mysqli_query($link, $sql);
         if($status){
-            header("Location: index.php?id=5&status=4");
+            header('Location: index.php?id=5&status=4&project='.$projectID);
         }else{
-            header("Location: index.php?id=5&status=5");
+            header('Location: index.php?id=5&status=5&project='.$projectID);
         }
     }else{
-        header("Location: index.php?id=5&status=5");
+        header('Location: index.php?id=5&status=5&project='.$projectID);
     }
     
 }
@@ -93,7 +96,7 @@ if(isset($_POST['delete'])){
 
     <!-- Trigger the modal with a button -->
 <?php
-    if($usertyp==1){
+    if($usertyp==2){
         echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newDeadline">+ hinzufügen</button>';
     } 
 ?>    
@@ -110,7 +113,7 @@ if(isset($_POST['delete'])){
                     </div>
                         <div class="modal-body">
                             <div id="input_container">
-
+                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                                 <label for="title">Titel*</label>
                                 <input id="title" type="text" name="title" class="form-control" maxlength="25">
                                 <label for="date">Datum*</label>
@@ -158,6 +161,7 @@ if(isset($_POST['delete'])){
                         <h4 class="modal-title">Deadline bearbeiten</h4>
                     </div>
                         <div class="modal-body">
+                            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                             <div id="deadlineEditContainer">
 
                                 <!-- Ajax Content -->
@@ -188,6 +192,7 @@ if(isset($_POST['delete'])){
                         <h4 class="modal-title">Deadline Details</h4>
                     </div>
                         <div class="modal-body">
+                            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                             <div id="deadlineShowContainer">
 
                                 <!-- Ajax Content -->
@@ -276,9 +281,9 @@ if(isset($_GET['status'])){
                 echo'<div class="deadline-date">'.$date.'</div>';
                 echo'<div class="deadline-title">'.$title.'</div>';
                 echo'<div class="deadline-description hidden-sm hidden-xs">'.$company.'</div>';
-                if($usertyp==1){
+                if($usertyp==2){
                     echo'<button type="button" class="btn btn-default deadline-btn-edit" data-toggle="modal" data-target="#editDeadline" value="'.$id.'"><i class="fa fa-pencil-square-o"></i></button>';
-                }else if($usertyp==2){
+                }else if($usertyp==3){
                     echo'<button type="button" class="btn btn-default deadline-btn-show" data-toggle="modal" data-target="#showDeadline" value="'.$id.'"><i class="fa fa-info-circle"></i></button>';
                 }
             echo'</div> ';            

@@ -58,10 +58,10 @@
                 echo'<div class="row row-dash-gallery">';
                     echo'<div class="col-xs-12 dash-gallery">';
                         echo'<div class="dash-slick-gallery">';
-                        if($usertyp==1){
+                        if($usertyp==2){
                             $sql=showAllIMG($projectID);
                         }else{
-                            $sql=showIMG($projectID, $usertyp);
+                            $sql=showIMG($projectID, 2);
                         }
                         $result= mysqli_query($link, $sql);
                         while($row= mysqli_fetch_array($result)){

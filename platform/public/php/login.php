@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
               $sql = "SELECT IdProject FROM project WHERE Fk_IdBauherr = $datensatz ";
               $result = mysqli_query($link, $sql);
               $row = mysqli_fetch_array($result);
-              echo $sql;
+              //echo $sql;
               //Fügt die Projekt ID der Session hinzu
               $_SESSION['IdProject'] = $row['IdProject'];
               

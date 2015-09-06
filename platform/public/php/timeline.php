@@ -1,19 +1,25 @@
 <?php
 require_once ('../../../library/public/database.inc.php');
-$projectID=2;
-$uploaddir= '../img/architect1/project1/img/';
-
 
 $link= connectDB();
 
+
 //Speichert einen neuen Eintrag in DB
 if(isset($_POST['submit'])){
-
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
     $visible = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_NUMBER_INT);
     $date = date("Y-m-d");
     $time = date("H:i:s");
+    
+    //Erzeugt Pfad für Bildupload
+    $sql= getNameCust($projectID);
+    $result= mysqli_query($link, $sql);
+    $row= mysqli_fetch_array($result);
+    $idArch= $row['Fk_IdArchitect'];
+
+    $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/';
 
     //Bildupload
     if(!empty($_FILES['userfile']['name'])){
@@ -40,9 +46,9 @@ if(isset($_POST['submit'])){
             //Errorcode der Übertragung abfragen
             $code= $_FILES['userfile']['error'];
 
-            header("Location: index.php?id=2&status=0");
+            header('Location: index.php?id=2&status=0&project='.$projectID);
         }else{
-            header("Location: index.php?id=2&status=3");
+            header('Location: index.php?id=2&status=3&project='.$projectID);
         }
     }else{
         $uploaddir= '../img/';
@@ -52,9 +58,9 @@ if(isset($_POST['submit'])){
         $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
         $status= mysqli_query($link, $sql);
         if(!$status){
-            header("Location: index.php?id=2&status=3");
+            header('Location: index.php?id=2&status=3&project='.$projectID);
         }else{
-            header("Location: index.php?id=2&status=0");
+            header('Location: index.php?id=2&status=0&project='.$projectID);
         }
     }
     
@@ -62,7 +68,8 @@ if(isset($_POST['submit'])){
 
 //Updated einen bestehenden Eintrag in DB
 if(isset($_POST['edit'])){
-
+    
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $postID= filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_NUMBER_INT);
     $title= filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $content= filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
@@ -72,6 +79,14 @@ if(isset($_POST['edit'])){
     $path= filter_input(INPUT_POST, 'path', FILTER_SANITIZE_STRING);
     $date = date("Y-m-d");
     $time = date("H:i:s");
+    
+    //Erzeugt Pfad für Bildupload
+    $sql= getNameCust($projectID);
+    $result= mysqli_query($link, $sql);
+    $row= mysqli_fetch_array($result);
+    $idArch= $row['Fk_IdArchitect'];
+
+    $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/' ;
 
     //Wenn neues File hochgeladen wird
     if(!empty($_FILES['userfile']['name'])){
@@ -97,16 +112,16 @@ if(isset($_POST['edit'])){
             //Errorcode der Übertragung abfragen
             $code= $_FILES['userfile']['error'];
 
-            header("Location: index.php?id=2&status=5");
+            header('Location: index.php?id=2&status=5&project='.$projectID);
         }else{
-            header("Location: index.php?id=2&status=1");
+            header('Location: index.php?id=2&status=1&project='.$projectID);
     }}else{
         $sql= updatePost($postID, $visible, $hashName, $orgName, $path, $title, $date, $time, $content);
         $status= mysqli_query($link, $sql);
         if(!$status){
-            header("Location: index.php?id=2&status=1");
+            header('Location: index.php?id=2&status=1&project='.$projectID);
         }else{
-            header("Location: index.php?id=2&status=5");
+            header('Location: index.php?id=2&status=5&project='.$projectID);
         }
     }
 }
@@ -116,7 +131,8 @@ if(isset($_POST['edit'])){
 if(isset($_POST['delete'])){
 
     if(!empty($_POST['postID'])){
-        $id=$_POST['postID'];
+            $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
+            $id=$_POST['postID'];
             $link= connectDB();
             $sql= selectPostIMG($id);
             $result = mysqli_query($link, $sql);
@@ -124,26 +140,34 @@ if(isset($_POST['delete'])){
             $fina=$row['HashName'];
             $path= $row['Path'];
             
+            //Erzeugt Pfad für Bildupload
+            $sql= getNameCust($projectID);
+            $result= mysqli_query($link, $sql);
+            $row= mysqli_fetch_array($result);
+            $idArch= $row['Fk_IdArchitect'];
+
+            $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/' ;
+            
             //Überprüfung ob das Platzhalter Bild eingestzt ist
             if($fina == 'placeholder.png'){
                 $sql2= deletePost($id);
                 $status= mysqli_query($link, $sql2);
                 if($status == true){
-                    header("Location: index.php?id=2&status=4");
+                    header('Location: index.php?id=2&status=4&project='.$projectID);
                 }else{
-                    header("Location: index.php?id=2&status=2");
+                    header('Location: index.php?id=2&status=2&project='.$projectID);
                 }
             }else{
                 if(unlink($path.$fina)){
                     $sql2= deletePost($id);
                     $status= mysqli_query($link, $sql2);
                     if($status == true){
-                        header("Location: index.php?id=2&status=4");
+                        header('Location: index.php?id=2&status=4&project='.$projectID);
                     }else{
-                        header("Location: index.php?id=2&status=2");
+                        header('Location: index.php?id=2&status=2&project='.$projectID);
                     }
                 }else{
-                    header("Location: index.php?id=2&status=2");
+                    header('Location: index.php?id=2&status=2&project='.$projectID);
                 }
             }
                 
@@ -171,10 +195,11 @@ echo'<h2 class="modul-title">Chronik</h2>';
 
 <!--Lightboxen (Modals)-->
 <div class="container modalgroup">
-
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">+ hinzufügen</button>
-
+<?php
+    if($usertyp==2){ 
+        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">+ hinzufügen</button>';
+    } 
+?> 
     <!-- Modal Global-->
     <div class="modal" id="newPost" role="dialog">
         <div class="modal-dialog">
@@ -188,7 +213,7 @@ echo'<h2 class="modul-title">Chronik</h2>';
                     </div>
                         <div class="modal-body">
                             <div id="input_container">
-
+                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                                 <label for="title">Titel*</label>
                                 <input id="title" type="text" name="title" class="form-control">
                                 <label for="content">Inhalt*</label>
@@ -238,6 +263,7 @@ echo'<h2 class="modul-title">Chronik</h2>';
                         <h4 class="modal-title">Chronikbeitrag bearbeiten</h4>
                     </div>
                         <div class="modal-body">
+                            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                             <div id="editContainer">
 
                                 <!-- Platzhalter für ajax Inhalt -->
@@ -293,7 +319,11 @@ while($row= mysqli_fetch_array($result)){
         $lock='';
     }
     echo'<div class="post row">';
-    echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';
+    if($usertyp==2){
+        echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';
+    }else{
+        echo'<h3>'.$row['Title'].'</h3>';
+    }    
     echo'<p class="date">'.$date.', '.$time.'</p>';
     echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
     echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';

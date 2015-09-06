@@ -1,13 +1,12 @@
 <?php
 require_once ('../../../library/public/database.inc.php');
 
-$projectID=2;
-$usertyp=1; //1= Architekt, 2=Bauherr
-
 $link= connectDB();
 
 //Speichern eines neuen Events
 if(isset($_POST['submit'])){
+    
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $dateOrg= $_POST['date'];
     $date = date('Y-m-d', strtotime($dateOrg));
     $time= $_POST['time'];
@@ -33,17 +32,19 @@ if(isset($_POST['submit'])){
         $sql= newEvent($projectID, $date, $time, $title, $description, $location);
         $status= mysqli_query($link, $sql);
         if($status){
-            header("Location: index.php?id=4&status=0");
+            header('Location: index.php?id=4&status=0&project='.$projectID);
         }else{
-            header("Location: index.php?id=4&status=1");
+            header('Location: index.php?id=4&status=1&project='.$projectID);
         }
     }else{
-        header("Location: index.php?id=4&status=1");
+        header('Location: index.php?id=4&status=1&project='.$projectID);
     }
 }
 
 //Update eines bestehenden Events
 if(isset($_POST['update'])){
+    
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $dateOrg= $_POST['date'];
     $date = date('Y-m-d', strtotime($dateOrg));
     $time= $_POST['time'];
@@ -70,17 +71,19 @@ if(isset($_POST['update'])){
         $sql= updateEvent($eventID, $date, $time, $title, $description, $location);
         $status= mysqli_query($link, $sql);
         if($status){
-            header("Location: index.php?id=4&status=2");
+            header('Location: index.php?id=4&status=2&project='.$projectID);
         }else{
-            header("Location: index.php?id=4&status=3");
+            header('Location: index.php?id=4&status=3&project='.$projectID);
         }
     }else{
-        header("Location: index.php?id=4&status=3");
+        header('Location: index.php?id=4&status=3&project='.$projectID);
     }
 }
 
 //Löschfunktion
 if(isset($_POST['delete'])){
+    
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
 
     if(!empty($_POST['eventID'])){
         $id=$_POST['eventID'];
@@ -88,12 +91,12 @@ if(isset($_POST['delete'])){
         $sql= deleteEvent($id);
         $status = mysqli_query($link, $sql);
         if($status){
-            header("Location: index.php?id=4&status=4");
+            header('Location: index.php?id=4&status=4&project='.$projectID);
         }else{
-            header("Location: index.php?id=4&status=5");
+            header('Location: index.php?id=4&status=5&project='.$projectID);
         }
     }else{
-        header("Location: index.php?id=4&status=5");
+        header('Location: index.php?id=4&status=5&project='.$projectID);
     }
     
 }
@@ -108,7 +111,7 @@ if(isset($_POST['delete'])){
 
     <!-- Trigger the modal with a button -->
 <?php
-    if($usertyp==1){
+    if($usertyp==2){
         echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newEvent">+ hinzufügen</button>';
     }
 ?>
@@ -125,7 +128,7 @@ if(isset($_POST['delete'])){
                     </div>
                         <div class="modal-body">
                             <div id="input_container">
-
+                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                                 <label for="date">Datum*</label>
                                 <input id="date" name="date" class="form-control datepicker">
                                 <label for="time">Zeit*</label>
@@ -169,6 +172,7 @@ if(isset($_POST['delete'])){
                         <h4 class="modal-title">Event bearbeiten</h4>
                     </div>
                         <div class="modal-body">
+                            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                             <div id="eventEditContainer">
 
                                 <!-- Ajax Content -->
@@ -291,7 +295,7 @@ if(isset($_POST['delete'])){
                 echo'<p class="event-desc-date">'.$day.'.'.$month.'.'.$year.', '.$time.' Uhr</p>';
                 echo'<p class="event-desc-address">'.$location.'</p>';
                 echo'<p class="event-desc-desc">'.$description.'</p>';
-                if($usertyp==1){
+                if($usertyp==2){
                     echo'<button type="button" class="btn btn-default btn_event_edit" data-toggle="modal" data-target="#editEvent" value="'.$id.'"><i class="fa fa-pencil-square-o"></i></button>';
                 }
             echo'</div>';

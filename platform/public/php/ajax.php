@@ -1,6 +1,7 @@
 <?php
+session_start();
 require_once ('../../../library/public/database.inc.php');
-$projectID=2;
+//$projectID=2;
 
 $link= connectDB();
 
@@ -201,6 +202,81 @@ if(isset($_POST['edit'])){
     }
 }
 
+//Ansicht um einen bestehenden Projekt-Adress-Eintrag anzusehen
+if(isset($_POST['details'])){
+    $data= '';
+
+    //Projektadresse ID
+    $id= filter_input(INPUT_POST, 'details', FILTER_SANITIZE_NUMBER_INT);
+
+    $sql4= getProjectAddress($id);
+    $result4= mysqli_query($link, $sql4);
+    while($row= mysqli_fetch_array($result4)){
+        $bkp= $row['BKP'];
+        $company= $row['Company'];
+        $addressline1= $row['Addressline1'];
+        $addressline2= $row['Addressline2'];
+        $zip= $row['ZIP'];
+        $city= $row['City'];
+        $country= $row['Country'];
+        $email= $row['Email'];
+        $phoneNumber= $row['PhoneNumber'];
+        $homepage= $row['Homepage'];
+        $projectCoordinator= $row['ProjectCoordinator'];
+        $phoneDirect= $row['PhoneDirect'];
+        $mobileNumber= $row['MobileNumber'];
+        $emailDirect= $row['EmailDirect'];
+        $description= $row['Description'];
+
+        $data.= '<h4>Firmendaten</h4>
+                <p>BKP*</p>
+                <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly" class="form-control">
+                <p>Firma*</p>
+                <input type="text" name="company" value="'.$company.'" readonly="readonly" class="form-control">
+                <p>Adresszeile 1*</p>
+                <input type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly" class="form-control">
+                <p>Adresszeile 2</p>
+                <input type="text" name="addressline2" value="'.$addressline2.'" readonly="readonly" class="form-control">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <p>PLZ*</p>
+                        <input type="text" name="zip" value="'.$zip.'" readonly="readonly" class="form-control">
+                    </div>
+                    <div class="col-xs-10">
+                        <p>Ort*</p>
+                        <input type="text" name="city" value="'.$city.'" readonly="readonly" class="form-control">
+                    </div>
+                </div>
+                <p>Land*</p>
+                <select name="country" readonly="readonly" class="form-control">
+                <option value="Schweiz" selected="selected">Schweiz</option>
+                <option value="Deutschland">Deutschland</option>
+                <option value="Österreich">Österreich</option>
+                <option value="Lichtenstein">Lichtenstein</option>
+                </select>
+                <p>Email (Hauptadresse)*</p>
+                <input type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
+                <p>Telefon (Hauptnummer)*</p>
+                <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly" class="form-control">
+                <p>Homepage*</p>
+                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly" class="form-control">
+
+                <br /><br />
+                <h4>Direkte Kontaktdaten</h4>
+                <p>Ansprechpartner</p>
+                <input type="text" name="projectCoordinator" value="'.$projectCoordinator.'" class="form-control" readonly="readonly">
+                <p>Email (Direkt)</p>
+                <input type="text" name="emailDirect" value="'.$emailDirect.'" class="form-control" readonly="readonly">
+                <p>Telefon (Direkt)</p>
+                <input type="text" name="phoneDirect" value="'.$phoneDirect.'" class="form-control" readonly="readonly">
+                <p>Mobile (Direkt)</p>
+                <input type="text" name="mobileDirect" value="'.$mobileNumber.'" class="form-control" readonly="readonly">
+                <p>Notizen</p>
+                <textarea name="description" class="form-control" rows="3" readonly="readonly">'.$description.'</textarea>';
+                echo $data;
+    }
+}
+
 //Formular mit Platzhaltern für das Editieren eines Chronik-Beitrags
 if(isset($_POST['postEdit'])){
     $data= '';
@@ -268,23 +344,24 @@ if(isset($_POST['delIMG'])){
     while($row= mysqli_fetch_array($result)){
         $imgS= $row['HashNameS'];
         $imgL= $row['HashNameL'];
+        $projectID= $row['Fk_IdProject'];
     }
 
     if(unlink($imgS) && unlink($imgL)){
         $sql= deleteImgGallery($id);
         $status= mysqli_query($link, $sql);
-        echo $status;
+        echo $projectID;
     }else{
-        echo $status;
+        echo $projectID;
     }
     
 }
 
 //Ermittlung des Usertyps
 if(isset($_POST['getUserTyp'])){
-    //1= Architekt
-    //2= Bauherr
-    $usertyp=1;
+    //2= Architekt
+    //3= Bauherr
+    $usertyp= $_SESSION['UserType'];
     echo $usertyp;
 }
 
@@ -333,6 +410,7 @@ if(isset($_POST['deadlineEdit'])){
     
     //Post ID
     $id= filter_input(INPUT_POST, 'deadlineEdit', FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= selectDeadlines($id);
     $result= mysqli_query($link, $sql);
 
@@ -342,6 +420,7 @@ if(isset($_POST['deadlineEdit'])){
         $idCraftsman= $row['IdCraftsman'];
         $title= $row['DeadlineTitle'];
         $description= $row['DeadlineDescription'];
+        $projectID= $row['Fk_IdProject'];
         $sql2= allProjectAddress($projectID);
         $result2= mysqli_query($link, $sql2);
         $craftsman='';

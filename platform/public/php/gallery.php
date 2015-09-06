@@ -1,10 +1,6 @@
 <?php
 require_once ('../../../library/public/database.inc.php');
 
-$projectID=2;
-$usertyp=1;
-$uploaddir= '../img/architect1/project1/img/';
-
 $link= connectDB();
 
 function resizeImage ($filepath_old, $filepath_new, $image_dimension, $scale_mode = 0){ 
@@ -75,12 +71,23 @@ function resizeImage ($filepath_old, $filepath_new, $image_dimension, $scale_mod
  } 
 
 if(isset($_POST['submit'])){
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     //Überprüfung ob mind. 1 File ausgewählt wurde
     if(isset($_FILES['my_file'])){
+        
         $files= $_FILES['my_file'];
         $fileCount= count($files['name']);
         $comment= filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
         $visible= $_POST['visible'];
+        
+        //Erzeugt Pfad für Bildupload
+        $sql= getNameCust($projectID);
+        $result= mysqli_query($link, $sql);
+        $row= mysqli_fetch_array($result);
+        $idArch= $row['Fk_IdArchitect'];
+
+        $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/';
+        
         
         //Schlaufe durch alle ausgewählten Files
         for($i=0; $i<$fileCount; $i++){
@@ -92,10 +99,6 @@ if(isset($_POST['submit'])){
             $image_attributes = getimagesize($tempna); 
             $image_width_old = $image_attributes[0]; 
             $image_height_old = $image_attributes[1];
-            
-            //Array mit Statusmeldungen
-            $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
-                'Nicht vollständig', 'Keine Datei hochgeladen');
             
             //Datei in kryptischen einzigartigen Namen umbenennen (Überschreibungen verhindern)
             $filename= sha1(time().mt_rand().$na);
@@ -114,7 +117,7 @@ if(isset($_POST['submit'])){
             $imageFileTypeL = pathinfo($uploadfileL, PATHINFO_EXTENSION);
             
             if($size > 4100000){
-                header("Location: index.php?id=7&status=3");
+                header('Location: index.php?id=7&status=3&project='.$projectID);
                 exit();
             }
             
@@ -122,7 +125,7 @@ if(isset($_POST['submit'])){
             if($imageFileTypeS != "jpg" && $imageFileTypeS != "png" && $imageFileTypeS != "jpeg"
             && $imageFileTypeS != "gif" && $imageFileTypeS != "JPG" && $imageFileTypeS != "JPEG"
                && $imageFileTypeS != "PNG" && $imageFileTypeS != "GIF") {
-                header("Location: index.php?id=7&status=2");
+                header('Location: index.php?id=7&status=2&project='.$projectID);
                 exit();
             }
             
@@ -130,7 +133,7 @@ if(isset($_POST['submit'])){
             if($imageFileTypeL != "jpg" && $imageFileTypeL != "png" && $imageFileTypeL != "jpeg"
             && $imageFileTypeL != "gif" && $imageFileTypeS != "JPG" && $imageFileTypeS != "JPEG"
                     && $imageFileTypeS != "PNG" && $imageFileTypeS != "GIF") {
-                header("Location: index.php?id=7&status=2");
+                header('Location: index.php?id=7&status=2&project='.$projectID);
                 exit();
             }
             
@@ -147,7 +150,6 @@ if(isset($_POST['submit'])){
                 }else{
                     $saveS=false;
                 }
-                
             }
             
             
@@ -163,22 +165,22 @@ if(isset($_POST['submit'])){
                     $saveL=true;
                 }else{
                     $saveL=false;
-                }
-                
+                }    
             }
             
             if($saveS && $saveL){
                 $sql= saveIMG($projectID, $uploadfileL, $uploadfileS, $na, $uploaddir, $comment, $visible);
-                $status= mysqli_query($link, $sql);
-                if($status){
-                    header("Location: index.php?id=7&status=1");
-                }else{
-                    header("Location: index.php?id=7&status=0");
+                $status= mysqli_query($link, $sql); 
+                //Prüfung ob Erfolgreich in DB geschrieben
+                if(!$status){
+                    header('Location: index.php?id=7&status=0&project='.$projectID);
                 }
-            }
-            
-            
-            
+            }   
+        }
+        if($status){
+            header('Location: index.php?id=7&status=1&project='.$projectID);
+        }else{
+            header('Location: index.php?id=7&status=0&project='.$projectID);
         }
     }
 }
@@ -191,9 +193,12 @@ if(isset($_POST['submit'])){
     
         <!--Lightboxen (Modals)-->
     <div class="container modalgroup">
-
-        <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">Fotos hochladen</button>
+        
+        <?php
+            if($usertyp==2){
+                echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">Fotos hochladen</button>';
+            } 
+        ?>
 
         <!-- Modal Global-->
         <div class="modal" id="newPost" role="dialog">
@@ -208,7 +213,8 @@ if(isset($_POST['submit'])){
                         </div>
                             <div class="modal-body">
                                 <div id="input_container">
-
+                                    
+                                    <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                                     <label for="imgupload">Bildupload</label>                                    
                                     <input id="imgupload" type="file" name="my_file[]" multiple >
                                     <p>(Multi-upload möglich, max. 4mb/ Foto)</p><br/>
@@ -264,13 +270,13 @@ if(isset($_POST['submit'])){
 
 
     <div id="nanoGallery3">
-    <?php
-        if($usertyp==1){
+    <?php //$projectID=2;
+        if($usertyp==2){
             $sql=showAllIMG($projectID);
         }else{
-            $sql=showIMG($projectID, $usertyp);
+            $sql=showIMG($projectID, 2);
         }
-        
+        //echo $sql;
         $result= mysqli_query($link, $sql);
         while($row= mysqli_fetch_array($result)){
             $imgL= $row['HashNameL'];

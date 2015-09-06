@@ -3,25 +3,19 @@
 require('../../../library/public/fpdf17/fpdf.php');
 require_once ('../../../library/public/database.inc.php');
 
-$projectID=2;
 $zip;
 $country;
 
 $link=connectDB();
 
-//Alle Projektdaten holen
-    $sql=getProjectDates($projectID);
-    $result= mysqli_query($link, $sql);
-    while ($row = mysqli_fetch_array($result)) {
-        $zip= $row['ZIP'];
-        $country= $row['Country'];
-    }
+
     
     
 //PDF Generator
 if(isset($_POST['submit'])){
     
     //Variablen Definitionen
+    $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $dateOrg= $_POST['date'];
     $date = date('Y-m-d', strtotime($dateOrg));
     $present= $_POST['present'];
@@ -278,16 +272,24 @@ if(isset($_POST['submit'])){
     }else{
         $pdf->Output('Baujournal.pdf', 'D');
     }
-    
+    header('Location: index.php?id=9&project='.$projectID);
+    exit();
 }
 
-
+//Alle Projektdaten holen
+$sql=getProjectDates($projectID);
+$result= mysqli_query($link, $sql);
+while ($row = mysqli_fetch_array($result)) {
+    $zip= $row['ZIP'];
+    $country= $row['Country'];
+}
 ?>
 
         
     <div class="col-xs-12 col-md-6">
         <h2 class="modul-title">Generation SIA Baujournal</h2>
         <form method="POST" action="sia.php" id="pdf">
+            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
             <input id="zip" type="hidden" name="zip" value="<?php echo $zip; ?>">
             <input id="country" type="hidden" name="country" value="<?php echo $country; ?>">
             
