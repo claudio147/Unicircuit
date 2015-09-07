@@ -45,6 +45,7 @@ function getCountriesDe() {
  */
 // Erstellung Architekt User in DB
 function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti, $a1, $a2) {
+    global $link;
     
     //Escapen der Variablen, Verhinderung von SQL Injections.
     $fn = mysqli_real_escape_string($link, $fn);
@@ -117,6 +118,8 @@ function allProjectAddress($projectID){
 
 function newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip, $city, $country, 
         $email, $phoneNumber, $homepage){
+    global $link;
+    
     $bkp = filter_var($bkp, FILTER_SANITIZE_NUMBER_INT);
     $company = mysqli_real_escape_string($link, $company);
     $addressline1 = mysqli_real_escape_string($link, $addressline1);
@@ -136,6 +139,8 @@ function newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip, $c
 
 function newProjectAddress($projectID, $FKGlobal, $projectCoordinator, $phoneDirect, $mobile, 
         $emailDirect, $description){
+    global $link;
+    
     $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
     $FKGlobal = filter_var($FKGlobal, FILTER_SANITIZE_NUMBER_INT);
     $projectCoordinator = mysqli_real_escape_string($link, $projectCoordinator);
@@ -151,6 +156,8 @@ function newProjectAddress($projectID, $FKGlobal, $projectCoordinator, $phoneDir
 }
 
 function getIdGlobal($company, $addressline1){
+    global $link;
+    
     $company = mysqli_real_escape_string($link, $company);
     $addressline1 = mysqli_real_escape_string($link, $addressline1);
     
@@ -170,6 +177,8 @@ function getGlobalAddress($id){
 }
 
 function checkGlobalAddress($company){
+    global $link;
+    
     $company = mysqli_real_escape_string($link, $company);
     
     $status=true;
@@ -198,6 +207,8 @@ function getProjectAddress($id){
 }
 
 function updateProjectAddress($id, $projectCoordinator, $phoneDirect, $mobileNumber, $emailDirect, $description){
+    global $link;
+    
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     $projectCoordinator = mysqli_real_escape_string($link, $projectCoordinator);
     $phoneDirect = mysqli_real_escape_string($link, $phoneDirect);
@@ -222,6 +233,8 @@ function deleteProjectAddress($id){
  * Timeline
  */
 function addPostwithIMG($idProject,$idVisible, $hashName, $orgName, $path, $title, $content, $date, $time){
+    global $link;
+    
     $idProject = filter_var($idProject, FILTER_SANITIZE_NUMBER_INT);
     $idVisible = filter_var($idVisible, FILTER_SANITIZE_NUMBER_INT);
     $hashName = mysqli_real_escape_string($link, $hashName);
@@ -250,6 +263,8 @@ function selectPostbyID($postID){
 }
 
 function updatePost($postID, $idVisible, $hashName, $orgName, $path, $title, $date, $time, $description){
+    global $link;
+    
     $postID = filter_var($postID, FILTER_SANITIZE_NUMBER_INT);
     $idVisible = filter_var($idVisible, FILTER_SANITIZE_NUMBER_INT);
     $hashName = mysqli_real_escape_string($link, $hashName);
@@ -303,12 +318,14 @@ function selectPostbyDate($projectID, $date){
 /*
  * Productsite
  */
-function allContentProductsite(){
+function allContentProductsite(){    
     $sql = 'SELECT Title, Content FROM Productsite';
     return $sql;
 }
 
 function selectImages($idHTML){
+    global $link;
+    
     $idHTML = filter_var($idHTML, FILTER_SANITIZE_NUMBER_INT);
     
     $sql= 'SELECT Filename, Comment FROM ProductsiteImages WHERE IdHTML='.$idHTML.' AND Active= 1';
@@ -320,6 +337,8 @@ function selectImages($idHTML){
  * Redaktionssystem
  */
 function allContentOfIdHTML($id){
+    global $link;
+    
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     
     $sql='SELECT Title, Content, InputType, Date, Time, Description FROM Productsite WHERE IdHTML='.$id;
@@ -327,6 +346,8 @@ function allContentOfIdHTML($id){
 }
 
 function saveToDB($title, $content){
+    global $link;
+    
     $title = mysqli_real_escape_string($link, $content);
     $content = mysqli_real_escape_string($link, $content);
     
@@ -337,6 +358,8 @@ function saveToDB($title, $content){
 }
 
 function allImagesOfIdHTML($id){
+    global $link;
+    
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     
     $sql='SELECT Date, Time, Orgname, Path, ID, Filename, Comment, Active FROM ProductsiteImages WHERE IdHTML='.$id;
@@ -344,6 +367,8 @@ function allImagesOfIdHTML($id){
 }
 
 function saveImageToDB($orgname, $comment, $file, $uploaddir, $select){
+    global $link;
+    
     $orgname = mysqli_real_escape_string($link, $orgname);
     $comment = mysqli_real_escape_string($link, $comment);
     // $file
@@ -358,6 +383,8 @@ function saveImageToDB($orgname, $comment, $file, $uploaddir, $select){
 }
 
 function deleteImage($id){
+    global $link;
+    
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     
     $sql= 'DELETE FROM ProductsiteImages WHERE ID='.$id;
@@ -365,6 +392,8 @@ function deleteImage($id){
 }
 
 function selectFilename($id){
+    global $link;
+    
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     
     $sql= 'SELECT Filename, Path FROM ProductsiteImages WHERE ID='.$id;
@@ -372,6 +401,8 @@ function selectFilename($id){
 }
 
 function updateImageStatus($id){
+    global $link;
+    
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     
     $sql='UPDATE ProductsiteImages SET Active= 1 WHERE ID= '.$id;
@@ -379,6 +410,8 @@ function updateImageStatus($id){
 }
 
 function setAllActiveNull($idHTML){
+    global $link;
+    
     $idHTML = filter_var($idHTML, FILTER_SANITIZE_NUMBER_INT);
     
     $sql= 'UPDATE ProductsiteImages SET Active= 0 WHERE IdHTML= '.$idHTML;
@@ -391,12 +424,23 @@ function setAllActiveNull($idHTML){
 
 //User aus Datenbank auslesen, anhand übereinstimmung und passwort
 function selectUser($email, $pw) {
+    global $link;
+    $email = mysqli_real_escape_string($link, $email);
+    $pw = mysqli_real_escape_string($link, $pw);
+    
    $sql = "SELECT IdUser, Fk_IdUserType, Active FROM User WHERE email='" . $email . "' "
             . "AND password='" . hash('sha256', $pw) . "'";
     return $sql;
 }
 //nach session eröffnung userDaten anpassen 
 function updateUser($date, $time, $sessionId, $browserTyp, $datensatz) {
+    global $link;
+    
+    //$date
+    //$time
+    //$sessionId
+    //$browserTyp
+    //$datensatz
    $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',"
               . " SessionId='$sessionId', Browser='$browserTyp'"
               . " WHERE id =$datensatz";
@@ -409,11 +453,18 @@ function updateUser($date, $time, $sessionId, $browserTyp, $datensatz) {
  */
 
 function getMailArch($projectID){
+    global $link;
+    
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= "SELECT u.Email, p.ProjectNumber, p.Title FROM User as u JOIN Project as p on u.IdUser = p.Fk_IdArchitect WHERE p.IdProject=".$projectID;
     return $sql;
 }
 
 function getNameCust($projectID){
+    global $link;
+    
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
     $sql= "SELECT u.Email, u.Firstname, u.Lastname, p.ProjectNumber, p.Title, p.Fk_IdArchitect FROM User as u JOIN Project as p on u.IdUser = p.Fk_IdBauherr WHERE p.IdProject=".$projectID;
     return $sql;
 }
@@ -425,6 +476,20 @@ function getNameCust($projectID){
 
 //erstellt einen Bauherr in der Datenbank
 function createBauherr($bhFn, $bhLn, $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhEmail, $bhPhNu, $bhMoNu, $pwHash) {
+    global $link;
+    
+    $bhFn = mysqli_real_escape_string($link, $bhFn);
+    $bhLn = mysqli_real_escape_string($link, $bhLn);
+    $bhAddressline1 = mysqli_real_escape_string($link, $bhAddressline1);
+    $bhAddressline2 = mysqli_real_escape_string($link, $bhAddressline2);
+    $bhZIP = filter_var($bhZIP, FILTER_SANITIZE_NUMBER_INT);
+    $bhCity = mysqli_real_escape_string($link, $bhCity);
+    $bhCountry = mysqli_real_escape_string($link, $bhCountry);
+    $bhEmail = mysqli_real_escape_string($link, $bhEmail);
+    $bhPhNu = mysqli_real_escape_string($link, $bhPhNu);
+    $bhMoNu = mysqli_real_escape_string($link, $bhMoNu);
+    $pwHash = mysqli_real_escape_string($link, $pwHash);
+    
     $sql= "INSERT INTO User (Firstname, Lastname, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, MobileNumber,
              Password, Fk_IdUserType, Active) VALUES
              ('$bhFn', '$bhLn', '$bhAddressline1', '$bhAddressline2', '$bhZIP', '$bhCity', '$bhCountry', '$bhEmail',
@@ -434,12 +499,29 @@ function createBauherr($bhFn, $bhLn, $bhAddressline1, $bhAddressline2, $bhZIP, $
 
 //Holt ID eines spezifischen Bauherren
 function getIdBauherr($pwHash) {
+    global $link;
+    
+    $pwHash = mysqli_real_escape_string($link, $pwHash);
+    
      $sql = 'SELECT IdUser FROM User WHERE Password="'.$pwHash.'"';
      return $sql;
 }
 
 //Erstellt das Projekt mit allen benötigten Daten
 function createProject($id, $bhId, $projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description) {
+    global $link;
+    
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    $bhId = filter_var($bhId, FILTER_SANITIZE_NUMBER_INT);
+    $projectNumb = filter_var($projectNumb, FILTER_SANITIZE_NUMBER_INT);
+    $title = mysqli_real_escape_string($link, $title);
+    $addressline1 = mysqli_real_escape_string($link, $addressline1);
+    $addressline2 = mysqli_real_escape_string($link, $addressline2);
+    $zip = filter_var($zip, FILTER_SANITIZE_NUMBER_INT);
+    $city = mysqli_real_escape_string($link, $city);
+    $country = mysqli_real_escape_string($link, $country);
+    $description = mysqli_real_escape_string($link, $description);
+    
      $sql = "INSERT INTO Project (Fk_IdArchitect, Fk_IdBauherr, ProjectNumber, Title, Addressline1, Addressline2, ZIP,
              City, Country, Description)
              VALUES ('$id', '$bhId', '$projectNumb', '$title', '$addressline1' ,'$addressline2' ,'$zip' ,'$city' ,'$country' ,'$description')";
@@ -448,12 +530,21 @@ function createProject($id, $bhId, $projectNumb, $title, $addressline1, $address
 
 //Holt ID eines spezifischen Projektes
 function getIdProject($projectNumb, $bhId){
+    global $link;
+    
+    $projectNumb = filter_var($projectNumb, FILTER_SANITIZE_NUMBER_INT);
+    $bhId = filter_var($bhId, FILTER_SANITIZE_NUMBER_INT);
+    
      $sql = "SELECT IdProject FROM Project WHERE ProjectNumber ='$projectNumb'AND Fk_IdBauherr = '$bhId' " ;
      return $sql;
 }
 
 //Gibt alle Projekte eines Architekten
 function getProjectsByArch($id) {
+    global $link;
+    
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
         p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM Project as p JOIN User
         as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id.' AND Storage IS NULL ';
@@ -462,6 +553,11 @@ function getProjectsByArch($id) {
 
 //Fügt Bild dem Projekt hinzu
 function addPicToProject($uploadfile, $proId){
+    global $link;
+    
+    //$uploadfile
+    $proId = filter_var($proId, FILTER_SANITIZE_NUMBER_INT);
+    
      $sql= "UPDATE Project SET picture = '$uploadfile' WHERE IdProject = '$proId'";
      return $sql;
 }
@@ -469,6 +565,29 @@ function addPicToProject($uploadfile, $proId){
 //Projekt Update mit neuem Bild
 function updateProjectWithPic($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $uploadfile, $bhFn, $bhLn,
         $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2) {
+    global $link;
+    
+    $projectNumb = filter_var($projectNumb, FILTER_SANITIZE_NUMBER_INT);
+    $title = mysqli_real_escape_string($link, $title);
+    $addressline1 = mysqli_real_escape_string($link, $addressline1);
+    $addressline2 = mysqli_real_escape_string($link, $addressline2);
+    $zip = filter_var($zip, FILTER_SANITIZE_NUMBER_INT);
+    $city = mysqli_real_escape_string($link, $city);
+    $country = mysqli_real_escape_string($link, $country);
+    $description = mysqli_real_escape_string($link, $description);
+    //$uploadfile
+    $bhFn = mysqli_real_escape_string($link, $bhFn);
+    $bhLn = mysqli_real_escape_string($link, $bhLn);
+    $bhAddressline1 = mysqli_real_escape_string($link, $bhAddressline1);
+    $bhAddressline2 = mysqli_real_escape_string($link, $bhAddressline2);
+    $bhZIP = filter_var($bhZIP, FILTER_SANITIZE_NUMBER_INT);
+    $bhCity = mysqli_real_escape_string($link, $bhCity);
+    $bhCountry = mysqli_real_escape_string($link, $bhCountry);
+    $bhPhNu = mysqli_real_escape_string($link, $bhPhNu);
+    $bhMoNu = mysqli_real_escape_string($link, $bhMoNu);
+    $bhEmail = mysqli_real_escape_string($link, $bhEmail);
+    $proId2 = filter_var($proId2, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= "UPDATE Project AS p, User AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
                     p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
                     p.Country = '$country', p.Description = '$description', p.Picture= '$uploadfile' ,
@@ -483,6 +602,27 @@ function updateProjectWithPic($projectNumb, $title, $addressline1, $addressline2
 //Projekt Update ohne neues Bild
 function updateProjectWithout($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $bhFn, $bhLn,
         $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2) {
+    global $link;
+    
+    $projectNumb = filter_var($projectNumb, FILTER_SANITIZE_NUMBER_INT);
+    $title = mysqli_real_escape_string($link, $title);
+    $addressline1 = mysqli_real_escape_string($link, $addressline1);
+    $addressline2 = mysqli_real_escape_string($link, $addressline2);
+    $zip = filter_var($zip, FILTER_SANITIZE_NUMBER_INT);
+    $city = mysqli_real_escape_string($link, $city);
+    $country = mysqli_real_escape_string($link, $country);
+    $description = mysqli_real_escape_string($link, $description);
+    $bhFn = mysqli_real_escape_string($link, $bhFn);
+    $bhLn = mysqli_real_escape_string($link, $bhLn);
+    $bhAddressline1 = mysqli_real_escape_string($link, $bhAddressline1);
+    $bhAddressline2 = mysqli_real_escape_string($link, $bhAddressline2);
+    $bhZIP = filter_var($bhZIP, FILTER_SANITIZE_NUMBER_INT);
+    $bhCity = mysqli_real_escape_string($link, $bhCity);
+    $bhCountry = mysqli_real_escape_string($link, $bhCountry);
+    $bhPhNu = mysqli_real_escape_string($link, $bhPhNu);
+    $bhMoNu = mysqli_real_escape_string($link, $bhMoNu);
+    $bhEmail = mysqli_real_escape_string($link, $bhEmail);
+    $proId2 = filter_var($proId2, FILTER_SANITIZE_NUMBER_INT);
     
    $sql = "UPDATE Project AS p, User AS u SET p.ProjectNumber = '$projectNumb', p.Title = '$title',
                     p.Addressline1 = '$addressline1', p.Addressline2 = '$addressline2', p.ZIP = '$zip', p.City = '$city',
@@ -496,12 +636,19 @@ function updateProjectWithout($projectNumb, $title, $addressline1, $addressline2
 
 //Archivierung eines Projektes
 function storeProject($proId2) {
+    global $link;
+    $proId2 = filter_var($proId2, FILTER_SANITIZE_NUMBER_INT);
+    
      $sql = "UPDATE Project AS P, User AS u SET p.Storage = 1 , u.Active = 4 WHERE p.FK_IdBauherr = u.IdUser AND IdProject = '$proId2'";
      return $sql;
 }
 
 //Passwort Update des Bauherren
 function resetBauhPw($IdProject, $pwHash) {
+    global $link;
+    $IdProject = filter_var($IdProject, FILTER_SANITIZE_NUMBER_INT);
+    $pwHash = mysqli_real_escape_string($link, $pwHash);
+    
     $sql = "UPDATE User AS u JOIN Project AS p ON u.IdUser = p.Fk_IdBauherr AND p.IdProject = '$IdProject' SET u.Password = '$pwHash'";
     return $sql;
 }
@@ -511,6 +658,9 @@ function resetBauhPw($IdProject, $pwHash) {
  */
 
 function getProjectsByArchStore($id) {
+    global $link;
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
         p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM Project as p JOIN User
         as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id.' AND Storage = 1 ORDER BY p.ProjectNumber ASC';
@@ -520,6 +670,14 @@ function getProjectsByArchStore($id) {
  * Galerie - Plattform
  */
 function saveIMG($idProject, $hashNameL, $hashNameS, $orgName, $path, $comment, $visible){
+    global $link;
+    $idProject = filter_var($idProject, FILTER_SANITIZE_NUMBER_INT);
+    //$hashNameS
+    //$orgName
+    //$path
+    $comment = mysqli_real_escape_string($link, $comment);
+    $visible = filter_var($visible, FILTER_SANITIZE_NUMBER_INT);
+    
     $date = date("Y-m-d");
     $time = date("H:i:s");
     $sql= "INSERT INTO Pictures(Fk_IdProject, HashNameL, HashNameS, Orgname, Path, Date, Time, Comment, Visibility) VALUES
@@ -528,21 +686,34 @@ function saveIMG($idProject, $hashNameL, $hashNameS, $orgName, $path, $comment, 
 }
 
 function showIMG($idProject, $visibility){
+    global $link;
+    $idProject = filter_var($idProject, FILTER_SANITIZE_NUMBER_INT);
+    $visibility = filter_var($visibility, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= "SELECT IdPicture, HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' AND Visibility= '$visibility' ORDER BY Date DESC, Time DESC";
     return $sql;
 }
 
 function showAllIMG($idProject){
+    global $link;
+    $idProject = filter_var($idProject, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= "SELECT IdPicture, HashNameL, HashNameS, Comment, Date, Time FROM Pictures WHERE Fk_IdProject = '$idProject' ORDER BY Date DESC, Time DESC";
     return $sql;
 }
 
 function deleteImgGallery($idIMG){
+    global $link;
+    $idIMG = filter_var($idIMG, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'Delete FROM Pictures WHERE IdPicture='.$idIMG;
     return $sql;
 }
 
 function getIMGPath($idIMG){
+    global $link;
+    $idIMG = filter_var($idIMG, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT Fk_IdProject, HashNameL, HashNameS FROM Pictures WHERE IdPicture='.$idIMG;
     return $sql;
 }
@@ -552,12 +723,28 @@ function getIMGPath($idIMG){
  * ****** Events
  */
 function newEvent($projectID, $date, $time, $title, $description, $location){
+    global $link;
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
+    //$date
+    //$time
+    $title = mysqli_real_escape_string($link, $title);
+    $description = mysqli_real_escape_string($link, $description);
+    $location = mysqli_real_escape_string($link, $location);
+    
     $sql= "INSERT INTO Events (Fk_IdProject, Date, Time, Title, Description, Location) VALUES
             ('$projectID','$date','$time','$title','$description','$location')";
     return $sql;
 }
 
 function updateEvent($eventID, $date, $time, $title, $description, $location){
+    global $link;
+    $eventID = filter_var($eventID, FILTER_SANITIZE_NUMBER_INT);
+    //$date
+    //$time
+    $title = mysqli_real_escape_string($link, $title);
+    $description = mysqli_real_escape_string($link, $description);
+    $location = mysqli_real_escape_string($link, $location);
+    
     $sql= "UPDATE Events SET Date='$date', Time='$time', Title='$title', Description='$description',"
             . "Location='$location' WHERE IdEvent= ".$eventID;
     return $sql;
@@ -565,21 +752,33 @@ function updateEvent($eventID, $date, $time, $title, $description, $location){
 
 
 function getAllEvents($projectID){
+    global $link;
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT IdEvent, Date, Time, Title, Description, Location FROM Events WHERE Fk_IdProject='.$projectID.' ORDER BY Date ASC, Time ASC';
     return $sql;
 }
 
 function selectEvent($eventID){
+    global $link;
+    $eventID = filter_var($eventID, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT Date, Time, Title, Description, Location FROM Events WHERE IdEvent='.$eventID;
     return $sql;
 }
 
 function deleteOld($projectID){
+    global $link;
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'DELETE FROM Events WHERE Fk_IdProject='.$projectID.' AND date < CURDATE()';
     return $sql;
 }
 
 function deleteEvent($eventID){
+    global $link;
+    $eventID = filter_var($eventID, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'DELETE FROM Events WHERE IdEvent='.$eventID;
     return $sql;
 }
@@ -589,6 +788,13 @@ function deleteEvent($eventID){
  ***** Deadlines
  */
 function newDeadline($projectID, $deadlineDate, $title, $description, $idCraftsman){
+    global $link;
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
+    //$deadlineDate
+    $title = mysqli_real_escape_string($link, $title);
+    $description = mysqli_real_escape_string($link, $description);
+    $idCraftsman = filter_var($idCraftsman, FILTER_SANITIZE_NUMBER_INT);
+    
     $date = date("Y-m-d");
     $time = date("H:i:s");
     $sql= "INSERT INTO Deadlines (Fk_IdProject, IdCraftsman, Date, Time, DeadlineDate, DeadlineTitle, DeadlineDescription) VALUES
@@ -597,16 +803,29 @@ function newDeadline($projectID, $deadlineDate, $title, $description, $idCraftsm
 }
 
 function getAllDeadlines($projectID){
+    global $link;
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT IdDeadlines, IdCraftsman, DeadlineDate, DeadlineTitle, DeadlineDescription FROM Deadlines WHERE Fk_IdProject='.$projectID.' ORDER BY DeadlineDate ASC';
     return $sql;
 }
 
 function selectDeadlines($id){
+    global $link;
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT IdCraftsman, DeadlineDate, DeadlineTitle, DeadlineDescription, Fk_IdProject FROM Deadlines WHERE IdDeadlines='.$id;
     return $sql;
 }
 
 function updateDeadline($id, $deadlineDate, $title, $description, $idCraftsman){
+    global $link;
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    //$deadlineDate
+    $title = mysqli_real_escape_string($link, $title);
+    $description = mysqli_real_escape_string($link, $description);
+    $idCraftsman = filter_var($idCraftsman, FILTER_SANITIZE_NUMBER_INT);
+    
     $date = date("Y-m-d");
     $time = date("H:i:s");
     $sql= "UPDATE Deadlines SET IdCraftsman='$idCraftsman', Date='$date', Time='$time', DeadlineDate='$deadlineDate', DeadlineTitle='$title', "
@@ -615,6 +834,9 @@ function updateDeadline($id, $deadlineDate, $title, $description, $idCraftsman){
 }
 
 function deleteDeadline($id){
+    global $link;
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'DELETE FROM Deadlines WHERE IdDeadlines='.$id;
     return $sql;
 }
@@ -623,6 +845,13 @@ function deleteDeadline($id){
  ******* Schedule
  */
 function saveSchedule($idProject, $hashName, $orgName, $path, $comment){
+    global $link;
+    $idProject = filter_var($idProject, FILTER_SANITIZE_NUMBER_INT);
+    //$hashName
+    //$orgName
+    //$path
+    $comment = mysqli_real_escape_string($link, $comment);
+    
     $date = date("Y-m-d");
     $time = date("H:i:s");
     $sql= "INSERT INTO Schedule(Fk_IdProject, HashName, Orgname, Path, Date, Time, Comment) VALUES
@@ -631,6 +860,9 @@ function saveSchedule($idProject, $hashName, $orgName, $path, $comment){
 }
 
 function showAllSchedule($idProject){
+    global $link;
+    $idProject = filter_var($idProject, FILTER_SANITIZE_NUMBER_INT);
+
     $sql= "SELECT IdSchedule, HashName, Orgname, Path, Comment, Date, Time FROM Schedule WHERE Fk_IdProject = '$idProject' ORDER BY Date DESC, Time DESC";
     return $sql;
 }
