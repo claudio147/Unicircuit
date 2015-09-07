@@ -356,8 +356,8 @@ $lnCust=$row['Lastname'];
                                         <div id="input_container">
                                            <!-- Projektspezifische Angaben --> 
                                             <h4>Daten Projekt</h4>
-                                            <div class="1">
-                                            <label for="1">Projektnummer*</label>
+                                            <div class="1" id="testABC">
+                                            <label class="control-label" for="1">Projektnummer*</label>
                                             <input id="1" type="text" name="ProjectNumber" class="form-control">
                                             </div>
                                             <label for="2">Projektbezeichnung</label>

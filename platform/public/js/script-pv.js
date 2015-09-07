@@ -1,10 +1,16 @@
 /*
  ******************** Projektverwaltung *******
 */
-function formCheck() {
+  function formCheck() {
       if (document.createProject.ProjectNumber.value === "") {
-          document.getElementByClass("1").className = "form-control";
-          alert('Test');
+        
+          var element = document.getElementById("testABC");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+            var element2 = document.getElementById("testABC");
+            alert(element2.classList);
+          //document.getElementsByClass("1").classList.add('test');
+          //alert('Test');
           return false;
       }  
       if (document.createProject.Title.value === "") {
@@ -18,7 +24,10 @@ function formCheck() {
       }
     }
 
+
 $(document).ready(function(){
+            
+
     
     //Darstellung Teaserbild
     $(".imgLiquidFill").imgLiquid();

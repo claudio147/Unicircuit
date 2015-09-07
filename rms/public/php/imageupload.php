@@ -1,7 +1,7 @@
 <?php
 
 //Einbindung Librarys
-require_once ('../../library/public/database.inc.php');
+require_once ('../../../library/public/database.inc.php');
 
 $sections= array(1=>'Landing page (2365 x 1744px)', 2=>'Slider Mobile (483 x 353px)', 3=>'Slider Desktop (502 x 301px)', 
         4=>'Über Uns Links (210 x 140px)', 5=>'Über Uns Rechts (210 x 140px)');
