@@ -301,7 +301,8 @@ $lnCust=$row['Lastname'];
         
         <!-- CSS spezifisch -->
         <link href="../css/style.css" rel="stylesheet">
-
+        
+        
 
     </head>
     <body>
@@ -346,7 +347,7 @@ $lnCust=$row['Lastname'];
 
                         <!-- Modal content-->
                         <div class="modal-content">
-                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
+                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST" name="createProject" onsubmit="return formCheck()">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Projekt erfassen</h4>
@@ -355,8 +356,10 @@ $lnCust=$row['Lastname'];
                                         <div id="input_container">
                                            <!-- Projektspezifische Angaben --> 
                                             <h4>Daten Projekt</h4>
+                                            <div class="1">
                                             <label for="1">Projektnummer*</label>
                                             <input id="1" type="text" name="ProjectNumber" class="form-control">
+                                            </div>
                                             <label for="2">Projektbezeichnung</label>
                                             <input id="2" type="text" name="Title" class="form-control">
                                             <label for="3">Strasse</label>
@@ -544,7 +547,7 @@ $_SESSION['IdProject'] = $projectsId;
     <!-- Gallery -->
     <!--<script src="../css/nanogallery/jquery.nanogallery.min.js"></script>-->
 
-    <script src="../js/script-pv.js"></script>
+    <script type="text/javascript" src="../js/script-pv.js"></script>
    <!-- <script src="../js/weather.js"></script>-->
 
     </body>
