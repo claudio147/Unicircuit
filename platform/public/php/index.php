@@ -217,7 +217,7 @@ $lnCust=$row['Lastname'];
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Abmelden</a>
+                            <a href="login.php"><i class="fa fa-fw fa-power-off"></i> Abmelden</a>
                         </li>
                     </ul>
                 </li>

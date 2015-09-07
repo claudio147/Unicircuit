@@ -186,10 +186,9 @@ body {
 .top-nav>.open>.dropdown-menu{
     width: 180px !important;
 }
-/*.link-pv{
-    float: right; 
-    margin-left: 100px;
-}*/
+.link-pv{
+    margin-bottom: 5px;
+}
 /* Side Navigation */
 
 @media(min-width:768px) {
