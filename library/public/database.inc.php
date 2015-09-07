@@ -78,15 +78,15 @@ function allUserData() {
 }
 // Holt Daten eines spezifischen Users anhand der ID
 function userData($id) {
-    //$id = mysqli_real_escape_string($link, $id);
-     $sql = 'SELECT Firstname, Lastname, Email, RegCode FROM User WHERE IdUser ='.$id;
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    $sql = 'SELECT Firstname, Lastname, Email, RegCode FROM User WHERE IdUser = '. $id;
      
      return $sql;
 }
 
 // Setzt Aktivierungsstand des gewählten Users auf 2(Aktivierungsmail verschickt)
 function setActive($id) {
-    //$id = mysqli_real_escape_string($link, $id);
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     $sql = 'UPDATE User SET Active = 2 WHERE IdUser = '. $id;
     
     return $sql;
@@ -94,7 +94,7 @@ function setActive($id) {
 
 // Setzt Aktivierungsstand des gewählten Users auf 3(Aktiviert)
 function setActive3($id) {
-    //$id = mysqli_real_escape_string($link, $id);
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     $sql = 'UPDATE User SET Active = 3 WHERE RegCode = '. $id;
     
     return $sql;
@@ -106,7 +106,7 @@ function setActive3($id) {
  * Handwerkerliste
  */
 function allProjectAddress($projectID){
-    //$projectID = mysqli_real_escape_string($link, $projectID);
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
     $sql= 'SELECT p.IdProjectAddress, p.ProjectCoordinator, p.PhoneDirect, p. MobileNumber, p.EmailDirect, 
         p.Description, g.BKP, g.Company, g.Addressline1, g.Addressline2, g.ZIP, g.City,
         g.Country, g.Email, g.PhoneNumber, g.Homepage FROM ProjectAddresslist as p JOIN
@@ -117,11 +117,11 @@ function allProjectAddress($projectID){
 
 function newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip, $city, $country, 
         $email, $phoneNumber, $homepage){
-    //$bkp = mysqli_real_escape_string($link, $bkp);
+    $bkp = filter_var($bkp, FILTER_SANITIZE_NUMBER_INT);
     $company = mysqli_real_escape_string($link, $company);
     $addressline1 = mysqli_real_escape_string($link, $addressline1);
     $addressline2 = mysqli_real_escape_string($link, $addressline2);
-    //$zip = mysqli_real_escape_string($link, $zip);
+    $zip = filter_var($zip, FILTER_SANITIZE_NUMBER_INT);
     $city = mysqli_real_escape_string($link, $city);
     $country = mysqli_real_escape_string($link, $country);
     $email = mysqli_real_escape_string($link, $email);
@@ -136,6 +136,13 @@ function newGlobalAddress($bkp, $company, $addressline1, $addressline2, $zip, $c
 
 function newProjectAddress($projectID, $FKGlobal, $projectCoordinator, $phoneDirect, $mobile, 
         $emailDirect, $description){
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
+    $FKGlobal = filter_var($FKGlobal, FILTER_SANITIZE_NUMBER_INT);
+    $projectCoordinator = mysqli_real_escape_string($link, $projectCoordinator);
+    $phoneDirect = mysqli_real_escape_string($link, $phoneDirect);
+    $mobile = mysqli_real_escape_string($link, $mobile);
+    $emailDirect = mysqli_real_escape_string($link, $emailDirect);
+    $description = mysqli_real_escape_string($link, $description);
     
     $sql= 'INSERT INTO ProjectAddresslist (Fk_IdProject, FK_IdGlobalAddress, ProjectCoordinator,
         PhoneDirect, MobileNumber, EmailDirect, Description) VALUES ('.$projectID.','.$FKGlobal.',"'
@@ -144,6 +151,9 @@ function newProjectAddress($projectID, $FKGlobal, $projectCoordinator, $phoneDir
 }
 
 function getIdGlobal($company, $addressline1){
+    $company = mysqli_real_escape_string($link, $company);
+    $addressline1 = mysqli_real_escape_string($link, $addressline1);
+    
     $sql= 'SELECT IdGlobalAddress from GlobalAddresslist WHERE Company="'.$company.'"';
     return $sql;
 }
@@ -160,6 +170,8 @@ function getGlobalAddress($id){
 }
 
 function checkGlobalAddress($company){
+    $company = mysqli_real_escape_string($link, $company);
+    
     $status=true;
     $link= connectDB();
     $sql= 'SELECT Company from GlobalAddresslist';
@@ -175,6 +187,8 @@ function checkGlobalAddress($company){
 }
 
 function getProjectAddress($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT p.IdProjectAddress, p.ProjectCoordinator, p.PhoneDirect, p. MobileNumber, p.EmailDirect, 
         p.Description, g.BKP, g.Company, g.Addressline1, g.Addressline2, g.ZIP, g.City,
         g.Country, g.Email, g.PhoneNumber, g.Homepage FROM ProjectAddresslist as p JOIN
@@ -184,6 +198,13 @@ function getProjectAddress($id){
 }
 
 function updateProjectAddress($id, $projectCoordinator, $phoneDirect, $mobileNumber, $emailDirect, $description){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    $projectCoordinator = mysqli_real_escape_string($link, $projectCoordinator);
+    $phoneDirect = mysqli_real_escape_string($link, $phoneDirect);
+    $mobileNumber = mysqli_real_escape_string($link, $mobileNumber);
+    $emailDirect = mysqli_real_escape_string($link, $emailDirect);
+    $description = mysqli_real_escape_string($link, $description);
+    
     $sql= 'UPDATE ProjectAddresslist SET Projectcoordinator= "'.$projectCoordinator.'", PhoneDirect="'.$phoneDirect.
             '", MobileNumber="'.$mobileNumber.'", EmailDirect="'.$emailDirect.'", Description="'.$description.'" WHERE
                 IdProjectAddress="'.$id.'"';
@@ -191,6 +212,8 @@ function updateProjectAddress($id, $projectCoordinator, $phoneDirect, $mobileNum
 }
 
 function deleteProjectAddress($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'DELETE FROM ProjectAddresslist WHERE IdProjectAddress="'.$id.'"';
     return $sql;
 }
@@ -199,22 +222,44 @@ function deleteProjectAddress($id){
  * Timeline
  */
 function addPostwithIMG($idProject,$idVisible, $hashName, $orgName, $path, $title, $content, $date, $time){
+    $idProject = filter_var($idProject, FILTER_SANITIZE_NUMBER_INT);
+    $idVisible = filter_var($idVisible, FILTER_SANITIZE_NUMBER_INT);
+    $hashName = mysqli_real_escape_string($link, $hashName);
+    $orgName = mysqli_real_escape_string($link, $orgName);
+    // $path = mysqli_real_escape_string($link, $path);
+    $title = mysqli_real_escape_string($link, $title);
+    $content = mysqli_real_escape_string($link, $content);
+   // $date = 
+    // $time =
     $sql= "INSERT INTO Timeline (Fk_IdProject, Id_visible, HashName, OrgName, Path, Title, Date, Time, Description) VALUES
         ('$idProject', '$idVisible', '$hashName', '$orgName', '$path', '$title', '$date', '$time', '$content')";
     return $sql;
 }
 
 function selectPosts($projectID){
+     $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
     $sql= 'SELECT IdTimeline, Id_visible, HashName, Path, Title, Date, Time, Description FROM Timeline WHERE Fk_IdProject="'.$projectID.'" ORDER BY Date DESC, Time DESC';
     return $sql;
 }
 
 function selectPostbyID($postID){
+     $postID = filter_var($postID, FILTER_SANITIZE_NUMBER_INT);
+     
     $sql= 'SELECT IdTimeline, Id_visible, HashName, OrgName, Path, Title, Date, Time, Description FROM Timeline WHERE IdTimeline="'.$postID.'"';
     return $sql;
 }
 
 function updatePost($postID, $idVisible, $hashName, $orgName, $path, $title, $date, $time, $description){
+    $postID = filter_var($postID, FILTER_SANITIZE_NUMBER_INT);
+    $idVisible = filter_var($idVisible, FILTER_SANITIZE_NUMBER_INT);
+    $hashName = mysqli_real_escape_string($link, $hashName);
+    $orgName = mysqli_real_escape_string($link, $orgName);
+    //path
+    $title = mysqli_real_escape_string($link, $title);
+    //$date
+    // $time
+    $description = mysqli_real_escape_string($link, $description);
+    
     $sql= 'UPDATE Timeline SET Id_visible="'.$idVisible.'", HashName="'.$hashName.'", Orgname="'.$orgname.'",
      Path="'.$path.'", Title="'.$title.'", Date="'.$date.'", Time="'.$time.'", 
      Description="'.$description.'" WHERE IdTimeline="'.$postID.'"';
@@ -222,11 +267,15 @@ function updatePost($postID, $idVisible, $hashName, $orgName, $path, $title, $da
 }
 
 function selectPostIMG($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT HashName, Path FROM Timeline WHERE IdTimeline='.$id;
     return $sql;
 }
 
 function deletePost($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'DELETE FROM Timeline WHERE IdTimeline='.$id;
     return $sql;
 }
@@ -236,21 +285,19 @@ function deletePost($id){
  * SIA Baujournal
  */
 function getProjectDates($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT Fk_IdArchitect, Fk_IdBauherr, ProjectNumber, Title, Addressline1, Addressline2, ZIP, City,
             Country, Description, Picture FROM Project WHERE IdProject='.$id;
     return $sql;
 }
 
 function selectPostbyDate($projectID, $date){
+    $projectID = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
+    // $date
     $sql= 'SELECT IdTimeline, Id_visible, HashName, OrgName, Path, Title, Date, Time, Description FROM Timeline WHERE Fk_IdProject="'.$projectID.'" AND Date="'.$date.'"';
     return $sql;
 }
-
-
-
-
-
-
 
 
 /*
@@ -262,6 +309,8 @@ function allContentProductsite(){
 }
 
 function selectImages($idHTML){
+    $idHTML = filter_var($idHTML, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT Filename, Comment FROM ProductsiteImages WHERE IdHTML='.$idHTML.' AND Active= 1';
     return $sql;
 }
@@ -271,11 +320,16 @@ function selectImages($idHTML){
  * Redaktionssystem
  */
 function allContentOfIdHTML($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql='SELECT Title, Content, InputType, Date, Time, Description FROM Productsite WHERE IdHTML='.$id;
     return $sql;
 }
 
 function saveToDB($title, $content){
+    $title = mysqli_real_escape_string($link, $content);
+    $content = mysqli_real_escape_string($link, $content);
+    
     $date = date("Y-m-d");
     $time = date("H:i:s");
     $sql= 'UPDATE Productsite SET Content ="'.$content.'", Date="'.$date.'", Time="'.$time.'" WHERE Title= "'.$title.'"';
@@ -283,11 +337,19 @@ function saveToDB($title, $content){
 }
 
 function allImagesOfIdHTML($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql='SELECT Date, Time, Orgname, Path, ID, Filename, Comment, Active FROM ProductsiteImages WHERE IdHTML='.$id;
     return $sql;
 }
 
 function saveImageToDB($orgname, $comment, $file, $uploaddir, $select){
+    $orgname = mysqli_real_escape_string($link, $orgname);
+    $comment = mysqli_real_escape_string($link, $comment);
+    // $file
+    // $uploaddir
+    $select = filter_var($select, FILTER_SANITIZE_NUMBER_INT);
+    
     $date = date("Y-m-d");
     $time = date("H:i:s");
     $sql= "INSERT INTO ProductsiteImages(Date, Time, Orgname, Comment, Filename, Path, IdHTML) VALUES
@@ -296,21 +358,29 @@ function saveImageToDB($orgname, $comment, $file, $uploaddir, $select){
 }
 
 function deleteImage($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'DELETE FROM ProductsiteImages WHERE ID='.$id;
     return $sql;
 }
 
 function selectFilename($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'SELECT Filename, Path FROM ProductsiteImages WHERE ID='.$id;
     return $sql;
 }
 
 function updateImageStatus($id){
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql='UPDATE ProductsiteImages SET Active= 1 WHERE ID= '.$id;
     return $sql;
 }
 
 function setAllActiveNull($idHTML){
+    $idHTML = filter_var($idHTML, FILTER_SANITIZE_NUMBER_INT);
+    
     $sql= 'UPDATE ProductsiteImages SET Active= 0 WHERE IdHTML= '.$idHTML;
     return $sql;
 }
