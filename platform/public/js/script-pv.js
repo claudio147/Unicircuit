@@ -1,7 +1,22 @@
 /*
  ******************** Projektverwaltung *******
 */
-
+function formCheck() {
+      if (document.createProject.ProjectNumber.value === "") {
+          document.getElementByClass("1").className = "form-control";
+          alert('Test');
+          return false;
+      }  
+      if (document.createProject.Title.value === "") {
+          alert('Test Title');
+          document.createProject.Title.className= "control-label";
+          return false;
+      }
+      if (document.createProject.Addressline1.value === "") {
+          document.createProject.Addressline1.className= "control-label";
+          return false;
+      }
+    }
 
 $(document).ready(function(){
     
@@ -33,5 +48,6 @@ $(document).ready(function(){
             $('#editContainer_storage').html(data);
         })  
     });
-})
+});
+
 
