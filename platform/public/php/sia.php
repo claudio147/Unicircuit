@@ -12,7 +12,7 @@ $link=connectDB();
     
     
 //PDF Generator
-if(isset($_POST['submit'])){
+if(isset($_POST['submit']) && isset($_POST['date'])){
     
     //Variablen Definitionen
     $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
@@ -162,7 +162,7 @@ if(isset($_POST['submit'])){
         $exist=false;
         $img;
         while($row= mysqli_fetch_array($result)){
-            if($row[HashName]!='placeholder.png'){
+            if($row['HashName']!='placeholder.png'){
                 $exist=true;
                 if($count==1){
                     if($y<215){
@@ -177,7 +177,7 @@ if(isset($_POST['submit'])){
                         $count++;
                     }
                     
-                }else{
+                }else if($row['HashName']!= NULL){
                     $img= $row['Path'].$row['HashName'];
                     $pdf->Image($img,125,$y,65);
                     $pdf->ln();
