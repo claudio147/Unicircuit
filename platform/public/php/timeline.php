@@ -311,27 +311,42 @@ $result = mysqli_query($link, $sql);
 echo'<div class="container timeline-container">';
 // Ausgabe Timeline
 while($row= mysqli_fetch_array($result)){
-    $date = date('d.m.Y', strtotime($row['Date']));
-    $time= substr($row['Time'],0,5);
-    if($row['Id_visible']==1){
-        $lock='<i class="fa fa-lock"></i>';
-    }else{
-        $lock='';
-    }
-    echo'<div class="post row">';
+    //Architekt sieht alle
     if($usertyp==2){
-        echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';
-    }else{
-        echo'<h3>'.$row['Title'].'</h3>';
-    }    
-    echo'<p class="date">'.$date.', '.$time.'</p>';
-    echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
-    echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
-    echo'</div>';
-    echo'<div class="col-sm-6">';
-    echo'<p>'.$row['Description'].'</p>';
-    echo'</div>';
-    echo'</div>';
+        $date = date('d.m.Y', strtotime($row['Date']));
+        $time= substr($row['Time'],0,5);
+        if($row['Id_visible']==1){
+            $lock='<i class="fa fa-lock"></i>';
+        }else{
+            $lock='';
+        }
+        echo'<div class="post row">';
+        echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';  
+        echo'<p class="date">'.$date.', '.$time.'</p>';
+        echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
+        echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
+        echo'</div>';
+        echo'<div class="col-sm-6">';
+        echo'<p>'.$row['Description'].'</p>';
+        echo'</div>';
+        echo'</div>';
+    
+    //Bauherr sieht nur Einträge für ihn    
+    }else if($usertyp==3 && $row['Id_visible']==2){
+        $date = date('d.m.Y', strtotime($row['Date']));
+        $time= substr($row['Time'],0,5);
+        echo'<div class="post row">';
+        echo'<h3>'.$row['Title'].'</h3>';   
+        echo'<p class="date">'.$date.', '.$time.'</p>';
+        echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
+        echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
+        echo'</div>';
+        echo'<div class="col-sm-6">';
+        echo'<p>'.$row['Description'].'</p>';
+        echo'</div>';
+        echo'</div>';
+    }
+    
 }
 echo'</div>';
 echo'</div>';
