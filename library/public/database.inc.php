@@ -348,7 +348,7 @@ function allContentOfIdHTML($id){
 function saveToDB($title, $content){
     global $link;
     
-    $title = mysqli_real_escape_string($link, $content);
+    $title = mysqli_real_escape_string($link, $title);
     $content = mysqli_real_escape_string($link, $content);
     
     $date = date("Y-m-d");

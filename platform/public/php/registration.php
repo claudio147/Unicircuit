@@ -38,70 +38,60 @@ if (isset($_POST['submit'])) {
 
   // Fehler im Eingabefeld?
   if (empty($fn) || strlen($fn) < 2) {
-    echo 'error firstname';
     $errorFN = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($ln) || strlen($ln) < 2) {
-    echo 'error lastname';
     $errorLN = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($co) || strlen($co) < 2) {
-    echo 'error company';
     $errorCO = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($a1) || strlen($a1) < 5) {
-    echo 'error adressline1';
     $errorA1 = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($zip) || strlen($zip) < 4) {
-    echo 'error zip';
     $errorZIP = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($ci) || strlen($ci) < 4) {
-    echo 'error city';
     $errorCi = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($cn) || strlen($cn) < 2) {
-    echo 'error country';
     $errorCn = true;
     $error = true;
   }
   
   // Fehler im Eingabefeld?
   if (empty($pn) || strlen($pn) < 2) {
-    echo 'error PhoneNumber';
     $errorPN = true;
     $error = true;
   }
 
   // Mailadresse korrekt?
   if (!checkMailFormat($em)) {
-    echo 'error email';
     $errorEM = true;
     $error = true;
   }
 
   // Passworte identisch
   if (($p1 != $p2) || (strlen($p1) < 8)) {
-    echo 'error password';
     $errorPW = true;
     $error = true;
   }
@@ -149,96 +139,152 @@ if (isset($_POST['submit'])) {
     echo $sql;
     if($status == true){
         createArchRegMail($fn, $ln, $em);
-        // header('location:registration.php');
-    }else
-    {
-    echo '<p> Datensatz konnte nicht erzeugt werden</p>';
+        $response=0;
+    }else{
+        $response=1;
     }
     mysqli_close($link);
-
-      
-  } else {
-      echo 'Sie sind schon angemeldet, warten Sie auf Ihre Freischaltung.';
+  }else{
+      $response=2;
   }
+}else{
+  $response=3;
 }
 }
 //Registrationsformular
 ?>
 
-
-
-
-<form action="registration.php" method="post">
-    <table border="0" width="600">
-   <tr>
-   <td width="200">Vorname: </td>
-   <td width="200"><input type="text" name="firstname" value="<?php echo $fn; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">Nachname: </td>
-   <td width="200"><input type="text" name="lastname" value="<?php echo $ln; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">Firma: </td>
-   <td width="200"><input type="text" name="company" value="<?php echo $co; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">Strasse & Hausnummer: </td>
-   <td width="200"><input type="text" name="adressline1" value="<?php echo $a1; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">Adresszeile 2: </td>
-   <td width="200"><input type="text" name="adressline2" value="<?php echo $a2; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">PLZ: </td>
-   <td width="200"><input type="text" name="zip" value="<?php echo $zip; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">Ort: </td>
-   <td width="200"><input type="text" name="city" value="<?php echo $ci; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">Land: </td>
-   <td width="200"><input type="text" name="country" value="<?php echo $cn; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">E-Mail: </td>
-   <td width="200"><input type="text" name="email" value="<?php echo $em; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">Telefon Nummer: </td>
-   <td width="200"><input type="text" name="PhoneNumber" value="<?php echo $pn; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <tr>
-   <td width="200">Mobile Nummer: </td>
-   <td width="200"><input type="text" name="MobileNumber" value="<?php echo $mn; ?>"></td>
-   <td>&nbsp;</td>
-  </tr>
-  <td>Passwort: </td>
-  <td><input type="password" name="password1" id="p1" value="<?php echo $p1; ?>"></td>
-   <td>&nbsp;</td>
-  </tr> 
-  <tr>
-   <td>Passwort erneut eingeben: </td>
-   <td><input type="password" name="password2" id="p2" value="<?php echo $p2; ?>"></td>
-   <td></td>
-  </tr>
-  <tr>
-   <td>&nbsp;</td>
-   <td colspan="2"><input type="submit" name="submit"></td>
-  </tr>
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
         
-    </table>
-</form>
-<div id="ergebnis"></div>
+        <title>Registration Unicircuit</title>
+        
+        <!-- CSS 3rd Party -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <style>
+            body{
+                background-color: #373d42;
+            }
+
+            .registration-container{
+                background-color: #f0f0f0;
+                margin-bottom: 50px;
+                padding: 30px;
+                position: relative;
+                -webkit-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+                -moz-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+                box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+            }
+
+            #btn-reg:hover{
+                background-color: #9fcd35;
+            }
+
+            .registration-title{
+                margin-top: 0px;
+                margin-bottom: 20px;
+                font-size: 30px;
+            }
+            .brand{
+                letter-spacing: 1px;
+                font-size: 48px;
+                margin-top: 60px;
+                margin-bottom: 60px;
+                text-align: center;
+                text-transform: uppercase;
+                font-weight: bold;
+                color: #9fcd35;
+            }
+            .alert>i{
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <form action="registration.php" method="post">
+                    <h1 class="brand">Unicircuit</h1>
+                    <?php
+                    if(isset($response)){
+                            $response;
+                            if($response==0){
+                                echo'<br/><div class="alert alert-success col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Besten Dank für Ihre Registrierung! Wir benachrichtigen Sie bei Freischaltung.</div>';
+                            }else if($response==1){
+                                echo'<br/><div class="alert alert-danger col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Registration fehlgeschlagen!</div>';
+                            }else if($response==2){
+                                echo'<br/><div class="alert alert-danger col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie sind bereits registriert. Bitte warten Sie auf Ihre Freigabe.</div>';
+                            }else if($response==3){
+                                echo'<br/><div class="alert alert-danger col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Registration fehlgeschlagen. Bitte eingaben überprüfen.</div>';
+                            }
+                        }
+
+                    ?>
+                    <div class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 registration-container">
+                        <h2 class="registration-title">Registration</h2>
+
+                        <label for="1">Vorname</label>
+                        <input id="1" class="form-control" type="text" name="firstname" value="<?php echo $fn; ?>">
+                        <label for="2">Nachname</label>
+                        <input id="2" class="form-control" type="text" name="lastname" value="<?php echo $ln; ?>">
+                        <label for="3">Firma</label>
+                        <input id="3" class="form-control" type="text" name="company" value="<?php echo $co; ?>">
+                        <label for="4">Strasse und Nr.</label>
+                        <input id="4" class="form-control" type="text" name="adressline1" value="<?php echo $a1; ?>">
+                        <label for="5">Adresszusatz</label>
+                        <input id="5" class="form-control" type="text" name="adressline2" value="<?php echo $a2; ?>">
+                        <div class="row">
+                          <div class="col-xs-2">
+                            <label for="6">PLZ</label>
+                            <input id="6" type="text" name="zip" value="<?php echo $zip; ?>" class="form-control">
+                          </div>
+                          <div class="col-xs-10">
+                            <label for="7">Ort</label>
+                            <input id="7" type="text" name="city" value="<?php echo $ci; ?>" class="form-control">
+                          </div>
+                        </div>
+                        <label for="8">Land</label>
+                        <select id="8" name="country" class="form-control">
+                            <?php 
+                            $link=connectDB();
+                            //Liste mit Ländern aus der Datenbank
+                            $sql = "SELECT Country FROM Countries";
+                            $resultC = mysqli_query($link, $sql);
+                                while($rowC= mysqli_fetch_array($resultC)){
+                                echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
+                            }?>
+                        </select>
+                        <label for="9">Email</label>
+                        <input id="9" class="form-control" type="text" name="email" value="<?php echo $em; ?>">
+                        <label for="10">Telefon</label>
+                        <input id="10" class="form-control" type="text" name="PhoneNumber" value="<?php echo $pn; ?>">
+                        <label for="11">Mobil</label>
+                        <input id="11" class="form-control" type="text" name="MobileNumber" value="<?php echo $mn; ?>">
+                        <label for="12">Passwort</label>
+                        <input id="12" class="form-control" type="password" name="password1" id="p1" value="<?php echo $p1; ?>">
+                        <label for="13">Passwort wiederholen</label>
+                        <input id="13" class="form-control" type="password" name="password2" id="p2" value="<?php echo $p2; ?>">
+                        <br/><input id="btn-reg" class="btn btn-default" type="submit" name="submit">
+
+
+
+
+                    </div>
+                </form>    
+            </div>
+            
+        </div>
+
+        <!-- JS 3rd Party -->
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+    </body>
+</html>

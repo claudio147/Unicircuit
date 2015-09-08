@@ -130,6 +130,9 @@ if (isset($_POST['submit'])) {
             #signin-btn>input{
                 margin-right: 30px;
             }
+            #signin-btn>input:hover{
+                background-color: #9fcd35;
+            }
             .email{
                 margin-bottom: 10px;
             }
