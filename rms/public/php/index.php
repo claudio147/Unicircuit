@@ -71,8 +71,8 @@ $lnCust=$row['Lastname'];
     <!-- CSS 3rd Party -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
-    <link href="../css/dataTable.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+    <!--<link href="../css/dataTable.css" rel="stylesheet">-->
 
     <!-- CSS spezifisch -->
     <link href="../css/style.css" rel="stylesheet">
@@ -206,20 +206,22 @@ $lnCust=$row['Lastname'];
     <script src="../js/bootstrap.min.js"></script>
 
     <!-- Timeline -->
-    <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+    <!--<script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>-->
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js"></script>
     
 
     <!-- Adressliste -->
     <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>-->
-    <script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>
+    <!--<script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>-->
 
-    <script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js"></script>
+    <!--<script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js"></script>-->
     <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>-->
     <!-- Gallery -->
 
     <!-- Überschreibt URL -->
    
-    <script src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/script.js"></script>
 
 
 

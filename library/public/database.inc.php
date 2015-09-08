@@ -73,7 +73,7 @@ function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $t
 }
 // Holt alle Daten der User in der Datenbank
 function allUserData() {
-    $sql = 'SELECT Firstname, Lastname, Company, ZIP, Country, PhoneNumber, 
+    $sql = 'SELECT Fk_IdUserType, Firstname, Lastname, Company, ZIP, Country, PhoneNumber, 
             MobileNumber, Email, RegCode, LastLoginDate, LastLoginTime, IdUser, Active FROM User';
     return $sql;
 }
