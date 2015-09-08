@@ -186,9 +186,7 @@ if (isset($_POST['submit'])) {
             #btn-reg:hover{
                 background-color: #9fcd35;
             }
-            .email{
-                margin-bottom: 10px;
-            }
+
             .registration-title{
                 margin-top: 0px;
                 margin-bottom: 20px;
