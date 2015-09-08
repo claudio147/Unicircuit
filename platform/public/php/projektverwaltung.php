@@ -356,27 +356,37 @@ $lnCust=$row['Lastname'];
                                         <div id="input_container">
                                            <!-- Projektspezifische Angaben --> 
                                             <h4>Daten Projekt</h4>
-                                            <div class="1">
-                                            <label for="1">Projektnummer*</label>
+                                            <div id="ProNumb">
+                                            <label for="1" class="control-label">Projektnummer*</label>
                                             <input id="1" type="text" name="ProjectNumber" class="form-control">
                                             </div>
-                                            <label for="2">Projektbezeichnung</label>
+                                            <div id="Title">
+                                            <label for="2" class="control-label">Projektbezeichnung</label>
                                             <input id="2" type="text" name="Title" class="form-control">
-                                            <label for="3">Strasse</label>
+                                            </div>
+                                            <div id="Address1">
+                                            <label for="3" class="control-label">Strasse</label>
                                             <input id="3" type="text" name="Addressline1" class="form-control">
-                                            <label for="4">Addresszeile 2</label>
+                                            </div>
+                                            <div id="Address2">
+                                            <label for="4" class="control-label">Addresszeile 2</label>
                                             <input id="4" type="text" name="Addressline2" class="form-control">
+                                            </div>
                                             <div class="row">
                                                 <div class="col-xs-2">
-                                                    <label for="5">PLZ</label>
+                                                    <div id="ZIP">
+                                                    <label for="5" class="control-label">PLZ*</label>
                                                     <input id="5" type="text" name="ZIP" class="form-control">
+                                                    </div>
                                                 </div>
                                                 <div class="col-xs-10">
-                                                    <label for="6">Ort</label>
+                                                    <div id="City">
+                                                    <label for="6" class="control-label">Ort*</label>
                                                     <input id="6" type="text" name="City" class="form-control">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <label for="7">Land</label>
+                                            <label for="7">Land*</label>
                                             <select id="7" name="Country" class="form-control">
                                                 <?php 
                                                 //Liste mit Ländern aus der Datenbank
@@ -386,30 +396,44 @@ $lnCust=$row['Lastname'];
                                                     echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
                                                 }?>
                                             </select>
-                                            <label for="8">Projektbeschrieb</label>
+                                            <div id="Description">
+                                            <label for="8" class="control-label">Projektbeschreib</label>
                                             <textarea id="8" name="Description" class="form-control"></textarea>
+                                            </div>
                                             <label for="upload">Projektbild</label>
                                             <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
                                             <input id="upload" type="file" name="userfile"/>
                                             <!-- Bauherren Daten, zur erstellung Bauherr -->
                                             <hr/>
                                             <h4>Daten Bauherr</h4>
-                                            <label for="9">Vorname</label>
+                                            <div id="BhFn">
+                                            <label for="9" class="control-label">Vorname*</label>
                                             <input id="9" type="text" name="BhFirstname" class="form-control">
-                                            <label for="10">Nachname</label>
+                                            </div>
+                                            <div id="BhLn">
+                                            <label for="10" class="control-label">Nachname*</label>
                                             <input id="10" type="text" name="BhLastname" class="form-control">
-                                            <label for="11">Strasse</label>
+                                            </div>
+                                            <div id="BhAddress1">
+                                            <label for="11" class="control-label">Strasse*</label>
                                             <input id="11" type="text" name="BhAddressline1" class="form-control">
-                                            <label for="12">Adresszeile 2</label>
+                                            </div>
+                                            <div id="BhAddress2">
+                                            <label for="12" class="control-label">Adresszeile 2</label>
                                             <input id="12" type="text" name="BhAddressline2" class="form-control">
+                                            </div>
                                             <div class="row">
                                                 <div class="col-xs-2">
-                                                    <label for="13">PLZ*</label>
+                                                    <div id="BhZIP">
+                                                    <label for="13" class="control-label">PLZ*</label>
                                                     <input id="13" type="text" name="BhZIP" class="form-control">
+                                                    </div>
                                                 </div>
                                                 <div class="col-xs-10">
-                                                    <label for="14">Ort*</label>
+                                                    <div id="BhCity">
+                                                    <label for="14" class="control-label">Ort*</label>
                                                     <input id="14" type="text" name="BhCity" class="form-control">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <label for="15">Land</label>
@@ -422,12 +446,18 @@ $lnCust=$row['Lastname'];
                                                     echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
                                                 }?>
                                             </select>
-                                            <label for="16">Telefonnummer</label>
+                                            <div id="BhPhNu">
+>                                            <label for="16" class="control-label">Telefonnummer</label>
                                             <input id="16" type="text" name="BhPhoneNumber" class="form-control">
-                                            <label for="17">Mobile Nummer</label>
+                                            </div>
+                                            <div id="BhMoNu">
+                                            <label for="17" class="control-label">Mobile Nummer</label>
                                             <input id="17" type="text" name="BhMobileNumber" class="form-control">
-                                            <label for="18">Email</label>
+                                            </div>
+                                            <div id="BhEmail">
+                                            <label for="18" class="control-label">Email*</label>
                                             <input id="18" type="email" name="BhEmail" class="form-control">
+                                            </div>
                                             
                                         </div>       
                                     </div>

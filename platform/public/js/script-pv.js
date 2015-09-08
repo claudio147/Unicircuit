@@ -1,22 +1,94 @@
 /*
  ******************** Projektverwaltung *******
 */
-function formCheck() {
+
+    function formCheck() {
+        var error = true;
+        //überprüft ob das Feld leer ist oder nicht, dementsprechend ändert es die class des eltern div.
       if (document.createProject.ProjectNumber.value === "") {
-          document.getElementByClass("1").className = "form-control";
-          alert('Test');
-          return false;
-      }  
-      if (document.createProject.Title.value === "") {
-          alert('Test Title');
-          document.createProject.Title.className= "control-label";
-          return false;
+           var element = document.getElementById("ProNumb");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      }  else {
+          var element = document.getElementById("ProNumb");
+          element.className = "";
       }
-      if (document.createProject.Addressline1.value === "") {
-          document.createProject.Addressline1.className= "control-label";
-          return false;
+      if (document.createProject.ZIP.value === "") {
+          var element = document.getElementById("ZIP");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      } else {
+          var element = document.getElementById("ZIP");
+          element.className = "";
       }
+      if (document.createProject.City.value === "") {
+          var element = document.getElementById("City");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      } else {
+          var element = document.getElementById("City");
+          element.className = "";
+      }
+      if (document.createProject.BhFirstname.value === "") {
+          var element = document.getElementById("BhFn");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      } else {
+          var element = document.getElementById("BhFn");
+          element.className = "";
+      }
+      if (document.createProject.BhLastname.value === "") {
+          var element = document.getElementById("BhLn");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      } else {
+          var element = document.getElementById("BhLn");
+          element.className = "";
+      }
+      if (document.createProject.BhAddressline1.value === "") {
+          var element = document.getElementById("BhAddress1");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      } else {
+          var element = document.getElementById("BhAddress1");
+          element.className = "";
+      }
+      if (document.createProject.BhZIP.value === "") {
+          var element = document.getElementById("BhZIP");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      } else {
+          var element = document.getElementById("BhZIP");
+          element.className = "";
+      }
+      if (document.createProject.BhCity.value === "") {
+          var element = document.getElementById("BhCity");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      } else {
+          var element = document.getElementById("BhCity");
+          element.className = "";
+      }
+      if (document.createProject.BhEmail.value === "") {
+          var element = document.getElementById("BhEmail");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      } else {
+          var element = document.getElementById("BhEmail");
+          element.className = "";
+      }
+      return error;
     }
+
 
 $(document).ready(function(){
     
@@ -48,6 +120,8 @@ $(document).ready(function(){
             $('#editContainer_storage').html(data);
         })  
     });
+    
+
 });
 
 
