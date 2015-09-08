@@ -647,3 +647,34 @@ button.deadline-btn-show:focus{
 #schedule-pdf{
     margin-top: 15px;
 }
+
+
+
+
+
+
+/*
+**************** RMS
+*/
+h1.navbar-title-rms{
+    margin-left: 70px !important;
+}
+//Bildupload Homepage
+.img-upload{
+    margin-bottom: 15px;
+}
+
+.td-img{
+    max-height: 80px;
+    max-width: 120px;
+}
+
+.img-list{
+    margin-top: 15px !important;
+}
+
+.navbar-brand,
+.navbar-brand:hover{
+    font-weight: bold;
+    color: #9fcd35 !important;
+}

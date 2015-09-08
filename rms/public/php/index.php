@@ -76,6 +76,7 @@ $lnCust=$row['Lastname'];
 
     <!-- CSS spezifisch -->
     <link href="../css/style.css" rel="stylesheet">
+    
     <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
     <script>tinymce.init({
             selector:'textarea#2',
@@ -103,7 +104,7 @@ $lnCust=$row['Lastname'];
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">ARCHCONSULTING</a>
-                <h1 class="navbar-text">Redaktionssystem</h1>
+                <h1 class="navbar-text navbar-title-rms">Redaktionssystem</h1>
             </div>
 
             <!-- Top Menu -->
@@ -177,7 +178,7 @@ $lnCust=$row['Lastname'];
                             include ('imageupload.php');
                             break;
                         case 3:
-                            include ('schedule.php');
+                            include ('userverwaltung.php');
                             break;
                         case 4:
                             include ('events.php');
