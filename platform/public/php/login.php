@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
     $sql = selectUser($email, $pw);
     $result = mysqli_query($link, $sql);
     $row = mysqli_fetch_array($result);
-    if($row['Active'] != 3 && !empty($row['IdUser'])) {
+    if($row['Active'] !=3 && !empty($row['IdUser'])) {
         $status=0;
         //echo '<p style="font-color:red; font-weight:bold">Sie sind noch nicht aktiviert oder sind gesperrt.</p>';
         
@@ -173,10 +173,10 @@ if (isset($_POST['submit'])) {
                 </form>    
             </div>
             <?php
-            if(!empty($status)){
+            if(isset($status)){
                     $status;
                     if($status==0){
-                        echo'<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie sind noch nicht aktiviert oder gesperrt.</div>';
+                        echo'<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie sind noch nicht aktiviert oder gesperrt.<br/>Bitte wenden Sie sich an die Hotline der Archconsulting.</div>';
                     }else if($status==1){
                         echo'<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Falscher Benutzername oder Passwort!</div>';
                     }

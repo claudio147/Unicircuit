@@ -1,6 +1,6 @@
-// DOCUMENT READY      
+// DOCUMENT READY
 $(document).ready(function(){
-    
+
     $('#table-user-list').DataTable({
         "scrollY":        "450px",
         "scrollCollapse": true,
@@ -12,10 +12,11 @@ $(document).ready(function(){
             infoFiltered: "(User gesamt: _MAX_)"
         },
     });
-    
-  //Lokale Adressliste (mit Export-Funktion)
-    /*$('#userverwaltung').DataTable({
-        "scrollY":        "450px",
+
+
+    //Adressliste (mit Export-Funktion)
+    $('#addresslist-rms').DataTable({
+        "scrollY":        "550px",
         "scrollCollapse": true,
         "paging":         false,
         fixedHeader: false,
@@ -30,15 +31,21 @@ $(document).ready(function(){
         buttons: [
             'excelHtml5',
             'csvHtml5',
-        {
-            extend: 'pdfHtml5', //PDF Funktion
-            message: today,
-            title: 'Projektadressliste',
-        }
         ]
-    });*/ 
-    
-    
-    
-    
+    });
+
+
+    //Ajax Loader für Inhalt in Lightbox bei bearbeiten
+    $('.btn-user-details').click(function(){
+        var id= $(this).val();
+
+        $.post('../php/ajax-rms.php', {"showUserDetails":id},function(data){
+            $('#userDetails').html(data);
+        }) 
+    });
+
+
+
+
+
 })

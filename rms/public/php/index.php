@@ -12,7 +12,7 @@ $link= connectDB();
 //Usertyp wird ermittelt (falls vorhanden)
 /*if(isset($_SESSION['UserType'])){
     $usertyp= $_SESSION['UserType']; //1= Archconsulting //2= Architekt //3= Bauherr
-    
+
     if($usertyp!=2){
         //Usertyp ohne Berechtigung
         header('Location: login.php?denied=1');
@@ -181,7 +181,7 @@ $lnCust=$row['Lastname'];
                             include ('userverwaltung.php');
                             break;
                         case 4:
-                            include ('events.php');
+                            include ('addresslist.php');
                             break;
                         default:
                             echo'<p>Error Loading Content</p>';
@@ -213,10 +213,10 @@ $lnCust=$row['Lastname'];
 
     <!-- Adressliste -->
     <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>-->
-    <!--<script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>-->
+    <script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>
 
-    <!--<script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js"></script>-->
-    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>-->
+    <script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
     <!-- Gallery -->
 
     <!-- Überschreibt URL -->

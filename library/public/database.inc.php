@@ -80,7 +80,8 @@ function allUserData() {
 // Holt Daten eines spezifischen Users anhand der ID
 function userData($id) {
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-    $sql = 'SELECT Firstname, Lastname, Email, RegCode FROM User WHERE IdUser = '. $id;
+    $sql = 'SELECT Fk_IdUserType, Firstname, Lastname, Company, Addressline1, Addressline2, ZIP, City, Country, Email,
+    PhoneNumber, MobileNumber, RegCode, SessionId, LastLoginTime, LastLoginDate, Active FROM User WHERE IdUser = '. $id;
      
      return $sql;
 }
@@ -98,6 +99,22 @@ function setActive3($id) {
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     $sql = 'UPDATE User SET Active = 3 WHERE RegCode = '. $id;
     
+    return $sql;
+}
+
+// Setzt Aktivierungsstand des gewählten Users auf 4(Gesperrt)
+function setActive4($id) {
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    $sql = 'UPDATE User SET Active = 4 WHERE IdUser = '. $id;
+
+    return $sql;
+}
+
+// Setzt Aktivierungsstand des gewählten Users auf 3(Reaktivierung)
+function reactivateUser($id) {
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    $sql = 'UPDATE User SET Active = 3 WHERE IdUser = '. $id;
+
     return $sql;
 }
 
@@ -166,7 +183,7 @@ function getIdGlobal($company, $addressline1){
 }
 
 function allGlobalAddress(){
-    $sql= 'SELECT IdGlobalAddress, BKP, Company, ZIP, City, PhoneNumber, Homepage from GlobalAddresslist';
+    $sql= 'SELECT IdGlobalAddress, BKP, Company, ZIP, City,Country, Email, PhoneNumber, Homepage from GlobalAddresslist';
     return $sql;
 }
 
