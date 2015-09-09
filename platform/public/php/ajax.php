@@ -27,49 +27,49 @@ if(isset($_POST['id'])){
 
         $data.= '<input type="hidden" name="idGlobalAddress" value="'.$id.'">
                 <h4>Firmendaten</h4>
-                <p>BKP*</p>
-                <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly" class="form-control">
-                <p>Firma*</p>
-                <input type="text" name="company" value="'.$company.'" readonly="readonly" class="form-control">
-                <p>Adresszeile 1*</p>
-                <input type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly" class="form-control">
-                <p>Adresszeile 2</p>
-                <input type="text" name="addressline2" value="'.$addressline2.'" readonly="readonly" class="form-control">
+                <label for="1">BKP*</label>
+                <input id="1" type="text" name="bkp" value="'.$bkp.'" readonly="readonly" class="form-control">
+                <label for="2">Firma*</label>
+                <input id="2" type="text" name="company" value="'.$company.'" readonly="readonly" class="form-control">
+                <label for="3">Adresszeile 1*</label>
+                <input id="3" type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly" class="form-control">
+                <label for="4">Adresszeile 2</label>
+                <input id="4" type="text" name="addressline2" value="'.$addressline2.'" readonly="readonly" class="form-control">
                 <div class="row">
                     <div class="col-xs-2">
-                        <p>PLZ*</p>
-                        <input type="text" name="zip" value="'.$zip.'" readonly="readonly" class="form-control">
+                        <label for="5">PLZ*</label>
+                        <input id="5" type="text" name="zip" value="'.$zip.'" readonly="readonly" class="form-control">
                     </div>
                     <div class="col-xs-10">
-                        <p>Ort*</p>
-                        <input type="text" name="city" value="'.$city.'" readonly="readonly" class="form-control">
+                        <label for="6">Ort*</label>
+                        <input id="6" type="text" name="city" value="'.$city.'" readonly="readonly" class="form-control">
                     </div>
                 </div>
-                <p>Land*</p>
-                <select name="country" class="form-control" readonly="readonly">
-                <option value="Schweiz" selected="selected">Schweiz</option>
-                <option value="Deutschland">Deutschland</option>
-                <option value="Österreich">Österreich</option>
-                <option value="Lichtenstein">Lichtenstein</option>
+                <label for="7">Land*</label>
+                <select id="7" name="country" class="form-control" readonly="readonly">
+                    <option value="Schweiz" selected="selected">Schweiz</option>
+                    <option value="Deutschland">Deutschland</option>
+                    <option value="Österreich">Österreich</option>
+                    <option value="Lichtenstein">Lichtenstein</option>
                 </select>
-                <p>Email (Hauptadresse)*</p>
-                <input type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
-                <p>Telefon (Hauptnummer)*</p>
-                <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly" class="form-control">
-                <p>Homepage*</p>
-                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly" class="form-control">
-                <br /><br />
+                <label for="8">Email (Hauptadresse)*</label>
+                <input id="8" type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
+                <label for="9">Telefon (Hauptnummer)*</label>
+                <input id="9" type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly" class="form-control">
+                <label for="10">Homepage*</label>
+                <input id="10" type="text" name="homepage" value="'.$homepage.'" readonly="readonly" class="form-control">
+                <hr/>
                 <h4>Direkte Kontaktdaten</h4>
-                <p>Ansprechpartner</p>
-                <input type="text" name="projectCoordinator" class="form-control">
-                <p>Email (Direkt)</p>
-                <input type="text" name="emailDirect" class="form-control">
-                <p>Telefon (Direkt)</p>
-                <input type="text" name="phoneDirect" class="form-control">
-                <p>Mobile (Direkt)</p>
-                <input type="text" name="mobileDirect" class="form-control">
-                <p>Notizen</p>
-                <textarea name="description" class="form-control" rows="3"></textarea>';
+                <label for="11">Ansprechpartner</label>
+                <input id="11" type="text" name="projectCoordinator" class="form-control">
+                <label for="12">Email (Direkt)</label>
+                <input id="12" type="text" name="emailDirect" class="form-control">
+                <label for="13">Telefon (Direkt)</label>
+                <input id="13" type="text" name="phoneDirect" class="form-control">
+                <label for="14">Mobile (Direkt)</label>
+                <input id="14" type="text" name="mobileDirect" class="form-control">
+                <label for="15">Notizen</label>
+                <textarea id="15" name="description" class="form-control" rows="3"></textarea>';
                 echo $data;
     }
 }
@@ -79,50 +79,49 @@ if(isset($_POST['new'])){
     $data= '';
 
         $data.= '<h4>Firmendaten</h4>
-                <p>BKP*</p>
-                <input type="text" name="bkp" class="form-control" maxlength="3">
-                <p>Firma*</p>
-                <input type="text" name="company" class="form-control">
-                <p>Adresszeile 1*</p>
-                <input type="text" name="addressline1" class="form-control">
-                <p>Adresszeile 2</p>
-                <input type="text" name="addressline2" class="form-control">
+                <label for="1">BKP*</label>
+                <input id="1" type="text" name="bkp" class="form-control" maxlength="3">
+                <label for="2">Firma*</label>
+                <input id="2" type="text" name="company" class="form-control">
+                <label for="3">Adresszeile 1*</label>
+                <input id="3" type="text" name="addressline1" class="form-control">
+                <label for="4">Adresszeile 2</label>
+                <input id="4" type="text" name="addressline2" class="form-control">
                 <div class="row">
                     <div class="col-xs-2">
-                        <p>PLZ*</p>
-                        <input type="text" name="zip" class="form-control" maxlength="4">
+                        <label for="5" >PLZ*</label>
+                        <input id="5" type="text" name="zip" class="form-control" maxlength="4">
                     </div>
                     <div class="col-xs-10">
-                        <p>Ort*</p>
-                        <input type="text" name="city" class="form-control">
+                        <label for="6">Ort*</label>
+                        <input id="6" type="text" name="city" class="form-control">
                     </div>
                 </div>
-                <p>Land*</p>
-                <select name="country" class="form-control">
+                <label for="7">Land*</label>
+                <select id="7" name="country" class="form-control">
                 <option value="Schweiz" selected="selected">Schweiz</option>
                 <option value="Deutschland">Deutschland</option>
                 <option value="Österreich">Österreich</option>
                 <option value="Lichtenstein">Lichtenstein</option>
                 </select>
-                <p>Email (Hauptadresse)*</p>
-                <input type="email" name="email" class="form-control">
-                <p>Telefon (Hauptnummer)*</p>
-                <input type="text" name="phoneNumber" class="form-control">
-                <p>Homepage*</p>
-                <input type="text" name="homepage" class="form-control">
-
-                <br /><br />
+                <label for="8">Email (Hauptadresse)*</label>
+                <input id="8" type="email" name="email" class="form-control">
+                <label for="9">Telefon (Hauptnummer)*</label>
+                <input id="9" type="text" name="phoneNumber" class="form-control">
+                <label for="10">Homepage*</label>
+                <input id="10" type="text" name="homepage" class="form-control">
+                <hr/>
                 <h4>Direkte Kontaktdaten</h4>
-                <p>Ansprechpartner</p>
-                <input type="text" name="projectCoordinator" class="form-control">
-                <p>Email (Direkt)</p>
-                <input type="text" name="emailDirect" class="form-control">
-                <p>Telefon (Direkt)</p>
-                <input type="text" name="phoneDirect" class="form-control">
-                <p>Mobile (Direkt)</p>
-                <input type="text" name="mobileDirect" class="form-control">
-                <p>Notizen</p>
-                <textarea name="description" class="form-control" rows="3"></textarea>';
+                <label for="11">Ansprechpartner</label>
+                <input id="11" type="text" name="projectCoordinator" class="form-control">
+                <label for="12">Email (Direkt)</label>
+                <input id=12" type="text" name="emailDirect" class="form-control">
+                <label for="13">Telefon (Direkt)</label>
+                <input id="13" type="text" name="phoneDirect" class="form-control">
+                <label for="14">Mobile (Direkt)</label>
+                <input id="14" type="text" name="mobileDirect" class="form-control">
+                <label for="15">Notizen</label>
+                <textarea id="15" name="description" class="form-control" rows="3"></textarea>';
                 echo $data;
 }
 
@@ -152,52 +151,51 @@ if(isset($_POST['edit'])){
         $emailDirect= $row['EmailDirect'];
         $description= $row['Description'];
 
-        $data.= '<input type="hidden" name="idProjectAddress" value="'.$id.'">
+        $data.= '<input type="hidden" name="idGlobalAddress" value="'.$id.'">
                 <h4>Firmendaten</h4>
-                <p>BKP*</p>
-                <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly" class="form-control">
-                <p>Firma*</p>
-                <input type="text" name="company" value="'.$company.'" readonly="readonly" class="form-control">
-                <p>Adresszeile 1*</p>
-                <input type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly" class="form-control">
-                <p>Adresszeile 2</p>
-                <input type="text" name="addressline2" value="'.$addressline2.'" readonly="readonly" class="form-control">
+                <label for="1">BKP*</label>
+                <input id="1" type="text" name="bkp" value="'.$bkp.'" readonly="readonly" class="form-control">
+                <label for="2">Firma*</label>
+                <input id="2" type="text" name="company" value="'.$company.'" readonly="readonly" class="form-control">
+                <label for="3">Adresszeile 1*</label>
+                <input id="3" type="text" name="addressline1" value="'.$addressline1.'" readonly="readonly" class="form-control">
+                <label for="4">Adresszeile 2</label>
+                <input id="4" type="text" name="addressline2" value="'.$addressline2.'" readonly="readonly" class="form-control">
                 <div class="row">
                     <div class="col-xs-2">
-                        <p>PLZ*</p>
-                        <input type="text" name="zip" value="'.$zip.'" readonly="readonly" class="form-control">
+                        <label for="5">PLZ*</label>
+                        <input id="5" type="text" name="zip" value="'.$zip.'" readonly="readonly" class="form-control">
                     </div>
                     <div class="col-xs-10">
-                        <p>Ort*</p>
-                        <input type="text" name="city" value="'.$city.'" readonly="readonly" class="form-control">
+                        <label for="6">Ort*</label>
+                        <input id="6" type="text" name="city" value="'.$city.'" readonly="readonly" class="form-control">
                     </div>
                 </div>
-                <p>Land*</p>
-                <select name="country" readonly="readonly" class="form-control">
-                <option value="Schweiz" selected="selected">Schweiz</option>
-                <option value="Deutschland">Deutschland</option>
-                <option value="Österreich">Österreich</option>
-                <option value="Lichtenstein">Lichtenstein</option>
+                <label for="7">Land*</label>
+                <select id="7" name="country" class="form-control" readonly="readonly">
+                    <option value="Schweiz" selected="selected">Schweiz</option>
+                    <option value="Deutschland">Deutschland</option>
+                    <option value="Österreich">Österreich</option>
+                    <option value="Lichtenstein">Lichtenstein</option>
                 </select>
-                <p>Email (Hauptadresse)*</p>
-                <input type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
-                <p>Telefon (Hauptnummer)*</p>
-                <input type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly" class="form-control">
-                <p>Homepage*</p>
-                <input type="text" name="homepage" value="'.$homepage.'" readonly="readonly" class="form-control">
-
-                <br /><br />
+                <label for="8">Email (Hauptadresse)*</label>
+                <input id="8" type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
+                <label for="9">Telefon (Hauptnummer)*</label>
+                <input id="9" type="text" name="phoneNumber" value="'.$phoneNumber.'" readonly="readonly" class="form-control">
+                <label for="10">Homepage*</label>
+                <input id="10" type="text" name="homepage" value="'.$homepage.'" readonly="readonly" class="form-control">
+                <hr/>
                 <h4>Direkte Kontaktdaten</h4>
-                <p>Ansprechpartner</p>
-                <input type="text" name="projectCoordinator" value="'.$projectCoordinator.'" class="form-control">
-                <p>Email (Direkt)</p>
-                <input type="text" name="emailDirect" value="'.$emailDirect.'" class="form-control">
-                <p>Telefon (Direkt)</p>
-                <input type="text" name="phoneDirect" value="'.$phoneDirect.'" class="form-control">
-                <p>Mobile (Direkt)</p>
-                <input type="text" name="mobileDirect" value="'.$mobileNumber.'" class="form-control">
-                <p>Notizen</p>
-                <textarea name="description" class="form-control" rows="3">'.$description.'</textarea>';
+                <label for="11">Ansprechpartner</label>
+                <input id="11" type="text" name="projectCoordinator" value="'.$projectCoordinator.'" class="form-control">
+                <label for="12">Email (Direkt)</label>
+                <input id="12" type="text" name="emailDirect" value="'.$emailDirect.'" class="form-control">
+                <label for="13">Telefon (Direkt)</label>
+                <input id="13" type="text" name="phoneDirect" value="'.$phoneDirect.'" class="form-control">
+                <label for="14">Mobile (Direkt)</label>
+                <input id="14" type="text" name="mobileDirect" value="'.$mobileDirect.'" class="form-control">
+                <label for="15">Notizen</label>
+                <textarea id="15" name="description" class="form-control" rows="3">'.$description.'</textarea>';
                 echo $data;
     }
 }

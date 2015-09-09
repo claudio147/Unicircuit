@@ -70,9 +70,11 @@ if(isset($_POST['showUserDetails'])){
     			//Projekte in array speichern
     			$count++;
     		}
-    	}else{
+    	}else if($row['Fk_IdUserType']==3){
     		$count=1;
-    	}
+    	}else if($row['Fk_IdUserType']==1){
+            $count=0;
+        }
 
 
 
@@ -130,7 +132,7 @@ if(isset($_POST['showUserDetails'])){
     			</tr>
     			<tr>
     				<td>Email</td>
-    				<td>'.$email.'</td>
+    				<td><a href="mailto:'.$email.'">'.$email.'</a></td>
     			</tr>
     			<tr>
     				<td>Telefon</td>
@@ -148,6 +150,74 @@ if(isset($_POST['showUserDetails'])){
     				<td class="col-xs-9">'.$count.'</td>
     			</tr>
 				</table>';
+                echo $data;
+    }
+}
+
+//Formular mit Platzhaltern um einen bestehenden Projekt-Adress-Eintrag zu bearbeiten
+if(isset($_POST['showAddressDetails'])){
+    $data= '';
+
+    //Projektadresse ID
+    $id= filter_input(INPUT_POST, 'showAddressDetails', FILTER_SANITIZE_NUMBER_INT);
+
+    $sql= getGlobalAddress($id);
+    $result= mysqli_query($link, $sql);
+    while($row= mysqli_fetch_array($result)){
+        $bkp= $row['BKP'];
+        $company= $row['Company'];
+        $addressline1= $row['Addressline1'];
+        $addressline2= $row['Addressline2'];
+        $zip= $row['ZIP'];
+        $city= $row['City'];
+        $country= $row['Country'];
+        $email= $row['Email'];
+        $phoneNumber= $row['PhoneNumber'];
+        $homepage= $row['Homepage'];
+        $count=0;
+        
+        $sql2=statsOfGlobalAddress($id);
+        $result2=  mysqli_query($link, $sql2);
+        $row2=mysqli_fetch_array($result2);
+        
+        $count= count($row2);
+
+        $data.= '<input type="hidden" name="idGlobalAddress" value="'.$id.'">
+                <h4>Firmendaten</h4>
+                <label for="1">BKP*</label>
+                <input id="1" type="text" name="bkp" value="'.$bkp.'" class="form-control">
+                <label for="2">Firma*</label>
+                <input id="2" type="text" name="company" value="'.$company.'" class="form-control">
+                <label for="3">Adresszeile 1*</label>
+                <input id="3" type="text" name="addressline1" value="'.$addressline1.'" class="form-control">
+                <label for="4">Adresszeile 2</label>
+                <input id="4" type="text" name="addressline2" value="'.$addressline2.'" class="form-control">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <label for="5">PLZ*</label>
+                        <input id="5" type="text" name="zip" value="'.$zip.'" class="form-control">
+                    </div>
+                    <div class="col-xs-10">
+                        <label for="6">Ort*</label>
+                        <input id="6" type="text" name="city" value="'.$city.'" class="form-control">
+                    </div>
+                </div>
+                <label for="7">Land*</label>
+                <select id="7" name="country" class="form-control">
+                    <option value="Schweiz" selected="selected">Schweiz</option>
+                    <option value="Deutschland">Deutschland</option>
+                    <option value="Österreich">Österreich</option>
+                    <option value="Lichtenstein">Lichtenstein</option>
+                </select>
+                <label for="8">Email (Hauptadresse)*</label>
+                <input id="8" type="email" name="email" value="'.$email.'" class="form-control">
+                <label for="9">Telefon (Hauptnummer)*</label>
+                <input id="9" type="text" name="phoneNumber" value="'.$phoneNumber.'" class="form-control">
+                <label for="10">Homepage*</label>
+                <input id="10" type="text" name="homepage" value="'.$homepage.'" class="form-control"><br/><br/>
+                <h4>Statistik</h4>
+                <label>Anzahl Verwendungen in Projekten</label>
+                <p>'.$count.' mal</p>';
                 echo $data;
     }
 }

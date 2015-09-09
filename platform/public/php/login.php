@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
       //1= Archconsulting //2= Architekt //3= Bauherr
       switch($row['Fk_IdUserType']) {
           case 1:
-              header('Location: ../../../rms/public/index.php');
+              header('Location: ../../../rms/public/php/index.php');
               break;
           case 2:
               header('Location: projektverwaltung.php');

@@ -183,7 +183,7 @@ function getIdGlobal($company, $addressline1){
 }
 
 function allGlobalAddress(){
-    $sql= 'SELECT IdGlobalAddress, BKP, Company, ZIP, City,Country, Email, PhoneNumber, Homepage from GlobalAddresslist';
+    $sql= 'SELECT IdGlobalAddress, BKP, Company, ZIP, City, Country, Email, PhoneNumber, Homepage from GlobalAddresslist';
     return $sql;
 }
 
@@ -239,10 +239,40 @@ function updateProjectAddress($id, $projectCoordinator, $phoneDirect, $mobileNum
     return $sql;
 }
 
+function updateGlobalAddress($id, $bkp, $company, $addressline1, $addressline2, $zip, $city, $country, $email, $phone, $homepage){
+    global $link;
+    
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    $bkp = mysqli_real_escape_string($link, $bkp);
+    $company = mysqli_real_escape_string($link, $company);
+    $addressline1 = mysqli_real_escape_string($link, $addressline1);
+    $addressline2 = mysqli_real_escape_string($link, $addressline2);
+    $zip = mysqli_real_escape_string($link, $zip);
+    $city = mysqli_real_escape_string($link, $city);
+    $country = mysqli_real_escape_string($link, $country);
+    $email = mysqli_real_escape_string($link, $email);
+    $phone = mysqli_real_escape_string($link, $phone);
+    $homepage = mysqli_real_escape_string($link, $homepage);
+
+    
+    $sql= 'UPDATE GlobalAddresslist SET BKP= "'.$bkp.'", Company="'.$company.
+            '", Addressline1="'.$addressline1.'", Addressline2="'.$addressline2.'", ZIP="'.$zip.'", City="'.$city.'", Country="'.$country.'"
+                , Email="'.$email.'", PhoneNumber="'.$phone.'", Homepage="'.$homepage.'" WHERE
+                IdGlobalAddress="'.$id.'"';
+    return $sql;
+}
+
 function deleteProjectAddress($id){
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     
     $sql= 'DELETE FROM ProjectAddresslist WHERE IdProjectAddress="'.$id.'"';
+    return $sql;
+}
+
+function statsOfGlobalAddress($idGlobal){
+    $id = filter_var($idGlobal, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql= 'SELECT IdProjectAddress FROM ProjectAddresslist WHERE Fk_IdGlobalAddress='.$id;
     return $sql;
 }
 

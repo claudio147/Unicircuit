@@ -10,17 +10,17 @@ $link= connectDB();
 
 
 //Usertyp wird ermittelt (falls vorhanden)
-/*if(isset($_SESSION['UserType'])){
+if(isset($_SESSION['UserType'])){
     $usertyp= $_SESSION['UserType']; //1= Archconsulting //2= Architekt //3= Bauherr
 
-    if($usertyp!=2){
+    if($usertyp!=1){
         //Usertyp ohne Berechtigung
-        header('Location: login.php?denied=1');
+        header('Location: ../../../platform/public/php/login.php?denied=1');
     }
 }else{
     //kein Usertyp = kein Zugriff
-    header('Location: login.php?denied=1');
-}*/
+    header('Location: ../../../platform/public/php/login.php?denied=1');
+}
 
 //Hole Navigation
 if(isset($_GET['nav'])){
@@ -43,14 +43,13 @@ if(isset($_GET['statusSave'])){
 
 
 //User Details
-/*
 $userID= $_SESSION['IdUser'];
 $sql=userData($userID);
 $result= mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
 $fnCust=$row['Firstname'];
 $lnCust=$row['Lastname'];
-*/
+
 
 ?>
 
@@ -117,7 +116,7 @@ $lnCust=$row['Lastname'];
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="login.php"><i class="fa fa-fw fa-power-off"></i> Abmelden</a>
+                            <a href="../../../platform/public/php/login.php"><i class="fa fa-fw fa-power-off"></i> Abmelden</a>
                         </li>
                     </ul>
                 </li>

@@ -198,7 +198,7 @@ echo'<tbody>';
       echo '<td>' . $row['Company'] . '</td>';
       echo '<td>' . $row['ZIP'] . '</td>';
       echo '<td>' . $row['Country'] . '</td>';
-      echo '<td>' . $row['Email'] . '</td>';
+      echo '<td><a href="mailto:'.$row['Email'].'">'.$row['Email'].'</a></td>';
 
       //Ueberpruefung ob User bereits aktiviert ist und sich schon eingeloggt hat
       $reg = $row['Active'];

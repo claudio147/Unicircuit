@@ -2,7 +2,7 @@
 $(document).ready(function(){
 
     $('#table-user-list').DataTable({
-        "scrollY":        "450px",
+        "scrollY":        "400px",
         "scrollCollapse": true,
         "paging":         false,
         language: {
@@ -16,7 +16,7 @@ $(document).ready(function(){
 
     //Adressliste (mit Export-Funktion)
     $('#addresslist-rms').DataTable({
-        "scrollY":        "550px",
+        "scrollY":        "400px",
         "scrollCollapse": true,
         "paging":         false,
         fixedHeader: false,
@@ -41,6 +41,15 @@ $(document).ready(function(){
 
         $.post('../php/ajax-rms.php', {"showUserDetails":id},function(data){
             $('#userDetails').html(data);
+        }) 
+    });
+    
+    //Ajax Loader für Inhalt in Lightbox bei bearbeiten
+    $('.btn_add').click(function(){
+        var id= $(this).val();
+
+        $.post('../php/ajax-rms.php', {"showAddressDetails":id},function(data){
+            $('#address-ajax').html(data);
         }) 
     });
 
