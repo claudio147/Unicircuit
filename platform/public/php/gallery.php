@@ -1,74 +1,8 @@
 <?php
 require_once ('../../../library/public/database.inc.php');
+require_once ('../../../library/public/security.inc.php');
 
 $link= connectDB();
-
-function resizeImage ($filepath_old, $filepath_new, $image_dimension, $scale_mode = 0){ 
-  if (!(file_exists($filepath_old)) || file_exists($filepath_new)) return false; 
-
-  $image_attributes = getimagesize($filepath_old); 
-  $image_width_old = $image_attributes[0]; 
-  $image_height_old = $image_attributes[1]; 
-  $image_filetype = $image_attributes[2]; 
-
-  if ($image_width_old <= 0 || $image_height_old <= 0) return false; 
-  $image_aspectratio = $image_width_old / $image_height_old; 
-
-  if ($scale_mode == 0) { 
-   $scale_mode = ($image_aspectratio > 1 ? -1 : -2); 
-  } elseif ($scale_mode == 1) { 
-   $scale_mode = ($image_aspectratio > 1 ? -2 : -1); 
-  } 
-
-  if ($scale_mode == -1) { 
-   $image_width_new = $image_dimension; 
-   $image_height_new = round($image_dimension / $image_aspectratio); 
-  } elseif ($scale_mode == -2) { 
-   $image_height_new = $image_dimension; 
-   $image_width_new = round($image_dimension * $image_aspectratio); 
-  } else { 
-   return false; 
-  } 
-
-  switch ($image_filetype) { 
-   case 1: 
-    $image_old = imagecreatefromgif($filepath_old); 
-    $image_new = imagecreate($image_width_new, $image_height_new); 
-    imagecopyresampled($image_new, $image_old, 0, 0, 0, 0, $image_width_new, $image_height_new, $image_width_old, $image_height_old); 
-    imagegif($image_new, $filepath_new); 
-    break; 
-  
-   case 2: 
-    $image_old = imagecreatefromjpeg($filepath_old); 
-    $image_new = imagecreatetruecolor($image_width_new, $image_height_new); 
-    imagecopyresampled($image_new, $image_old, 0, 0, 0, 0, $image_width_new, $image_height_new, $image_width_old, $image_height_old); 
-    imagejpeg($image_new, $filepath_new); 
-    break; 
-
-   case 3: 
-    $image_old = imagecreatefrompng($filepath_old); 
-    $image_colordepth = imagecolorstotal($image_old); 
-
-    if ($image_colordepth == 0 || $image_colordepth > 255) { 
-     $image_new = imagecreatetruecolor($image_width_new, $image_height_new); 
-    } else { 
-     $image_new = imagecreate($image_width_new, $image_height_new); 
-    } 
-
-    imagealphablending($image_new, false); 
-    imagecopyresampled($image_new, $image_old, 0, 0, 0, 0, $image_width_new, $image_height_new, $image_width_old, $image_height_old); 
-    imagesavealpha($image_new, true); 
-    imagepng($image_new, $filepath_new); 
-    break; 
-
-   default: 
-    return false; 
-  } 
-
-  imagedestroy($image_old);
-  imagedestroy($image_new);
-  return true; 
- } 
 
 if(isset($_POST['submit'])){
     $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
@@ -113,26 +47,20 @@ if(isset($_POST['submit'])){
             $saveS=false;
             $saveL=false;
             
-            $imageFileTypeS = pathinfo($uploadfileS, PATHINFO_EXTENSION);
-            $imageFileTypeL = pathinfo($uploadfileL, PATHINFO_EXTENSION);
             
             if($size > 4100000){
                 header('Location: index.php?id=7&status=3&project='.$projectID);
                 exit();
             }
             
-            // Überprüfung von File- Format
-            if($imageFileTypeS != "jpg" && $imageFileTypeS != "png" && $imageFileTypeS != "jpeg"
-            && $imageFileTypeS != "gif" && $imageFileTypeS != "JPG" && $imageFileTypeS != "JPEG"
-               && $imageFileTypeS != "PNG" && $imageFileTypeS != "GIF") {
+            //Überprüfung Dateiformat
+            if(!checkImageType($uploadfileS)){
                 header('Location: index.php?id=7&status=2&project='.$projectID);
                 exit();
             }
             
-            // Überprüfung von File- Format
-            if($imageFileTypeL != "jpg" && $imageFileTypeL != "png" && $imageFileTypeL != "jpeg"
-            && $imageFileTypeL != "gif" && $imageFileTypeS != "JPG" && $imageFileTypeS != "JPEG"
-                    && $imageFileTypeS != "PNG" && $imageFileTypeS != "GIF") {
+            //Überprüfung Dateiformat
+            if(!checkImageType($uploadfileL)){
                 header('Location: index.php?id=7&status=2&project='.$projectID);
                 exit();
             }
@@ -154,7 +82,7 @@ if(isset($_POST['submit'])){
             
             
             if($image_width_old>1920 || $image_height_old>1920){
-                //Verkleinert das Originalbild auf eine Länge von 2880px
+                //Verkleinert das Originalbild auf eine Länge von 1920px
                 if(resizeImage($tempna, $uploadfileL, 1920)){
                     $saveL=true;
                 }else{
@@ -185,9 +113,8 @@ if(isset($_POST['submit'])){
     }
 }
 
-
-
 ?>
+
 <div class="col-xs-12 col-md-12">
     <h2 class="modul-title">Galerie</h2>
     

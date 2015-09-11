@@ -57,7 +57,7 @@ if(isset($_POST['submit'])) {
      $mail = createBauhMail($bhEmail, $bhFn, $bhLn, $BhPw, $title);
      
      //macht weiter wenn Mail geschickt wurde
-     if($mail == TRUE) {
+     if($mail){
      
      //Verschlüsselt das Passwort
      $pwHash = hash('sha256',$BhPw);
@@ -91,43 +91,91 @@ if(isset($_POST['submit'])) {
      //Bildupload für neues Projekt
     if(!empty($_FILES['userfile']['name'])){
 
-    //Array mit Statusmeldungen
-    $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
-        'Nicht vollständig', 'Keine Datei hochgeladen');
-    
+        $tempna= $_FILES['userfile']['tmp_name'];
+        $orgname= $_FILES['userfile']['name'];
+        $size= $_FILES['userfile']['size'];
+        $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
+        $extension= strrchr($_FILES['userfile']['name'],'.');
+        $file= $filename.$extension;
 
-    $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
-    $extension= strrchr($_FILES['userfile']['name'],'.');
-    $file= $filename.$extension;
-    
-    //Dateipfad mit Dateinamen zusammensetzen
-    $uploadfile= $uploaddir.basename($file);
-        if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
-            //echo'<p>Datei wurde erfolgreich hochgeladen.</p>';
-            $orgname= $_FILES['userfile']['name'];
+        //Dateipfad mit Dateinamen zusammensetzen
+        $uploadfile= $uploaddir.basename($file);
 
+        //Ermittle Bildgrösse
+        $image_attributes = getimagesize($tempna); 
+        $image_width_old = $image_attributes[0];
+        $image_height_old = $image_attributes[1];
+        
+        $error1=false;
+        $error2=false;
+        //Überprüft Dateityp
+        if(!checkImageType($file)){
+            $error1=true;
+        }
 
+        //Überprüft Dateigrösse
+        if($size > 2100000){
+            $error2=true;
+        }
+
+        //Verkleinert Bilder über 600px Seitenlänge und speichert diese im verzeichnis,
+        //Bilder unter 600px Seitenlänge werden direkt ins Verzeichnis gespeichert
+        if(!$error1 && !$error2){
+            if($image_width_old>600 || $image_height_old>600){
+                if(resizeImage($tempna, $uploadfile, 600)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;
+                }
+            }else{
+                if(move_uploaded_file($tempna, $uploadfile)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;
+                }
+            }
+        }else{
+            $statusUpload=false;
+            $filetypeError=true;
+        } 
+
+        if($statusUpload){
+            //Erfolgreich gespeichert --> Speichert DB Eintrag
             $sql= addPicToProject($uploadfile, $proId);
             $status= mysqli_query($link, $sql);
 
-            //Errorcode der Übertragung abfragen
-            $code= $_FILES['userfile']['error'];
+            if($status){
+                $response='2';
+                $usePlaceholder=false;
+            }else{
+                $response='3';
+                $usePlaceholder=true;
+            }
 
-            //Übersetzer Error-Code in Worten (sh. Array) ausgeben
-            
+        }else if($filetypeError){
+            $response='4';
+            $usePlaceholder=true;
         }else{
-            echo'<p>Datei konnte nicht hochgeladen werden!</p>';
-            
+            $response='3';
+            $usePlaceholder=true;
         }
+    
     }else{
-       // $uploaddirAlt= '../img/';
-       // $file= 'placeholder.png';
-       // $orgname= 'placeholder.png';
+        $usePlaceholder=true;
+    }
+    //Setzt Platzhalterbild
+    if($usePlaceholder){
         $uploadfile = '../img/placeholder.png' ;
         $sql= addPicToProject($uploadfile, $proId);
         $status= mysqli_query($link, $sql);
-        if(!$status){
-            echo'<p>Fehlgeschlagen</p>';
+        if($status){
+            $response='2';
+        }else{
+            $response='3';
+        }
+        
+        if($filetypeError){
+            $response='4';
         }
     }
 }
@@ -160,42 +208,87 @@ if(isset($_POST['edit'])) {
 
     //Update wenn auch ein neues Bild hochgeladen wurde
      if(!empty($_FILES['userfile']['name'])){
-
-    //Array mit Statusmeldungen
-    $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
-        'Nicht vollständig', 'Keine Datei hochgeladen');
     
-    $uploaddir = '../architects/architect_'.$id.'/project_'.$proId2.'/' ;
-    $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
-    $extension= strrchr($_FILES['userfile']['name'],'.');
-    $file= $filename.$extension;
+        $uploaddir = '../architects/architect_'.$id.'/project_'.$proId2.'/' ;
+        $tempna= $_FILES['userfile']['tmp_name'];
+        $orgname= $_FILES['userfile']['name'];
+        $size= $_FILES['userfile']['size'];
+        $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
+        $extension= strrchr($_FILES['userfile']['name'],'.');
+        $file= $filename.$extension;
+
+        //Dateipfad mit Dateinamen zusammensetzen
+        $uploadfile= $uploaddir.basename($file);
+
+        //Ermittle Bildgrösse
+        $image_attributes = getimagesize($tempna); 
+        $image_width_old = $image_attributes[0];
+        $image_height_old = $image_attributes[1];
         
-    //Dateipfad mit Dateinamen zusammensetzen
-    $uploadfile= $uploaddir.basename($file);
-        if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
-            //echo'<p>Datei wurde erfolgreich hochgeladen.</p>';
-            $orgname= $_FILES['userfile']['name'];
-
-                $sql= updateProjectWithPic($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $uploadfile, $bhFn, $bhLn,
-        $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2);
-            
-            $status= mysqli_query($link, $sql);
-
-            //Errorcode der Übertragung abfragen
-            $code= $_FILES['userfile']['error'];
-
-            //Übersetzer Error-Code in Worten (sh. Array) ausgeben
-            
-        }else{
-            echo'<p>Datei konnte nicht hochgeladen werden!</p>';
-            
+        $error1=false;
+        $error2=false;
+        //Überprüft Dateityp
+        if(!checkImageType($file)){
+            $error1=true;
         }
-    } else {
+
+        //Überprüft Dateigrösse
+        if($size > 2100000){
+            $error2=true;
+        }
+
+        //Verkleinert Bilder über 600px Seitenlänge und speichert diese im verzeichnis,
+        //Bilder unter 600px Seitenlänge werden direkt ins Verzeichnis gespeichert
+        if(!$error1 && !$error2){
+            if($image_width_old>600 || $image_height_old>600){
+                if(resizeImage($tempna, $uploadfile, 600)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;     
+                }
+            }else{
+                if(move_uploaded_file($tempna, $uploadfile)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;
+                }
+            }
+        }else{
+            $statusUpload=false;
+            $filetypeError=true;
+        }
+        
+
+        if($statusUpload){
+            //Erfolgreich gespeichert --> Speichert DB Eintrag
+            $sql= updateProjectWithPic($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $uploadfile, $bhFn, $bhLn,
+                $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2);
+
+            $status= mysqli_query($link, $sql);
+            
+            if($status){
+                $response='0';
+            }else{
+                $response='1';
+            }
+            
+        }else if($filetypeError){
+            $response='4';
+        }else{
+            $response='1';
+        }
+
+    }else{
         //Projekt Upload wenn kein Bild hochgeladen wurde.
         $sql = updateProjectWithout($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $bhFn, $bhLn,
         $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2);
         
         $status = mysqli_query($link, $sql);
+        if($status){
+            $response='0';
+        }else{
+            $response='1';
+        }
     }
 }
 
@@ -400,9 +493,8 @@ $lnCust=$row['Lastname'];
                                             <label for="8" class="control-label">Projektbeschreib</label>
                                             <textarea id="8" name="Description" class="form-control"></textarea>
                                             </div>
-                                            <label for="upload">Projektbild</label>
-                                            <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
-                                            <input id="upload" type="file" name="userfile"/>
+                                            <label for="upload3">Projektbild</label>
+                                            <input id="upload3" type="file" name="userfile"/>
                                             <!-- Bauherren Daten, zur erstellung Bauherr -->
                                             <hr/>
                                             <h4>Daten Bauherr</h4>
@@ -507,8 +599,24 @@ $lnCust=$row['Lastname'];
             
 <?php
 
-// Ausgabe Projekte
 
+if(isset($response)){
+        $x=$response;
+        if($x==0){
+            echo'<br/><div class="alert alert-success" role="alert">Projekt erfolgreich bearbeitet.</div>';
+        }else if($x==1){
+            echo'<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen</div>';
+        }else if($x==2){
+            echo'<br/><div class="alert alert-success" role="alert">Projekt erfolgreich hinzugefügt</div>';
+        }else if($x==3){
+            echo'<br/><div class="alert alert-danger" role="alert">Projekt hinzufügen fehlgeschlagen</div>';
+        }else if($x==4){
+            echo'<br/><div class="alert alert-danger" role="alert">Max. 2MB und Filetypen: .jpg/.png/.gif</div>';
+        }
+    }
+    
+    
+// Ausgabe Projekte
 
 $sql = getProjectsByArch($id);
 

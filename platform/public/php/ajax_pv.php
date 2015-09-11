@@ -90,7 +90,6 @@ if (isset($_POST['postEdit'])) {
                 <label for="8">Projektbeschrieb</label>
                 <textarea id="8" name="Description" class="form-control">'.$description.'</textarea>
                 <label for="upload">Projektbild</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
                 <input id="upload" type="file" name="userfile"/>
                 <!-- Bauherren Daten, zur erstellung Bauherr -->
                 <hr/>
