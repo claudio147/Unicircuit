@@ -246,6 +246,7 @@ if(isset($_GET['status'])){
             $dateOrg= $row['DeadlineDate'];
             $date = date('d.m.Y', strtotime($dateOrg));
             $dateINT= strtotime($date);
+            $idCraftsman=NULL;
             $idCraftsman= $row['IdCraftsman'];
             $id= $row['IdDeadlines'];
             

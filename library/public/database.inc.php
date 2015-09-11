@@ -197,13 +197,20 @@ function checkGlobalAddress($company){
     global $link;
     
     $company = mysqli_real_escape_string($link, $company);
+    $comp= strtolower($company);
     
     $status=true;
     $link= connectDB();
     $sql= 'SELECT Company from GlobalAddresslist';
     $result= mysqli_query($link, $sql);
     while($row=  mysqli_fetch_array($result)){
-        if($company== $row['Company']){
+        //Wandelt den String in kleinschreibung
+        $data=strtolower($row['Company']);
+        
+        //Gibt die Anzahl an unterschiedlichen Zeichen aus
+        $lev = levenshtein($comp, $data);
+        
+        if($lev < 2){
             return false;
         }else{
             $status=true;
@@ -265,7 +272,7 @@ function updateGlobalAddress($id, $bkp, $company, $addressline1, $addressline2, 
 function deleteProjectAddress($id){
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     
-    $sql= 'DELETE FROM ProjectAddresslist WHERE IdProjectAddress="'.$id.'"';
+    $sql= 'DELETE FROM ProjectAddresslist WHERE IdProjectAddress='.$id;
     return $sql;
 }
 
@@ -273,6 +280,35 @@ function statsOfGlobalAddress($idGlobal){
     $id = filter_var($idGlobal, FILTER_SANITIZE_NUMBER_INT);
     
     $sql= 'SELECT IdProjectAddress FROM ProjectAddresslist WHERE Fk_IdGlobalAddress='.$id;
+    return $sql;
+}
+
+function countProjectAddress($idGlobal){
+    $id = filter_var($idGlobal, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql= 'SELECT COUNT(*) FROM ProjectAddresslist as a JOIN Project as p on a.Fk_IdProject=
+    p.IdProject WHERE Fk_IdGlobalAddress='.$id.' AND Storage IS NULL';
+    return $sql;
+}
+
+function deleteGlobal1($idGlobal){
+    $id = filter_var($idGlobal, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql= "DELETE FROM ProjectAddresslist WHERE Fk_IdGlobalAddress=$id";
+    return $sql;
+}
+
+function deleteGlobal2($idGlobal){
+    $id = filter_var($idGlobal, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql= "DELETE FROM GlobalAddresslist WHERE IdGlobalAddress=$id";
+    return $sql;
+}
+
+function updateDeadlineCraft($idCraftsman){
+    $id = filter_var($idCraftsman, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql= "UPDATE Deadlines SET IdCraftsman=0 WHERE IdCraftsman=$id";
     return $sql;
 }
 
@@ -686,7 +722,7 @@ function storeProject($proId2) {
     global $link;
     $proId2 = filter_var($proId2, FILTER_SANITIZE_NUMBER_INT);
     
-     $sql = "UPDATE Project AS P, User AS u SET p.Storage = 1 , u.Active = 4 WHERE p.FK_IdBauherr = u.IdUser AND IdProject = '$proId2'";
+     $sql = "UPDATE Project AS p, User AS u SET p.Storage = 1 , u.Active = 4 WHERE p.FK_IdBauherr = u.IdUser AND IdProject = '$proId2'";
      return $sql;
 }
 

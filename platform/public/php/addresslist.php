@@ -34,68 +34,59 @@ if(isset($_POST['submit'])){
     $mobileDirect = filter_input(INPUT_POST, 'mobileDirect', FILTER_SANITIZE_STRING);
     $emailDirect = filter_input(INPUT_POST, 'emailDirect', FILTER_SANITIZE_STRING);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
-    //echo $projectID;
+
     // Fehler im Eingabefeld?
     if (empty($bkp) || strlen($bkp) > 3) {
         $errorBKP = true;
         $error = true;
-        echo $bkp;
     }
 
     // Fehler im Eingabefeld?
     if (empty($company) || strlen($company) < 4) {
         $errorCompany = true;
         $error = true;
-        echo'2';
     }
 
     // Fehler im Eingabefeld?
     if (empty($addressline1) || strlen($addressline1) < 5) {
         $errorAddressline1 = true;
         $error = true;
-        echo '3';
     }
 
     // Fehler im Eingabefeld?
     if (empty($zip) || strlen($zip) < 4) {
         $errorZIP = true;
         $error = true;
-        echo'4';
     }
 
     // Fehler im Eingabefeld?
     if (empty($city) || strlen($city) < 4) {
         $errorCity = true;
         $error = true;
-        echo'5';
     }
 
     // Fehler im Eingabefeld?
     if (empty($country)) {
         $errorCountry = true;
         $error = true;
-        echo'6';
     }
 
     // Mailadresse korrekt?
     if (!checkMailFormat($email)) {
         $errorEmail = true;
         $error = true;
-        echo'7';
     }
 
     // Fehler im Eingabefeld?
     if (empty($phoneNumber) || strlen($phoneNumber) < 10) {
         $errorPhoneNumber = true;
         $error = true;
-        echo'8';
     }
 
     // Fehler im Eingabefeld?
     if (empty($homepage) || strlen($homepage) < 10) {
         $errorHomepage = true;
         $error = true;
-        echo'9';
     }
 
     //Datenbankbefehle wenn kein Error vorhanden ist.
@@ -116,7 +107,8 @@ if(isset($_POST['submit'])){
                 }
             }else{
                 $statusGlobal=false;
-                echo'<p>Firma exisitert bereits in globaler DB</p>';
+                header('Location: index.php?id=6&status=0&project='.$projectID);
+                exit();
             }
         }else if(isset($_POST['idGlobalAddress'])){
             $idGlobal = filter_input(INPUT_POST, 'idGlobalAddress', FILTER_SANITIZE_NUMBER_INT);
@@ -145,12 +137,16 @@ if(isset($_POST['submit'])){
 
 
         if($statusGlobal==true && $statusProject==true){
-            header('Location: index.php?id=6&project='.$projectID);
+            //header('Location: index.php?id=6&project='.$projectID);
+            header('Location: index.php?id=6&status=1&project='.$projectID);
+            exit();
         }else{
-            echo'<p>Error1</p>';
+            header('Location: index.php?id=6&status=2&project='.$projectID);
+            exit();
         }
     }else{
-        echo'<p>Error2</p>';
+        header('Location: index.php?id=6&status=2&project='.$projectID);
+        exit();
     }
 }
 
@@ -161,20 +157,41 @@ if(isset($_POST['delete'])){
     $sql= deleteProjectAddress($idProjectAddress);
     $resultDel = mysqli_query($link, $sql);
     if($resultDel){
-        header('Location: index.php?id=6&project='.$projectID);
+        header('Location: index.php?id=6&status=3&project='.$projectID);
         exit();
     }else{
-        echo'<p>Löschen fehlgeschlagen</p>';
+        header('Location: index.php?id=6&status=4&project='.$projectID);
+        exit();
+    }
+}
+
+if(isset($_POST['update'])){
+
+    $projectID = filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
+    $idProjectAddress= filter_input(INPUT_POST, 'idProjectAddress', FILTER_SANITIZE_NUMBER_INT);
+    $projectCoordinator = filter_input(INPUT_POST, 'projectCoordinator', FILTER_SANITIZE_STRING);
+    $phoneDirect = filter_input(INPUT_POST, 'phoneDirect', FILTER_SANITIZE_STRING);
+    $mobileDirect = filter_input(INPUT_POST, 'mobileDirect', FILTER_SANITIZE_STRING);
+    $emailDirect = filter_input(INPUT_POST, 'emailDirect', FILTER_SANITIZE_STRING);
+    $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+
+    $sql= updateProjectAddress($idProjectAddress, $projectCoordinator, $phoneDirect, $mobileDirect, $emailDirect, $description);
+    $status = mysqli_query($link, $sql);
+    if($status){
+        header('Location: index.php?id=6&status=5&project='.$projectID);
+        exit();
+    }else{
+        header('Location: index.php?id=6&status=6&project='.$projectID);
+        exit();
     }
 }
 
 ?>
 
 
-<?php
-echo'<div class="col-xs-12">';
-echo'<h2 class="modul-title">Adressliste</h2>';
-?>
+<div class="col-xs-12">
+<h2 class="modul-title">Adressliste</h2>
+
 
 <!--Lightboxen (Modals)-->
 <div class="container modalgroup">
@@ -254,8 +271,7 @@ echo'<h2 class="modul-title">Adressliste</h2>';
             <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
             <div id="newAddress">
                 
-
-                <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
+               <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
 
             </div>
         </div>
@@ -292,7 +308,7 @@ echo'<h2 class="modul-title">Adressliste</h2>';
             </div>
         </div>
         <div class="modal-footer">
-            <input type="submit" name="submit" value="Speichern" class="btn btn-default">
+            <input type="submit" name="update" value="Speichern" class="btn btn-default">
             <input type="submit" name="delete" value="Löschen" class="btn btn-default">
           <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
         </div>
@@ -339,6 +355,27 @@ echo'<h2 class="modul-title">Adressliste</h2>';
 </div>
 
 <?php
+
+if(isset($_GET['status'])){
+        $x=$_GET['status'];
+        if($x==0){
+            echo'<br/><div class="alert alert-danger" role="alert">Firma existiert bereits in globaler Adressdatenbank! - Bitte Suchfunktion benutzen.</div>';
+        }else if($x==1){
+            echo'<br/><div class="alert alert-success" role="alert">Adress erfolgreich hinzugefügt.</div>';
+        }else if($x==2){
+            echo'<br/><div class="alert alert-danger" role="alert">Adresse hinzufügen fehlgeschlagen.</div>';
+        }else if($x==3){
+            echo'<br/><div class="alert alert-success" role="alert">Adresse erfolgreich gelöscht.</div>';
+        }else if($x==4){
+            echo'<br/><div class="alert alert-danger" role="alert">Löschen fehlgeschlagen.</div>';
+        }else if($x==5){
+            echo'<br/><div class="alert alert-success" role="alert">Adresse erfolgreich bearbeitet.</div>';
+        }else if($x==6){
+            echo'<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen!</div>';
+        }
+    }
+    
+    
 echo'<table class="table order hover" id="localAddress">';
 echo'<thead>';
 echo'<tr>';
@@ -372,6 +409,9 @@ while($row= mysqli_fetch_array($result)){
 echo'</tbody>';
 echo'</table>';
 echo'</div>';
+
+ 
+    
 
 ?>
 

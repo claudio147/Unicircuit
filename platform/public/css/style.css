@@ -299,11 +299,10 @@ div.modalgroup{
 */
 
 .pv-container{
-    //background-color: #f0f0f0 !important;
     height: 500px;
-    //margin-left: 15px;
-    //margin-right: 15px;
     padding: 10px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .pv-cont-content{
