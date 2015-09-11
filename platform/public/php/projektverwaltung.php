@@ -324,7 +324,7 @@ $lnCust=$row['Lastname'];
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
+                                <a class="btn_userSettings" data-target="#editUser" href="#" data-toggle="modal" data-value="<?php echo $userID; ?> "><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -495,6 +495,37 @@ $lnCust=$row['Lastname'];
                                     <input type="submit" name="store" value="Archivieren" class="btn btn-default"/>
                                     <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
                                     <input type="submit" name="delete" value="Löschen" class="btn btn-default" />
+
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                                </div>
+                          </form>
+
+                        </div>
+
+                    </div>
+                </div>
+                
+                 <!-- User Settings -->
+                <!-- Modal Global-->
+                <div class="modal" id="editUser" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Benutzer Einstellungen</h4>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="editContainer_User">
+
+                                            <!-- Platzhalter für ajax Inhalt -->
+
+                                        </div>       
+                                    </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="editUser" value="Speichern" class="btn btn-default"/>
 
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
                                 </div>

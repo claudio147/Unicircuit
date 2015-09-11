@@ -90,7 +90,6 @@ if (isset($_POST['postEdit'])) {
                 <label for="8">Projektbeschrieb</label>
                 <textarea id="8" name="Description" class="form-control">'.$description.'</textarea>
                 <label for="upload">Projektbild</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
                 <input id="upload" type="file" name="userfile"/>
                 <!-- Bauherren Daten, zur erstellung Bauherr -->
                 <hr/>
@@ -214,9 +213,78 @@ if (isset($_POST['postStorage'])) {
 
 if(isset($_POST['userSettings'])) {
     $id = filter_input(INPUT_POST, 'userSettings', FILTER_SANITIZE_NUMBER_INT);
+    echo 'id User'.$id;
     
     $sql = 'SELECT Firstname, Lastname, Company, Addressline1, Addressline2, ZIP, City, Country,
-            Email, PhoneNumber, MobileNumber FROM User WHERE IdUser = '.$id ;
+            Email, PhoneNumber, MobileNumber, Fk_IdUserType FROM User WHERE IdUser = '.$id ;
+    
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    
+    $firstname = $row['Firstname'];
+    $lastname = $row['Lastname'];
+    $company = $row['Company'];
+    $addressline1 = $row['Addressline1'];
+    $addressline2 = $row['Addressline2'];
+    $zip = $row['ZIP'];
+    $city = $row['City'];
+    $country = $row['Country'];
+    $email = $row['Email'];
+    $phoneNumber = $row['PhoneNumber'];
+    $mobileNumber = $row['MobileNumber'];
+    $usertype = $row['Fk_IdUserType'];  // 1=Administrator 2= Architekt 3= Bauherr
+    
+     //Auswahl Länderliste aus DB und erstellt die Dropdown Liste.
+     $sql = "SELECT Country FROM Countries";
+     $resultC = mysqli_query($link, $sql);
+    $countries = '';
+        while($rowC= mysqli_fetch_array($resultC)){
+            if($rowC['Country'] == $country) {
+                $countries .= '<option value="'.$rowC['Country'].'" selected = "selected">'.$rowC['Country'].'</option>';
+            }else {
+                $countries .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
+            }
+        }
+        //Fügt eine Zeile Firma hinzu falls es sich um einen Architekt handelt.
+        //Fügt den Logo Upload hinzu falls es sich um einen Architekten handelt.
+        $company = '';
+        $logo = '';
+        if($usertype == 2) {
+            $company = '<label for="3">Firma</label>
+                        <input id="3" type="text" name="Company" class="form-control value="'.$company.'">';
+            $logo = '<label for="upload">Logo</label>
+                    <input id="upload" type="file" name="userfile"/>';
+        }
+        
+         $data.= '<h4>Benutzer Einstellungen</h4>
+                <input type="hidden" name="userID" value="'.$id.'"/>
+                <label for="1">Vorname*</label>
+                <input id="1" type="text" name="Firstname" class="form-control" value="'.$firstname.'">
+                <label for="2">Nachname</label>
+                <input id="2" type="text" name="Lastname" class="form-control" value="'.$lastname.'">';
+         $data.= $company;  
+         $data.= '<label for="3">Strasse</label>
+                <input id="3" type="text" name="Addressline1" class="form-control" value="'.$addressline1.'">
+                <label for="4">Addresszeile 2</label>
+                <input id="4" type="text" name="Addressline2" class="form-control" value="'.$addressline2.'">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <label for="5">PLZ</label>
+                        <input id="5" type="text" name="ZIP" class="form-control" value="'.$zip.'">
+                    </div>
+                    <div class="col-xs-10">
+                        <label for="6">Ort</label>
+                        <input id="6" type="text" name="City" class="form-control" value="'.$city.'">
+                    </div>
+                </div>
+                <label for="7">Land</label>
+                <select id="7" name="Country" class="form-control">';
+        $data .= $countries;
+        $data .= '</select>';
+        $data .= $logo;
+                
+       
+        echo $data;
     
     
 }
