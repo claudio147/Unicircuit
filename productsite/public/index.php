@@ -481,6 +481,9 @@ require_once ('../../library/public/contentLoaderProductsite.inc.php');
 				<div class="col-sm-6 col-sm-offset-3">
 					<form id="contact-form">
 						<div class="ajax-hidden">
+                                                        <!-- Input Email Feld als Honeypot für Bots -->
+                                                        <input type="email" class="c_important" id="h_email" class="form-control" name="h_email" placeholder="Bitte nicht ausfüllen">
+                                                        <input type="text" class="c_important" id="h_time" class="form-control" name="h_time" value="<?php echo time();  ?>">
 							<div class="form-group wow fadeInUp">
 								<label class="sr-only" for="c_name">Name</label>
 								<input type="text" id="c_name" class="form-control" name="c_name" placeholder="Name">

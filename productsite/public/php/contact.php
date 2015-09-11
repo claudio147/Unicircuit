@@ -18,9 +18,9 @@ function debug_to_console($data) {
 
 
 
-
-require '../../../library/public/mail.inc.php';
 */
+require_once '../../../library/public/mail.inc.php';
+
 
 if(isset($_POST['message'])){
 
@@ -29,15 +29,17 @@ if(isset($_POST['message'])){
 	$message = $_POST['message'];
 
 	
-/*
+
 	$email2 = 'claudio.schaepper@gmail.com';
-	$status1 = MailCustomer($name, $email);
-	$status2 = MailArchconsulting($name, $email2, $message);
+	
+	$status2 = sendMailArchcon($name, $email2, $message, $email);
+        $status1 = sendMailCustomer($name, $email);
+        //$status2=true;
+        //$status1=true;
 
-*/
 
 
-
+/*
 	//Email Absenderadresse (Archconsulting)
 	$email2 = 'info@unicircuit.ch';
 	
@@ -117,11 +119,9 @@ if(isset($_POST['message'])){
 
 	//Send Email für Archconsutling mit Kontaktanfrage
 	$status1 = mail($to, $subject, $messageForm, $header);
+*/
+	if($status1 && $status2/* == TRUE && $status2==TRUE*/){	
 
-	if($status1 == TRUE && $status2==TRUE){	
-		$res['sendstatus'] = 'done';
-	
-		//Edit your message here
 		$res['message'] = 'Ihre Kontaktanfrage wird so schnell wie möglich beantwortet.';
     }
 	else{

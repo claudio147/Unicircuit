@@ -29,6 +29,24 @@ $mail->Password   = "arch!consulting";  // Gmail password
 $mail->SetFrom('archconsulting2@gmail.com', 'Archconsulting'); // Absenderadresse
 $mail->addReplyTo('archconsulting2@gmail.com','Archconsulting');
 
+//Mail 2 ist für Kontaktformular des Onepagers (ohne Add Reply Archconsulting UND damit beide mails korrekt versendet werden!)
+$mail2 = new PHPMailer(); // Erstellen eines Objektes PHPMailer
+$mail2->IsSMTP();
+//$mail->Host = 'smtp.gmail.com'; // SMTP Server
+// $mail->SMTPDebug  = 2; // Aktivierung Debug Informationen
+$mail2->SMTPAuth   = true;  // SMTP Authentifierzung wird benötigt bei gmail Servern
+$mail2->SMTPSecure = "tls"; // Server präfix
+$mail2->Host       = "smtp.gmail.com"; // SMTP Server Adresse
+$mail2->Port       = 587; // Gmail SMTP Server Port
+
+$mail2->CharSet = 'utf-8';
+
+$mail2->Username   = "archconsulting2@gmail.com"; // Gmail username
+$mail2->Password   = "arch!consulting";  // Gmail password
+
+
+$mail2->SetFrom('archconsulting2@gmail.com', 'Archconsulting'); // Absenderadresse
+
 
 
 // prueft Mail Format
@@ -184,6 +202,81 @@ function createBauhResetPw($bhEmail, $bhFn, $bhLn, $BhPw, $title) {
         return true;
         }
 }
+
+//Mails Onepager
+// Erstellt und versendet Mail an Kunden als Auto-response
+function sendMailCustomer($na, $em) {
+    global $mail;
+    $mail ->Subject = 'Anfrage Unicircuit';
+    $mail->AddAddress($em, $na);
+      // Nachricht zusammenbauen
+      $mail->MsgHTML("
+	<html>
+        <head>
+            <title>Kontaktanfrage Unicircuit</title>
+            <style>
+                font-family: 'Arial', sans-serif;
+            </style>
+        </head>
+
+        <body>
+
+        <h3>Kontaktanfrage Unicircuit</h3>
+        <br />
+        <p>Guten Tag ".$na."</p>
+        <p>Besten Dank für Ihre Kontaktanfrage.</p>
+        <p>Wir werden uns schnellstmöglich mit Ihnen in Verbindung setzen.<p>
+        <br />
+        <p>Freundliche Grüsse</p>
+        <p>Ihr Unicircuit-Team</p>
+
+        </body>
+        </html>");
+
+      // Mail an Benutzer/in senden.
+      if(!$mail->Send()) {
+          return false;
+        } else {
+            return true;
+        }
+}
+
+//Erstellt Mail an Archconsulting mit Nachricht aus Kontaktformular
+function sendMailArchcon($na2, $em2, $me, $emCust){
+    global $mail2;
+    $mail2 ->Subject = 'Anfrage Unicircuit';
+    $mail2->AddAddress($em2, 'Archconsulting');
+    $mail2->addReplyTo($emCust, $na2);
+      // Nachricht zusammenbauen
+      $mail2->MsgHTML("
+	<html>
+        <head>
+            <title>Kontaktanfrage Unicircuit</title>
+            <style>
+                font-family: 'Arial', sans-serif;
+            </style>
+        </head>
+
+        <body>
+
+        <h3>Kontaktanfrage Unicircuit</h3>
+        <br />
+        <p><b>Name:</b> ".$na2." </p>
+        <p><b>Email:</b> ".$emCust." </p>
+        <br />		 
+        <p><b>Nachricht:</b><br />".$me."</p>
+
+        </body>
+        </html>");
+
+      // Mail an Benutzer/in senden.
+      if(!$mail2->Send()) {
+          return false;
+        } else {
+            return true;
+        }
+}
+
 
 
 
