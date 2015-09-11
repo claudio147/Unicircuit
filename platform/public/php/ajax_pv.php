@@ -211,3 +211,12 @@ if (isset($_POST['postStorage'])) {
         echo $data;
     }
 }
+
+if(isset($_POST['userSettings'])) {
+    $id = filter_input(INPUT_POST, 'userSettings', FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql = 'SELECT Firstname, Lastname, Company, Addressline1, Addressline2, ZIP, City, Country,
+            Email, PhoneNumber, MobileNumber FROM User WHERE IdUser = '.$id ;
+    
+    
+}

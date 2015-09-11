@@ -136,7 +136,6 @@ if (isset($_POST['submit'])) {
      
      
       $status = mysqli_query($link, $sql);
-    echo $sql;
     if($status == true){
         createArchRegMail($fn, $ln, $em);
         $response=0;

@@ -182,6 +182,36 @@ $lnCust=$row['Lastname'];
 </head>
 
 <body>
+                <!-- User Settings -->
+                <!-- Modal Global-->
+                <div class="modal" id="editPost" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Projekt bearbeiten</h4>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="editContainer_pv">
+
+                                            <!-- Platzhalter für ajax Inhalt -->
+
+                                        </div>       
+                                    </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
+
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                                </div>
+                          </form>
+
+                        </div>
+
+                    </div>
+                </div>
 
     <div id="wrapper">
 
