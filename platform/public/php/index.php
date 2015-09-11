@@ -182,6 +182,36 @@ $lnCust=$row['Lastname'];
 </head>
 
 <body>
+                <!-- User Settings -->
+                <!-- Modal Global-->
+                <div class="modal" id="editUser" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form enctype="multipart/form-data" action="index.php" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Benutzer Einstellungen</h4>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="editContainer_User">
+
+                                            <!-- Platzhalter für ajax Inhalt -->
+
+                                        </div>       
+                                    </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
+
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                                </div>
+                          </form>
+
+                        </div>
+
+                    </div>
+                </div>
 
     <div id="wrapper">
 
@@ -213,7 +243,7 @@ $lnCust=$row['Lastname'];
                         }
                         ?>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
+                            <a class="btn_userSettings" data-target="#editUser" href="#" data-toggle="modal" data-value="<?php echo $userID; ?> "><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -333,6 +363,7 @@ $lnCust=$row['Lastname'];
 
     </div>
     <!-- /#wrapper -->
+    
 
     <!-- JS 3rd Party -->
     <script src="../js/jquery-1.11.1.min.js"></script>

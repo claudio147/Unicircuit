@@ -339,6 +339,19 @@ $(document).ready(function(){
         dynamicResizerDashTimeline();
         dynamicResizerDashGallery();
     }
+    
+    /*
+     * User Settings
+     */
+    
+    //Ajax Loader für User Settings in Lightbox bei bearbeiten
+    $('.btn_userSettings').click(function(){
+        alert('test');
+        var id= $(this).data('value');
+        $.post('../php/ajax_pv.php', {"userSettings":id},function(data){
+            $('#editContainer_User').html(data);
+        })      
+    });
 
     
 })//--> END document Ready
