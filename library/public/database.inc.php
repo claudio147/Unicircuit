@@ -81,7 +81,7 @@ function allUserData() {
 function userData($id) {
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     $sql = 'SELECT Fk_IdUserType, Firstname, Lastname, Company, Addressline1, Addressline2, ZIP, City, Country, Email,
-    PhoneNumber, MobileNumber, RegCode, SessionId, LastLoginTime, LastLoginDate, Active FROM User WHERE IdUser = '. $id;
+    PhoneNumber, MobileNumber, RegCode, SessionId, LastLoginTime, LastLoginDate, Active, Picture FROM User WHERE IdUser = '. $id;
      
      return $sql;
 }
@@ -115,6 +115,16 @@ function reactivateUser($id) {
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     $sql = 'UPDATE User SET Active = 3 WHERE IdUser = '. $id;
 
+    return $sql;
+}
+
+//Hole Logo Architekt
+function selectArchLogo($projectID){
+    $id = filter_var($projectID, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql= 'SELECT u.Picture FROM User as u JOIN
+        Project as p on p.Fk_IdArchitect = u.IdUser WHERE p.IdProject
+        ='.$id;
     return $sql;
 }
 

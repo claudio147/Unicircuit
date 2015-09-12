@@ -361,6 +361,7 @@ $result= mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
 $fnCust=$row['Firstname'];
 $lnCust=$row['Lastname'];
+$logo= $row['Picture'];
 ?>
 
 <!DOCTYPE html>
@@ -395,6 +396,10 @@ $lnCust=$row['Lastname'];
         <!-- CSS spezifisch -->
         <link href="../css/style.css" rel="stylesheet">
         
+        <!-- FAVICON -->
+        <link rel="shortcut icon" href="../img/icon.png" type="image/png" />
+        <link rel="icon" href="../img/icon.png" type="image/png" />
+        
         
 
     </head>
@@ -407,7 +412,7 @@ $lnCust=$row['Lastname'];
 
                 <!-- Logo und "Toggle" -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html" target="_blank"><img src="../img/architect1/personal/logo.gif" alt="Logo"></a>
+                    <a class="navbar-brand" href="#"><img src="<?php echo $logo; ?>" alt="Logo"></a>
                     <h1 class="navbar-text">Projektverwaltung</h1>
                 </div>
 

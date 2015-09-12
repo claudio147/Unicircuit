@@ -36,7 +36,9 @@ require_once ('../../library/public/contentLoaderProductsite.inc.php');
         
 	<link href="css/style.css" rel="stylesheet" media="screen">
 
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+        <!-- FAVICON -->
+        <link rel="shortcut icon" href="icon.png" type="image/png" />
+        <link rel="icon" href="icon.png" type="image/png" />
         
 	<!-- JS 3rd Party-->
         <script src="js/modernizr.custom.js"></script>

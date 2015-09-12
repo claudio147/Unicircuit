@@ -5,7 +5,7 @@ window.onresize= dynamicResizer;
 window.onload= dynamicResizer;
 
 function dynamicResizer(){
-    var cw = $('.col-sm-2').width();
+    var cw = $('.imgLiquid').width();
     cw +=30;
     $('.imgLiquid').css({'height':cw+'px'});
     console.log(cw);
@@ -135,7 +135,7 @@ $(document).ready(function(){
     
 
         function dynamicResizer(){
-            var cw = $('.col-sm-2').width();
+            var cw = $('.imgLiquid').width();
             cw +=30;
             $('.imgLiquid').css({'height':cw+'px'});
         } 
