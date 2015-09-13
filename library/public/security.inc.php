@@ -109,3 +109,26 @@ function resizeImage ($filepath_old, $filepath_new, $image_dimension, $scale_mod
         return true;
     }
  }
+ 
+ function checkResponse($response) {
+     if(isset($response)){
+        $x=$response;
+        if($x==0){
+            $stat ='<br/><div class="alert alert-success" role="alert">Projekt erfolgreich bearbeitet.</div>';
+        }else if($x==1){
+            $stat ='<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen</div>';
+        }else if($x==2){
+            $stat ='<br/><div class="alert alert-success" role="alert">Projekt erfolgreich hinzugefügt</div>';
+        }else if($x==3){
+            $stat='<br/><div class="alert alert-danger" role="alert">Projekt hinzufügen fehlgeschlagen</div>';
+        }else if($x==4){
+            $stat = '<br/><div class="alert alert-danger" role="alert">Max. 2MB und Filetypen: .jpg/.png/.gif</div>';
+        } else if($x==5) {
+            $stat = '<br/><div class="alert alert-success" role="alert">Benutzer Einstellungen wurden bearbeitet.</div>';
+        } else if($x==6) {
+            $stat = '<br/><div class="alert alert-danger" role="alert">Passwort konnte nicht geändert werden.
+                 Die Passwörter stimmen nicht überein oder das Passwort hat weniger als 8 Zeichen!</div>';
+        }
+    }
+    return $stat;
+ }

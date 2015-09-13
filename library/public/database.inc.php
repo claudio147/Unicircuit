@@ -585,7 +585,7 @@ function createBauherr($bhFn, $bhLn, $bhAddressline1, $bhAddressline2, $bhZIP, $
     
     $sql= "INSERT INTO User (Firstname, Lastname, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, MobileNumber,
              Password, Fk_IdUserType, Active) VALUES
-             ('$bhFn', '$bhLn', '$bhAddressline1', '$bhAddressline2', '$bhZIP', '$bhCity', '$bhCountry', '$bhEmail',
+             ('$bhFn',  '$bhLn', '$bhAddressline1', '$bhAddressline2', '$bhZIP', '$bhCity', '$bhCountry', '$bhEmail',
              '$bhPhNu', '$bhMoNu', '$pwHash', 3, 3)";
     return $sql;
 }
@@ -743,6 +743,69 @@ function resetBauhPw($IdProject, $pwHash) {
     $pwHash = mysqli_real_escape_string($link, $pwHash);
     
     $sql = "UPDATE User AS u JOIN Project AS p ON u.IdUser = p.Fk_IdBauherr AND p.IdProject = '$IdProject' SET u.Password = '$pwHash'";
+    return $sql;
+}
+
+//Update der Usersettings Architekt, mit neuem Logo
+function updateArchWithPic($firstname, $lastname, $company, $addressline1, $addressline2, $zip, $city, 
+        $country, $phoneNumber, $mobileNumber, $email, $uploadfile, $id) {
+    global $link;
+    $firstname = mysqli_real_escape_string($link, $firstname);
+    $lastname = mysqli_real_escape_string($link, $lastname);
+    $company = mysqli_real_escape_string($link, $company);
+    $addressline1 = mysqli_real_escape_string($link, $addressline1);
+    $addressline2 = mysqli_real_escape_string($link, $addressline2);
+    $zip = filter_var($zip, FILTER_SANITIZE_NUMBER_INT);
+    $city = mysqli_real_escape_string($link, $city);
+    $country = mysqli_real_escape_string($link, $country);
+    $phoneNumber = mysqli_real_escape_string($link, $phoneNumber);
+    $mobileNumber = mysqli_real_escape_string($link, $mobileNumber);
+    $email = mysqli_real_escape_string($link, $email);
+    //$uploadfile
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql = "UPDATE User SET Firstname = '$firstname', Lastname = '$lastname', Company = '$company', Addressline1 = '$addressline1', 
+           Addressline2 = '$addressline2', ZIP = '$zip', City = '$city', Country = '$country', PhoneNumber = '$phoneNumber',
+           MobileNumber = '$mobileNumber', Email = '$email', Picture = '$uploadfile' WHERE IdUser = '$id'";
+   return $sql;
+            
+}
+
+//Update Usersettings Architekt ohne Logo
+function updateArchWithoutPic($firstname, $lastname, $company, $addressline1, $addressline2, $zip, $city, $country, $phoneNumber,
+                        $mobileNumber, $email, $id) {
+    global $link;
+    $firstname = mysqli_real_escape_string($link, $firstname);
+    $lastname = mysqli_real_escape_string($link, $lastname);
+    $company = mysqli_real_escape_string($link, $company);
+    $addressline1 = mysqli_real_escape_string($link, $addressline1);
+    $addressline2 = mysqli_real_escape_string($link, $addressline2);
+    $zip = filter_var($zip, FILTER_SANITIZE_NUMBER_INT);
+    $city = mysqli_real_escape_string($link, $city);
+    $country = mysqli_real_escape_string($link, $country);
+    $phoneNumber = mysqli_real_escape_string($link, $phoneNumber);
+    $mobileNumber = mysqli_real_escape_string($link, $mobileNumber);
+    $email = mysqli_real_escape_string($link, $email);
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql = "UPDATE User SET Firstname = '$firstname', Lastname = '$lastname', Company = '$company', Addressline1 = '$addressline1', 
+           Addressline2 = '$addressline2', ZIP = '$zip', City = '$city', Country = '$country', PhoneNumber = '$phoneNumber',
+           MobileNumber = '$mobileNumber', Email = '$email' WHERE IdUser = '$id'";
+   return $sql;
+}
+
+
+//Holt Infos eines Users anhand der Id
+function getUserbyId($id) {
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        
+    $sql = 'SELECT Firstname, Lastname, Company, Addressline1, Addressline2, ZIP, City, Country,
+            Email, PhoneNumber, MobileNumber, Fk_IdUserType FROM User WHERE IdUser = '.$id ;
+    return $sql;
+}
+//Neues Passwort für den User in der DB sichern
+function updateUserPw($p1, $id) {
+    $sql = "UPDATE User SET Password = '$p1' WHERE IdUser = '$id' ";
     return $sql;
 }
 
