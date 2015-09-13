@@ -143,7 +143,11 @@ $row = mysqli_fetch_array($result);
 $fnCust=$row['Firstname'];
 $lnCust=$row['Lastname'];
 
-
+//Hole Link Arch.-Logo
+$sql=selectArchLogo($projectID);
+$result=mysqli_query($link, $sql);
+$row=mysqli_fetch_array($result);
+$logo= $row['Picture'];
 
 ?>
 
@@ -177,6 +181,10 @@ $lnCust=$row['Lastname'];
 
     <!-- CSS spezifisch -->
     <link href="../css/style.css" rel="stylesheet">
+    
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="../img/icon.png" type="image/png" />
+    <link rel="icon" href="../img/icon.png" type="image/png" />
 
 
 </head>
@@ -226,11 +234,10 @@ $lnCust=$row['Lastname'];
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html" target="_blank"><img src="../img/architect1/personal/logo.gif" alt="Logo"></a>
+                <a class="navbar-brand" href="#"><img src="<?php echo $logo; ?>" alt="Logo"></a>
                 <h1 class="navbar-text"><?php echo $prNr.'&nbsp;&nbsp;&nbsp;&nbsp;'.$prNa;?></h1>
-            </div>
-
-            <!-- Top Menu -->
+                
+                <!-- Top Menu -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
@@ -239,7 +246,7 @@ $lnCust=$row['Lastname'];
                         if($usertyp==2){
                             echo'<li>';
                             echo'<a class="link-pv" href="projektverwaltung.php"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Projektverwaltung</a>';
-                            echo'</li>';   
+                            echo'</li>';
                         }
                         ?>
                         <li>
@@ -252,6 +259,11 @@ $lnCust=$row['Lastname'];
                     </ul>
                 </li>
             </ul>
+                
+                
+            </div>
+
+            
 
             <!-- Sidebar Menü (Element klappen ein bei kleinem Viewport) -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">

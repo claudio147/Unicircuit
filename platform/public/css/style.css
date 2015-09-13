@@ -85,7 +85,7 @@ a.noStyleLink:hover{
 h1{
 	margin-top: 12px !important;
 	margin-bottom: 12px !important;
-	margin-left: 135px !important;
+	//margin-left: 135px !important;
 	font-size: 24px;
         color: #f0f0f0 !important;
 }
@@ -95,11 +95,10 @@ body {
     background-color: #fff;
 }
 
-@media(min-width:768px) {
+
     body {
         margin-top: 50px;
     }
-}
 
 #wrapper {
     padding-left: 0;
@@ -107,7 +106,7 @@ body {
 
 #page-wrapper {
     width: 100%;
-    padding: 0;
+    padding: 10px;
     background-color: #fff;
 }
 
@@ -116,7 +115,7 @@ body {
     line-height: normal;
 }
 
-@media(min-width:768px) {
+@media(min-width:1025px) {
     #wrapper {
         padding-left: 225px;
     }
@@ -137,7 +136,11 @@ body {
 
 .top-nav>li {
     display: inline-block;
-    float: left;
+    float: right !important;
+}
+
+.navbar-header {
+    float: none;
 }
 
 .top-nav>li>a {
@@ -186,12 +189,19 @@ body {
 .top-nav>.open>.dropdown-menu{
     width: 180px !important;
 }
+
+h1.navbar-text {
+    float: left !important;
+    margin-right: 15px !important;
+    margin-left: 15px;
+}
+
 .link-pv{
     margin-bottom: 5px;
 }
 /* Side Navigation */
 
-@media(min-width:768px) {
+@media(min-width:1025px) {
     .side-nav {
         position: fixed;
         top: 51px;
@@ -213,6 +223,56 @@ body {
     .side-nav>li>button,
     .side-nav>li>ul>li>button{
         width: 225px;
+        height: 50px;
+        text-align: left;
+        background: transparent;
+        border: none;
+        color: #f0f0f0;
+        padding-left: 15px;
+    }
+
+    .side-nav li a:hover,
+    .side-nav li a:focus,
+    .side-nav>li>button:hover,
+    .side-nav>li>button:focus,
+    .side-nav>li>button:active,
+    .side-nav>li>ul>li>button:hover,
+    .side-nav>li>ul>li>button:focus,
+    .side-nav>li>ul>li>button:active,
+    .side-nav>li>.active,
+    .side-nav>li>ul>li>.active{
+        outline: none;
+        background-color: #9fcd35 !important;
+        color: #373d42 !important;
+    }
+    
+    h1{
+    margin-left: 135px !important;
+    }
+}
+
+@media(max-width:1024px) {
+    .side-nav {
+        //position: fixed;
+        //top: 51px;
+        //left: 225px;
+        //width: 225px;
+        //margin-left: -225px;
+        border: none;
+        border-radius: 0;
+        overflow-y: auto;
+        background-color: #373d42;
+        //bottom: 0;
+        overflow-x: hidden;
+        padding-bottom: 40px;
+    }
+
+    .side-nav>li>a {
+        width: 100%;
+    }
+    .side-nav>li>button,
+    .side-nav>li>ul>li>button{
+        width: 100%;
         height: 50px;
         text-align: left;
         background: transparent;
@@ -290,6 +350,27 @@ div.modalgroup{
     margin-left: 0px;
     padding-left: 0px;
 }
+.post{
+    background-color: #f0f0f0;
+    margin-top: 25px;
+    padding: 15px;
+    -webkit-box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
+    -moz-box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
+    box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
+}
+
+.post-title{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.post-date{
+    font-style: italic;
+}
+
+.timeline-container{
+    width: auto !important;
+}
 
 
 
@@ -299,11 +380,10 @@ div.modalgroup{
 */
 
 .pv-container{
-    //background-color: #f0f0f0 !important;
     height: 500px;
-    //margin-left: 15px;
-    //margin-right: 15px;
     padding: 10px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .pv-cont-content{
@@ -495,6 +575,18 @@ button.deadline-btn-show:focus{
 ****** Dashboard
 */
 
+@media(max-width:768px){
+    .post-content{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    
+    .post-title{
+        margin-top: 10px;
+        font-size: 21px;
+        
+    }
+}
 .dash-wrapper{
     margin-top: 15px;
     margin-left: 0px;
@@ -646,4 +738,42 @@ button.deadline-btn-show:focus{
 */
 #schedule-pdf{
     margin-top: 15px;
+}
+
+
+@media (max-width: 1024px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-fixed-top {
+		top: 0;
+		border-width: 0 0 1px;
+	}
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+		margin-top: 7.5px;
+	}
+	.navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+  		display:block !important;
+	}
 }

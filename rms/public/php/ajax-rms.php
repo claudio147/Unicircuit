@@ -176,11 +176,11 @@ if(isset($_POST['showAddressDetails'])){
         $homepage= $row['Homepage'];
         $count=0;
         
-        $sql2=statsOfGlobalAddress($id);
+        $sql2=countProjectAddress($id);
         $result2=  mysqli_query($link, $sql2);
         $row2=mysqli_fetch_array($result2);
-        
-        $count= count($row2);
+        $count=$row2['COUNT(*)'];
+
 
         $data.= '<input type="hidden" name="idGlobalAddress" value="'.$id.'">
                 <h4>Firmendaten</h4>
@@ -216,7 +216,7 @@ if(isset($_POST['showAddressDetails'])){
                 <label for="10">Homepage*</label>
                 <input id="10" type="text" name="homepage" value="'.$homepage.'" class="form-control"><br/><br/>
                 <h4>Statistik</h4>
-                <label>Anzahl Verwendungen in Projekten</label>
+                <label>Anzahl Verwendungen in Projekten (Aktiv)</label>
                 <p>'.$count.' mal</p>';
                 echo $data;
     }

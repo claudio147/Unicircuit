@@ -76,6 +76,10 @@ $lnCust=$row['Lastname'];
     <!-- CSS spezifisch -->
     <link href="../css/style.css" rel="stylesheet">
     
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="../img/icon.png" type="image/png" />
+    <link rel="icon" href="../img/icon.png" type="image/png" />
+    
     <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
     <script>tinymce.init({
             selector:'textarea#2',

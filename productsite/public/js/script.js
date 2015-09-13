@@ -218,37 +218,52 @@
 		$('#contact-form').submit(function(e) {
 
 			e.preventDefault();
-
+                        
+                        var honeypot = $('#h_email').val();
+                        var posted= $('#h_time').val();
 			var c_name = $('#c_name').val();
 			var c_email = $('#c_email').val();
 			var c_message = $('#c_message ').val();
 			var response = $('#contact-form .ajax-response');
-			
-			var formData = {
+                        
+                        var d = new Date();
+                        var curTime = d.getTime();
+                        
+                        var timeDiff = (curTime - posted);
+                        
+                        if(timeDiff<10){
+                            response.fadeIn(500);
+                            response.html('<i class="fa fa-warning"></i> Ihre Nachricht wurde als SPAM erkannt!');
+                        }else if(honeypot.trim()){
+                            response.fadeIn(500);
+                            response.html('<i class="fa fa-warning"></i> Ihre Nachricht wurde als SPAM erkannt!');
+                        }else{
+                            var formData = {
 				'name'       : c_name,
 				'email'      : c_email,
 				'message'    : c_message
-			};
+                            };
 
-			if (( c_name== '' || c_email == '' || c_message == '') || (!isValidEmailAddress(c_email) )) {
-				response.fadeIn(500);
-				response.html('<i class="fa fa-warning"></i> Bitte Eingaben überprüfen und erneut versuchen.');
-			}
+                            if (( c_name== '' || c_email == '' || c_message == '') || (!isValidEmailAddress(c_email) )) {
+                                    response.fadeIn(500);
+                                    response.html('<i class="fa fa-warning"></i> Bitte Eingaben überprüfen und erneut versuchen.');
+                            }
 
-			else {
-					 $.ajax({
-							type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-							url         : './php/contact.php', // the url where we want to POST
-							data        : formData, // our data object
-							dataType    : 'json', // what type of data do we expect back from the server
-							encode      : true,
-							success		: function(res){
-											var ret = $.parseJSON(JSON.stringify(res));
-											response.html(ret.message).fadeIn(500);
-							}
-						});
-				}  
-
+                            else {
+                                             $.ajax({
+                                                            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                                                            url         : './php/contact.php', // the url where we want to POST
+                                                            data        : formData, // our data object
+                                                            dataType    : 'json', // what type of data do we expect back from the server
+                                                            encode      : true,
+                                                            success	: function(res){
+                                                                            var ret = $.parseJSON(JSON.stringify(res));
+                                                                            response.html(ret.message).fadeIn(500);
+                                                                        }
+                                                    });
+                                    }  
+                        }
+			
             	return false;
 			});
 

@@ -772,6 +772,10 @@ textarea.form-control {
 	background-color: #9fcd35;
 }
 
+.c_important{
+    display: none;
+}
+
 
 /* ---------------------------------------------- /*
  * AGB's

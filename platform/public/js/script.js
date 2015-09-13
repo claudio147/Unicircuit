@@ -5,7 +5,7 @@ window.onresize= dynamicResizer;
 window.onload= dynamicResizer;
 
 function dynamicResizer(){
-    var cw = $('.col-sm-2').width();
+    var cw = $('.imgLiquid').width();
     cw +=30;
     $('.imgLiquid').css({'height':cw+'px'});
     console.log(cw);
@@ -39,7 +39,7 @@ $(document).ready(function(){
 
     //Lokale Adressliste (mit Export-Funktion)
     $('#localAddress').DataTable({
-        "scrollY":        "450px",
+        "scrollY":        "400px",
         "scrollCollapse": true,
         "paging":         false,
         fixedHeader: false,
@@ -135,7 +135,7 @@ $(document).ready(function(){
     
 
         function dynamicResizer(){
-            var cw = $('.col-sm-2').width();
+            var cw = $('.imgLiquid').width();
             cw +=30;
             $('.imgLiquid').css({'height':cw+'px'});
         } 

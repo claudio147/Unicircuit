@@ -151,7 +151,7 @@ if(isset($_POST['edit'])){
         $emailDirect= $row['EmailDirect'];
         $description= $row['Description'];
 
-        $data.= '<input type="hidden" name="idGlobalAddress" value="'.$id.'">
+        $data.= '<input type="hidden" name="idProjectAddress" value="'.$id.'">
                 <h4>Firmendaten</h4>
                 <label for="1">BKP*</label>
                 <input id="1" type="text" name="bkp" value="'.$bkp.'" readonly="readonly" class="form-control">

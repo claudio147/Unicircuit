@@ -33,11 +33,14 @@ if(isset($_POST['submit'])){
         $status= mysqli_query($link, $sql);
         if($status){
             header('Location: index.php?id=4&status=0&project='.$projectID);
+            exit();
         }else{
             header('Location: index.php?id=4&status=1&project='.$projectID);
+            exit();
         }
     }else{
         header('Location: index.php?id=4&status=1&project='.$projectID);
+        exit();
     }
 }
 

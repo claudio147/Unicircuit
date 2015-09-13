@@ -294,16 +294,16 @@ if(isset($_POST['edit'])) {
 
 //Archivierung eines Projektes
 if(isset($_POST['store'])) {
-     $store = filter_input(INPUT_POST, 'store', FILTER_SANITIZE_STRING); 
+    $store = filter_input(INPUT_POST, 'store', FILTER_SANITIZE_STRING); 
      
-     if(!empty($_POST['postID'])) {
-         $proId2 = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_STRING);
-         
-         $sql = storeProject($proId2);
-         $status2 = mysqli_query($link, $sql);
-         if(isset($status2)) {
-             echo 'Das Projekt wurde in Ihr Archiv verschoben, und der dazugehörige Bauherr wurde Deaktiviert.';
-         }
+    if(!empty($_POST['postID'])) {
+        $proId2 = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_STRING);
+
+        $sql = storeProject($proId2);
+        $status2 = mysqli_query($link, $sql);
+        if(isset($status2)) {
+            echo 'Das Projekt wurde in Ihr Archiv verschoben, und der dazugehörige Bauherr wurde Deaktiviert.';
+        }
          
 
          
@@ -455,6 +455,7 @@ $result= mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
 $fnCust=$row['Firstname'];
 $lnCust=$row['Lastname'];
+$logo= $row['Picture'];
 ?>
 
 <!DOCTYPE html>
@@ -489,6 +490,10 @@ $lnCust=$row['Lastname'];
         <!-- CSS spezifisch -->
         <link href="../css/style.css" rel="stylesheet">
         
+        <!-- FAVICON -->
+        <link rel="shortcut icon" href="../img/icon.png" type="image/png" />
+        <link rel="icon" href="../img/icon.png" type="image/png" />
+        
         
 
     </head>
@@ -501,7 +506,7 @@ $lnCust=$row['Lastname'];
 
                 <!-- Logo und "Toggle" -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html" target="_blank"><img src="../img/architect1/personal/logo.gif" alt="Logo"></a>
+                    <a class="navbar-brand" href="#"><img src="<?php echo $logo; ?>" alt="Logo"></a>
                     <h1 class="navbar-text">Projektverwaltung</h1>
                 </div>
 
@@ -577,7 +582,7 @@ $lnCust=$row['Lastname'];
                                             <select id="7" name="Country" class="form-control">
                                                 <?php 
                                                 //Liste mit Ländern aus der Datenbank
-                                                $sql = "SELECT Country FROM countries";
+                                                $sql = "SELECT Country FROM Countries";
                                                 $resultC = mysqli_query($link, $sql);
                                                     while($rowC= mysqli_fetch_array($resultC)){
                                                     echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';

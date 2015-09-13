@@ -251,7 +251,7 @@ if(isset($_POST['delete'])){
 <?php
 
 
-echo'<div class="col-xs-12 col-md-8">';
+echo'<div class="col-xs-12">';
 echo'<h2 class="modul-title">Chronik</h2>';
 ?>
 
@@ -259,7 +259,7 @@ echo'<h2 class="modul-title">Chronik</h2>';
 <div class="container modalgroup">
 <?php
     if($usertyp==2){ 
-        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost">+ hinzufügen</button>';
+        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
     } 
 ?> 
     <!-- Modal Global-->
@@ -386,30 +386,30 @@ while($row= mysqli_fetch_array($result)){
         }else{
             $lock='';
         }
-        echo'<div class="post row">';
-        echo'<h3><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';  
-        echo'<p class="date">'.$date.', '.$time.'</p>';
-        echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
-        echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
-        echo'</div>';
-        echo'<div class="col-sm-6">';
-        echo'<p>'.$row['Description'].'</p>';
-        echo'</div>';
+        echo'<div class="post row">';            
+            echo'<div class="col-xs-4 col-sm-3 col-md-2 imgLiquidFill imgLiquid">';
+                echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img class="post-img" alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
+            echo'</div>';
+            echo'<div class="col-xs-8 col-sm-9 col-md-10">';
+                echo'<h3 class="post-title"><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';  
+                echo'<p class="post-date">'.$date.', '.$time.'</p>';
+                echo'<p>'.$row['Description'].'</p>';
+            echo'</div>';
         echo'</div>';
     
     //Bauherr sieht nur Einträge für ihn    
     }else if($usertyp==3 && $row['Id_visible']==2){
         $date = date('d.m.Y', strtotime($row['Date']));
         $time= substr($row['Time'],0,5);
-        echo'<div class="post row">';
-        echo'<h3>'.$row['Title'].'</h3>';   
-        echo'<p class="date">'.$date.', '.$time.'</p>';
-        echo'<div class="col-sm-2 imgLiquidFill imgLiquid ">';
-        echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
-        echo'</div>';
-        echo'<div class="col-sm-6">';
-        echo'<p>'.$row['Description'].'</p>';
-        echo'</div>';
+        echo'<div class="post row">';            
+            echo'<div class="col-xs-4 col-sm-3 col-md-2 imgLiquidFill imgLiquid">';
+                echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img class="post-img" alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
+            echo'</div>';
+            echo'<div class="col-xs-8 col-sm-9 col-md-10">';
+                echo'<h3 class="post-title">'.$row['Title'].'</h3>';  
+                echo'<p class="post-date">'.$date.', '.$time.'</p>';
+                echo'<p>'.$row['Description'].'</p>';
+            echo'</div>';
         echo'</div>';
     }
     
