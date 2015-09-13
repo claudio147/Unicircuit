@@ -539,7 +539,7 @@ function createBauherr($bhFn, $bhLn, $bhAddressline1, $bhAddressline2, $bhZIP, $
     
     $sql= "INSERT INTO User (Firstname, Lastname, Addressline1, Addressline2, ZIP, City, Country, Email, PhoneNumber, MobileNumber,
              Password, Fk_IdUserType, Active) VALUES
-             ('$bhFn', '$bhLn', '$bhAddressline1', '$bhAddressline2', '$bhZIP', '$bhCity', '$bhCountry', '$bhEmail',
+             ('$bhFn',  '$bhLn', '$bhAddressline1', '$bhAddressline2', '$bhZIP', '$bhCity', '$bhCountry', '$bhEmail',
              '$bhPhNu', '$bhMoNu', '$pwHash', 3, 3)";
     return $sql;
 }
