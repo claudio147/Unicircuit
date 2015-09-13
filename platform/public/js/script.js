@@ -8,7 +8,7 @@ function dynamicResizer(){
     var cw = $('.imgLiquid').width();
     cw +=30;
     $('.imgLiquid').css({'height':cw+'px'});
-    console.log(cw);
+    //console.log(cw);
 } 
 
 
@@ -278,13 +278,15 @@ $(document).ready(function(){
      */
     function dynamicResizerDashboard(){
         var height = $(window).height();
-        full=height-123;
-        half= full/2-110;
-        quat= height/4-40;
+        
+        var eventheight = $('.event-container-dash').height();
+        evt= eventheight+30;
+        full=height-130;
+        quat= (full-evt-130)/2;
         $('.dash-timeline').css({'height':full+'px'});
-        $('.dash-gallery').css({'height':half+'px'});
+        $('.dash-gallery').css({'height':quat+'px'});
         $('.dash-deadlines').css({'height':quat+'px'});
-        $('.dash-events').css({'height':quat+'px'});
+        $('.dash-events').css({'height':evt+'px'});
     } 
     
     //Timeline-Mini
@@ -303,11 +305,19 @@ $(document).ready(function(){
             gh=gh-30;
             $('.dash-slick-img').css({'height':gh+'px'});
             $('.dash-slick-img').css({'width':gw+'px'});
-
+            
+            var slides=0;
+            if($(window).width()<=768){
+                var slides=1;
+            }else if($(window).width()<=1024){
+                var slides=2;
+            }else{
+                var slides=3;
+            }
             //Gallery-mini
             $('.dash-slick-gallery').slick({
-                                        slidesToShow: 3,
-                                        slidesToScroll: 3,
+                                        slidesToShow: slides,
+                                        slidesToScroll: 1,
                             dots: false,
                             infinite: false,
                             arrows: false,
@@ -338,6 +348,7 @@ $(document).ready(function(){
         dynamicResizerDashboard();
         dynamicResizerDashTimeline();
         dynamicResizerDashGallery();
+        
     }
     
     /*

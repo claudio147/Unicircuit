@@ -295,6 +295,11 @@ h1.navbar-text {
         background-color: #9fcd35 !important;
         color: #373d42 !important;
     }
+    
+    #page-wrapper>.container-fluid{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
 }
 
 .side-nav>li>ul {
@@ -597,7 +602,7 @@ button.deadline-btn-show:focus{
     background-color: #373d42;
     height: 35px;
     padding-left: 10px;
-    border-right: solid 5px #fff;
+    //border-right: solid 5px #fff;
     color: #fff;
     z-index: 999;
     -webkit-box-shadow: 0px 12px 7px -5px rgba(0,0,0,0.48);
@@ -633,11 +638,18 @@ button.deadline-btn-show:focus{
 }
 
 .dash-timeline{
-    border-right: solid 5px #fff;
+    //border-right: solid 5px #fff;
     padding-left: 10px;
     padding-right: 10px;
     background-color: #f0f0f0;
     overflow-y: auto;
+}
+
+
+.row-dash-gallery,
+.row-dash-deadlines,
+.row-dash-events{
+    margin-right: -15px !important;
 }
 
 .post-dash{

@@ -27,7 +27,7 @@ if(isset($_SESSION['UserType'])){
                 $_SESSION['LastProjectID']=$_POST['projectID'];
             }
             if(!isset($_POST['nav'])){//Bei einem Refresh über den Browser wird die Navigation 1 (Home) aufgerufen
-                $_POST['nav']=1;
+                $_POST['nav']=$_SESSION['LastNav'];
             }
             
         }else{
@@ -53,6 +53,8 @@ if(isset($_SESSION['UserType'])){
 //Projekt ID wird ermittelt
 if(isset($_POST['goto'])){//Architekt (1. Aufruf)
     $projectID= $_POST['goto'];
+    $_SESSION['LastProjectID']=$projectID;
+    $_POST['nav']=1;
     //Pürft ob das ausgewählte Projekt vom Architekten X ist
     if(in_array($projectID, $validprojects)){
         //Setzt Menüpunkt Home auf aktiv
@@ -68,7 +70,7 @@ if(isset($_POST['goto'])){//Architekt (1. Aufruf)
         $projectID= $_POST['projectID'];
      
         //Wenn keine übergeben wird,
-    }else if (isset($_SESSION['LastProjectID'])) {
+    }else if (isset($_SESSION['LastProjectID'])){
         $projectID=$_SESSION['LastProjectID'];
     }
     
@@ -77,6 +79,7 @@ if(isset($_POST['goto'])){//Architekt (1. Aufruf)
     if(isset($_POST['nav'])){
         //Setzt angeklickten Menüpunkt als Aktiv (Grüner hintergrund)
         $active= $_POST['nav'];
+        $_SESSION['LastNav']=$active;
         switch ($active) {
             case 1:
                 $active1='active';

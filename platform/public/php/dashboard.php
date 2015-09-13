@@ -238,7 +238,11 @@
                                             $m='???';
                                     }
                                     
-                                    echo'<div class="col-xs-4 col-md-3 event-container event-container-dash">';
+                                    if($count==4){
+                                        echo'<div class="hidden-xs hidden-sm col-md-3  event-container event-container-dash">';
+                                    }else{
+                                        echo'<div class="col-xs-4 col-sm-4 col-md-3 event-container event-container-dash">';
+                                    }
                                         echo'<div class="event-front event-front-dash">';
                                             echo'<p class="event-day">'.$day.'</p>';
                                             echo'<p class="event-month">'.$m.'</p>';
