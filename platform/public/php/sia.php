@@ -18,10 +18,29 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
     $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     $dateOrg= $_POST['date'];
     $date = date('Y-m-d', strtotime($dateOrg));
+    $dateOutput= date('d.m.Y', strtotime($dateOrg));
     $present= $_POST['present'];
     $notes= iconv('UTF-8', 'windows-1252', $_POST['notes']);
     $title;
     $prNr;
+    
+    if($date>  date('Y-m-d', time())){
+        //Datum in Zukunft gewählt --> exit
+        header('Location: index.php?id=9&status=0&project='.$projectID);
+        exit();
+    }
+    
+    if(empty($dateOrg)){
+        //Überprüft ob ein Datum gesetzt wurde
+        header('Location: index.php?status=0&id=9&project='.$projectID);
+        exit();
+    }
+    
+    //Hole Link Arch.-Logo
+    $sql=selectArchLogo($projectID);
+    $result=mysqli_query($link, $sql);
+    $row=mysqli_fetch_array($result);
+    $logo= $row['Picture'];
     
     //Alle Projektdaten holen
     $sql=getProjectDates($projectID);
@@ -50,7 +69,7 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
     $pdf->AddPage();
 
     //Logo
-    $pdf->Image('../img/architect1/personal/logo.gif',140,10,50);
+    $pdf->Image($logo,140,10,50,15);
 
 
     //1. Abschnitt
@@ -64,7 +83,7 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
     $pdf->Cell(30,10,$prNr,0,0,'L');
     $pdf->SetFont($font,'',14);
     $pdf->Cell(100,10,$title,0,0,'L');
-    $pdf->Cell(40,10,$date,0,1,'R');
+    $pdf->Cell(40,10,$dateOutput,0,1,'R');
 
     //Trennlinie
     $pdf->line(20,40,190,40);
@@ -267,13 +286,9 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
     
 
     //Download
-    if(!empty($date)){
-        $pdf->Output('Baujournal_'.$date.'.pdf', 'D');
-    }else{
-        $pdf->Output('Baujournal.pdf', 'D');
-    }
-    header('Location: index.php?id=9&project='.$projectID);
-    exit();
+    $pdf->Output('Baujournal_'.$date.'.pdf', 'D');
+
+    
 }
 
 //Alle Projektdaten holen
@@ -299,7 +314,7 @@ while ($row = mysqli_fetch_array($result)) {
             <input id="weatherIcon" type="hidden" name="weatherIcon" value="">
             <input id="weatherDesc" type="hidden" name="weatherDesc" value="">
             
-            <label for="date">Datum des gewünschten Baujournal- Eintrags</label>
+            <label for="date">Datum des gewünschten Baujournal- Eintrags*</label>
             <input type="" name="date" id="date" class="form-control datepicker">
             <label for="handwerker">Anwesende Handwerker</label>
             <select name="present[]" size="10" multiple="multiple" class="form-control" id="handwerker">
@@ -318,4 +333,13 @@ while ($row = mysqli_fetch_array($result)) {
             <br />
             <input class="btn btn-default createPDF" type="submit" name="submit" value="SIA Baujournal herunterladen"/>
         </form>
+        
+        <?php  
+        if(isset($_GET['status'])){
+            $x=$_GET['status'];
+            if($x==0){
+                echo'<br/><div class="alert alert-danger" role="alert">Fehlgeschlagen! – kein Datum oder Datum > heute</div>';
+            }
+        }
+        ?>
     </div>

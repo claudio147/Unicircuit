@@ -202,6 +202,15 @@ h1.navbar-text {
 /* Side Navigation */
 
 @media(min-width:1025px) {
+    
+    h1.navbar-text {
+    margin-left: 40px !important;
+    }
+
+    a.navbar-brand{
+    width: 225px;
+    
+    }
     .side-nav {
         position: fixed;
         top: 51px;

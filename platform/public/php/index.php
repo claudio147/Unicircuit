@@ -278,6 +278,7 @@ $result=mysqli_query($link, $sql);
 $row=mysqli_fetch_array($result);
 $logo= $row['Picture'];
 
+
 ?>
 
 <!DOCTYPE html>
