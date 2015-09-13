@@ -354,11 +354,12 @@ if(isset($_POST['pwReset'])) {
 
 //Anpassungen User Einstellungen 
 if(isset($_POST['editUser'])) {
-    $id = filter_input(INPUT_POST, 'editUser', FILTER_SANITIZE_NUMBER_INT);
+    $id = filter_input(INPUT_POST, 'UserId', FILTER_SANITIZE_NUMBER_INT);
     
      //Daten in Variablen Speichern
      $firstname = filter_input(INPUT_POST, 'Firstname', FILTER_SANITIZE_STRING);
      $lastname = filter_input(INPUT_POST, 'Lastname', FILTER_SANITIZE_STRING);
+     $company = filter_input(INPUT_POST, 'Company', FILTER_SANITIZE_STRING);
      $addressline1 = filter_input(INPUT_POST, 'Addressline1', FILTER_SANITIZE_STRING);
      $addressline2 = filter_input(INPUT_POST, 'Addressline2', FILTER_SANITIZE_STRING);
      $zip = filter_input(INPUT_POST, 'ZIP', FILTER_SANITIZE_STRING);
@@ -371,7 +372,7 @@ if(isset($_POST['editUser'])) {
      //Update wenn auch ein neues Bild hochgeladen wurde
      if(!empty($_FILES['userfile']['name'])){
     
-        $uploaddir = '../architects/architect_'.$id.'/project_'.$proId2.'/' ;
+        $uploaddir = '../architects/architect_'.$id.'/' ;
         $tempna= $_FILES['userfile']['tmp_name'];
         $orgname= $_FILES['userfile']['name'];
         $size= $_FILES['userfile']['size'];
@@ -423,13 +424,13 @@ if(isset($_POST['editUser'])) {
 
         if($statusUpload){
             //Erfolgreich gespeichert --> Speichert DB Eintrag
-            $sql= updateProjectWithPic($projectNumb, $title, $addressline1, $addressline2, $zip, $city, $country, $description, $uploadfile, $bhFn, $bhLn,
-                $bhAddressline1, $bhAddressline2, $bhZIP, $bhCity, $bhCountry, $bhPhNu, $bhMoNu, $bhEmail, $proId2);
+            $sql= updateArchWithPic($firstname, $lastname, $company, $addressline1, $addressline2, $zip, $city, $country, $phoneNumber,
+                        $mobileNumber, $email, $uploadfile, $id);
 
             $status= mysqli_query($link, $sql);
             
             if($status){
-                $response='0';
+                $response='5';
             }else{
                 $response='1';
             }
@@ -440,10 +441,41 @@ if(isset($_POST['editUser'])) {
             $response='1';
         }
 
+    } 
+    else {
+        $sql = updateArchWithoutPic($firstname, $lastname, $company, $addressline1, $addressline2, $zip, $city, $country, $phoneNumber,
+                        $mobileNumber, $email, $id);
+        $status= mysqli_query($link, $sql);
+            
+            if($status){
+                $response='5';
+            }else{
+                $response='1';
+            }
+    }
+    
+    if(!empty($_POST['password1'])) {
+        $pw1 = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
+        $pw2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
+        // Passworte identisch
+        if (($pw1 != $pw2) || (strlen($pw1) < 8)) {
+        $response = '6';
+        $error = true;
+        }
+        if(!isset($error)) {
+            $pw1 = hash('sha256', $pw1);
+            
+            $sql = updateUserPw($pw1, $id);
+            $status = mysqli_query($link, $sql);
+            if($status) {
+                $response = '5';
+            } else{
+                $response = '1';
+            }
+        }
     }
      
-     
-    
+
 }
 
 
@@ -742,6 +774,11 @@ if(isset($response)){
             echo'<br/><div class="alert alert-danger" role="alert">Projekt hinzufügen fehlgeschlagen</div>';
         }else if($x==4){
             echo'<br/><div class="alert alert-danger" role="alert">Max. 2MB und Filetypen: .jpg/.png/.gif</div>';
+        } else if($x==5) {
+            echo'<br/><div class="alert alert-success" role="alert">Benutzer Einstellungen wurden bearbeitet.</div>';
+        } else if($x==6) {
+            echo'<br/><div class="alert alert-danger" role="alert">Passwort konnte nicht geändert werden.
+                 Die Passwörter stimmen nicht überein oder das Passwort hat weniger als 8 Zeichen!</div>';
         }
     }
     

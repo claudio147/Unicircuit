@@ -49,6 +49,131 @@ if(isset($_SESSION['UserType'])){
     //kein Usertyp = kein Zugriff
     header('Location: login.php?denied=1');
 }
+//Anpassungen User Einstellungen 
+if(isset($_POST['edit_User'])) {
+    $id = filter_input(INPUT_POST, 'UserId', FILTER_SANITIZE_NUMBER_INT);
+    
+     //Daten in Variablen Speichern
+     $firstname = filter_input(INPUT_POST, 'Firstname', FILTER_SANITIZE_STRING);
+     $lastname = filter_input(INPUT_POST, 'Lastname', FILTER_SANITIZE_STRING);
+     $company = filter_input(INPUT_POST, 'Company', FILTER_SANITIZE_STRING);
+     $addressline1 = filter_input(INPUT_POST, 'Addressline1', FILTER_SANITIZE_STRING);
+     $addressline2 = filter_input(INPUT_POST, 'Addressline2', FILTER_SANITIZE_STRING);
+     $zip = filter_input(INPUT_POST, 'ZIP', FILTER_SANITIZE_STRING);
+     $city = filter_input(INPUT_POST, 'City', FILTER_SANITIZE_STRING);
+     $country = filter_input(INPUT_POST, 'Country', FILTER_SANITIZE_STRING);
+     $phoneNumber = filter_input(INPUT_POST, 'PhoneNumber', FILTER_SANITIZE_STRING);
+     $mobileNumber = filter_input(INPUT_POST, 'MobileNumber', FILTER_SANITIZE_STRING);
+     $email = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_STRING);
+     
+     //Update wenn auch ein neues Bild hochgeladen wurde
+     if(!empty($_FILES['userfile']['name'])){
+    
+        $uploaddir = '../architects/architect_'.$id.'/' ;
+        $tempna= $_FILES['userfile']['tmp_name'];
+        $orgname= $_FILES['userfile']['name'];
+        $size= $_FILES['userfile']['size'];
+        $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
+        $extension= strrchr($_FILES['userfile']['name'],'.');
+        $file= $filename.$extension;
+
+        //Dateipfad mit Dateinamen zusammensetzen
+        $uploadfile= $uploaddir.basename($file);
+
+        //Ermittle Bildgrösse
+        $image_attributes = getimagesize($tempna); 
+        $image_width_old = $image_attributes[0];
+        $image_height_old = $image_attributes[1];
+        
+        $error1=false;
+        $error2=false;
+        //Überprüft Dateityp
+        if(!checkImageType($file)){
+            $error1=true;
+        }
+
+        //Überprüft Dateigrösse
+        if($size > 2100000){
+            $error2=true;
+        }
+
+        //Verkleinert Bilder über 200px Seitenlänge und speichert diese im verzeichnis,
+        //Bilder unter 200px Seitenlänge werden direkt ins Verzeichnis gespeichert
+        if(!$error1 && !$error2){
+            if($image_width_old>200 || $image_height_old>200){
+                if(resizeImage($tempna, $uploadfile, 200)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;     
+                }
+            }else{
+                if(move_uploaded_file($tempna, $uploadfile)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;
+                }
+            }
+        }else{
+            $statusUpload=false;
+            $filetypeError=true;
+        }
+        
+
+        if($statusUpload){
+            //Erfolgreich gespeichert --> Speichert DB Eintrag
+            $sql= updateArchWithPic($firstname, $lastname, $company, $addressline1, $addressline2, $zip, $city, $country, $phoneNumber,
+                        $mobileNumber, $email, $uploadfile, $id);
+
+            $status= mysqli_query($link, $sql);
+            
+            if($status){
+                $response='5';
+            }else{
+                $response='1';
+            }
+            
+        }else if($filetypeError){
+            $response='4';
+        }else{
+            $response='1';
+        }
+
+    } 
+    else {
+        $sql = updateArchWithoutPic($firstname, $lastname, $company, $addressline1, $addressline2, $zip, $city, $country, $phoneNumber,
+                        $mobileNumber, $email, $id);
+        $status= mysqli_query($link, $sql);
+            
+            if($status){
+                $response='5';
+            }else{
+                $response='1';
+            }
+    }
+    
+    if(!empty($_POST['password1'])) {
+        $pw1 = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
+        $pw2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
+        // Passworte identisch
+        if (($pw1 != $pw2) || (strlen($pw1) < 8)) {
+        $response = '6';
+        $error = true;
+        }
+        if(!isset($error)) {
+            $pw1 = hash('sha256', $pw1);
+            
+            $sql = updateUserPw($pw1, $id);
+            $status = mysqli_query($link, $sql);
+            if($status) {
+                $response = '5';
+            } else{
+                $response = '1';
+            }
+        }
+    }
+     
+
+}
 
 //Projekt ID wird ermittelt
 if(isset($_POST['goto'])){//Architekt (1. Aufruf)
@@ -210,7 +335,7 @@ $logo= $row['Picture'];
                                         </div>       
                                     </div>
                                 <div class="modal-footer">
-                                    <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
+                                    <input type="submit" name="edit_User" value="Speichern" class="btn btn-default"/>
 
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
                                 </div>

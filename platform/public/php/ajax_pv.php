@@ -213,10 +213,8 @@ if (isset($_POST['postStorage'])) {
 
 if(isset($_POST['userSettings'])) {
     $id = filter_input(INPUT_POST, 'userSettings', FILTER_SANITIZE_NUMBER_INT);
-    echo 'id User'.$id;
     
-    $sql = 'SELECT Firstname, Lastname, Company, Addressline1, Addressline2, ZIP, City, Country,
-            Email, PhoneNumber, MobileNumber, Fk_IdUserType FROM User WHERE IdUser = '.$id ;
+    $sql = getUserbyId($id);
     
     $result = mysqli_query($link, $sql);
     $row = mysqli_fetch_array($result);
@@ -256,32 +254,39 @@ if(isset($_POST['userSettings'])) {
                     <input id="upload" type="file" name="userfile"/>';
         }
         
-         $data.= '<h4>Benutzer Einstellungen</h4>
-                <input type="hidden" name="userID" value="'.$id.'"/>
+         $data.= '
+                <input type="hidden" name="UserId" value="'.$id.'"/>
                 <label for="1">Vorname*</label>
                 <input id="1" type="text" name="Firstname" class="form-control" value="'.$firstname.'">
                 <label for="2">Nachname</label>
                 <input id="2" type="text" name="Lastname" class="form-control" value="'.$lastname.'">';
          $data.= $company;  
-         $data.= '<label for="3">Strasse</label>
-                <input id="3" type="text" name="Addressline1" class="form-control" value="'.$addressline1.'">
-                <label for="4">Addresszeile 2</label>
-                <input id="4" type="text" name="Addressline2" class="form-control" value="'.$addressline2.'">
+         $data.= '<label for="4">Strasse</label>
+                <input id="4" type="text" name="Addressline1" class="form-control" value="'.$addressline1.'">
+                <label for="5">Addresszeile 2</label>
+                <input id="5" type="text" name="Addressline2" class="form-control" value="'.$addressline2.'">
                 <div class="row">
                     <div class="col-xs-2">
-                        <label for="5">PLZ</label>
-                        <input id="5" type="text" name="ZIP" class="form-control" value="'.$zip.'">
+                        <label for="6">PLZ</label>
+                        <input id="6" type="text" name="ZIP" class="form-control" value="'.$zip.'">
                     </div>
                     <div class="col-xs-10">
-                        <label for="6">Ort</label>
-                        <input id="6" type="text" name="City" class="form-control" value="'.$city.'">
+                        <label for="7">Ort</label>
+                        <input id="7" type="text" name="City" class="form-control" value="'.$city.'">
                     </div>
                 </div>
-                <label for="7">Land</label>
-                <select id="7" name="Country" class="form-control">';
+                <label for="8">Land</label>
+                <select id="8" name="Country" class="form-control">';
         $data .= $countries;
         $data .= '</select>';
+        $data .= '<label for="8"> E-Mail</label>
+                <input id="8" type="text" name="Email" class="form-control" value="'.$email.'">';
         $data .= $logo;
+        $data .= '<h3>Neues Passwort:</h3>
+                <label for="9">Passwort</label>
+                <input id="9" class="form-control" type="password" name="password1">
+                <label for="10">Passwort wiederholen</label>
+                <input id="10" class="form-control" type="password" name="password2">';
                 
        
         echo $data;
