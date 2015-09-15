@@ -375,7 +375,7 @@ $logo= $row['Picture'];
                         <?php
                         if($usertyp==2){
                             echo'<li>';
-                            echo'<a class="link-pv" href="projektverwaltung.php"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Projektverwaltung</a>';
+                            echo'<a class="link-pv" href="projektverwaltung.php?nav=1"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Projektverwaltung</a>';
                             echo'</li>';
                         }
                         ?>

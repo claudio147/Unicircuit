@@ -114,8 +114,12 @@ if(isset($_POST['delete'])){
 
     <!-- Trigger the modal with a button -->
 <?php
-    if($usertyp==2){
-        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newEvent">+ hinzufügen</button>';
+    $sql=getStatusProject($projectID);
+    $result=  mysqli_query($link, $sql);
+    $row=  mysqli_fetch_array($result);
+    $statusStorage=$row['Storage'];
+    if($usertyp==2 && $statusStorage!=1){
+        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newEvent"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
     }
 ?>
     <!-- Modal Global-->
@@ -298,7 +302,7 @@ if(isset($_POST['delete'])){
                 echo'<p class="event-desc-date">'.$day.'.'.$month.'.'.$year.', '.$time.' Uhr</p>';
                 echo'<p class="event-desc-address">'.$location.'</p>';
                 echo'<p class="event-desc-desc">'.$description.'</p>';
-                if($usertyp==2){
+                if($usertyp==2 && $statusStorage!=1){
                     echo'<button type="button" class="btn btn-default btn_event_edit" data-toggle="modal" data-target="#editEvent" value="'.$id.'"><i class="fa fa-pencil-square-o"></i></button>';
                 }
             echo'</div>';

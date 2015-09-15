@@ -197,8 +197,12 @@ if(isset($_POST['update'])){
 <div class="container modalgroup">
     
 <?php
-    if($usertyp==2){
-        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" id="btn_new_address">+ Hinzufügen</button>';
+    $sql3=getStatusProject($projectID);
+    $result3=  mysqli_query($link, $sql3);
+    $row=  mysqli_fetch_array($result3);
+    $statusStorage=$row['Storage'];
+    if($usertyp==2 && $statusStorage!=1){
+        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" id="btn_new_address"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
     } 
 ?> 
   <!-- Modal Global-->
@@ -398,7 +402,7 @@ while($row= mysqli_fetch_array($result)){
     echo'<td><a href="tel:'.$row['PhoneDirect'].'">'.$row['PhoneDirect'].'</td>';
     echo'<td><a href="tel:'.$row['MobileNumber'].'">'.$row['MobileNumber'].'</td>';
     echo'<td><a href="mailto:'.$row['EmailDirect'].'">'.$row['EmailDirect'].'</td>';
-    if($usertyp==2){
+    if($usertyp==2 && $statusStorage!=1){
         echo'<td><button type="button" class="btn btn-default btn_edit" data-toggle="modal" data-target="#modalEdit" value="'.$row['IdProjectAddress'].'">bearbeiten</button></td>';
     }else{
         echo'<td><button type="button" class="btn btn-default btn_details" data-toggle="modal" data-target="#modalDetails" value="'.$row['IdProjectAddress'].'">Details</button></td>';

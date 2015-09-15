@@ -8,29 +8,19 @@
     
  if(!isset($_SESSION['IdUser']) || $_SESSION['UserType'] != 2) {
     header('Location: login.php?denied=1');
+    
+    
 }
 
-if(isset($_GET['nav'])){
-    $nav=$_GET['nav']; //1= Aktive Projekte //2= Archiv   
-}else{
-    $nav=1;
-}
-
-if($nav==1){
-    $title='Projektverwaltung';
-}else if($nav==2){
-    $title='Archiv';
-}
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/security.inc.php');
 require_once ('../../../library/public/mail.inc.php');
 
-
 //Holt Architekten User Daten
 $id = $_SESSION['IdUser'];
-    
+
 $link = connectDB();
 
 
@@ -39,7 +29,6 @@ $link = connectDB();
 
 
 
-/*
 //Erstellung eines neuen Projektes
 if(isset($_POST['submit'])) {
     //Projektdaten in Variablen Speichern
@@ -315,12 +304,10 @@ if(isset($_POST['store'])) {
         $sql = storeProject($proId2);
         $status2 = mysqli_query($link, $sql);
         if(isset($status2)) {
-            echo 'Das Projekt wurde in Ihr Archiv verschoben, und der dazugehörige Bauherr wurde Deaktiviert.';
-        }
-         
-
-         
-         
+            $response='7';
+        }else{
+            $response='8';
+        }  
      }
 }
 
@@ -490,7 +477,7 @@ if(isset($_POST['editUser'])) {
      
 
 }
-*/
+
 
 
 //User Details
@@ -503,137 +490,284 @@ $lnCust=$row['Lastname'];
 $logo= $row['Picture'];
 ?>
 
-<!DOCTYPE html>
-<html lang="de">
 
-    <head>
-
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-
-        <title><?php echo $title; ?></title>
-
-        <!-- CSS 3rd Party -->
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <!--<link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />-->
-        <!--<link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
-        <link href="../css/dataTable.css" rel="stylesheet">
-        <link href="../css/nanogallery/css/nanogallery.min.css" rel="stylesheet">
-        <link href="../css/nanogallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet">
-        <link href="../css/datepicker.css" rel="stylesheet">
-        <link href="../css/bootstrap-clockpicker.min.css" rel="stylesheet">
-        <link href="../css/slick.css" rel="stylesheet">
-        <link href="../css/slick-theme.css" rel="stylesheet">
-        <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
-        <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css" rel="stylesheet">-->
-        
-        <!-- CSS spezifisch -->
-        <link href="../css/style.css" rel="stylesheet">
-        
-        <!-- FAVICON -->
-        <link rel="shortcut icon" href="../img/icon.png" type="image/png" />
-        <link rel="icon" href="../img/icon.png" type="image/png" />
-        
-        
-
-    </head>
-    <body>
         
         <div id="wrapper wrapper-pv">
         
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
-                <!-- Logo und "Toggle" -->
-                <div class="navbar-header navbar-header-pv">
-                    <a class="navbar-brand" href="#"><img src="<?php echo $logo; ?>" alt="Logo"></a>
-                    <h1 class="navbar-text"><?php echo $title; ?></h1>
-                
-
-                    <!-- Top Menu -->
-                    <ul class="nav navbar-right top-nav">
-                        <li class="dropdown">
-
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <?php
-                                //Projektverwaltung
-                                if($nav==1){
-                                    echo'<li>';
-                                    echo'<a class="btn_userSettings" href="projektverwaltung.php?nav=2"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Archiv</a>';
-                                    echo'</li>';
-                                //Archiv
-                                }else if($nav==2){
-                                    echo'<li>';
-                                    echo'<a class="btn_userSettings" href="projektverwaltung.php?nav=1"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Projektverwaltung</a>';
-                                    echo'</li>';
-                                } 
-                                ?>
-                                <li>
-                                    <a class="btn_userSettings" data-target="#editUser" href="#" data-toggle="modal" data-value="<?php echo $userID; ?> "><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="login.php"><i class="fa fa-fw fa-power-off"></i> Abmelden</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
 
             <div class="container">
 
-                <?php
-                if(isset($nav)){
-                    switch ($nav){
-                        case 1:
-                            include ('activeProjects.php');
-                            break;
-                        case 2:
-                            include ('storage.php');
-                            break;
-                        default:
-                            echo'<p>Error Loading Content</p>';
-                    }
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost"><i class="fa fa-plus-circle"></i> hinzufügen</button>
+
+                <!-- Modal Global-->
+                <div class="modal" id="newPost" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST" name="createProject" onsubmit="return formCheck()">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Projekt erfassen</h4>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="input_container">
+                                           <!-- Projektspezifische Angaben --> 
+                                            <h4>Daten Projekt</h4>
+                                            <div id="ProNumb">
+                                            <label for="1" class="control-label">Projektnummer*</label>
+                                            <input id="1" type="text" name="ProjectNumber" class="form-control">
+                                            </div>
+                                            <div id="Title">
+                                            <label for="2" class="control-label">Projektbezeichnung</label>
+                                            <input id="2" type="text" name="Title" class="form-control" maxlength="14">
+                                            </div>
+                                            <div id="Address1">
+                                            <label for="3" class="control-label">Strasse</label>
+                                            <input id="3" type="text" name="Addressline1" class="form-control">
+                                            </div>
+                                            <div id="Address2">
+                                            <label for="4" class="control-label">Addresszeile 2</label>
+                                            <input id="4" type="text" name="Addressline2" class="form-control">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <div id="ZIP">
+                                                    <label for="5" class="control-label">PLZ*</label>
+                                                    <input id="5" type="text" name="ZIP" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div id="City">
+                                                    <label for="6" class="control-label">Ort*</label>
+                                                    <input id="6" type="text" name="City" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label for="7">Land*</label>
+                                            <select id="7" name="Country" class="form-control">
+                                                <?php 
+                                                //Liste mit Ländern aus der Datenbank
+                                                $sql = "SELECT Country FROM Countries";
+                                                $resultC = mysqli_query($link, $sql);
+                                                    while($rowC= mysqli_fetch_array($resultC)){
+                                                    echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
+                                                }?>
+                                            </select>
+                                            <div id="Description">
+                                            <label for="8" class="control-label">Projektbeschreib</label>
+                                            <textarea id="8" name="Description" class="form-control"></textarea>
+                                            </div>
+                                            <label for="upload3">Projektbild</label>
+                                            <input id="upload3" type="file" name="userfile"/>
+                                            <!-- Bauherren Daten, zur erstellung Bauherr -->
+                                            <hr/>
+                                            <h4>Daten Bauherr</h4>
+                                            <div id="BhFn">
+                                            <label for="9" class="control-label">Vorname*</label>
+                                            <input id="9" type="text" name="BhFirstname" class="form-control">
+                                            </div>
+                                            <div id="BhLn">
+                                            <label for="10" class="control-label">Nachname*</label>
+                                            <input id="10" type="text" name="BhLastname" class="form-control">
+                                            </div>
+                                            <div id="BhAddress1">
+                                            <label for="11" class="control-label">Strasse*</label>
+                                            <input id="11" type="text" name="BhAddressline1" class="form-control">
+                                            </div>
+                                            <div id="BhAddress2">
+                                            <label for="12" class="control-label">Adresszeile 2</label>
+                                            <input id="12" type="text" name="BhAddressline2" class="form-control">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <div id="BhZIP">
+                                                    <label for="13" class="control-label">PLZ*</label>
+                                                    <input id="13" type="text" name="BhZIP" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div id="BhCity">
+                                                    <label for="14" class="control-label">Ort*</label>
+                                                    <input id="14" type="text" name="BhCity" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label for="15">Land</label>
+                                            <select id="15" name="BhCountry" class="form-control">
+                                                <?php 
+                                                //Liste mit Ländern aus der Datenbank
+                                                $sql = "SELECT Country FROM countries";
+                                                $resultC = mysqli_query($link, $sql);
+                                                    while($rowC= mysqli_fetch_array($resultC)){
+                                                    echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
+                                                }?>
+                                            </select>
+                                            <div id="BhPhNu">
+>                                            <label for="16" class="control-label">Telefonnummer</label>
+                                            <input id="16" type="text" name="BhPhoneNumber" class="form-control">
+                                            </div>
+                                            <div id="BhMoNu">
+                                            <label for="17" class="control-label">Mobile Nummer</label>
+                                            <input id="17" type="text" name="BhMobileNumber" class="form-control">
+                                            </div>
+                                            <div id="BhEmail">
+                                            <label for="18" class="control-label">Email*</label>
+                                            <input id="18" type="email" name="BhEmail" class="form-control">
+                                            </div>
+                                            
+                                        </div>       
+                                    </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="submit" value="Projekt Erstellen" class="btn btn-default"/>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                                </div>
+                          </form>
+
+                        </div>
+
+                    </div>
+                </div>
+    
+                <!-- Projekt bearbeiten -->
+                <!-- Modal Global-->
+                <div class="modal" id="editPost" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Projekt bearbeiten</h4>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="editContainer_pv">
+
+                                            <!-- Platzhalter für ajax Inhalt -->
+
+                                        </div>       
+                                    </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="store" value="Archivieren" class="btn btn-default"/>
+                                    <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
+                                    <!--<input type="submit" name="delete" value="Löschen" class="btn btn-default" />-->
+
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                                </div>
+                          </form>
+
+                        </div>
+
+                    </div>
+                </div>
+                
+                 <!-- User Settings -->
+                <!-- Modal Global-->
+                <div class="modal" id="editUser" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Benutzer Einstellungen</h4>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="editContainer_User">
+
+                                            <!-- Platzhalter für ajax Inhalt -->
+
+                                        </div>       
+                                    </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="editUser" value="Speichern" class="btn btn-default"/>
+
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                                </div>
+                          </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            
+<?php
+
+
+if(isset($response)){
+        $x=$response;
+        if($x==0){
+            echo'<br/><div class="alert alert-success" role="alert">Projekt erfolgreich bearbeitet.</div>';
+        }else if($x==1){
+            echo'<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen</div>';
+        }else if($x==2){
+            echo'<br/><div class="alert alert-success" role="alert">Projekt erfolgreich hinzugefügt</div>';
+        }else if($x==3){
+            echo'<br/><div class="alert alert-danger" role="alert">Projekt hinzufügen fehlgeschlagen</div>';
+        }else if($x==4){
+            echo'<br/><div class="alert alert-danger" role="alert">Max. 2MB und Filetypen: .jpg/.png/.gif</div>';
+        }else if($x==5) {
+            echo'<br/><div class="alert alert-success" role="alert">Benutzer Einstellungen wurden bearbeitet.</div>';
+        }else if($x==6) {
+            echo'<br/><div class="alert alert-danger" role="alert">Passwort konnte nicht geändert werden.
+                 Die Passwörter stimmen nicht überein oder das Passwort hat weniger als 8 Zeichen!</div>';
+        }else if($x==7) {
+            echo'<br/><div class="alert alert-success" role="alert">Projekt erfolgreich archiviert</div>';
+        }else if($x==8) {
+            echo'<br/><div class="alert alert-danger" role="alert">Archivieren fehlgeschlagen!</div>';
+        }
+    }
+    
+    
+                // Ausgabe Projekte AKTIV
+                $sql = getProjectsByArch($id);
+
+                $result = mysqli_query($link, $sql);
+
+
+                $projectsId = array();
+
+                echo'<div class="pv-row row">';
+                while($row= mysqli_fetch_array($result)){
+                    $projectsId[] = $row['IdProject'];
+                    echo'<div class="col-xs-4 col-md-3 pv-container">';
+                        echo'<div class="pv-cont-content">';
+                        echo'<div class="imgLiquidFill imgLiquid project-img-cont">';
+                        echo'<img class="projectimage" alt="project-image" src="'.$row['Picture'].'"/>';
+                        echo'</div>';
+                        echo'<p class="pv-label">Projektnummer</p>';
+                        echo'<p class="pv-bold">'.$row['ProjectNumber'].'</p>';
+                        echo'<p class="pv-label">Bezeichnung</p>';
+                        echo'<p class="pv-bold">'.$row['Title'].'</p>';
+                        echo'<p class="pv-label">Bauherr</p>';
+                        echo'<p class="pv-reg">'.$row['Firstname'].' '.$row['Lastname'].'</p>';
+                        echo'<div class="row">';
+                            echo'<div class="col-xs-6">';
+                                echo'<button type="button" class="btn-pv btn_postEdit_pv btn btn-default" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i> Einstell.</button>';
+                            echo'</div>';
+                            echo'<div class="col-xs-6">';
+                                echo'<form action="index.php" method="POST">
+                                <button type="submit" name ="goto" class="btn-pv btn btn-default" value="'.$row['IdProject'].'"><i class="fa fa-share"></i> öffnen</button>
+                                </form>';
+                            echo'</div>';
+                        echo'</div>';
+                        echo'</div>';
+                    echo'</div>';
                 }
-                ?>
+                echo'</div>';
+
+                //Speichert alle ProjectIds in einer Session Array
+                $_SESSION['IdProject'] = $projectsId;
+
+?>
+
 
             </div><!-- End Container--> 
         
         </div><!-- End #Wrapper--> 
         
          
-    <!-- JS 3rd Party -->
-    <script src="../js/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <!--<script src="../css/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>-->
-    <!--<script src="../js/bootstrap-clockpicker.min.js"></script>
-    <script src="../js/slick.js"></script>-->
-    <!-- Timeline -->
-    <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>-->
-    <!--<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>-->
-    <script src="../js/imgLiquid-min.js"></script>
-    <!-- Adressliste -->
-    <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>
-    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-    <script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>-->
-    <!-- Gallery -->
-    <!--<script src="../css/nanogallery/jquery.nanogallery.min.js"></script>-->
-    <script>
-        window.history.pushState('', '', '/php/projektverwaltung.php');
-        //window.history.pushState('', '', '/diplomarbeit/platform/public/php/projektverwaltung.php');
-    </script>
-    <script type="text/javascript" src="../js/script-pv.js"></script>
-   <!-- <script src="../js/weather.js"></script>-->
-
-    </body>
-</html>

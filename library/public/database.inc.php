@@ -736,6 +736,15 @@ function storeProject($proId2) {
      return $sql;
 }
 
+//gibt Status des Projekts
+function getStatusProject($proID){
+    global $link;
+    $proID = filter_var($proID, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql="SELECT Storage FROM Project WHERE IdProject=".$proID;
+    return $sql;
+}
+
 //Passwort Update des Bauherren
 function resetBauhPw($IdProject, $pwHash) {
     global $link;

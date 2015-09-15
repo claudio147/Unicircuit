@@ -66,7 +66,7 @@ if (isset($_POST['postEdit'])) {
         $data.= '<h4>Daten Projekt</h4>
                 <input type="hidden" name="postID" value="'.$postProject.'"/>
                 <label for="1">Projektnummer*</label>
-                <input id="1" type="text" name="ProjectNumber" class="form-control" value="'.$projectNumb.'">
+                <input id="1" type="text" name="ProjectNumber" class="form-control" value="'.$projectNumb.'" maxlength="14">
                 <label for="2">Projektbezeichnung</label>
                 <input id="2" type="text" name="Title" class="form-control" value="'.$title.'">
                 <label for="3">Strasse</label>
@@ -170,42 +170,64 @@ if (isset($_POST['postStorage'])) {
 
 
 
-        $data.= '<input type="hidden" name="postID" value="'.$postProject.'" readonly="readonly"/>
-                <p>Projektnummer*</p>
-                 <input type="text" name="ProjectNumber" value="'.$projectNumb.'"readonly="readonly>
-                <p>Projektbezeichnung</p>
-                 <input type="text" name="Title" value="'.$title.' readonly="readonly" ">
-                 <p>Strasse</p>
-                 <input type="text" name="Addressline1" value="'.$addressline1.'" readonly="readonly">
-                 <p>Addresszeile 2</p>
-                 <input type="text" name="Addressline2" value="'.$addressline2.'" readonly="readonly">
-                 <p>PLZ*/Ort*</p>
-                 <input type="text" name="ZIP" value="'.$zip.'"><input type="text" name="City" value="'.$city.'" readonly="readonly">
-                 <p>Land</p>
-                 <input type="text" name="Country" value="'.$country.'" readonly="readonly">
-                 <p>Projektbeschrieb</p>
-                 <textarea name="Description" readonly="readonly" >'.$description.'</textarea>
-                 <p>Projektbild</p>
-                 
-                 <h4>Daten Bauherr</h4>
-                 <p>Vorname</p>
-                 <input type="text" name="BhFirstname" value="'.$bhFirstname.'" readonly="readonly">
-                 <p>Nachname</p>
-                 <input type="text" name="BhLastname" value="'.$bhLastname.'" readonly="readonly">
-                 <p>Strasse</p>
-                 <input type="text" name="BhAddressline1" value="'.$bhAddressline1.'" readonly="readonly">
-                 <p>Adresszeile 2</p>
-                 <input type="text" name="BhAddressline2" value="'.$bhAddressline2.'" readonly="readonly">
-                 <p>PLZ/Ort</p>
-                 <input type="text" name="BhZIP" value="'.$bhZIP.'"><input type="text" name="BhCity" value="'.$bhCity.'" readonly="readonly">
-                 <p>Land</p>
-                 <input type="text" name="BhCountry" value="'.$bhCountry.'" readonly="readonly">
-                 <p>Telefonnummer</p>
-                 <input type="text" name="BhPhoneNumber" value="'.$bhPhNu.'" readonly="readonly">
-                 <p>Mobile Nummer</p>
-                 <input type="text" name="BhMobileNumber" value="'.$bhMoNu.'" readonly="readonly">
-                 <p>Email</p>
-                 <input type="text" name="BhEmail" value="'.$bhEmail.'" readonly="readonly">';
+        $data.= '<h4>Daten Projekt</h4>
+                <input type="hidden" name="postID" value="'.$postProject.'"/>
+                <label for="1">Projektnummer*</label>
+                <input id="1" type="text" name="ProjectNumber" class="form-control" value="'.$projectNumb.'" maxlength="14" readonly="readonly">
+                <label for="2">Projektbezeichnung</label>
+                <input id="2" type="text" name="Title" class="form-control" value="'.$title.'" readonly="readonly">
+                <label for="3">Strasse</label>
+                <input id="3" type="text" name="Addressline1" class="form-control" value="'.$addressline1.'" readonly="readonly">
+                <label for="4">Addresszeile 2</label>
+                <input id="4" type="text" name="Addressline2" class="form-control" value="'.$bhAddressline2.'" readonly="readonly">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <label for="5">PLZ</label>
+                        <input id="5" type="text" name="ZIP" class="form-control" value="'.$zip.'" readonly="readonly">
+                    </div>
+                    <div class="col-xs-10">
+                        <label for="6">Ort</label>
+                        <input id="6" type="text" name="City" class="form-control" value="'.$city.'" readonly="readonly">
+                    </div>
+                </div>
+                <label for="7">Land</label>
+                <select id="7" name="Country" class="form-control" disabled="disabled">
+                <option value="'.$country.'">'.$country.'</option>
+                </select>
+                <label for="8">Projektbeschrieb</label>
+                <textarea id="8" name="Description" class="form-control" readonly="readonly">'.$description.'</textarea>
+                <label for="upload">Projektbild</label>
+                <!-- Bauherren Daten, zur erstellung Bauherr -->
+                <hr/>
+                <h4>Daten Bauherr</h4>
+                <label for="9">Vorname</label>
+                <input id="9" type="text" name="BhFirstname" class="form-control" value="'.$bhFirstname.'" readonly="readonly">
+                <label for="10">Nachname</label>
+                <input id="10" type="text" name="BhLastname" class="form-control" value="'.$bhLastname.'" readonly="readonly">
+                <label for="11">Strasse</label>
+                <input id="11" type="text" name="BhAddressline1" class="form-control" value="'.$bhAddressline1.'" readonly="readonly">
+                <label for="12">Adresszeile 2</label>
+                <input id="12" type="text" name="BhAddressline2" class="form-control" value="'.$bhAddressline2.'" readonly="readonly">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <label for="13">PLZ*</label>
+                        <input id="13" type="text" name="BhZIP" class="form-control" value="'.$bhZIP.'" readonly="readonly">
+                    </div>
+                    <div class="col-xs-10">
+                        <label for="14">Ort*</label>
+                        <input id="14" type="text" name="BhCity" class="form-control" value="'.$bhCity.'" readonly="readonly">
+                    </div>
+                </div>
+                <label for="15">Land</label>
+                <select id="15" name="BhCountry" class="form-control" disabled="disabled">
+                <option value="'.$bhCountry.'">'.$bhCountry.'</option>
+                </select>
+                <label for="16">Telefonnummer</label>
+                <input id="16" type="text" name="BhPhoneNumber" class="form-control" value="'.$bhPhNu.'" readonly="readonly">
+                <label for="17">Mobile Nummer</label>
+                <input id="17" type="text" name="BhMobileNumber" class="form-control" value="'.$bhMoNu.'" readonly="readonly">
+                <label for="18">Email</label>
+                <input id="18" type="email" name="BhEmail" class="form-control" value="'.$bhEmail.'" readonly="readonly"><br/>';
 
         echo $data;
     }

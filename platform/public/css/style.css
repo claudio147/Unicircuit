@@ -392,18 +392,17 @@ div.modalgroup{
 /*
 ***** Projektverwaltung
 */
-
 .pv-container{
     height: 500px;
     padding: 10px;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 5px;
+    margin-bottom: 15px;
 }
 
 .pv-cont-content{
     background-color: #f0f0f0 !important;
     padding: 10px;
-    
+    height: 100%;
     -webkit-box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
     -moz-box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
     box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
@@ -422,6 +421,7 @@ div.modalgroup{
 .pv-bold{
     font-size: 32px;
     font-weight: bold;
+    overflow: hidden;
 }
 
 .pv-reg{
@@ -431,7 +431,19 @@ div.modalgroup{
 
 .btn-pv{
     width: 100%;
-    margin-top: 50px;
+    margin-top: 20px;
+}
+
+@media(max-width:768px){
+    .btn-pv{
+    margin-top: 60px;
+}
+}
+
+@media(max-width:1199px){
+    .btn-pv{
+    margin-top: 70px;
+}
 }
 
 .btn-pv:hover{
@@ -752,7 +764,10 @@ button.deadline-btn-show:focus{
 }
 
 
-
+.navbar-header-pv{
+        float: left;
+        width: 100%;
+}
 
 /*
 **************** Terminplan
@@ -766,6 +781,11 @@ button.deadline-btn-show:focus{
     .navbar-header {
         float: none;
     }
+    
+    .navbar-header-pv{
+        float: left;
+    }
+    
     .navbar-left,.navbar-right {
         float: none !important;
     }
@@ -797,4 +817,10 @@ button.deadline-btn-show:focus{
     .collapse.in{
   		display:block !important;
 	}
+}
+
+@media(max-width:1200px){
+    .pv-bold{
+        font-size: 28px;
+    }
 }

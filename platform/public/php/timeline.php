@@ -258,7 +258,11 @@ echo'<h2 class="modul-title">Chronik</h2>';
 <!--Lightboxen (Modals)-->
 <div class="container modalgroup">
 <?php
-    if($usertyp==2){ 
+    $sql=getStatusProject($projectID);
+    $result=  mysqli_query($link, $sql);
+    $row=  mysqli_fetch_array($result);
+    $statusStorage=$row['Storage'];
+    if($usertyp==2 && $statusStorage!=1){ 
         echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
     } 
 ?> 
@@ -391,7 +395,11 @@ while($row= mysqli_fetch_array($result)){
                 echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img class="post-img" alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
             echo'</div>';
             echo'<div class="col-xs-8 col-sm-9 col-md-10">';
-                echo'<h3 class="post-title"><button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>'.$row['Title'].'  '.$lock.'</h3>';  
+                echo'<h3 class="post-title">';
+                if($statusStorage!=1){
+                    echo'<button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>';
+                }
+                echo $row['Title'].'  '.$lock.'</h3>';  
                 echo'<p class="post-date">'.$date.', '.$time.'</p>';
                 echo'<p>'.$row['Description'].'</p>';
             echo'</div>';

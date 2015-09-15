@@ -81,8 +81,12 @@ if(isset($_POST['submit'])){
     <div class="container modalgroup">
         
         <?php
-            if($usertyp==2){ 
-                echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newSchedule">Terminplan hochladen</button>';
+            $sql=getStatusProject($projectID);
+            $result=  mysqli_query($link, $sql);
+            $row=  mysqli_fetch_array($result);
+            $statusStorage=$row['Storage'];
+            if($usertyp==2 && $statusStorage!=1){ 
+                echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newSchedule"><i class="fa fa-plus-circle"></i> hochladen</button>';
             } 
         ?>  
 

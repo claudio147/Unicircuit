@@ -96,8 +96,12 @@ if(isset($_POST['delete'])){
 
     <!-- Trigger the modal with a button -->
 <?php
-    if($usertyp==2){
-        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newDeadline">+ hinzufügen</button>';
+    $sql=getStatusProject($projectID);
+    $result=  mysqli_query($link, $sql);
+    $row=  mysqli_fetch_array($result);
+    $statusStorage=$row['Storage'];
+    if($usertyp==2 && $statusStorage!=1){
+        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newDeadline"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
     } 
 ?>    
     <!-- Modal Global-->
@@ -282,9 +286,9 @@ if(isset($_GET['status'])){
                 echo'<div class="deadline-date">'.$date.'</div>';
                 echo'<div class="deadline-title">'.$title.'</div>';
                 echo'<div class="deadline-description hidden-sm hidden-xs">'.$company.'</div>';
-                if($usertyp==2){
+                if($usertyp==2 && $statusStorage!=1){
                     echo'<button type="button" class="btn btn-default deadline-btn-edit" data-toggle="modal" data-target="#editDeadline" value="'.$id.'"><i class="fa fa-pencil-square-o"></i></button>';
-                }else if($usertyp==3){
+                }else{
                     echo'<button type="button" class="btn btn-default deadline-btn-show" data-toggle="modal" data-target="#showDeadline" value="'.$id.'"><i class="fa fa-info-circle"></i></button>';
                 }
             echo'</div> ';            
