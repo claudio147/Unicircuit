@@ -253,7 +253,7 @@ if(isset($_POST['userSettings'])) {
     $phoneNumber = $row['PhoneNumber'];
     $mobileNumber = $row['MobileNumber'];
     $usertype = $row['Fk_IdUserType'];  // 1=Administrator 2= Architekt 3= Bauherr
-    
+
      //Auswahl Länderliste aus DB und erstellt die Dropdown Liste.
      $sql = "SELECT Country FROM Countries";
      $resultC = mysqli_query($link, $sql);
@@ -267,11 +267,11 @@ if(isset($_POST['userSettings'])) {
         }
         //Fügt eine Zeile Firma hinzu falls es sich um einen Architekt handelt.
         //Fügt den Logo Upload hinzu falls es sich um einen Architekten handelt.
-        $company = '';
+        $companyShow = '';
         $logo = '';
         if($usertype == 2) {
-            $company = '<label for="3">Firma</label>
-                        <input id="3" type="text" name="Company" class="form-control value="'.$company.'">';
+            $companyShow = '<label for="3">Firma</label>
+                        <input id="3" type="text" name="Company" class="form-control" value="'.$company.'">';
             $logo = '<label for="upload">Logo</label>
                     <input id="upload" type="file" name="userfile"/>';
         }
@@ -282,7 +282,7 @@ if(isset($_POST['userSettings'])) {
                 <input id="1" type="text" name="Firstname" class="form-control" value="'.$firstname.'">
                 <label for="2">Nachname</label>
                 <input id="2" type="text" name="Lastname" class="form-control" value="'.$lastname.'">';
-         $data.= $company;  
+         $data.= $companyShow;
          $data.= '<label for="4">Strasse</label>
                 <input id="4" type="text" name="Addressline1" class="form-control" value="'.$addressline1.'">
                 <label for="5">Addresszeile 2</label>

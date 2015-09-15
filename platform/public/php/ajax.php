@@ -25,6 +25,18 @@ if(isset($_POST['id'])){
         $phoneNumber= $row['PhoneNumber'];
         $homepage= $row['Homepage'];
 
+        //Auswahl Länderliste aus DB und erstellt die Dropdown Liste.
+        $sql = "SELECT Country FROM Countries";
+        $resultC = mysqli_query($link, $sql);
+        $countries = '';
+        while($rowC= mysqli_fetch_array($resultC)){
+            if($rowC['Country'] == $country) {
+                $countries .= '<option value="'.$rowC['Country'].'" selected = "selected">'.$rowC['Country'].'</option>';
+            }else {
+                $countries .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
+            }
+        }
+
         $data.= '<input type="hidden" name="idGlobalAddress" value="'.$id.'">
                 <h4>Firmendaten</h4>
                 <label for="1">BKP*</label>
@@ -46,12 +58,9 @@ if(isset($_POST['id'])){
                     </div>
                 </div>
                 <label for="7">Land*</label>
-                <select id="7" name="country" class="form-control" readonly="readonly">
-                    <option value="Schweiz" selected="selected">Schweiz</option>
-                    <option value="Deutschland">Deutschland</option>
-                    <option value="Österreich">Österreich</option>
-                    <option value="Lichtenstein">Lichtenstein</option>
-                </select>
+                <select id="7" name="country" class="form-control" readonly="readonly">';
+                $data .= $countries;
+                $data.='</select>
                 <label for="8">Email (Hauptadresse)*</label>
                 <input id="8" type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
                 <label for="9">Telefon (Hauptnummer)*</label>
@@ -76,6 +85,13 @@ if(isset($_POST['id'])){
 
 //Leeres Formular um neue Adresse hinzuzufügen
 if(isset($_POST['new'])){
+    $sql = "SELECT Country FROM Countries";
+    $resultC = mysqli_query($link, $sql);
+    $countries = '';
+        while($rowC= mysqli_fetch_array($resultC)){
+                $countries .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
+    }
+
     $data= '';
 
         $data.= '<h4>Firmendaten</h4>
@@ -98,12 +114,9 @@ if(isset($_POST['new'])){
                     </div>
                 </div>
                 <label for="7">Land*</label>
-                <select id="7" name="country" class="form-control">
-                <option value="Schweiz" selected="selected">Schweiz</option>
-                <option value="Deutschland">Deutschland</option>
-                <option value="Österreich">Österreich</option>
-                <option value="Lichtenstein">Lichtenstein</option>
-                </select>
+                <select id="7" name="country" class="form-control">';
+                $data .= $countries;
+                $data.='</select>
                 <label for="8">Email (Hauptadresse)*</label>
                 <input id="8" type="email" name="email" class="form-control">
                 <label for="9">Telefon (Hauptnummer)*</label>
@@ -151,6 +164,18 @@ if(isset($_POST['edit'])){
         $emailDirect= $row['EmailDirect'];
         $description= $row['Description'];
 
+        //Auswahl Länderliste aus DB und erstellt die Dropdown Liste.
+        $sql = "SELECT Country FROM Countries";
+        $resultC = mysqli_query($link, $sql);
+        $countries = '';
+        while($rowC= mysqli_fetch_array($resultC)){
+            if($rowC['Country'] == $country) {
+                $countries .= '<option value="'.$rowC['Country'].'" selected = "selected">'.$rowC['Country'].'</option>';
+            }else {
+                $countries .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
+            }
+        }
+
         $data.= '<input type="hidden" name="idProjectAddress" value="'.$id.'">
                 <h4>Firmendaten</h4>
                 <label for="1">BKP*</label>
@@ -172,12 +197,9 @@ if(isset($_POST['edit'])){
                     </div>
                 </div>
                 <label for="7">Land*</label>
-                <select id="7" name="country" class="form-control" readonly="readonly">
-                    <option value="Schweiz" selected="selected">Schweiz</option>
-                    <option value="Deutschland">Deutschland</option>
-                    <option value="Österreich">Österreich</option>
-                    <option value="Lichtenstein">Lichtenstein</option>
-                </select>
+                <select id="7" name="country" class="form-control" readonly="readonly">';
+                $data.=$counties;    
+                $data.='</select>
                 <label for="8">Email (Hauptadresse)*</label>
                 <input id="8" type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
                 <label for="9">Telefon (Hauptnummer)*</label>
@@ -226,6 +248,18 @@ if(isset($_POST['details'])){
         $emailDirect= $row['EmailDirect'];
         $description= $row['Description'];
 
+        //Auswahl Länderliste aus DB und erstellt die Dropdown Liste.
+        $sql = "SELECT Country FROM Countries";
+        $resultC = mysqli_query($link, $sql);
+        $countries = '';
+        while($rowC= mysqli_fetch_array($resultC)){
+            if($rowC['Country'] == $country) {
+                $countries .= '<option value="'.$rowC['Country'].'" selected = "selected">'.$rowC['Country'].'</option>';
+            }else {
+                $countries .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
+            }
+        }
+
         $data.= '<h4>Firmendaten</h4>
                 <p>BKP*</p>
                 <input type="text" name="bkp" value="'.$bkp.'" readonly="readonly" class="form-control">
@@ -246,12 +280,9 @@ if(isset($_POST['details'])){
                     </div>
                 </div>
                 <p>Land*</p>
-                <select name="country" readonly="readonly" class="form-control">
-                <option value="Schweiz" selected="selected">Schweiz</option>
-                <option value="Deutschland">Deutschland</option>
-                <option value="Österreich">Österreich</option>
-                <option value="Lichtenstein">Lichtenstein</option>
-                </select>
+                <select name="country" readonly="readonly" class="form-control">';
+                $data.=$countries;
+                $data.='</select>
                 <p>Email (Hauptadresse)*</p>
                 <input type="email" name="email" value="'.$email.'" readonly="readonly" class="form-control">
                 <p>Telefon (Hauptnummer)*</p>
