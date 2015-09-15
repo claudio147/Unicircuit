@@ -606,7 +606,7 @@ $logo= $row['Picture'];
                                                 }?>
                                             </select>
                                             <div id="BhPhNu">
->                                            <label for="16" class="control-label">Telefonnummer</label>
+                                            <label for="16" class="control-label"> Telefonnummer</label>
                                             <input id="16" type="text" name="BhPhoneNumber" class="form-control">
                                             </div>
                                             <div id="BhMoNu">
