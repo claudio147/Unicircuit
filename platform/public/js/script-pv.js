@@ -14,6 +14,15 @@
           var element = document.getElementById("ProNumb");
           element.className = "";
       }
+      if (document.createProject.Title.value === "") {
+           var element = document.getElementById("Title");
+            element.classList.add("form-group");
+            element.classList.add("has-error");
+          var error = false;
+      }  else {
+          var element = document.getElementById("Title");
+          element.className = "";
+      }
       if (document.createProject.ZIP.value === "") {
           var element = document.getElementById("ZIP");
             element.classList.add("form-group");

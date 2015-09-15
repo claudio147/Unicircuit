@@ -459,6 +459,10 @@ $logo= $row['Picture'];
             <div class="container-fluid">
 
                 <?php
+                //Rückgabemeldung für Eingaben in Lightboxen
+               $stat = checkResponse($response);
+               echo $stat;
+               
                 if(isset($_POST['nav'])){
                     switch($_POST['nav']){
                         case 1:
@@ -495,6 +499,8 @@ $logo= $row['Picture'];
                     include ('dashboard.php');
                 }
 
+                
+               
                 ?>
 
             </div>
