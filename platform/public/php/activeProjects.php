@@ -521,7 +521,7 @@ $logo= $row['Picture'];
                                             <input id="1" type="text" name="ProjectNumber" class="form-control">
                                             </div>
                                             <div id="Title">
-                                            <label for="2" class="control-label">Projektbezeichnung</label>
+                                            <label for="2" class="control-label">Projektbezeichnung*</label>
                                             <input id="2" type="text" name="Title" class="form-control" maxlength="14">
                                             </div>
                                             <div id="Address1">
@@ -698,29 +698,10 @@ $logo= $row['Picture'];
 <?php
 
 
-if(isset($response)){
-        $x=$response;
-        if($x==0){
-            echo'<br/><div class="alert alert-success" role="alert">Projekt erfolgreich bearbeitet.</div>';
-        }else if($x==1){
-            echo'<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen</div>';
-        }else if($x==2){
-            echo'<br/><div class="alert alert-success" role="alert">Projekt erfolgreich hinzugefügt</div>';
-        }else if($x==3){
-            echo'<br/><div class="alert alert-danger" role="alert">Projekt hinzufügen fehlgeschlagen</div>';
-        }else if($x==4){
-            echo'<br/><div class="alert alert-danger" role="alert">Max. 2MB und Filetypen: .jpg/.png/.gif</div>';
-        }else if($x==5) {
-            echo'<br/><div class="alert alert-success" role="alert">Benutzer Einstellungen wurden bearbeitet.</div>';
-        }else if($x==6) {
-            echo'<br/><div class="alert alert-danger" role="alert">Passwort konnte nicht geändert werden.
-                 Die Passwörter stimmen nicht überein oder das Passwort hat weniger als 8 Zeichen!</div>';
-        }else if($x==7) {
-            echo'<br/><div class="alert alert-success" role="alert">Projekt erfolgreich archiviert</div>';
-        }else if($x==8) {
-            echo'<br/><div class="alert alert-danger" role="alert">Archivieren fehlgeschlagen!</div>';
-        }
-    }
+                //Rückgabemeldung für Eingaben in Lightboxen
+               $stat = checkResponse($response);
+               echo $stat;
+
     
     
                 // Ausgabe Projekte AKTIV

@@ -67,7 +67,7 @@ if (isset($_POST['postEdit'])) {
                 <input type="hidden" name="postID" value="'.$postProject.'"/>
                 <label for="1">Projektnummer*</label>
                 <input id="1" type="text" name="ProjectNumber" class="form-control" value="'.$projectNumb.'" maxlength="14">
-                <label for="2">Projektbezeichnung</label>
+                <label for="2">Projektbezeichnung*</label>
                 <input id="2" type="text" name="Title" class="form-control" value="'.$title.'">
                 <label for="3">Strasse</label>
                 <input id="3" type="text" name="Addressline1" class="form-control" value="'.$addressline1.'">
