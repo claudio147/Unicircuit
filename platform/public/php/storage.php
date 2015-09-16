@@ -13,6 +13,7 @@
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
+require_once ('../../../library/public/security.inc.php');
 
 //Holt Architekten User Daten
 $id = $_SESSION['IdUser'];
@@ -26,6 +27,39 @@ $result = mysqli_query($link, $sql);
 //Ausgabe Warnung
 /*echo'<div class="alert alert-danger" role="alert">Archivierte Projekte können nicht zurückgeholt werden. <br> 
     Bauherren haben keinen Zugriff auf Archiv Projekte</div>';*/
+
+//Löschen eines Archivierten Projektes, Löscht auch dazugehörigen Bauherr und Verzeichnis
+if(isset($_POST['delete'])) {
+    $idBauherr = filter_input(INPUT_POST, 'idUser', FILTER_SANITIZE_NUMBER_INT);
+    $idProject = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_NUMBER_INT);
+    $path = '../architects/architect_'.$id.'/project_'.$idProject.'/' ;
+    
+    //Funtkion zum löschen des Ordners mit Inhalt des Projektes
+    $handle = opendir($path);
+        if($handle)
+           {
+                while ( false !== ($file = readdir($handle)) )
+                {
+                if ( $file != "." and $file != ".." )
+                    {
+                     unlink($path.$file);
+                    }
+                }   
+            }
+            rmdir($path);
+    
+    $sql = "DELETE FROM Project WHERE IdProject = '$idProject'";
+    $status = mysqli_query($link, $sql);
+        $sql = "DELETE FROM User WHERE IdUser = '$idBauherr'";
+        $statusDel = mysqli_query($link, $sql);
+    if(isset($statusDel)) {
+        //Speichert erfolgreiche Löschung in Variable zur Ausgabe
+        $response = 10;
+    } else {
+        $respone = 9;
+    }
+            
+}
 ?>
 
 <div id="wrapper wrapper-pv">
@@ -38,7 +72,7 @@ $result = mysqli_query($link, $sql);
 
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <form enctype="multipart/form-data" action="storage.php" method="POST">
+                    <form enctype="multipart/form-data" action="projektverwaltung.php?nav=2" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Projekt Details</h4>
@@ -51,8 +85,6 @@ $result = mysqli_query($link, $sql);
                                 </div>       
                             </div>
                         <div class="modal-footer">
-                            <input type="submit" name="store" value="Archivieren" class="btn btn-default"/>
-                            <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
                             <input type="submit" name="delete" value="Löschen" class="btn btn-default" />
 
                             <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
@@ -66,6 +98,10 @@ $result = mysqli_query($link, $sql);
 
          
 <?php
+    //Rückgabemeldung für Eingaben in Lightboxen
+               $stat = checkResponse($response);
+               echo $stat;
+               
     $projectsId = array();
 
     echo'<div class="pv-row row">';

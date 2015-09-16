@@ -172,6 +172,7 @@ if (isset($_POST['postStorage'])) {
 
         $data.= '<h4>Daten Projekt</h4>
                 <input type="hidden" name="postID" value="'.$postProject.'"/>
+                <input type="hidden" name="idUser" value="'.$idUser.'" />
                 <label for="1">Projektnummer*</label>
                 <input id="1" type="text" name="ProjectNumber" class="form-control" value="'.$projectNumb.'" maxlength="14" readonly="readonly">
                 <label for="2">Projektbezeichnung</label>

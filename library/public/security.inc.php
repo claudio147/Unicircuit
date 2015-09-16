@@ -128,6 +128,14 @@ function resizeImage ($filepath_old, $filepath_new, $image_dimension, $scale_mod
         } else if($x==6) {
             $stat = '<br/><div class="alert alert-danger" role="alert">Passwort konnte nicht geändert werden.
                  Die Passwörter stimmen nicht überein oder das Passwort hat weniger als 8 Zeichen!</div>';
+        } else if($x==7) {
+            $stat = '<br/><div class="alert alert-success" role="alert">Projekt wurde archiviert</div>';
+        } else if($x==8) {
+            $stat = '<br/><div class="alert alert-danger" role="alert">Projekt konnte nicht archiviert werden</div>';
+        } else if($x==9) {
+            $stat = '<br/><div class="alert alert-danger" role="alert">Projekt konnte nicht gelöscht werden</div>';
+        } else if($x==10) {
+            $stat = '<br/><div class="alert alert-success" role="alert">Projekt wurde erfolgreich gelöscht</div>';
         }
     }
     return $stat;
