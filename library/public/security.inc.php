@@ -110,7 +110,7 @@ function resizeImage ($filepath_old, $filepath_new, $image_dimension, $scale_mod
     }
  }
  
- function checkResponse($response) {
+ function checkResponse($response){
      if(isset($response)){
         $x=$response;
         if($x==0){

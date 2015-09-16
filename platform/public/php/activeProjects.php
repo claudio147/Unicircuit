@@ -499,7 +499,7 @@ $logo= $row['Picture'];
             <div class="container">
 
                 <!-- Trigger the modal with a button -->
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost"><i class="fa fa-plus-circle"></i> hinzufügen</button>
+                <button type="button" class="btn btn-default btn_addProject" data-toggle="modal" data-target="#newPost"><i class="fa fa-plus-circle"></i> hinzufügen</button>
 
                 <!-- Modal Global-->
                 <div class="modal" id="newPost" role="dialog">
@@ -599,7 +599,7 @@ $logo= $row['Picture'];
                                             <select id="15" name="BhCountry" class="form-control">
                                                 <?php 
                                                 //Liste mit Ländern aus der Datenbank
-                                                $sql = "SELECT Country FROM countries";
+                                                $sql = "SELECT Country FROM Countries";
                                                 $resultC = mysqli_query($link, $sql);
                                                     while($rowC= mysqli_fetch_array($resultC)){
                                                     echo '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';

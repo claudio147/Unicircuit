@@ -1,5 +1,5 @@
-.modal .modal-body {
-    height: 520px;
+.modal .modal-body{
+    max-height: 65vh;
     overflow-y: auto;
 }
 
@@ -28,6 +28,10 @@ textarea{
 	border: none;
 	margin-right: 10px;
 	padding-left: 0px;
+}
+
+#btn_new_address{
+    margin-bottom: 10px;
 }
 
 .fa-lock{
@@ -427,6 +431,10 @@ div.modalgroup{
 .pv-reg{
     font-size: 22px;
     //font-weight: normal;
+}
+
+.btn_addProject{
+    margin-top: 10px;
 }
 
 .btn-pv{
