@@ -300,6 +300,8 @@ $logo= $row['Picture'];
     <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.9/css/dataTables.bootstrap.min.css">
     <link href="../css/dataTable.css" rel="stylesheet">
     <link href="../css/nanogallery/css/nanogallery.min.css" rel="stylesheet">
     <link href="../css/nanogallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet">
@@ -521,6 +523,8 @@ $logo= $row['Picture'];
     <script src="../js/slick.js"></script>
     <!-- Timeline -->
     <script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js"></script>
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/imgLiquid-min.js"></script>
     <!-- Adressliste -->

@@ -16,6 +16,17 @@ function dynamicResizer(){
         
 $(document).ready(function(){
     
+    /* ---------------------------------------------- /*
+    * Touchevents für iOS
+    /* ---------------------------------------------- */
+
+    $('.event-container').on('touchstart', function(){
+           $(this).addClass('select');
+           }).on('.event-container', function(){
+           $(this).removeClass('select');
+           });
+                        
+                        
     //Aktuelles Datum
     var today = new Date();
     var dd = today.getDate();
@@ -42,14 +53,18 @@ $(document).ready(function(){
         "scrollY":        "400px",
         "scrollCollapse": true,
         "paging":         false,
-        fixedHeader: false,
+        fixedHeader: true,
         dom: 'Bfrtip',
         ordering: true,
+        responsive: {
+        details: false
+        },
         language: {
             search: "Suche",
             zeroRecords: "Keine Adressen gefunden",
             info: "Anzahl Adressen: _TOTAL_",
-            infoFiltered: "(Adressen gesamt: _MAX_)"
+            infoFiltered: "(Adressen gesamt: _MAX_)",
+            infoEmpty: "Keine Einträge gefunden."
         },
         buttons: [
             'excelHtml5',
@@ -63,26 +78,27 @@ $(document).ready(function(){
     });
 
     //Globale Adressliste (ohne Export-Funktion)
-    $('#globalAddress').DataTable({
-        "scrollY":        "290px",
+    var test= $('#globalAddress').DataTable({
+        "scrollY":        "280px",
         "scrollCollapse": true,
         "paging":         false,
         //dom: 'Bfrtip',
         ordering: true,
-        fixedHeader: false,
-        //responsive: true,
+        fixedHeader: true,
+        responsive: true,
         language: {
             search: "Suche",
             zeroRecords: "Keine Adressen gefunden",
             info: "Anzahl Adressen: _TOTAL_",
-            infoFiltered: "(Adressen gesamt: _MAX_)"
+            infoFiltered: "(Adressen gesamt: _MAX_)",
+            infoEmpty: "Keine Einträge gefunden."
         },
     });
     
     
 
     //Styling Tabellen Buttons (PDF,Excel, CSV)
-    $('.dt-button').addClass('btn btn-default');
+    $('.dt-button').addClass('btn btn-default btn-xs');
 
     // Content Loader mit Ajax (Modals / Lightboxen)
     $('.btn_add').click(function(){

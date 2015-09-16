@@ -218,15 +218,15 @@ if(isset($_POST['update'])){
         </div>
               <div class="modal-body">
 
-            <div id="input_container testXY">
+            <div id="input_container">
             <h3>Adressdatenbank</h3>
                 <?php
 
                     echo'<table class="table order hover" id="globalAddress">';
                     echo'<thead>';
                     echo'<tr>';
-                    echo'<th>Firma</th>';
                     echo'<th>BKP</th>';
+                    echo'<th>Firma</th>';
                     echo'<th>PLZ</th>';
                     echo'<th>Ort</th>';
                     echo'<th></th>';
@@ -236,8 +236,8 @@ if(isset($_POST['update'])){
 
                     while($row= mysqli_fetch_array($result2)){
                         echo'<tr>';
-                        echo'<td><a href="http://'.$row['Homepage'].'/" target="_blank">'.$row['Company'].'</a></td>';
                         echo'<td>'.$row['BKP'].'</td>';
+                        echo'<td><a href="http://'.$row['Homepage'].'/" target="_blank">'.$row['Company'].'</a></td>';
                         echo'<td>'.$row['ZIP'].'</td>';
                         echo'<td>'.$row['City'].'</td>';
                         echo'<td><button type="button" class="btn btn-default btn_add" data-toggle="modal" data-target="#modalSearch" data-dismiss="modal" value="'.$row['IdGlobalAddress'].'">hinzufügen</button></td>';
@@ -383,21 +383,21 @@ if(isset($_GET['status'])){
 echo'<table class="table order hover" id="localAddress">';
 echo'<thead>';
 echo'<tr>';
-echo'<th>Firma</th>';
 echo'<th>BKP</th>';
+echo'<th>Firma</th>';
 echo'<th>Kontaktperson</th>';
 echo'<th>Tel. Direkt</th>';
 echo'<th>Mobil</th>';
 echo'<th>Email Direkt</th>';
-echo'<th></th>';
+echo'<th class="all"></th>';
 echo'</tr>';
 echo'</thead>';
 echo'<tbody>';
 
 while($row= mysqli_fetch_array($result)){
     echo'<tr>';
-    echo'<td><a href="http://'.$row['Homepage'].'/" target="_blank">'.$row['Company'].'</a></td>';
     echo'<td>'.$row['BKP'].'</td>';
+    echo'<td><a href="http://'.$row['Homepage'].'/" target="_blank">'.$row['Company'].'</a></td>';
     echo'<td>'.$row['ProjectCoordinator'].'</td>';
     echo'<td><a href="tel:'.$row['PhoneDirect'].'">'.$row['PhoneDirect'].'</td>';
     echo'<td><a href="tel:'.$row['MobileNumber'].'">'.$row['MobileNumber'].'</td>';
