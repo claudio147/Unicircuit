@@ -85,7 +85,7 @@ $(document).ready(function(){
         //dom: 'Bfrtip',
         ordering: true,
         fixedHeader: true,
-        responsive: true,
+        //responsive: true,
         language: {
             search: "Suche",
             zeroRecords: "Keine Adressen gefunden",

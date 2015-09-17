@@ -115,9 +115,6 @@ $lnCust=$row['Lastname'];
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $fnCust.' '.$lnCust ?><b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Einstellungen</a>
-                        </li>
                         <li class="divider"></li>
                         <li>
                             <a href="../../../platform/public/php/login.php"><i class="fa fa-fw fa-power-off"></i> Abmelden</a>
