@@ -352,24 +352,10 @@ echo'<h2 class="modul-title">Chronik</h2>';
 
 <?php  
     if(isset($_GET['status'])){
-        $x=$_GET['status'];
-        if($x==0){
-            echo'<br/><div class="alert alert-success" role="alert">Beitrag erfolgreich hochgeladen</div>';
-        }else if($x==1){
-            echo'<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen</div>';
-        }else if($x==2){
-            echo'<br/><div class="alert alert-danger" role="alert">Löschen fehlgeschlagen</div>';
-        }else if($x==3){
-            echo'<br/><div class="alert alert-danger" role="alert">Beitrag hinzufügen fehlgeschlagen</div>';
-        }else if($x==4){
-            echo'<br/><div class="alert alert-success" role="alert">Beitrag wurde erfolgreich gelöscht</div>';
-        }else if($x==5){
-            echo'<br/><div class="alert alert-success" role="alert">Beitrag wurde erfolgreich bearbeitet</div>';
-        }else if($x==6){
-            echo'<br/><div class="alert alert-danger" role="alert">Hochladen Fehlgeschlagen! - Nur JPG, JPEG, PNG, GIF</div>';
-        }else if($x==7){
-            echo'<br/><div class="alert alert-danger" role="alert">Hochladen Fehlgeschlagen! - max. Dateigrösse 4 MB</div>';
-        }
+        $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
+        //Rückgabemeldung für Event-Handling Timeline
+               $stat = checkEventTimeline($response);
+               echo $stat;
     }
 ?>
 

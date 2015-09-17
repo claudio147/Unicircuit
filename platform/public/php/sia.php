@@ -336,10 +336,10 @@ while ($row = mysqli_fetch_array($result)) {
         
         <?php  
         if(isset($_GET['status'])){
-            $x=$_GET['status'];
-            if($x==0){
-                echo'<br/><div class="alert alert-danger" role="alert">Fehlgeschlagen! – kein Datum oder Datum > heute</div>';
-            }
-        }
+        $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
+        //Rückgabemeldung für Event-Handling SIA
+               $stat = checkEventSia($response);
+               echo $stat;
+    }
         ?>
     </div>

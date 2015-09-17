@@ -206,21 +206,12 @@ if(isset($_POST['delete'])){
 <!-- Fehlermeldungen / Erfolgsmeldungen -->
 <?php  
     if(isset($_GET['status'])){
-        $x=$_GET['status'];
-        if($x==0){
-            echo'<br/><div class="alert alert-success" role="alert">Event erfolgreich hinzugefügt</div>';
-        }else if($x==1){
-            echo'<br/><div class="alert alert-danger" role="alert">Hinzufügen fehlgeschlagen! Bitte erneut versuchen</div>';
-        }else if($x==2){
-            echo'<br/><div class="alert alert-success" role="alert">Event erfolgreich bearbeitet</div>';
-        }else if($x==3){
-            echo'<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen! Bitte erneut versuchen</div>';
-        }else if($x==4){
-            echo'<br/><div class="alert alert-success" role="alert">Event erfolgreich gelöscht</div>';
-        }else if($x==5){
-            echo'<br/><div class="alert alert-danger" role="alert">Löschen fehlgeschlagen! Bitte erneut versuchen</div>';
-        }
+        $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
+        //Rückgabemeldung für Event-Handling Events
+               $stat = checkEventEvents($response);
+               echo $stat;
     }
+        
     
     //Lösche alte Termine
     $sql= deleteOld($projectID);

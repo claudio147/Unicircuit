@@ -361,22 +361,11 @@ if(isset($_POST['update'])){
 <?php
 
 if(isset($_GET['status'])){
-        $x=$_GET['status'];
-        if($x==0){
-            echo'<br/><div class="alert alert-danger" role="alert">Firma existiert bereits in globaler Adressdatenbank! - Bitte Suchfunktion benutzen.</div>';
-        }else if($x==1){
-            echo'<br/><div class="alert alert-success" role="alert">Adress erfolgreich hinzugefügt.</div>';
-        }else if($x==2){
-            echo'<br/><div class="alert alert-danger" role="alert">Adresse hinzufügen fehlgeschlagen.</div>';
-        }else if($x==3){
-            echo'<br/><div class="alert alert-success" role="alert">Adresse erfolgreich gelöscht.</div>';
-        }else if($x==4){
-            echo'<br/><div class="alert alert-danger" role="alert">Löschen fehlgeschlagen.</div>';
-        }else if($x==5){
-            echo'<br/><div class="alert alert-success" role="alert">Adresse erfolgreich bearbeitet.</div>';
-        }else if($x==6){
-            echo'<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen!</div>';
-        }
+        $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
+        //Rückgabemeldung für Event-Handling Addresslist
+               $stat = checkEventAddresslist($response);
+               echo $stat;
+        
     }
     
     

@@ -218,20 +218,10 @@ if(isset($_POST['delete'])){
  
 <?php
 if(isset($_GET['status'])){
-        $x=$_GET['status'];
-        if($x==0){
-            echo'<br/><div class="alert alert-success" role="alert">Deadline erfolgreich hinzugefügt</div>';
-        }else if($x==1){
-            echo'<br/><div class="alert alert-danger" role="alert">Hinzufügen fehlgeschlagen! Bitte erneut versuchen</div>';
-        }else if($x==2){
-            echo'<br/><div class="alert alert-success" role="alert">Deadline erfolgreich bearbeitet</div>';
-        }else if($x==3){
-            echo'<br/><div class="alert alert-danger" role="alert">Bearbeiten fehlgeschlagen! Bitte erneut versuchen</div>';
-        }else if($x==4){
-            echo'<br/><div class="alert alert-success" role="alert">Deadline erfolgreich gelöscht</div>';
-        }else if($x==5){
-            echo'<br/><div class="alert alert-danger" role="alert">Löschen fehlgeschlagen! Bitte erneut versuchen</div>';
-        }
+        $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
+        //Rückgabemeldung für Event-Handling Deadlines
+               $stat = checkEventDeadlines($response);
+               echo $stat;
     }
     
 ?>

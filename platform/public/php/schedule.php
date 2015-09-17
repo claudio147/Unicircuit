@@ -127,20 +127,10 @@ if(isset($_POST['submit'])){
     
     <?php  
     if(isset($_GET['status'])){
-        $x=$_GET['status'];
-        if($x==0){
-            echo'<br/><div class="alert alert-success" role="alert">Terminplan erfolgreich hochgeladen</div>';
-        }else if($x==1){
-            echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! - Bitte erneut versuchen</div>';
-        }else if($x==2){
-            echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! - Nur PDF und X-PDF erlaubt</div>';
-        }else if($x==3){
-            echo'<br/><div class="alert alert-warning" role="alert">Hochladen Fehlgeschlagen! max. 8 MB</div>';
-        }else if($x==4){
-            echo'<br/><div class="alert alert-success" role="alert">Terminplan erfolgreich gelöscht</div>';
-        }else if($x==5){
-            echo'<br/><div class="alert alert-warning" role="alert">Löschen fehlgeschlagen! Bitte erneut versuchen</div>';
-        }
+        $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
+        //Rückgabemeldung für Event-Handling Schedule
+               $stat = checkEventSchedule($response);
+               echo $stat;
     }
     
     $sql= showAllSchedule($projectID);

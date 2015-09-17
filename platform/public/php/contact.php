@@ -91,12 +91,10 @@ if(isset($_POST['submit'])){
     </form>
     <?php  
     if(isset($_GET['sent'])){
-        $x=$_GET['sent'];
-        if($x==1){
-            echo'<br/><div class="alert alert-success" role="alert">Nachricht erfolgreich gesendet!</div>';
-        }else if($x==2){
-            echo'<br/><div class="alert alert-warning" role="alert">Senden fehlgeschlagen! Bitte eingaben überprüfen</div>';
-        }
+        $response = filter_input(INPUT_GET, 'sent', FILTER_SANITIZE_NUMBER_INT);
+        //Rückgabemeldung für Event-Handling Contact
+               $stat = checkEventContact($response);
+               echo $stat;
     }
     ?>
 </div>
