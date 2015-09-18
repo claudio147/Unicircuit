@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
     $row = mysqli_fetch_array($result);
     if($row['Active'] !=3 && !empty($row['IdUser'])) {
         $status=0;
-        //echo '<p style="font-color:red; font-weight:bold">Sie sind noch nicht aktiviert oder sind gesperrt.</p>';
+        //Wenn User gesperrt ist
         
     }
     // Konnte eine ID aufgrund der Login-Daten ermittelt werden?
@@ -47,9 +47,9 @@ if (isset($_POST['submit'])) {
       //Vorbereitung für Speicherung der ProjektId
       $_SESSION['IdProject'] = '';
       
-      // Beschaffen wir uns ein paar interessante Informationen
+      // Beschaffung User Daten
       $date = date("Y:m:d");
-      $time = date("G:i:s");
+      $time = date("H:i:s");
       $sessionId = session_id();
       $browserTyp = substr($_SERVER['HTTP_USER_AGENT'], 0, 250);
       $datensatz = $row['IdUser'];
@@ -58,6 +58,7 @@ if (isset($_POST['submit'])) {
       // Es wird ein Update durchgeführt, da die Benutzdaten stimmen
       $sql = updateUser($date, $time, $sessionId, $browserTyp, $datensatz);
       $result = mysqli_query($link, $sql);
+      
 
       // Anhand des UserTyps auf die entsprechende Seite weiterleinten.
       //1= Archconsulting //2= Architekt //3= Bauherr

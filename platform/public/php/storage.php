@@ -48,10 +48,12 @@ if(isset($_POST['delete'])) {
             }
             rmdir($path);
     
-    $sql = "DELETE FROM Project WHERE IdProject = '$idProject'";
+     //Löscht alle DB Einträge des Projektes
+    $sql = deleteProject($idProject);
     $status = mysqli_query($link, $sql);
-        $sql = "DELETE FROM User WHERE IdUser = '$idBauherr'";
-        $statusDel = mysqli_query($link, $sql);
+    //Löscht den dazugehörigen Bauherren
+    $sql = deleteBauherr($idBauherr);
+    $statusDel = mysqli_query($link, $sql);
     if(isset($statusDel)) {
         //Speichert erfolgreiche Löschung in Variable zur Ausgabe
         $response = 10;
@@ -103,7 +105,7 @@ if(isset($_POST['delete'])) {
                echo $stat;
                
     $projectsId = array();
-
+    //Ausgabe der Archivierten Projekte
     echo'<div class="pv-row row">';
     while($row= mysqli_fetch_array($result)){
         $projectsId[] = $row['IdProject'];

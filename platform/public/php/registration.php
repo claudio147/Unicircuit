@@ -99,13 +99,12 @@ if (isset($_POST['submit'])) {
   // Prüfen, ob ein Fehler im Eingabeformular seitens Benutzer/in erkannt wurde
   if (!isset($error)) {
     // Wenn kein Fehler, dann zuerst prüfen, ob eventuell Benutzer/in schon in
-    // der Datenbank registiert ist. Dabei können wir uns auf die E-Mail
-    // Adresse beschränken, da diese ja weltweit eindeutig ist
+    // der Datenbank registiert ist.
     // Verbinde mit der Datenbank
      $link = connectDB();
     // Hole aus der Datebank ID von Benutzer/in, welche die eingegebene 
     // E-Mail Adresse besitzt
-    $sql2 = "SELECT * FROM User WHERE Email='$em'";
+    $sql2 = checkUser($em);
     
     $result = mysqli_query($link, $sql2);
     // Zähle alle Datensätze, welcher das SQL-Statement zurück gegeben hat

@@ -43,6 +43,10 @@ function getCountriesDe() {
 /*
  * Userverwaltung
  */
+function checkUser($em){
+    $sql = "SELECT IdUser FROM User WHERE Email='$em'";
+    return $sql;
+}
 // Erstellung Architekt User in DB
 function createArchitect($link, $fn, $ln, $co, $zip, $ci, $cn, $pn, $mn, $em, $to, $p1, $da, $ti, $a1, $a2) {
     global $link;
@@ -534,9 +538,9 @@ function updateUser($date, $time, $sessionId, $browserTyp, $datensatz) {
     //$sessionId
     //$browserTyp
     //$datensatz
-   $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',"
-              . " SessionId='$sessionId', Browser='$browserTyp'"
-              . " WHERE id =$datensatz";
+   $sql = "UPDATE User SET LastLoginDate='$date',LastLoginTime='$time',
+              SessionId='$sessionId', Browser='$browserTyp'
+              WHERE IdUser ='$datensatz'";
    return $sql;
 }
 
@@ -829,6 +833,21 @@ function getProjectsByArchStore($id) {
     $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
         p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM Project as p JOIN User
         as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id.' AND Storage = 1 ORDER BY p.ProjectNumber ASC';
+    return $sql;
+}
+
+function deleteProject($idProject) {
+    $idProject = filter_var($idProject, FILTER_SANITIZE_NUMBER_INT);
+    $sql = "DELETE FROM Project WHERE IdProject = '$idProject'";
+    
+    return $sql;
+    
+}
+
+function deleteBauherr($idBauherr) {
+    $idBauherr = filter_var($idBauherr, FILTER_SANITIZE_NUMBER_INT);
+    $sql = "DELETE FROM User WHERE IdUser = '$idBauherr'";
+    
     return $sql;
 }
 /*
