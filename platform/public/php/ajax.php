@@ -356,7 +356,6 @@ if(isset($_POST['postEdit'])){
                 </label>
                 </div>
                 <label for="upload">Bildupload</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="4100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
                 <input id="upload" type="file" name="userfile"/>';
 
                 echo $data;

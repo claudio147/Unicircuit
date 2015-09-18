@@ -107,7 +107,6 @@ if(isset($_POST['delete'])){
 
 ?>
 <div class="col-xs-12">
-<h2 class="modul-title">Events</h2>
 
 <!--Lightboxen (Modals)-->
 <div class="container modalgroup">

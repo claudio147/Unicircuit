@@ -52,10 +52,10 @@ if(isset($_POST['submit'])){
         exit();
     }
     
-    //Verkleinert Bilder über 1080px Seitenlänge und speichert diese im verzeichnis,
-    //Bilder unter 1080px Seitenlänge werden direkt ins Verzeichnis gespeichert
-    if($image_width_old>1080 || $image_height_old>1080){
-        if(resizeImage($tempna, $uploadfile, 1080)){
+    //Verkleinert Bilder über 800px Seitenlänge und speichert diese im verzeichnis,
+    //Bilder unter 800px Seitenlänge werden direkt ins Verzeichnis gespeichert
+    if($image_width_old>800 || $image_height_old>800){
+        if(resizeImage($tempna, $uploadfile, 800)){
             $statusUpload=true;
         }else{
             $statusUpload=false;
@@ -150,10 +150,10 @@ if(isset($_POST['edit'])){
             exit();
         }
         
-        //Verkleinert Bilder über 1080px Seitenlänge und speichert diese im verzeichnis,
-        //Bilder unter 1080px Seitenlänge werden direkt ins Verzeichnis gespeichert
-        if($image_width_old>1080 || $image_height_old>1080){
-            if(resizeImage($tempna, $uploadfile, 1080)){
+        //Verkleinert Bilder über 800px Seitenlänge und speichert diese im verzeichnis,
+        //Bilder unter 800px Seitenlänge werden direkt ins Verzeichnis gespeichert
+        if($image_width_old>800 || $image_height_old>800){
+            if(resizeImage($tempna, $uploadfile, 800)){
                 $statusUpload=true;
             }else{
                 $statusUpload=false;
@@ -244,17 +244,7 @@ if(isset($_POST['delete'])){
 ?>
 
 
-
-
-
-
-<?php
-
-
-echo'<div class="col-xs-12">';
-echo'<h2 class="modul-title">Chronik</h2>';
-?>
-
+<div class="col-xs-12">
 <!--Lightboxen (Modals)-->
 <div class="container modalgroup">
 <?php
@@ -298,7 +288,6 @@ echo'<h2 class="modul-title">Chronik</h2>';
                                     </label>
                                 </div>
                                 <label for="upload">Bildupload</label>
-                                <input type="hidden" name="MAX_FILE_SIZE" value="4100000"/> <!-- Grössenbegrenzung (nicht Sicher) -->
                                 <input id="upload" type="file" name="userfile"/>
 
 

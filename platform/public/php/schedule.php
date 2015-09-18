@@ -75,7 +75,6 @@ if(isset($_POST['submit'])){
 ?>
 
 <div class="col-xs-12">
-    <h2 class="modul-title">Terminplan</h2>
     
     <!--Lightboxen (Modals)-->
     <div class="container modalgroup">

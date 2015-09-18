@@ -190,7 +190,6 @@ if(isset($_POST['update'])){
 
 
 <div class="col-xs-12">
-<h2 class="modul-title">Adressliste</h2>
 
 
 <!--Lightboxen (Modals)-->
@@ -219,7 +218,7 @@ if(isset($_POST['update'])){
               <div class="modal-body">
 
             <div id="input_container">
-            <h3>Adressdatenbank</h3>
+            <h4>Adressdatenbank</h4>
                 <?php
 
                     echo'<table class="table order hover" id="globalAddress">';

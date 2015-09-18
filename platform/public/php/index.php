@@ -22,13 +22,16 @@ if(isset($_SESSION['UserType'])){
     if($usertyp==2){
         if($_SESSION['IdProject']){
             $validprojects= $_SESSION['IdProject'];//hole Array mit Projekten des Architekten (die er öffnen darf, sprich seine eigenen Projekte)
-            
+
             //Speichert letzt geöffnetes Projekt in der Session (nur Architekt)
             if(isset($_POST['projectID'])){
                 $_SESSION['LastProjectID']=$_POST['projectID'];
             }
             if(!isset($_POST['nav'])){//Bei einem Refresh über den Browser wird die Navigation 1 (Home) aufgerufen
                 $_POST['nav']=$_SESSION['LastNav'];
+            }
+            if(isset($_SESSION['LastProjectID'])){
+                $projectID=$_SESSION['LastProjectID'];
             }
             
         }else{
@@ -180,11 +183,14 @@ if(isset($_POST['edit_User'])) {
 if(isset($_POST['goto'])){//Architekt (1. Aufruf)
     $projectID= $_POST['goto'];
     $_SESSION['LastProjectID']=$projectID;
+    $_SESSION['LastNav']=1;
     $_POST['nav']=1;
     //Pürft ob das ausgewählte Projekt vom Architekten X ist
     if(in_array($projectID, $validprojects)){
         //Setzt Menüpunkt Home auf aktiv
         $active1='active';
+        //Collapse Menü (Termine: geschlossen)
+        $collapse='collapse';
     }else{
         //kein Zugriff auf dieses Projekt
         header('Location: login.php?denied=1');
@@ -206,6 +212,9 @@ if(isset($_POST['goto'])){//Architekt (1. Aufruf)
         //Setzt angeklickten Menüpunkt als Aktiv (Grüner hintergrund)
         $active= $_POST['nav'];
         $_SESSION['LastNav']=$active;
+        
+        //Collapse Menü (Termine: geschlossen)
+        $collapse='collapse';
         switch ($active) {
             case 1:
                 $active1='active';
@@ -215,12 +224,18 @@ if(isset($_POST['goto'])){//Architekt (1. Aufruf)
                 break;
             case 3:
                 $active3='active';
+                //Collapse Menü (Termine: geöffnet)
+                $collapse='collapse.in';
                 break;
             case 4:
                 $active4='active';
+                //Collapse Menü (Termine: geöffnet)
+                $collapse='collapse.in';
                 break;
             case 5:
                 $active5='active';
+                //Collapse Menü (Termine: geöffnet)
+                $collapse='collapse.in';
                 break;
             case 6:
                 $active6='active';
@@ -244,7 +259,7 @@ if(isset($_POST['goto'])){//Architekt (1. Aufruf)
     
     
     
-}else if(isset ($projectIDx)){//Bauherr (1. Aufruf)
+}else if(isset($projectIDx)){//Bauherr (1. Aufruf)
     $projectID= $projectIDx;
     //Setzt Menüpunkt Home auf aktiv
     $active1='active';   
@@ -411,8 +426,8 @@ $logo= $row['Picture'];
                             <!--<a href="index.php?id=2" id="timeline"><i class="fa fa-tachometer"></i>Chronik</a>-->
                         </li>
                         <li id="termine_li">
-                            <a id="termingroup" href="javascript:;" data-toggle="collapse" data-target="#termine"><i class="fa fa-calendar"></i>Termine<i class="fa fa-fw fa-caret-down"></i></a>
-                            <ul id="termine" class="collapse">
+                            <a id="termingroup" href="javascript:;" data-toggle="collapse" data-target="#termine"><i class="fa fa-calendar"></i>Termine<i id="icon-collaps-menu" class="fa fa-fw fa-caret-down collapse-icon"></i></a>
+                            <ul id="termine" class="<?php echo $collapse; ?>">
                                 <li>
                                     <button type="submit" id="terminplan" name="nav" value="3"  class="<?php echo $active3; ?>">Terminplan</button>
                                     <!--<a href="index.php?id=3" id="terminplan" >Terminplan</a>-->

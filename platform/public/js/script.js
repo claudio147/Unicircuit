@@ -43,7 +43,6 @@ $(document).ready(function(){
     today = dd+'/'+mm+'/'+yyyy;
 
 
-
     /*
     ******************* Adressliste
     */
@@ -79,7 +78,7 @@ $(document).ready(function(){
 
     //Globale Adressliste (ohne Export-Funktion)
     var test= $('#globalAddress').DataTable({
-        "scrollY":        "280px",
+        "scrollY":        "240px",
         "scrollCollapse": true,
         "paging":         false,
         //dom: 'Bfrtip',

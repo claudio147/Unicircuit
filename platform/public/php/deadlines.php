@@ -89,7 +89,6 @@ if(isset($_POST['delete'])){
 ?>
 
 <div class="col-xs-12">
-    <h2 class="modul-title">Entscheidungs- Termine</h2>
     
     <!--Lightboxen (Modals)-->
     <div class="container modalgroup">

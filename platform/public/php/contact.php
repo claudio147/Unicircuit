@@ -79,7 +79,6 @@ if(isset($_POST['submit'])){
 
 
 <div class="col-xs-12 col-md-6">
-    <h2 class="modul-title">Kontaktformular</h2>
     <form method="POST" action="contact.php">
         <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
         <label for="subject">Betreff:</label>

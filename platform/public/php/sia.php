@@ -302,7 +302,6 @@ while ($row = mysqli_fetch_array($result)) {
 
         
     <div class="col-xs-12 col-md-6">
-        <h2 class="modul-title">Generation SIA Baujournal</h2>
         <form method="POST" action="sia.php" id="pdf">
             <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
             <input id="zip" type="hidden" name="zip" value="<?php echo $zip; ?>">

@@ -1,3 +1,14 @@
+@font-face { font-family: 'HelveticaNeueLTStd-Lt';
+             src: url('../fonts/HelveticaNeueLTStd-Lt.otf') format('opentype'); }
+@font-face { font-family: 'HelveticaNeueLTStd-Bd';
+             src: url('../fonts/HelveticaNeueLTStd-Bd.otf') format('opentype'); }
+
+h3,h4, .pv-bold,
+div .deadline-date{
+    font-family: 'HelveticaNeueLTStd-Bd';
+}
+
+
 .modal .modal-body{
     max-height: 65vh;
     overflow-y: auto;
@@ -43,6 +54,7 @@ textarea{
 }
 body{
     background-color: #f0f0f0;
+    font-family: 'HelveticaNeueLTStd-Lt';
 }
 
 label{
@@ -114,7 +126,7 @@ body {
     background-color: #fff;
 }
 
-.huge {
+.huge{
     font-size: 50px;
     line-height: normal;
 }
@@ -202,6 +214,11 @@ h1.navbar-text {
 
 .link-pv{
     margin-bottom: 5px;
+}
+
+.collapse-icon{
+    float: right;
+    font-size: 18px;
 }
 /* Side Navigation */
 
@@ -424,13 +441,11 @@ div.modalgroup{
 
 .pv-bold{
     font-size: 32px;
-    font-weight: bold;
     overflow: hidden;
 }
 
 .pv-reg{
     font-size: 22px;
-    //font-weight: normal;
 }
 
 .btn_addProject{
@@ -684,6 +699,9 @@ button.deadline-btn-show:focus{
 .post-dash{
     margin-left: 0px;
     margin-right: 0px;
+    -webkit-box-shadow: 0px 0px 12px 8px rgba(184,184,184,1);
+    -moz-box-shadow: 0px 0px 12px 8px rgba(184,184,184,1);
+    box-shadow: 0px 0px 12px 8px rgba(184,184,184,1);
 }
 
 .post-dash>h3{

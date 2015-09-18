@@ -214,7 +214,7 @@
 		/* ---------------------------------------------- /*
 		 * Contact form ajax
 		/* ---------------------------------------------- */
-
+                
 		$('#contact-form').submit(function(e) {
 
 			e.preventDefault();
@@ -227,10 +227,12 @@
 			var response = $('#contact-form .ajax-response');
                         
                         var d = new Date();
-                        var curTime = d.getTime();
+                        var curTime=Math.floor(d.getTime() / 1000);
                         
                         var timeDiff = (curTime - posted);
-                        
+                        console.log('Current: '+curTime);
+                        console.log('Posted: '+posted);
+                        console.log('Diff: '+timeDiff);
                         if(timeDiff<10){
                             response.fadeIn(500);
                             response.html('<i class="fa fa-warning"></i> Ihre Nachricht wurde als SPAM erkannt!');

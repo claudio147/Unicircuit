@@ -116,7 +116,6 @@ if(isset($_POST['submit'])){
 ?>
 
 <div class="col-xs-12 col-md-12">
-    <h2 class="modul-title">Galerie</h2>
     
         <!--Lightboxen (Modals)-->
     <div class="container modalgroup">
