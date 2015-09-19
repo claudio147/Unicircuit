@@ -29,7 +29,7 @@ $result = mysqli_query($link, $sql);
     Bauherren haben keinen Zugriff auf Archiv Projekte</div>';*/
 
 //Löschen eines Archivierten Projektes, Löscht auch dazugehörigen Bauherr und Verzeichnis
-if(isset($_POST['delete'])) {
+if(isset($_POST['idUser'])){
     $idBauherr = filter_input(INPUT_POST, 'idUser', FILTER_SANITIZE_NUMBER_INT);
     $idProject = filter_input(INPUT_POST, 'postID', FILTER_SANITIZE_NUMBER_INT);
     $path = '../architects/architect_'.$id.'/project_'.$idProject.'/' ;
@@ -56,9 +56,11 @@ if(isset($_POST['delete'])) {
     $statusDel = mysqli_query($link, $sql);
     if(isset($statusDel)) {
         //Speichert erfolgreiche Löschung in Variable zur Ausgabe
-        $response = 10;
+        header('Location: projektverwaltung.php?nav=2&status=10');
+        //$response = 10;
     } else {
-        $respone = 9;
+        header('Location: projektverwaltung.php?nav=2&status=9');
+        //$respone = 9;
     }
             
 }
@@ -69,25 +71,25 @@ if(isset($_POST['delete'])) {
           
         <!-- Projekt ProjektInfos -->
         <!-- Modal Global-->
-        <div class="modal" id="editPost" role="dialog">
+        <div class="modal" id="editPost" role="dialog" style="z-index: 2;">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <form enctype="multipart/form-data" action="projektverwaltung.php?nav=2" method="POST">
+                    <form enctype="multipart/form-data" action="storage.php" method="POST" id="deleteProject" name="deleteProject">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Projekt Details</h4>
                         </div>
                             <div class="modal-body">
                                 <div id="editContainer_storage">
-
-                                    <!-- Platzhalter für ajax Inhalt -->
+                                    
+                                    <!-- Platzhalter für Ajax Inhalt -->
 
                                 </div>       
                             </div>
                         <div class="modal-footer">
-                            <input type="submit" name="delete" value="Löschen" class="btn btn-default" />
+                            <input type="submit" name="delete" value="Löschen" class="btn btn-default"/>
 
                             <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
                         </div>
@@ -97,12 +99,18 @@ if(isset($_POST['delete'])) {
 
             </div>
         </div>
+        
+        <div id="dialog" title="Projekt Löschen">
+            <i class="fa fa-exclamation-triangle fa-4x"></i>
+            <p>Möchten Sie das Projekt wirklich löschen?</p>
+            <p>Das Löschen eines Projekts kann nicht wiederrufen werden.</p>
+        </div>
 
          
 <?php
     //Rückgabemeldung für Eingaben in Lightboxen
-               $stat = checkResponse($response);
-               echo $stat;
+    $stat = checkResponse($response);
+    echo $stat;
                
     $projectsId = array();
     //Ausgabe der Archivierten Projekte

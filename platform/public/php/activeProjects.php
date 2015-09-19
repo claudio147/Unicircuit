@@ -479,22 +479,11 @@ if(isset($_POST['editUser'])) {
 }
 
 
-
-//User Details
-$userID= $_SESSION['IdUser'];
-$sql=userData($userID);
-$result= mysqli_query($link, $sql);
-$row = mysqli_fetch_array($result);
-$fnCust=$row['Firstname'];
-$lnCust=$row['Lastname'];
-$logo= $row['Picture'];
 ?>
 
 
         
         <div id="wrapper wrapper-pv">
-        
-
 
             <div class="container">
 
@@ -664,36 +653,7 @@ $logo= $row['Picture'];
                     </div>
                 </div>
                 
-                 <!-- User Settings -->
-                <!-- Modal Global-->
-                <div class="modal" id="editUser" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Benutzer Einstellungen</h4>
-                                </div>
-                                    <div class="modal-body">
-                                        <div id="editContainer_User">
-
-                                            <!-- Platzhalter für ajax Inhalt -->
-
-                                        </div>       
-                                    </div>
-                                <div class="modal-footer">
-                                    <input type="submit" name="editUser" value="Speichern" class="btn btn-default"/>
-
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-                                </div>
-                          </form>
-
-                        </div>
-
-                    </div>
-                </div>
+                
             
 <?php
 

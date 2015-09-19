@@ -138,6 +138,39 @@ $(document).ready(function(){
         })      
     });
     
+    
+    
+    $(function(){       
+        // jQuery UI Dialog   
+                 
+        $('#dialog').dialog({
+            autoOpen: false,
+            width: 500,
+            modal: true,
+            resizable: false,
+            buttons: {
+                "Löschen": function() {
+                    document.deleteProject.submit();
+
+                },
+                "Abbrechen": function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        
+         
+        $('form#deleteProject').submit(function(e){
+            e.preventDefault();
+ 
+            //$("p#dialog-email").html($("input#emailJQ").val());
+            $('#dialog').dialog('moveToTop');
+            $('#dialog').dialog('open');
+            
+        });
+    });
+    
+    
 
 });
 

@@ -377,7 +377,6 @@ $(document).ready(function(){
             $('#editContainer_User').html(data);
         })      
     });
-
     
 })//--> END document Ready
 

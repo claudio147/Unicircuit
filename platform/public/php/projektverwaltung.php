@@ -22,6 +22,10 @@ if($nav==1){
     $title='Archiv';
 }
 
+if($_GET['status']){
+    $response=$_GET['status'];
+}
+
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/security.inc.php');
@@ -520,6 +524,8 @@ $logo= $row['Picture'];
         <!-- CSS 3rd Party -->
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
+        <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css" rel="stylesheet">
         <!--<link href="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.css" type="text/css" rel="stylesheet" />-->
         <!--<link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
         <link href="../css/dataTable.css" rel="stylesheet">
@@ -529,7 +535,7 @@ $logo= $row['Picture'];
         <link href="../css/bootstrap-clockpicker.min.css" rel="stylesheet">
         <link href="../css/slick.css" rel="stylesheet">
         <link href="../css/slick-theme.css" rel="stylesheet">
-        <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
+        
         <link href="../css/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css" rel="stylesheet">-->
         
         <!-- CSS spezifisch -->
@@ -543,6 +549,36 @@ $logo= $row['Picture'];
 
     </head>
     <body>
+         <!-- User Settings -->
+                <!-- Modal Global-->
+                <div class="modal" id="editUser" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form enctype="multipart/form-data" action="projektverwaltung.php" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Benutzer Einstellungen</h4>
+                                </div>
+                                    <div class="modal-body">
+                                        <div id="editContainer_User">
+
+                                            <!-- Platzhalter für ajax Inhalt -->
+
+                                        </div>       
+                                    </div>
+                                <div class="modal-footer">
+                                    <input type="submit" name="editUser" value="Speichern" class="btn btn-default"/>
+
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                                </div>
+                          </form>
+
+                        </div>
+
+                    </div>
+                </div>
         
         <div id="wrapper wrapper-pv">
         
@@ -612,13 +648,14 @@ $logo= $row['Picture'];
     <!-- JS 3rd Party -->
     <script src="../js/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <!--<script src="../css/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>-->
+    <script src="../css/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
     <!--<script src="../js/bootstrap-clockpicker.min.js"></script>
     <script src="../js/slick.js"></script>-->
     <!-- Timeline -->
     <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>-->
     <!--<script src="//cdn.rawgit.com/noelboss/featherlight/1.3.3/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>-->
     <script src="../js/imgLiquid-min.js"></script>
+    <script type="text/javascript" src="../js/jquery.popconfirm.js"></script>
     <!-- Adressliste -->
     <!--<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js"></script>

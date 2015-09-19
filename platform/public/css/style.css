@@ -8,6 +8,10 @@ div .deadline-date{
     font-family: 'HelveticaNeueLTStd-Bd';
 }
 
+#dialog{
+    font-family: 'HelveticaNeueLTStd-Lt';
+    display: none;
+}
 
 .modal .modal-body{
     max-height: 65vh;
