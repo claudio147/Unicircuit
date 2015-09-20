@@ -78,7 +78,7 @@ function createRegMail ($em, $fn ,$ln, $to) {
 	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
     registiert. Um die Registration abzuschliessen, klicken Sie bitte auf
     folgenden Link: <br />
-    <a href=\"http://local-platform.int.ch/php/verification.php?regcode=$to\">Registration abschliessen</a>".
+    <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/verification.php?regcode=$to\">Registration abschliessen</a>".
     "</p><p>Es gr&uuml;sst das Team von Archconsulting</p></body></html>");
 
       // Mail an Benutzer/in senden.
@@ -162,7 +162,7 @@ function createBauhMail($bhEmail, $BhFn, $BhLn, $BhPw, $title) {
             <body>
             <p> Guten Tag Herr $BhFn $BhLn</p>
             <p> Ihr Architekt hat Ihr Projekt $title auf der Plattform Unicircuit eröffnet. </p>
-            <p> Sie können sich unter <a href=\"http://local-platform.int.ch/php/login.php\">Login</a> direkt einloggen</p>
+            <p> Sie können sich unter <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/login.php\">Login</a> direkt einloggen</p>
             <p> Ihr Passwort für den erstmaligen Login lautet: <b>$BhPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
                <p> Viel Spass wünscht <b> Archconsulting</b> </p>");
     
@@ -190,7 +190,7 @@ function createBauhResetPw($bhEmail, $bhFn, $bhLn, $BhPw, $title) {
             <body>
             <p> Guten Tag Herr $bhFn $bhLn</p>
             <p> Ihr Architekt hat Ihr Passwort für das Projekt $title zurückgesetzt. </p>
-            <p> Sie können sich unter <a href=\"http://local-platform.int.ch/php/login.php\">Login</a> direkt einloggen mit dem neuen Passwort</p>
+            <p> Sie können sich unter <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/login.php\">Login</a> direkt einloggen mit dem neuen Passwort</p>
             <p> Ihr Passwort lautet: <b>$BhPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
                <p> Viel Spass wünscht <b> Archconsulting</b> </p>");
     
