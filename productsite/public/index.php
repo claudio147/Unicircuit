@@ -13,7 +13,7 @@ require_once ('../../library/public/contentLoaderProductsite.inc.php');
 	<title>Unicircuit</title>
 
 	<!-- CSS 3rd party -->
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="css/font-awesome.css" rel="stylesheet" media="screen">
 	<link href="css/simple-line-icons.css" rel="stylesheet" media="screen">
 	<link href="css/animate.css" rel="stylesheet">
@@ -23,7 +23,7 @@ require_once ('../../library/public/contentLoaderProductsite.inc.php');
 	<!-- CSS Custom -->
 	        <style>
             #home {
-                background: url(images/<?php
+                background: url(img/<?php
                         $link= connectDB();
                         $sql= selectImages(1);
                         $result = mysqli_query($link, $sql);
@@ -294,11 +294,11 @@ require_once ('../../library/public/contentLoaderProductsite.inc.php');
                                     $sql= selectImages(3);
                                     $result = mysqli_query($link, $sql);
                                     while($row= mysqli_fetch_array($result)){
-                                        echo'<div><img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'"></div>';
+                                        echo'<div><img src="img/'.$row['Filename'].'" alt="'.$row['Comment'].'"></div>';
                                     }
                                     ?>
 				</div>	
-				<img src="images/imac.png" alt="Bildrahmen Imac" class="imac">
+				<img src="img/imac.png" alt="Bildrahmen Imac" class="imac">
             </div>
 
 			<div class="row slider-mobile" id="sliderMobile">
@@ -308,11 +308,11 @@ require_once ('../../library/public/contentLoaderProductsite.inc.php');
                                     $sql= selectImages(2);
                                     $result = mysqli_query($link, $sql);
                                     while($row= mysqli_fetch_array($result)){
-                                        echo'<div><img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'"></div>';
+                                        echo'<div><img src="img/'.$row['Filename'].'" alt="'.$row['Comment'].'"></div>';
                                     }
                                     ?>
 				</div>
-				<img src="images/ipad.png" alt="Bildrahmen Ipad" class="ipad">
+				<img src="img/ipad.png" alt="Bildrahmen Ipad" class="ipad">
            	</div>
 		</div><!-- End contaier -->
 	</section>
@@ -443,7 +443,7 @@ require_once ('../../library/public/contentLoaderProductsite.inc.php');
                         $sql= selectImages(4);
                         $result = mysqli_query($link, $sql);
                         while($row= mysqli_fetch_array($result)){
-                            echo'<img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'">';
+                            echo'<img src="img/'.$row['Filename'].'" alt="'.$row['Comment'].'">';
                         }
                         ?>
             		<p class="name"><?php echo $AU_personLeftName ?></p>
@@ -455,7 +455,7 @@ require_once ('../../library/public/contentLoaderProductsite.inc.php');
                         $sql= selectImages(5);
                         $result = mysqli_query($link, $sql);
                         while($row= mysqli_fetch_array($result)){
-                            echo'<img src="images/'.$row['Filename'].'" alt="'.$row['Comment'].'">';
+                            echo'<img src="img/'.$row['Filename'].'" alt="'.$row['Comment'].'">';
                         }
                         ?>
             		<p class="name"><?php echo $AU_personRightName ?></p>
@@ -556,12 +556,12 @@ require_once ('../../library/public/contentLoaderProductsite.inc.php');
 
 	<!-- Javascript Dateien -->
 	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.parallax-1.1.3.js"></script>
 	<script src="js/jquery.sticky.js"></script>
 	<script src="js/smoothscroll.js"></script>
 	<script src="js/wow.min.js"></script>
-    <script src="js/slick.js"></script>
+        <script src="js/slick.js"></script>
 	<script src="js/script.js"></script>	
 
 </body>

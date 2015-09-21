@@ -313,7 +313,7 @@ textarea.form-control {
     text-align: center;
 }
 .calltoaction {
-    background: url(../images/slider-background.jpg);
+    background: url(../img/slider-background.jpg);
 	background-color: #222;
 	background-repeat: no-repeat;
 	background-position: 0 0;
@@ -375,7 +375,7 @@ textarea.form-control {
 
 .home-overlay {
     background-color: rgba(44, 62, 80, 0.3);
-    background-image: url("../images/pattern.png");
+    background-image: url("../img/pattern.png");
     background-repeat: repeat;
     height: 100%;
     left: 0;
@@ -1087,7 +1087,7 @@ ol li:before {
 }
 
 #status {
-	background-image: url(../images/preloader.gif);
+	background-image: url(../img/preloader.gif);
 	background-position: center;
 	background-repeat: no-repeat;
 	height: 200px;

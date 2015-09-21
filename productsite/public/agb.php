@@ -12,7 +12,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 	<title>Unicircuit-AGB</title>
 
 	<!-- CSS 3rd party-->
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="css/font-awesome.css" rel="stylesheet" media="screen">
 	<link href="css/simple-line-icons.css" rel="stylesheet" media="screen">
 	<link href="css/animate.css" rel="stylesheet">
@@ -103,16 +103,16 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 
 	<!-- Javascript files -->
 	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.parallax-1.1.3.js"></script>
 	<script src="js/imagesloaded.pkgd.js"></script>
 	<script src="js/jquery.sticky.js"></script>
 	<script src="js/smoothscroll.js"></script>
 	<script src="js/wow.min.js"></script>
-    <script src="js/jquery.easypiechart.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/jquery.cbpQTRotator.js"></script>
-    <script src="js/slick.js"></script>
+        <script src="js/jquery.easypiechart.js"></script>
+        <script src="js/waypoints.min.js"></script>
+        <script src="js/jquery.cbpQTRotator.js"></script>
+        <script src="js/slick.js"></script>
 	<script src="js/script.js"></script>
 
 </body>
