@@ -3,6 +3,13 @@
 @font-face { font-family: 'HelveticaNeueLTStd-Bd';
              src: url('../fonts/HelveticaNeueLTStd-Bd.otf') format('opentype'); }
 
+
+
+//Zeigt keine Scrollbars mehr an
+::-webkit-scrollbar { 
+    display: none; 
+}
+
 h3,h4, .pv-bold,
 div .deadline-date{
     font-family: 'HelveticaNeueLTStd-Bd';
