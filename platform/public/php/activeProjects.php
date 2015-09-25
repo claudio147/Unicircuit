@@ -688,7 +688,7 @@ if(isset($_POST['editUser'])) {
                         echo'<p class="pv-reg">'.$row['Firstname'].' '.$row['Lastname'].'</p>';
                         echo'<div class="row">';
                             echo'<div class="col-xs-6">';
-                                echo'<button type="button" class="btn-pv btn_postEdit_pv btn btn-default" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i> Einstell.</button>';
+                                echo'<button type="button" class="btn-pv btn_postEdit_pv btn btn-default" data-toggle="modal" data-target="#editPost" value="'.$row['IdProject'].'"><i class="fa fa-pencil-square-o"></i> Bearbeiten</button>';
                             echo'</div>';
                             echo'<div class="col-xs-6">';
                                 echo'<form action="index.php" method="POST">

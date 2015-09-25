@@ -270,16 +270,16 @@ if(isset($_GET['status'])){
                 $company='';
             }
             
-            echo'<button type="button" class="btn btn-default deadline-btn-edit" data-toggle="modal" data-target="#editDeadline" value="'.$id.'">';
+
+            if($usertyp==2 && $statusStorage!=1){
+                echo'<button type="button" class="btn btn-default deadline-btn-edit" data-toggle="modal" data-target="#editDeadline" value="'.$id.'">';
+            }else{
+                echo'<button type="button" class="btn btn-default deadline-btn-show" data-toggle="modal" data-target="#showDeadline" value="'.$id.'">';
+            }
             echo'<div class="col-xs-12 deadline-row '.$class.'">';
                 echo'<div class="deadline-date">'.$date.'</div>';
                 echo'<div class="deadline-title">'.$title.'</div>';
                 echo'<div class="deadline-description hidden-sm hidden-xs">'.$company.'</div>';
-                /*if($usertyp==2 && $statusStorage!=1){
-                    echo'<button type="button" class="btn btn-default deadline-btn-edit" data-toggle="modal" data-target="#editDeadline" value="'.$id.'"><i class="fa fa-pencil-square-o"></i></button>';
-                }else{
-                    echo'<button type="button" class="btn btn-default deadline-btn-show" data-toggle="modal" data-target="#showDeadline" value="'.$id.'"><i class="fa fa-info-circle"></i></button>';
-                }*/
                 echo'<i class="fa fa-pencil-square-o"></i>';
             echo'</div> '; 
             echo'</button>';

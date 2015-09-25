@@ -304,7 +304,6 @@ $(document).ready(function(){
 
 
     
-    
     /*
      * Dashboard
      */
@@ -320,7 +319,6 @@ $(document).ready(function(){
         $('.dash-deadlines').css({'height':quat+'px'});
         $('.dash-events').css({'height':evt+'px'});
         
-        //$('.dash-timeline').getNiceScroll().hide();
         $('.dash-timeline').niceScroll({
             cursorcolor:"#373d42",
             cursoropacitymax:0,
@@ -330,11 +328,7 @@ $(document).ready(function(){
             cursorcolor:"#373d42",
             cursoropacitymax:0
         });
-        
-        
-        
-
-    } 
+    }
     
     //Timeline-Mini
     function dynamicResizerDashTimeline(){
@@ -363,8 +357,8 @@ $(document).ready(function(){
             }
             //Gallery-mini
             $('.dash-slick-gallery').slick({
-                                        slidesToShow: slides,
-                                        slidesToScroll: 1,
+                            slidesToShow: slides,
+                            slidesToScroll: 1,
                             dots: false,
                             infinite: false,
                             arrows: false,
@@ -393,7 +387,7 @@ $(document).ready(function(){
         setheightSchedule();
         dynamicResizerDashboard();
         dynamicResizerDashTimeline();
-        dynamicResizerDashGallery();       
+        dynamicResizerDashGallery(); 
     }
     
     /*

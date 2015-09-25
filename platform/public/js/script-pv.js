@@ -139,7 +139,7 @@ $(document).ready(function(){
     });
     
     
-    
+    //Warnmeldung beim Löschen
     $(function(){       
         // jQuery UI Dialog   
                  
@@ -169,6 +169,8 @@ $(document).ready(function(){
             
         });
     });
+    
+
     
     
 
