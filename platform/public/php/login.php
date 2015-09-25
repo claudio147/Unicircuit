@@ -5,7 +5,10 @@
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
+require_once ('../../../library/public/security.inc.php');
+require_once ('../../../library/public/mail.inc.php');
 
+$link = connectDB();
 //Zerstörung Cookie
 if (isset($_COOKIE[session_name()])) {
   session_start(); // Reinitialisiere Session
@@ -24,7 +27,7 @@ if (isset($_POST['submit'])) {
     $pw = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
     
-    $link = connectDB();
+    
     $sql = selectUser($email, $pw);
     $result = mysqli_query($link, $sql);
     $row = mysqli_fetch_array($result);
@@ -71,7 +74,7 @@ if (isset($_POST['submit'])) {
               break;
           case 3:
               //Holt die entsprechende ProjektId des Bauherren
-              $sql = "SELECT IdProject FROM Project WHERE Fk_IdBauherr = $datensatz ";
+              $sql = getProjectId($datensatz);
               $result = mysqli_query($link, $sql);
               $row = mysqli_fetch_array($result);
               //echo $sql;
@@ -92,6 +95,34 @@ if (isset($_POST['submit'])) {
   }
 }
 
+
+//Funktion wenn User auf Passwort vergessen klickt
+if ($_GET['forgotten'] == 1) {
+    $forgotten = true;
+        
+}
+//Passwort Renew eines Users
+if(isset($_POST['pwRenew'])) {
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+    $sql = getDetailsByMail($email);
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    $fn = $row['Firstname'];
+    $ln = $row['Lastname'];
+        if($row != 0 ) {
+            $newPw = generatePassword();
+            $newPwHash = hash('sha256', $newPw);
+            $sql = updatePassword($newPwHash, $email);
+            $result = mysqli_query($link, $sql);
+            $sendMail =  createResetPw($email, $fn, $ln, $newPw);
+                if($sendMail == true) {
+                    $status = 2;
+                } else {
+                    $status = 0;
+                }
+        
+        }   
+}
 ?>
 
 <!DOCTYPE html>
@@ -161,17 +192,36 @@ if (isset($_POST['submit'])) {
         
         <div class="container">
             <div class="row">
-                <form action="login.php" method="post">
-                    <h1 class="brand">Unicircuit</h1>
-                    <div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4 login-container">
-                        <h2 class="login-title">Login</h2>
-                        <label for="1">Email</label>
-                        <input id="1" type="email" name="email" class="form-control email"/>
-                        <label for="2">Passwort</label>
-                        <input id="2" type="password" name="password" class="form-control"/>
-                        <div id="signin-btn"><input type="submit" value="Anmelden" name="submit" class="btn btn-default"/><a href="">Passwort vergessen?</a></div>
-                    </div>
-                </form>    
+                <?php
+                //Ausgabe Login normal
+                if(!isset($forgotten)) {
+                echo '<form action="login.php" method="post">';
+                echo    '<h1 class="brand">Unicircuit</h1>';
+                echo    '<div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4 login-container">';
+                echo       '<h2 class="login-title">Login</h2>';
+                echo        '<label for="1">Email</label>';
+                echo        '<input id="1" type="email" name="email" class="form-control email"/>';
+                echo       ' <label for="2">Passwort</label>';
+                echo        '<input id="2" type="password" name="password" class="form-control"/>';
+                echo        '<div id="signin-btn"><input type="submit" value="Anmelden" name="submit" class="btn btn-default"/><a href="login.php?forgotten=1">Passwort vergessen?</a></div>';
+                echo    '</div>';
+                echo '</form>';  
+                //Ausgabe Passwort vergessen Funktion falls flag(forgotten) auf true ist.
+                } else if($forgotten == true) {
+                echo '<form action="login.php" method="post">';
+                echo    '<h1 class="brand">Unicircuit</h1>';
+                echo    '<div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4 login-container">';
+                echo       '<h2 class="login-title">Passwort Vergessen</h2>';
+                echo        '<label for="1">Email</label>';
+                echo        '<input id="1" type="email" name="email" class="form-control email"/>';
+                echo        '<div id="signin-btn"><input type="submit" value="Passwort zurücksetzen" name="pwRenew" class="btn btn-default"/></div>';
+                echo    '</div>';
+                echo '</form>';  
+                
+                }
+                
+                
+                 ?>
             </div>
             <?php
             if(isset($status)){
@@ -180,6 +230,8 @@ if (isset($_POST['submit'])) {
                         echo'<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie sind noch nicht aktiviert oder gesperrt.<br/>Bitte wenden Sie sich an die Hotline der Archconsulting.</div>';
                     }else if($status==1){
                         echo'<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Falscher Benutzername oder Passwort!</div>';
+                    }else if($status==2){
+                        echo'<br/><div class="alert alert-success col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie erhalten eine Email mit Ihrem neuen Passwort</div>';
                     }
                 }
 

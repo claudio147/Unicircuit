@@ -74,7 +74,7 @@ function createRegMail ($em, $fn ,$ln, $to) {
       $mail->MsgHTML("
 	<html><head>
 	<title>Anmledung bei Archconsulting Unicircuit</title>
-	</head><body><p>Hallo $fn $ln</p>
+	</head><body><p>Guten Tag $fn $ln</p>
 	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
     registiert. Um die Registration abzuschliessen, klicken Sie bitte auf
     folgenden Link: <br />
@@ -101,7 +101,7 @@ function createArchRegMail($fn, $ln, $em) {
       $mail->MsgHTML("
 	<html><head>
 	<title>Anmeldung bei Archconsulting Unicircuit</title>
-	</head><body><p>Hallo $fn $ln</p>
+	</head><body><p>Guten Tag $fn $ln</p>
 	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
     registiert. Nach erfolgreicher Prüfung erhalten Sie ihr aktivierungs Mail.</body></html>");
 
@@ -160,7 +160,7 @@ function createBauhMail($bhEmail, $BhFn, $BhLn, $BhPw, $title) {
             <title> Projekt wurde auf Unicircuit eröffnet</title>
             </head>
             <body>
-            <p> Guten Tag Herr $BhFn $BhLn</p>
+            <p> Guten Tag $BhFn $BhLn</p>
             <p> Ihr Architekt hat Ihr Projekt $title auf der Plattform Unicircuit eröffnet. </p>
             <p> Sie können sich unter <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/login.php\">Login</a> direkt einloggen</p>
             <p> Ihr Passwort für den erstmaligen Login lautet: <b>$BhPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
@@ -188,7 +188,7 @@ function createBauhResetPw($bhEmail, $bhFn, $bhLn, $BhPw, $title) {
             <title> Passwort Rücksetzunh</title>
             </head>
             <body>
-            <p> Guten Tag Herr $bhFn $bhLn</p>
+            <p> Guten Tag $bhFn $bhLn</p>
             <p> Ihr Architekt hat Ihr Passwort für das Projekt $title zurückgesetzt. </p>
             <p> Sie können sich unter <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/login.php\">Login</a> direkt einloggen mit dem neuen Passwort</p>
             <p> Ihr Passwort lautet: <b>$BhPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
@@ -274,6 +274,33 @@ function sendMailArchcon($na2, $em2, $me, $emCust){
           return false;
         } else {
             return true;
+        }
+}
+
+//Mail für Paswort Reset eines Users
+function createResetPw($email, $fn, $ln, $newPw) {
+    global $mail;
+    $mail ->Subject = 'Passwort Reset ihres Unicircuit Accounts';
+    $address = $email;
+    $mail ->addAddress($address, $fn.' '.$ln);
+        //Nachricht erstellen
+    $mail->msgHTML("
+            <html><head>
+            <title> Passwort Rücksetzunh</title>
+            </head>
+            <body>
+            <p> Guten Tag $Fn $Ln</p>
+            <p> Ihr Passwort für <b>UNICIRCUIT </b> wurde zurückgesetzt,. </p>
+            <p> Sie können sich unter <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/login.php\">Login</a> direkt einloggen mit dem neuen Passwort</p>
+            <p> Ihr Passwort lautet: <b>$newPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
+               <p> Viel Spass wünscht <b> Archconsulting</b> </p>");
+    
+    // Mail an Benutzer/in senden.
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        return false;
+        } else {
+        return true;
         }
 }
 

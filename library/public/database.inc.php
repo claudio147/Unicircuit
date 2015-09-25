@@ -544,6 +544,24 @@ function updateUser($date, $time, $sessionId, $browserTyp, $datensatz) {
    return $sql;
 }
 
+//Holt ProjectID
+function getProjectId($datensatz) {
+     $sql = "SELECT IdProject FROM Project WHERE Fk_IdBauherr = $datensatz ";
+     return $sql;
+}
+
+//Holt UserDetails anhand Email
+function getDetailsByMail($email) {
+    $sql = "SELECT Firstname, Lastname FROM User WHERE Email = '$email'";
+    return $sql;
+}
+
+//Ändert Passwort des Users in DB
+function updatePassword($newPwHash, $email) {
+    $sql = "UPDATE User SET Password = '$newPwHash' WHERE Email = '$email'";
+    return $sql;
+}
+
 
 /*
  * Kontaktformular - Plattform
