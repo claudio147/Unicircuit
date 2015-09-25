@@ -826,6 +826,8 @@ button.deadline-btn-show:focus{
 */
 #schedule-pdf{
     margin-top: 15px;
+    width:100%; 
+    border: solid 1px;
 }
 
 

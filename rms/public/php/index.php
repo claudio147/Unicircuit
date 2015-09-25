@@ -81,14 +81,6 @@ $lnCust=$row['Lastname'];
     <link rel="icon" href="../img/icon.png" type="image/png" />
     
     <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
-    <script>tinymce.init({
-            selector:'textarea#2',
-            plugins: 'code link image lists preview table',
-            skin: 'custom',
-            width: 600,
-            min_height: 300,
-        });
-    </script>
 </head>
 
 <body>

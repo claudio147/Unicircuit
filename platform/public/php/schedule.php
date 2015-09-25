@@ -141,7 +141,7 @@ if(isset($_POST['submit'])){
     
     ?>
         
-    <object id="schedule-pdf" data="<?php echo $pdfSchedule; ?>" type="application/pdf" style="width:100%; border: solid 1px"></object>
+    <object id="schedule-pdf" data="<?php echo $pdfSchedule; ?>" type="application/pdf"></object>
 
 
 

@@ -332,7 +332,6 @@ if(isset($_POST['save'])){
                             <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
                         </div>
                     </form>
-
                 </div>
 
             </div>

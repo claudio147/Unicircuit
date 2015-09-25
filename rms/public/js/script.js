@@ -52,6 +52,14 @@ $(document).ready(function(){
             $('#address-ajax').html(data);
         }) 
     });
+    
+    tinymce.init({
+        selector:'textarea#2',
+        plugins: 'code link image lists preview table',
+        skin: 'custom',
+        width: 600,
+        min_height: 300,
+    });
 
 
 

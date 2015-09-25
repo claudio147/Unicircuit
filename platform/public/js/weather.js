@@ -47,9 +47,7 @@ $(document).ready(function(){
                                         url:'https://api.worldweatheronline.com/free/v2/past-weather.ashx',
                                         data:{
                                                 key: '72e5fd218af8b7f1122673e5aa0ca',
-                                                //q: '47.42456259999999, 9.3748965',
                                                 q: cord,
-                                                //type: 'LatLon',
                                                 date: date,
                                                 tp: 24,
                                                 lang: 'de',
@@ -68,18 +66,7 @@ $(document).ready(function(){
                                         document.getElementById('humidity').value=humidity; 
                                         document.getElementById('weatherIcon').value=icon; 
                                         document.getElementById('weatherDesc').value=desc; 
-
-                                        console.log(data);
-                                        console.log(maxTemp);
-                                        console.log(minTemp);
-                                        console.log(humidity);
-                                        console.log(cord);
-
-
-
-
-                                });
-                                
+                                });                              
                         });
 
 

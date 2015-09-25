@@ -22,12 +22,9 @@ if (isset($_POST['Selection'])){
 //Dateiupload
 if(isset($_POST['upload'])){
     $select= $_POST['select'];
-    //Array mit Statusmeldungen
-    $errorstatus= array('Alles OK', 'Zeitüberschreitung', 'Grössenüberschreitung',
-        'Nicht vollständig', 'Keine Datei hochgeladen');
 
     //Zielverzeichnis, in welches die Datei kopiert wird
-    $uploaddir= '../../../productsite/public/images/';
+    $uploaddir= '../../../productsite/public/img/';
 
     $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
     $extension= strrchr($_FILES['userfile']['name'],'.');
@@ -45,17 +42,10 @@ if(isset($_POST['upload'])){
         }else{
             $comment= '';
         }
-        
-
-
 
         $link = connectDB();
         $sql= saveImageToDB($orgname, $comment, $file, $uploaddir, $select);
         $status= mysqli_query($link, $sql);
-
-
-        //Errorcode der Übertragung abfragen
-        $code= $_FILES['userfile']['error'];
 
         if($status){
             header('Location: index.php?nav=2&statusSave=0');

@@ -65,9 +65,9 @@ if(isset($_POST['submit'])){
                 exit();
             }
             
-            if($image_width_old>1000 || $image_height_old>1000){
-                //Verkleinert das Originalbild auf eine Länge von 1000px
-                if(resizeImage($tempna, $uploadfileS, 1000)){
+            if($image_width_old>600 || $image_height_old>600){
+                //Verkleinert das Originalbild auf eine Länge von 600px
+                if(resizeImage($tempna, $uploadfileS, 600)){
                     $saveS=true;
                 }else{
                     $saveS=false;
@@ -207,8 +207,7 @@ if(isset($_POST['submit'])){
             $id= $row['IdPicture'];
             echo'<a href="'.$imgL.'" data-ngid="'.$id.'" data-ngthumb="'.$imgS.'" data-ngdesc="'.$date.'">'.$com.'</a>';
         }
-    ?>
-        
+    ?>  
     </div>
 
 </div><!-- END Include Gallery -->

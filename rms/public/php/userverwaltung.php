@@ -204,18 +204,14 @@ echo'<tbody>';
       $reg = $row['Active'];
       if ($reg == 1) {
         echo '<td class="info"><a href="userverwaltung.php?id=' . $row['IdUser'] . '">aktivieren</a></td>';
-
       } else if($reg == 2) {
-
         echo '<td class="warning">Aktivierungs Mail verschickt</td>';
-
       } else if($reg == 3) {
-
           echo '<td>Aktiv</td>';
       } else if($reg == 4) {
           echo '<td class="danger">User gesperrt</td>';
       } else {
-          echo 'Fehler';
+          echo '<td class="danger">ERROR!!</td>';
       }
 
       echo'<td><button type="button" class="btn btn-default btn-sm btn-user-details" data-toggle="modal" data-target="#modalUser" value="'.$row['IdUser'].'">Details</button></td>';

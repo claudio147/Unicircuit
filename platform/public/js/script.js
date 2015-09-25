@@ -21,10 +21,10 @@ $(document).ready(function(){
     /* ---------------------------------------------- */
 
     $('.event-container').on('touchstart', function(){
-           $(this).addClass('select');
-           }).on('.event-container', function(){
-           $(this).removeClass('select');
-           });
+        $(this).addClass('select');
+    }).on('.event-container', function(){
+        $(this).removeClass('select');
+    });
                         
                         
     //Aktuelles Datum
@@ -76,22 +76,31 @@ $(document).ready(function(){
         ]
     });
 
-    //Globale Adressliste (ohne Export-Funktion)
-    var test= $('#globalAddress').DataTable({
-        "scrollY":        "240px",
-        "scrollCollapse": true,
-        "paging":         false,
-        //dom: 'Bfrtip',
-        ordering: true,
-        fixedHeader: true,
-        //responsive: true,
-        language: {
-            search: "Suche",
-            zeroRecords: "Keine Adressen gefunden",
-            info: "Anzahl Adressen: _TOTAL_",
-            infoFiltered: "(Adressen gesamt: _MAX_)",
-            infoEmpty: "Keine Einträge gefunden."
-        },
+    
+    var modalInitial = false;
+    $('#myModal').on('shown.bs.modal', function (e) {
+        if(!modalInitial){
+            //Globale Adressliste (ohne Export-Funktion)
+          $('#globalAddress').DataTable({
+              "scrollY":        "240px",
+              "scrollCollapse": true,
+              "paging":         false,
+              //dom: 'Bfrtip',
+              ordering: true,
+              fixedHeader: true,
+              //responsive: true,
+              language: {
+                  search: "Suche",
+                  zeroRecords: "Keine Adressen gefunden",
+                  info: "Anzahl Adressen: _TOTAL_",
+                  infoFiltered: "(Adressen gesamt: _MAX_)",
+                  infoEmpty: "Keine Einträge gefunden."
+              }
+          });
+          
+          modalInitial=true;
+        }
+        
     });
     
     
