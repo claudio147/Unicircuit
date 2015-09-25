@@ -3,24 +3,12 @@
 @font-face { font-family: 'HelveticaNeueLTStd-Bd';
              src: url('../fonts/HelveticaNeueLTStd-Bd.otf') format('opentype'); }
 
-
-
-//Zeigt keine Scrollbars mehr an
-body {
-    overflow: scroll;
-    overflow-x: hidden;
-        }
-::-webkit-scrollbar{
-  width:0px;   // here actuall it exist but width is 0 so no one can see it 
-  background:transparent;
-} //end of the code here
-// this code for further customization of thumbs
-::-webkit-scrollbar-thumb{
-   background-color: rgba(0,0,0,0);
+/*Outline ausblenden*/
+.btn:focus, .btn:active:focus, .btn.active:focus {
+   outline: none !important;
 }
 
-//Verhindert horizontales Scrollen
-html{
+body{
     overflow-x: hidden;
 }
 
@@ -133,14 +121,11 @@ h1{
 }
 
 body {
-    margin-top: 100px;
+    margin-top: 50px;
     background-color: #fff;
 }
 
 
-    body {
-        margin-top: 50px;
-    }
 
 #wrapper {
     padding-left: 0;
@@ -415,9 +400,9 @@ div.modalgroup{
     background-color: #f0f0f0;
     margin-top: 25px;
     padding: 15px;
-    -webkit-box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
-    -moz-box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
-    box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
+    -webkit-box-shadow: 10px 10px 29px -8px rgba(219,219,219,1);
+    -moz-box-shadow: 10px 10px 29px -8px rgba(219,219,219,1);
+    box-shadow: 10px 10px 29px -8px rgba(219,219,219,1);
 }
 
 .post-title{
@@ -450,9 +435,9 @@ div.modalgroup{
     background-color: #f0f0f0 !important;
     padding: 10px;
     height: 100%;
-    -webkit-box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
-    -moz-box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
-    box-shadow: 5px 5px 20px 5px rgba(133,133,133,1);
+    -webkit-box-shadow: 10px 10px 29px -8px rgba(219,219,219,1);
+    -moz-box-shadow: 10px 10px 29px -8px rgba(219,219,219,1);
+    box-shadow: 10px 10px 29px -8px rgba(219,219,219,1);
 }
 
 .project-img-cont{
@@ -594,7 +579,7 @@ div.modalgroup{
 }
 
 .deadline-row:hover{
-    box-shadow: 10px 10px 5px #888888;
+    box-shadow: 5px 5px 5px #6C7882;
     transition: 0.3s;
 }
 
@@ -616,8 +601,14 @@ div.modalgroup{
 }
 
 .deadline-row>.deadline-title{
+    text-align: left;
     margin-right: 40px;
     width: 300px;
+}
+
+.deadline-row>i{
+    float: right;
+    font-size: 24px;
 }
 
 button.deadline-btn-edit,
@@ -628,10 +619,11 @@ button.deadline-btn-show,
 button.deadline-btn-show:hover,
 button.deadline-btn-show:active,
 button.deadline-btn-show:focus{
+    width: 100%;
     border: none;
     background: transparent;
     float: right;
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .deadline-detail{
@@ -669,6 +661,7 @@ button.deadline-btn-show:focus{
 }
 
 .dash-header{
+    margin-top: -20px;
     background-color: #373d42;
     height: 35px;
     padding-left: 10px;
@@ -685,26 +678,31 @@ button.deadline-btn-show:focus{
     font-size: 20px;
 }
 
-.dash-header>h2>a,
+/*.dash-header>h2>a,
 .dash-header>h2>a:active{
     color: #fff;
 }
 
 .dash-header>h2>a:hover{
     color: #9fcd35;
-}
+}*/
 
 .dash-left{
     border-right: 25px solid #fff;
 }
 
 .dash-link{
-    float: right;
+    //float: right;
     margin-right: 10px;
+    height: 35px;
 }
 
 .dashboard-title{
     margin-top: 10px;
+}
+
+.dashboard-title>i{
+    float: right;
 }
 
 .dash-timeline{
@@ -725,9 +723,9 @@ button.deadline-btn-show:focus{
 .post-dash{
     margin-left: 0px;
     margin-right: 0px;
-    -webkit-box-shadow: 0px 0px 12px 8px rgba(184,184,184,1);
-    -moz-box-shadow: 0px 0px 12px 8px rgba(184,184,184,1);
-    box-shadow: 0px 0px 12px 8px rgba(184,184,184,1);
+    -webkit-box-shadow: 0px 0px 38px 10px rgba(219,219,219,1);
+-moz-box-shadow: 0px 0px 38px 10px rgba(219,219,219,1);
+box-shadow: 0px 0px 38px 10px rgba(219,219,219,1);
 }
 
 .post-dash>h3{

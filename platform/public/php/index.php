@@ -12,7 +12,6 @@ $link= connectDB();
 if(isset($_GET['id'])){
     $_POST['nav']=$_GET['id'];
     $_POST['projectID']=$_GET['project'];
-    
 }
 
 //Usertyp wird ermittelt (falls vorhanden)
@@ -333,10 +332,11 @@ $logo= $row['Picture'];
     <link rel="shortcut icon" href="../img/icon.png" type="image/png" />
     <link rel="icon" href="../img/icon.png" type="image/png" />
 
-
+    
+    
 </head>
 
-<body>
+<body style="overflow-x: hidden;">
                 <!-- User Settings -->
                 <!-- Modal Global-->
                 <div class="modal" id="editUser" role="dialog">
@@ -551,6 +551,9 @@ $logo= $row['Picture'];
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
     <!-- Gallery -->
     <script src="../css/nanogallery/jquery.nanogallery.min.js"></script>
+
+    <script src="../js/jquery.nicescroll.min.js"></script>
+    
     <!-- Überschreibt URL -->
     <script>
         window.history.pushState('', '', '/php/index.php');

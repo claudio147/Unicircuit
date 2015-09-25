@@ -9,10 +9,11 @@
             <?php
                 echo'<div class="col-xs-12">';
                     echo'<div class="row">';
-                        echo'<div class="col-xs-12 dash-header">';
-                            echo'<h2 class="dashboard-title">Chronik<a class="dash-link" href="index.php?id=2"><i class="fa fa-external-link"></i></a></h2>';
-                            echo'';
-                        echo'</div>';
+                        echo'<a class="dash-link" href="index.php?id=2">';
+                            echo'<div class="col-xs-12 dash-header">';
+                                echo'<h2 class="dashboard-title">Chronik<i class="fa fa-external-link"></i></h2>';
+                            echo'</div>';
+                        echo'</a>';
                     echo'</div>';
                 echo'</div>';
                 echo'<div class="col-xs-12 dash-timeline">';
@@ -68,9 +69,11 @@
                     <?php
 
                     echo'<div class="row">';
-                        echo'<div class="col-xs-12 dash-header">';
-                            echo'<h2 class="dashboard-title">Galerie<a class="dash-link" href="index.php?id=7"><i class="fa fa-external-link"></i></a></h2>';
-                        echo'</div>';
+                        echo'<a class="dash-link" href="index.php?id=7">';
+                            echo'<div class="col-xs-12 dash-header">';
+                                echo'<h2 class="dashboard-title">Galerie<i class="fa fa-external-link"></i></h2>';
+                            echo'</div>';
+                        echo'</a>';
                     echo'</div>';
                 echo'<div class="row row-dash-gallery">';
                     echo'<div class="col-xs-12 dash-gallery">';
@@ -98,9 +101,11 @@
                     <?php
 
                     echo'<div class="row">';
-                        echo'<div class="col-xs-12 dash-header">';
-                            echo'<h2 class="dashboard-title">Deadlines<a class="dash-link" href="index.php?id=5"><i class="fa fa-external-link"></i></a></h2>';
-                        echo'</div>';
+                        echo'<a class="dash-link" href="index.php?id=5">';
+                            echo'<div class="col-xs-12 dash-header">';
+                                echo'<h2 class="dashboard-title">Deadlines<i class="fa fa-external-link"></i></h2>';
+                            echo'</div>';
+                        echo'</a>';
                     echo'</div>';
                     echo'<div class="row row-dash-deadlines">';
                         echo'<div class="col-xs-12 dash-deadlines">';
@@ -161,9 +166,11 @@
                     <?php
 
                     echo'<div class="row">';
-                        echo'<div class="col-xs-12 dash-header">';
-                            echo'<h2 class="dashboard-title">Events<a class="dash-link" href="index.php?id=4"><i class="fa fa-external-link"></i></a></h2>';
-                        echo'</div>';
+                        echo'<a class="dash-link" href="index.php?id=4">';
+                            echo'<div class="col-xs-12 dash-header">';
+                                echo'<h2 class="dashboard-title">Events<i class="fa fa-external-link"></i></h2>';
+                            echo'</div>';
+                        echo'</a>';
                     echo'</div>';
                     echo'<div class="row row-dash-events">';
                         echo'<div class="col-xs-12 dash-events">';

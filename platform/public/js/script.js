@@ -12,9 +12,12 @@ function dynamicResizer(){
 } 
 
 
-// DOCUMENT READY
-        
+// DOCUMENT READY     
 $(document).ready(function(){
+    
+
+     
+
     
     /* ---------------------------------------------- /*
     * Touchevents für iOS
@@ -30,7 +33,7 @@ $(document).ready(function(){
     //Aktuelles Datum
     var today = new Date();
     var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
+    var mm = today.getMonth()+1; //Januar ist 0
     var yyyy = today.getFullYear();
 
     if(dd<10) {
@@ -42,7 +45,7 @@ $(document).ready(function(){
     } 
     today = dd+'/'+mm+'/'+yyyy;
 
-
+    
     /*
     ******************* Adressliste
     */
@@ -75,6 +78,9 @@ $(document).ready(function(){
         }
         ]
     });
+            $('.dataTables_scrollBody').niceScroll({
+            cursorcolor:"#373d42",
+        });
 
     
     var modalInitial = false;
@@ -100,7 +106,9 @@ $(document).ready(function(){
           
           modalInitial=true;
         }
-        
+        $('.dataTables_scrollBody').niceScroll({
+            cursorcolor:"#373d42",
+        });
     });
     
     
@@ -311,6 +319,21 @@ $(document).ready(function(){
         $('.dash-gallery').css({'height':quat+'px'});
         $('.dash-deadlines').css({'height':quat+'px'});
         $('.dash-events').css({'height':evt+'px'});
+        
+        //$('.dash-timeline').getNiceScroll().hide();
+        $('.dash-timeline').niceScroll({
+            cursorcolor:"#373d42",
+            cursoropacitymax:0,
+        });
+        
+        $('.dash-deadlines').niceScroll({
+            cursorcolor:"#373d42",
+            cursoropacitymax:0
+        });
+        
+        
+        
+
     } 
     
     //Timeline-Mini
@@ -365,14 +388,12 @@ $(document).ready(function(){
     window.onload= resize;
     
     function resize(){
-        
         dynamicResizerEvent();
         dynamicResizer();
         setheightSchedule();
         dynamicResizerDashboard();
         dynamicResizerDashTimeline();
-        dynamicResizerDashGallery();
-        
+        dynamicResizerDashGallery();       
     }
     
     /*
@@ -386,6 +407,8 @@ $(document).ready(function(){
             $('#editContainer_User').html(data);
         })      
     });
+    
+    
     
 })//--> END document Ready
 
