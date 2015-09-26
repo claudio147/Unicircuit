@@ -642,6 +642,8 @@ button.deadline-btn-show,
 button.deadline-btn-show:hover,
 button.deadline-btn-show:active,
 button.deadline-btn-show:focus{
+    padding-left: 0px;
+    padding-right: 0px;
     width: 100%;
     border: none;
     background: transparent;
@@ -907,4 +909,8 @@ button.deadline-btn-show:focus{
     .pv-bold{
         font-size: 28px;
     }
+}
+
+div.form-group{
+    margin-bottom: 0px;
 }

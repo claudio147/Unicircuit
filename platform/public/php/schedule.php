@@ -103,7 +103,7 @@ if(isset($_POST['submit'])){
                             <div class="modal-body">
                                 <div id="input_container">
                                     <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
-                                    <label for="scheduleUpload">Terminplan</label>                                    
+                                    <label for="scheduleUpload">Terminplan*</label>                                    
                                     <input id="scheduleUpload" type="file" name="schedule" >
                                     <p>(PDF Format)</p><br/>
                                     <label for="comment">Kommentar</label>

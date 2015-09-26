@@ -20,10 +20,10 @@ if(isset($_POST['submit'])){
     if(empty($time) || $time== '00:00:00'){
         $error=true;
     }
-    if(empty($title)){
+    if(empty($title) || strlen($title)<3){
         $error=true;
     }
-    if(empty($location)){
+    if(empty($location) || strlen($location)<3){
         $error=true;
     }
     

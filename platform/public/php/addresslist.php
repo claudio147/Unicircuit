@@ -265,7 +265,7 @@ if(isset($_POST['update'])){
 
       <!-- Modal content-->
       <div class="modal-content">
-          <form action="addresslist.php" method="POST">
+          <form action="addresslist.php" method="POST" name="createAddress" onsubmit="return addressCheck()">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal">&times;</button>
           <h4 class="modal-title">Handwerker hinzufügen</h4>

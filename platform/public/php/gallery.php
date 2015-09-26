@@ -7,8 +7,7 @@ $link= connectDB();
 if(isset($_POST['submit'])){
     $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     //Überprüfung ob mind. 1 File ausgewählt wurde
-    if(isset($_FILES['my_file'])){
-        
+    if($_FILES['my_file']['error'][0]!=4){ 
         $files= $_FILES['my_file'];
         $fileCount= count($files['name']);
         $comment= filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
@@ -110,6 +109,8 @@ if(isset($_POST['submit'])){
         }else{
             header('Location: index.php?id=7&status=0&project='.$projectID);
         }
+    }else{
+        header('Location: index.php?id=7&status=0&project='.$projectID);
     }
 }
 

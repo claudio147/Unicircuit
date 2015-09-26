@@ -11,7 +11,94 @@ function dynamicResizer(){
     //console.log(cw);
 } 
 
-
+function addressCheck() {
+    var error = true;
+    //überprüft ob das Feld leer ist oder nicht, dementsprechend ändert es die class des eltern div.
+    if (document.createAddress.bkp.value === "") {
+        var element = document.getElementById("checkBKP");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+        var error = false;
+    }else{
+        var element = document.getElementById("checkBKP");
+        element.className = "";
+    }
+    
+    if (document.createAddress.company.value === "") {
+        var element = document.getElementById("checkComp");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+        var error = false;
+    }else{
+        var element = document.getElementById("checkComp");
+        element.className = "";
+    }
+    
+    if (document.createAddress.addressline1.value === "") {
+        var element = document.getElementById("checkAddrL1");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+        var error = false;
+    }else{
+        var element = document.getElementById("checkAddrL1");
+        element.className = "";
+    }
+    
+    if (document.createAddress.zip.value === "") {
+        var element = document.getElementById("checkZIP");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+        var error = false;
+    }else{
+        var element = document.getElementById("checkZIP");
+        element.className = "";
+    }
+    
+    if (document.createAddress.city.value === "") {
+        var element = document.getElementById("checkCity");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+        var error = false;
+    }else{
+        var element = document.getElementById("checkCity");
+        element.className = "";
+    }
+    
+    if (document.createAddress.email.value === "") {
+        var element = document.getElementById("checkEmail");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+        var error = false;
+    }else{
+        var element = document.getElementById("checkEmail");
+        element.className = "";
+    }
+    
+    if (document.createAddress.phoneNumber.value === "") {
+        var element = document.getElementById("checkPhone");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+        var error = false;
+    }else{
+        var element = document.getElementById("checkPhone");
+        element.className = "";
+    }
+    
+    if (document.createAddress.homepage.value === "") {
+        var element = document.getElementById("checkHomepage");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+        var error = false;
+    }else{
+        var element = document.getElementById("checkHomepage");
+        element.className = "";
+    }
+    
+    return error;
+    }
+    
+    
+    
 // DOCUMENT READY     
 $(document).ready(function(){
     

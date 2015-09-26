@@ -14,87 +14,110 @@ if(isset($_POST['submit'])){
     $date = date("Y-m-d");
     $time = date("H:i:s");
     
-    //Erzeugt Pfad für Bildupload
-    $sql= getNameCust($projectID);
-    $result= mysqli_query($link, $sql);
-    $row= mysqli_fetch_array($result);
-    $idArch= $row['Fk_IdArchitect'];
+    // Fehler im Eingabefeld?
+    if (empty($title) || strlen($title) < 5) {
+      $errorTitle = true;
+      $error = true;
+    }
+    
+    if(empty($content) || strlen($content) < 5){
+        $errorContent=true;
+        $error=true;
+    }
+    
+    if(empty($visible)){
+        $errorVisible=true;
+        $error=true;
+    }
+    
+    if(!isset($error)){
+        //Erzeugt Pfad für Bildupload
+        $sql= getNameCust($projectID);
+        $result= mysqli_query($link, $sql);
+        $row= mysqli_fetch_array($result);
+        $idArch= $row['Fk_IdArchitect'];
 
-    $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/';
+        $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/';
 
-    //Bildupload
-    if(!empty($_FILES['userfile']['name'])){       
-    
-    $tempna= $_FILES['userfile']['tmp_name'];
-    $orgname= $_FILES['userfile']['name'];
-    $size= $_FILES['userfile']['size'];
-    $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
-    $extension= strrchr($_FILES['userfile']['name'],'.');
-    $file= $filename.$extension;
-    
-    //Dateipfad mit Dateinamen zusammensetzen
-    $uploadfile= $uploaddir.basename($file);
-    
-    //Ermittle Bildgrösse
-    $image_attributes = getimagesize($tempna); 
-    $image_width_old = $image_attributes[0];
-    $image_height_old = $image_attributes[1];
-    
-    //Überprüft Dateityp
-    if(!checkImageType($file)){
-        header('Location: index.php?id=2&status=6&project='.$projectID);
-        exit();
-    }
-    
-    //Überprüft Dateigrösse
-    if($size > 4100000){
-        header('Location: index.php?id=2&status=7&project='.$projectID);
-        exit();
-    }
-    
-    //Verkleinert Bilder über 800px Seitenlänge und speichert diese im verzeichnis,
-    //Bilder unter 800px Seitenlänge werden direkt ins Verzeichnis gespeichert
-    if($image_width_old>800 || $image_height_old>800){
-        if(resizeImage($tempna, $uploadfile, 800)){
-            $statusUpload=true;
-        }else{
-            $statusUpload=false;
-        }
-    }else{
-        if(move_uploaded_file($tempna, $uploadfile)){
-            $statusUpload=true;
-        }else{
-            $statusUpload=false;
-        }
-    }
-    
-    if($statusUpload){
-        //Erfolgreich gespeichert --> Speichert DB Eintrag
-        $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
-        $status= mysqli_query($link, $sql);
-        
-        header('Location: index.php?id=2&status=0&project='.$projectID);
-        exit();
-    }else{
-        header('Location: index.php?id=2&status=1&project='.$projectID);
-        exit();
-    }
- 
-    }else{
-        $uploaddir= '../img/';
-        $file= 'placeholder.png';
-        $orgname= 'placeholder.png';
+        //Bildupload
+        if(!empty($_FILES['userfile']['name'])){       
 
-        $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
-        $status= mysqli_query($link, $sql);
-        if(!$status){
-            header('Location: index.php?id=2&status=3&project='.$projectID);
+        $tempna= $_FILES['userfile']['tmp_name'];
+        $orgname= $_FILES['userfile']['name'];
+        $size= $_FILES['userfile']['size'];
+        $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
+        $extension= strrchr($_FILES['userfile']['name'],'.');
+        $file= $filename.$extension;
+
+        //Dateipfad mit Dateinamen zusammensetzen
+        $uploadfile= $uploaddir.basename($file);
+
+        //Ermittle Bildgrösse
+        $image_attributes = getimagesize($tempna); 
+        $image_width_old = $image_attributes[0];
+        $image_height_old = $image_attributes[1];
+
+        //Überprüft Dateityp
+        if(!checkImageType($file)){
+            header('Location: index.php?id=2&status=6&project='.$projectID);
             exit();
+        }
+
+        //Überprüft Dateigrösse
+        if($size > 4100000){
+            header('Location: index.php?id=2&status=7&project='.$projectID);
+            exit();
+        }
+
+        //Verkleinert Bilder über 800px Seitenlänge und speichert diese im verzeichnis,
+        //Bilder unter 800px Seitenlänge werden direkt ins Verzeichnis gespeichert
+        if($image_width_old>800 || $image_height_old>800){
+            if(resizeImage($tempna, $uploadfile, 800)){
+                $statusUpload=true;
+            }else{
+                $statusUpload=false;
+            }
         }else{
+            if(move_uploaded_file($tempna, $uploadfile)){
+                $statusUpload=true;
+            }else{
+                $statusUpload=false;
+            }
+        }
+
+        if($statusUpload){
+            //Erfolgreich gespeichert --> Speichert DB Eintrag
+            $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
+            $status= mysqli_query($link, $sql);
+
             header('Location: index.php?id=2&status=0&project='.$projectID);
             exit();
+        }else{
+            header('Location: index.php?id=2&status=1&project='.$projectID);
+            exit();
         }
+
+        }else{
+            $uploaddir= '../img/';
+            $file= 'placeholder.png';
+            $orgname= 'placeholder.png';
+
+            $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
+            $status= mysqli_query($link, $sql);
+            if(!$status){
+                header('Location: index.php?id=2&status=3&project='.$projectID);
+                exit();
+            }else{
+                header('Location: index.php?id=2&status=0&project='.$projectID);
+                exit();
+            }
+        }
+    }else{
+        header('Location: index.php?id=2&status=3&project='.$projectID);
+        exit();
     }
+    
+    
     
 }
 
@@ -112,80 +135,107 @@ if(isset($_POST['edit'])){
     $date = date("Y-m-d");
     $time = date("H:i:s");
     
-    //Erzeugt Pfad für Bildupload
-    $sql= getNameCust($projectID);
-    $result= mysqli_query($link, $sql);
-    $row= mysqli_fetch_array($result);
-    $idArch= $row['Fk_IdArchitect'];
-
-    $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/' ;
-
-    //Wenn neues File hochgeladen wird
-    if(!empty($_FILES['userfile']['name'])){
-
-        $tempna= $_FILES['userfile']['tmp_name'];
-        $orgname= $_FILES['userfile']['name'];
-        $size= $_FILES['userfile']['size'];
-        $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
-        $extension= strrchr($_FILES['userfile']['name'],'.');
-        $file= $filename.$extension;
+    // Fehler im Eingabefeld?
+    if (empty($title) || strlen($title) < 5) {
+      $errorTitle = true;
+      $error = true;
+    }
     
-        //Dateipfad mit Dateinamen zusammensetzen
-        $uploadfile= $uploaddir.basename($file);
+    if(empty($content) || strlen($content) < 5){
+        $errorContent=true;
+        $error=true;
+    }
+    
+    if(empty($visible)){
+        $errorVisible=true;
+        $error=true;
+    }
+    
+    
+    if(!isset($error)){
+        //Erzeugt Pfad für Bildupload
+        $sql= getNameCust($projectID);
+        $result= mysqli_query($link, $sql);
+        $row= mysqli_fetch_array($result);
+        $idArch= $row['Fk_IdArchitect'];
 
-        //Ermittle Bildgrösse
-        $image_attributes = getimagesize($tempna); 
-        $image_width_old = $image_attributes[0];
-        $image_height_old = $image_attributes[1];
-        
-        //Überprüft Dateityp
-        if(!checkImageType($file)){
-            header('Location: index.php?id=2&status=6&project='.$projectID);
-            exit();
-        }
+        $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/' ;
 
-        //Überprüft Dateigrösse
-        if($size > 4100000){
-            header('Location: index.php?id=2&status=7&project='.$projectID);
-            exit();
-        }
-        
-        //Verkleinert Bilder über 800px Seitenlänge und speichert diese im verzeichnis,
-        //Bilder unter 800px Seitenlänge werden direkt ins Verzeichnis gespeichert
-        if($image_width_old>800 || $image_height_old>800){
-            if(resizeImage($tempna, $uploadfile, 800)){
-                $statusUpload=true;
+        //Wenn neues File hochgeladen wird
+        if(!empty($_FILES['userfile']['name'])){
+
+            $tempna= $_FILES['userfile']['tmp_name'];
+            $orgname= $_FILES['userfile']['name'];
+            $size= $_FILES['userfile']['size'];
+            $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
+            $extension= strrchr($_FILES['userfile']['name'],'.');
+            $file= $filename.$extension;
+
+            //Dateipfad mit Dateinamen zusammensetzen
+            $uploadfile= $uploaddir.basename($file);
+
+            //Ermittle Bildgrösse
+            $image_attributes = getimagesize($tempna); 
+            $image_width_old = $image_attributes[0];
+            $image_height_old = $image_attributes[1];
+
+            //Überprüft Dateityp
+            if(!checkImageType($file)){
+                header('Location: index.php?id=2&status=6&project='.$projectID);
+                exit();
+            }
+
+            //Überprüft Dateigrösse
+            if($size > 4100000){
+                header('Location: index.php?id=2&status=7&project='.$projectID);
+                exit();
+            }
+
+            //Verkleinert Bilder über 800px Seitenlänge und speichert diese im verzeichnis,
+            //Bilder unter 800px Seitenlänge werden direkt ins Verzeichnis gespeichert
+            if($image_width_old>800 || $image_height_old>800){
+                if(resizeImage($tempna, $uploadfile, 800)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;
+                }
             }else{
-                $statusUpload=false;
+                if(move_uploaded_file($tempna, $uploadfile)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;
+                }
+            }
+
+            if($statusUpload){
+                //Erfolgreich gespeichert --> Speichert DB Eintrag
+                $sql= updatePost($postID, $visible, $file, $orgname, $uploaddir, $title, $date, $time, $content);
+                $status= mysqli_query($link, $sql);
+
+                header('Location: index.php?id=2&status=0&project='.$projectID);
+                exit();
+            }else{
+                header('Location: index.php?id=2&status=1&project='.$projectID);
+                exit();
             }
         }else{
-            if(move_uploaded_file($tempna, $uploadfile)){
-                $statusUpload=true;
-            }else{
-                $statusUpload=false;
-            }
-        }
-        
-        if($statusUpload){
-            //Erfolgreich gespeichert --> Speichert DB Eintrag
-            $sql= updatePost($postID, $visible, $file, $orgname, $uploaddir, $title, $date, $time, $content);
+            $sql= updatePost($postID, $visible, $hashName, $orgName, $path, $title, $date, $time, $content);
             $status= mysqli_query($link, $sql);
-
-            header('Location: index.php?id=2&status=0&project='.$projectID);
-            exit();
-        }else{
-            header('Location: index.php?id=2&status=1&project='.$projectID);
-            exit();
+            if(!$status){
+                header('Location: index.php?id=2&status=1&project='.$projectID);
+                exit();
+            }else{
+                header('Location: index.php?id=2&status=5&project='.$projectID);
+                exit();
+            }
         }
     }else{
-        $sql= updatePost($postID, $visible, $hashName, $orgName, $path, $title, $date, $time, $content);
-        $status= mysqli_query($link, $sql);
-        if(!$status){
-            header('Location: index.php?id=2&status=1&project='.$projectID);
-        }else{
-            header('Location: index.php?id=2&status=5&project='.$projectID);
-        }
+        header('Location: index.php?id=2&status=1&project='.$projectID);
+        exit();
     }
+    
+    
+    
 }
 
 

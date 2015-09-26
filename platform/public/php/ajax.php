@@ -95,21 +95,27 @@ if(isset($_POST['new'])){
     $data= '';
 
         $data.= '<h4>Firmendaten</h4>
-                <label for="1">BKP*</label>
+                <div id="checkBKP">
+                <label for="1" class="control-label">BKP*</label>
                 <input id="1" type="text" name="bkp" class="form-control" maxlength="3">
-                <label for="2">Firma*</label>
+                </div>
+                <div id="checkComp">
+                <label for="2" class="control-label">Firma*</label>
                 <input id="2" type="text" name="company" class="form-control">
-                <label for="3">Adresszeile 1*</label>
+                </div>
+                <div id="checkAddrL1">
+                <label for="3" class="control-label">Adresszeile 1*</label>
                 <input id="3" type="text" name="addressline1" class="form-control">
+                </div>
                 <label for="4">Adresszeile 2</label>
                 <input id="4" type="text" name="addressline2" class="form-control">
                 <div class="row">
-                    <div class="col-xs-2">
-                        <label for="5" >PLZ*</label>
+                    <div class="col-xs-2" id="checkZIP">
+                        <label for="5" class="control-label">PLZ*</label>
                         <input id="5" type="text" name="zip" class="form-control" maxlength="4">
                     </div>
-                    <div class="col-xs-10">
-                        <label for="6">Ort*</label>
+                    <div class="col-xs-10" id="checkCity">
+                        <label for="6" class="control-label">Ort*</label>
                         <input id="6" type="text" name="city" class="form-control">
                     </div>
                 </div>
@@ -117,12 +123,18 @@ if(isset($_POST['new'])){
                 <select id="7" name="country" class="form-control">';
                 $data .= $countries;
                 $data.='</select>
-                <label for="8">Email (Hauptadresse)*</label>
+                <div id="checkEmail">
+                <label for="8" class="control-label">Email (Hauptadresse)*</label>
                 <input id="8" type="email" name="email" class="form-control">
-                <label for="9">Telefon (Hauptnummer)*</label>
+                </div>
+                <div id="checkPhone">
+                <label for="9" class="control-label">Telefon (Hauptnummer)*</label>
                 <input id="9" type="text" name="phoneNumber" class="form-control">
-                <label for="10">Homepage*</label>
+                </div>
+                <div id="checkHomepage">
+                <label for="10" class="control-label">Homepage*</label>
                 <input id="10" type="text" name="homepage" class="form-control">
+                </div>
                 <hr/>
                 <h4>Direkte Kontaktdaten</h4>
                 <label for="11">Ansprechpartner</label>

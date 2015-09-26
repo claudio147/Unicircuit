@@ -16,7 +16,7 @@ if(isset($_POST['submit'])){
     if(empty($date) || $date== 0000-00-00){
         $error=true;
     }
-    if(empty($title)){
+    if(empty($title) || strlen($title)<4){
         $error=true;
     }
     
@@ -48,7 +48,7 @@ if(isset($_POST['update'])){
     if(empty($date) || $date== 0000-00-00){
         $error=true;
     }
-    if(empty($title)){
+    if(empty($title) || strlen($title)<4){
         $error=true;
     }
     
