@@ -188,7 +188,7 @@
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
 			$('#home').css({'background-attachment': 'scroll'});
 		} else {
-			$('#home').parallax('50%', 0.1);
+			$('#home').parallax('50%', 0.3);
 		}
 
 

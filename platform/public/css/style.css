@@ -699,7 +699,6 @@ button.deadline-btn-show:focus{
     background-color: #373d42;
     height: 35px;
     padding-left: 10px;
-    //border-right: solid 5px #fff;
     color: #fff;
     z-index: 999;
     -webkit-box-shadow: 0px 12px 7px -5px rgba(0,0,0,0.48);
@@ -708,14 +707,12 @@ button.deadline-btn-show:focus{
 }
 
 .dash-header>h2{
-    margin-top: 7px;
-    font-size: 20px;
+    
 }
 
 .dash-link{
     //float: right;
     margin-right: 10px;
-    height: 35px;
 }
 
 /*.dash-header>h2>a,
@@ -732,7 +729,9 @@ button.deadline-btn-show:focus{
 }
 
 .dashboard-title{
-    margin-top: 10px;
+    margin-top: 7px;
+    font-size: 20px;
+    //margin-top: 10px;
 }
 
 .dashboard-title>i{
