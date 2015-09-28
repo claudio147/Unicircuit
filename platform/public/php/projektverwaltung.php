@@ -580,14 +580,14 @@ $logo= $row['Picture'];
                     </div>
                 </div>
         
-        <div id="wrapper wrapper-pv">
+        <div id="wrapper wrapper-pv" class="wrapper-pv">
         
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
                 <!-- Logo und "Toggle" -->
                 <div class="navbar-header navbar-header-pv">
-                    <a class="navbar-brand" href="#"><img src="<?php echo $logo; ?>" alt="Logo"></a>
+                    <a class="navbar-brand" href="#"><img src="<?php echo $logo; ?>" alt="Logo" class="logo-pv"></a>
                     <h1 class="navbar-text"><?php echo $title; ?></h1>
                 
 
@@ -623,7 +623,7 @@ $logo= $row['Picture'];
                 </div>
             </nav>
 
-            <div class="container">
+            <div class="container container-pv">
 
                 <?php
                 if(isset($nav)){

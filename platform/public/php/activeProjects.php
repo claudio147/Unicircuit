@@ -560,9 +560,7 @@ if(isset($_POST['editUser'])) {
 
 
         
-        <div id="wrapper wrapper-pv">
 
-            <div class="container">
 
                 <!-- Trigger the modal with a button -->
                 <button type="button" class="btn btn-default btn_addProject" data-toggle="modal" data-target="#newPost"><i class="fa fa-plus-circle"></i> hinzufügen</button>
@@ -784,8 +782,5 @@ if(isset($_POST['editUser'])) {
 ?>
 
 
-            </div><!-- End Container--> 
-        
-        </div><!-- End #Wrapper--> 
         
          

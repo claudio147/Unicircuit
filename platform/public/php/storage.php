@@ -65,9 +65,7 @@ if(isset($_POST['idUser'])){
             
 }
 ?>
-
-<div id="wrapper wrapper-pv">
-      <div class="container">  
+ 
           
         <!-- Projekt ProjektInfos -->
         <!-- Modal Global-->
@@ -145,6 +143,3 @@ if(isset($_POST['idUser'])){
 }
 
 ?>
-</div><!-- End Container--> 
-        
-</div><!-- End #Wrapper--> 

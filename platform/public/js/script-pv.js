@@ -109,8 +109,28 @@ $(document).ready(function(){
             cw = (cw/4)*3;
             $('.project-img-cont').css({'height':cw+'px'});
         }
-    window.onresize= resizerTeaserIMG;
-    window.onload= resizerTeaserIMG;
+        
+    function marginTitlePV(){
+        var cw = $('.wrapper-pv').width();
+        var cont= $('.container-pv').width();
+        var logo= $('.logo-pv').width();
+        var w= (cw-cont)/2-230;
+        if(((cw-cont)/2) > (logo+30)){
+            $('.navbar-text').css({'margin-left':w+'px'});
+        }else{
+            $('.navbar-text').css({'margin-left':15+'px'});
+        }
+        
+        //alert(w);
+    }
+    window.onresize= resize;
+    window.onload= resize;
+    
+    function resize(){
+        resizerTeaserIMG();
+        marginTitlePV(); 
+    }
+   
         
         
         

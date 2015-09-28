@@ -247,7 +247,7 @@ h1.navbar-text {
 @media(min-width:1025px) {
     
     h1.navbar-text {
-    margin-left: 40px !important;
+    margin-left: 40px;
     }
 
     a.navbar-brand{
@@ -297,10 +297,7 @@ h1.navbar-text {
         background-color: #9fcd35 !important;
         color: #373d42 !important;
     }
-    
-    h1{
-    margin-left: 135px !important;
-    }
+
 }
 
 @media(max-width:1024px) {
@@ -768,6 +765,7 @@ button.deadline-btn-show:focus{
 }
 
 .dash-gallery{
+    padding-top: 5px;
     margin-right: -10px;
     background-color: #f0f0f0;
 }
