@@ -695,7 +695,7 @@ button.deadline-btn-show:focus{
 }
 
 .dash-header{
-    margin-top: -20px;
+    //margin-top: -20px;
     background-color: #373d42;
     height: 35px;
     padding-left: 10px;
@@ -706,12 +706,14 @@ button.deadline-btn-show:focus{
     box-shadow: 0px 12px 7px -5px rgba(0,0,0,0.48);
 }
 
-.dash-header>h2{
-    
+.dash-row{
+    height: 35px;
 }
 
 .dash-link{
     //float: right;
+    display: inline-block;
+    width: 100%;
     margin-right: 10px;
 }
 

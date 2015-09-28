@@ -98,6 +98,69 @@ if(isset($_POST['activate'])){
     exit();
   }
 }
+
+//Löscht einen User
+if(isset($_POST['delete'])){
+    $usID= $_POST['userID'];
+    $typ= $_POST['userTyp'];
+    
+    if($typ==2){
+        //Löschen von Architekt
+        //Holt alle Projekte eines Architekts
+        $sql=getAllProjectsByArch($id);
+        $result=mysqli_query($link, $sql);
+        while($row=  mysqli_fetch_array($result)){
+            $proID=$row['IdProject'];
+            $idBauherr=$row['Fk_IdBauherr'];
+            $path = '../../../platform/public/architects/architect_'.$usID.'/project_'.$proID.'/';
+            
+            //Funtkion zum Löschen des Ordners mit Inhalt des Projektes
+            $handle = opendir($path);
+                if($handle)
+                   {
+                        while ( false !== ($file = readdir($handle)) )
+                        {
+                        if ( $file != "." and $file != ".." )
+                            {
+                             unlink($path.$file);
+                            }
+                        }   
+                    }
+                    rmdir($path);
+            
+            $sql= deleteProject($proID);
+            $status= mysqli_query($link, $sql);
+            
+            //Löscht den dazugehörigen Bauherren
+            $sql = deleteBauherr($idBauherr);
+            $statusDel = mysqli_query($link, $sql);
+            if(!$status && !$statusDel){
+                $error=true;
+            }
+        }
+        //Überprüfung ob etwas fehlgeschlagen hat
+        if(!isset($error)){
+            //Löschen des Architekten-Users
+            $sql=deleteBauherr($usID);
+            $status=mysqli_query($link, $sql);
+            if($status){
+                header('Location: index.php?nav=3&statusSave=7');
+                exit();
+            }else{
+                header('Location: index.php?nav=3&statusSave=8');
+                exit();
+            }
+        }else{
+            header('Location: index.php?nav=3&statusSave=8');
+            exit();
+        }
+        
+        
+    }else{
+        header('Location: index.php?nav=3&statusSave=9');
+        exit();
+    }
+}
 ?>
 
 
@@ -128,6 +191,7 @@ if(isset($_POST['activate'])){
             <div class="modal-footer">
                 <input type="submit" name="activate" value="User aktivieren" class="btn btn-default">
                 <input type="submit" name="block" value="User sperren" class="btn btn-default">
+                <input type="submit" name="delete" value="User löschen" class="btn btn-default">
               <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="">Schliessen</button>
             </div>
           </form>
@@ -157,6 +221,12 @@ if(isset($status)){
             echo'<div class="alert alert-warning" role="alert">User reaktivierung fehlgeschlagen!</div>';
         }else if($status==6){
             echo'<div class="alert alert-warning" role="alert">User die nicht gesperrt sind können nicht reaktiviert werden.</div>';
+        }else if($status==7){
+            echo'<div class="alert alert-success" role="alert">User erfolgreich gelöscht.</div>';
+        }else if($status==8){
+            echo'<div class="alert alert-warning" role="alert">User löschen fehlgeschlagen!</div>';
+        }else if($status==9){
+            echo'<div class="alert alert-warning" role="alert">Das Löschen ist nur für User des Typs «Architekt» zulässig!</div>';
         }
     }
 

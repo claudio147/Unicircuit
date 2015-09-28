@@ -854,7 +854,17 @@ function getProjectsByArchStore($id) {
     return $sql;
 }
 
-function deleteProject($idProject) {
+function getAllProjectsByArch($id){
+    global $link;
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM Project as p JOIN User
+        as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id;
+    return $sql;
+}
+
+function deleteProject($idProject){
     $idProject = filter_var($idProject, FILTER_SANITIZE_NUMBER_INT);
     $sql = "DELETE FROM Project WHERE IdProject = '$idProject'";
     
@@ -862,7 +872,7 @@ function deleteProject($idProject) {
     
 }
 
-function deleteBauherr($idBauherr) {
+function deleteBauherr($idBauherr){
     $idBauherr = filter_var($idBauherr, FILTER_SANITIZE_NUMBER_INT);
     $sql = "DELETE FROM User WHERE IdUser = '$idBauherr'";
     

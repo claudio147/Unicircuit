@@ -61,8 +61,9 @@ if(isset($_POST['showUserDetails'])){
     	$mob= $row['MobileNumber'];
     	$lastT= $row['LastLoginTime'];
     	$lastD= $row['LastLoginDate'];
+        $usertyp= $row['Fk_IdUserType'];
 
-    	if($row['Fk_IdUserType']==2){
+    	if($usertyp==2){
     		$count=0;
     		$sql2= getProjectsByArch($id);
     		$result2= mysqli_query($link, $sql2);
@@ -70,9 +71,9 @@ if(isset($_POST['showUserDetails'])){
     			//Projekte in array speichern
     			$count++;
     		}
-    	}else if($row['Fk_IdUserType']==3){
+    	}else if($usertyp==3){
     		$count=1;
-    	}else if($row['Fk_IdUserType']==1){
+    	}else if($usertyp==1){
             $count=0;
         }
 
@@ -80,6 +81,7 @@ if(isset($_POST['showUserDetails'])){
 
     	$data.= '<input type="hidden" name="status" value="'.$row['Active'].'">
                 <input type="hidden" name="userID" value="'.$id.'">
+                <input type="hidden" name="userTyp" value="'.$usertyp.'">
                 <h4>Status</h4>
     			<table class="table table-hover">
     			<tr>
