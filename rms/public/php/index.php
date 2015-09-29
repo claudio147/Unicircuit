@@ -121,7 +121,7 @@ $lnCust=$row['Lastname'];
                     <ul class="nav navbar-nav side-nav">
                         
                         <li id="homepage_li">
-                            <a id="homepagegroup" href="javascript:;" data-toggle="collapse" data-target="#homepage"><i class="fa fa-calendar"></i>Homepage<i class="fa fa-fw fa-caret-down"></i></a>
+                            <a id="homepagegroup" href="javascript:;" data-toggle="collapse" data-target="#homepage"><i class="fa fa-desktop"></i>Homepage<i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="homepage" class="collapse">
                                 <li>
                                     <button type="submit" id="hptext" name="nav" value="1"  class="<?php echo $active3; ?>">Textanpassung</button>
@@ -135,7 +135,7 @@ $lnCust=$row['Lastname'];
                         </li>
                         
                         <li id="platform_li">
-                            <a id="platformgroup" href="javascript:;" data-toggle="collapse" data-target="#platform"><i class="fa fa-calendar"></i>Plattform<i class="fa fa-fw fa-caret-down"></i></a>
+                            <a id="platformgroup" href="javascript:;" data-toggle="collapse" data-target="#platform"><i class="fa fa-users"></i>Plattform<i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="platform" class="collapse">
                                 <li>
                                     <button type="submit" id="userverwaltung" name="nav" value="3"  class="<?php echo $active3; ?>">Userverwaltung</button>

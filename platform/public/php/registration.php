@@ -8,6 +8,7 @@
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
+require_once ('../../../library/public/security.inc.php');
 require_once ('../../../library/public/mail.inc.php');
 
 //check mail

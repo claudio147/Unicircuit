@@ -281,10 +281,14 @@ if(isset($_POST['save'])){
                         </div>
                         <label for="7">Land*</label>
                         <select id="7" name="country" class="form-control">
-                        <option value="Schweiz" selected="selected">Schweiz</option>
-                        <option value="Deutschland">Deutschland</option>
-                        <option value="Österreich">Österreich</option>
-                        <option value="Lichtenstein">Lichtenstein</option>
+                        <?php
+                            //Auswahl Länderliste aus DB und erstellt die Dropdown Liste.
+                            $sql = "SELECT Country FROM Countries";
+                            $resultC = mysqli_query($link, $sql);
+                            while($rowC= mysqli_fetch_array($resultC)){
+                                echo'<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
+                            }
+                        ?>
                         </select>
                         <label for="8">Email (Hauptadresse)*</label>
                         <input id="8" type="email" name="email" class="form-control">

@@ -1,3 +1,7 @@
+.fa-caret-down{
+    float: right;
+}
+
 .modal .modal-body {
     height: 520px;
     overflow-y: auto;

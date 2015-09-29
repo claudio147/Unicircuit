@@ -34,7 +34,9 @@ $(document).ready(function(){
         ]
     });
 
-
+    //Styling Tabellen Buttons (PDF,Excel, CSV)
+    $('.dt-button').addClass('btn btn-default btn-xs');
+    
     //Ajax Loader für Inhalt in Lightbox bei bearbeiten
     $('.btn-user-details').click(function(){
         var id= $(this).val();

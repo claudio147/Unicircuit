@@ -261,10 +261,10 @@ $(document).ready(function(){
      * Galerie
     /* ---------------------------------------------- */
     
-    function myImgToolbarCustDisplay($elements, item, data) {
+    function myImgToolbarCustDisplay($elements, item, data){
         //Ermittlung Usertyp und anzeige von Löschfunktion bei Architekt
         $.post('../php/ajax.php', {"getUserTyp":'2'},function(usertyp){
-                if(usertyp==2){
+                if(usertyp!=2){
                     // Custom Element mit Lösch-Button
                     $elements.html('<i id="delIMG" data-img="'+item.GetID()+'" class="fa fa-trash-o fa-2x"></i>');
                     

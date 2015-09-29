@@ -102,8 +102,10 @@ function createArchRegMail($fn, $ln, $em) {
 	<html><head>
 	<title>Anmeldung bei Archconsulting Unicircuit</title>
 	</head><body><p>Guten Tag $fn $ln</p>
-	<p>Sie haben sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
-    registiert. Nach erfolgreicher Prüfung erhalten Sie ihr aktivierungs Mail.</body></html>");
+	<p>Vielen Dank das Sie sich auf der Plattform <i>Unicircuit</i> als neuer Benutzer
+        registiert haben.<br/>Nach erfolgreicher Prüfung erhalten Sie ihr Aktivierungs-Mail.<br/>
+        Falls Sie noch Fragen haben wenden Sie sich an unser Team unter info@archconsulting.ch<br/><br/>
+        Freundliche Grüsse<br/>Ihr Unicircuit Team</body></html>");
 
       // Mail an Benutzer/in senden.
       if(!$mail->Send()) {

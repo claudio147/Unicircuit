@@ -24,7 +24,6 @@ $result = mysqli_query($link, $sql);
  */
 if(isset($_GET['id'])) {
     $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-    // $id = $_GET['id'];
 
     $sql = userData($id);
 
@@ -107,7 +106,7 @@ if(isset($_POST['delete'])){
     if($typ==2){
         //Löschen von Architekt
         //Holt alle Projekte eines Architekts
-        $sql=getAllProjectsByArch($id);
+        $sql=getAllProjectsByArch($usID);
         $result=mysqli_query($link, $sql);
         while($row=  mysqli_fetch_array($result)){
             $proID=$row['IdProject'];
@@ -143,6 +142,7 @@ if(isset($_POST['delete'])){
             //Löschen des Architekten-Users
             $sql=deleteBauherr($usID);
             $status=mysqli_query($link, $sql);
+            
             if($status){
                 header('Location: index.php?nav=3&statusSave=7');
                 exit();
