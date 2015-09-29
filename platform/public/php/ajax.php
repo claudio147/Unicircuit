@@ -1,7 +1,14 @@
+<!--
+*   Unicircuit Plattform
+*   «Ajax Loader (in Projekten bzw. Modulen)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 session_start();
+
+//Einbinden von Libraries
 require_once ('../../../library/public/database.inc.php');
-//$projectID=2;
 
 $link= connectDB();
 
@@ -79,7 +86,7 @@ if(isset($_POST['id'])){
                 <input id="14" type="text" name="mobileDirect" class="form-control">
                 <label for="15">Notizen</label>
                 <textarea id="15" name="description" class="form-control" rows="3"></textarea>';
-                echo $data;
+            echo $data;
     }
 }
 
@@ -94,60 +101,60 @@ if(isset($_POST['new'])){
 
     $data= '';
 
-        $data.= '<h4>Firmendaten</h4>
-                <div id="checkBKP">
-                <label for="1" class="control-label">BKP*</label>
-                <input id="1" type="text" name="bkp" class="form-control" maxlength="3">
+    $data.= '<h4>Firmendaten</h4>
+            <div id="checkBKP">
+            <label for="1" class="control-label">BKP*</label>
+            <input id="1" type="text" name="bkp" class="form-control" maxlength="3">
+            </div>
+            <div id="checkComp">
+            <label for="2" class="control-label">Firma*</label>
+            <input id="2" type="text" name="company" class="form-control">
+            </div>
+            <div id="checkAddrL1">
+            <label for="3" class="control-label">Adresszeile 1*</label>
+            <input id="3" type="text" name="addressline1" class="form-control">
+            </div>
+            <label for="4">Adresszeile 2</label>
+            <input id="4" type="text" name="addressline2" class="form-control">
+            <div class="row">
+                <div class="col-xs-2" id="checkZIP">
+                    <label for="5" class="control-label">PLZ*</label>
+                    <input id="5" type="text" name="zip" class="form-control" maxlength="4">
                 </div>
-                <div id="checkComp">
-                <label for="2" class="control-label">Firma*</label>
-                <input id="2" type="text" name="company" class="form-control">
+                <div class="col-xs-10" id="checkCity">
+                    <label for="6" class="control-label">Ort*</label>
+                    <input id="6" type="text" name="city" class="form-control">
                 </div>
-                <div id="checkAddrL1">
-                <label for="3" class="control-label">Adresszeile 1*</label>
-                <input id="3" type="text" name="addressline1" class="form-control">
-                </div>
-                <label for="4">Adresszeile 2</label>
-                <input id="4" type="text" name="addressline2" class="form-control">
-                <div class="row">
-                    <div class="col-xs-2" id="checkZIP">
-                        <label for="5" class="control-label">PLZ*</label>
-                        <input id="5" type="text" name="zip" class="form-control" maxlength="4">
-                    </div>
-                    <div class="col-xs-10" id="checkCity">
-                        <label for="6" class="control-label">Ort*</label>
-                        <input id="6" type="text" name="city" class="form-control">
-                    </div>
-                </div>
-                <label for="7">Land*</label>
-                <select id="7" name="country" class="form-control">';
-                $data .= $countries;
-                $data.='</select>
-                <div id="checkEmail">
-                <label for="8" class="control-label">Email (Hauptadresse)*</label>
-                <input id="8" type="email" name="email" class="form-control">
-                </div>
-                <div id="checkPhone">
-                <label for="9" class="control-label">Telefon (Hauptnummer)*</label>
-                <input id="9" type="text" name="phoneNumber" class="form-control">
-                </div>
-                <div id="checkHomepage">
-                <label for="10" class="control-label">Homepage*</label>
-                <input id="10" type="text" name="homepage" class="form-control">
-                </div>
-                <hr/>
-                <h4>Direkte Kontaktdaten</h4>
-                <label for="11">Ansprechpartner</label>
-                <input id="11" type="text" name="projectCoordinator" class="form-control">
-                <label for="12">Email (Direkt)</label>
-                <input id=12" type="text" name="emailDirect" class="form-control">
-                <label for="13">Telefon (Direkt)</label>
-                <input id="13" type="text" name="phoneDirect" class="form-control">
-                <label for="14">Mobile (Direkt)</label>
-                <input id="14" type="text" name="mobileDirect" class="form-control">
-                <label for="15">Notizen</label>
-                <textarea id="15" name="description" class="form-control" rows="3"></textarea>';
-                echo $data;
+            </div>
+            <label for="7">Land*</label>
+            <select id="7" name="country" class="form-control">';
+            $data .= $countries;
+            $data.='</select>
+            <div id="checkEmail">
+            <label for="8" class="control-label">Email (Hauptadresse)*</label>
+            <input id="8" type="email" name="email" class="form-control">
+            </div>
+            <div id="checkPhone">
+            <label for="9" class="control-label">Telefon (Hauptnummer)*</label>
+            <input id="9" type="text" name="phoneNumber" class="form-control">
+            </div>
+            <div id="checkHomepage">
+            <label for="10" class="control-label">Homepage*</label>
+            <input id="10" type="text" name="homepage" class="form-control">
+            </div>
+            <hr/>
+            <h4>Direkte Kontaktdaten</h4>
+            <label for="11">Ansprechpartner</label>
+            <input id="11" type="text" name="projectCoordinator" class="form-control">
+            <label for="12">Email (Direkt)</label>
+            <input id=12" type="text" name="emailDirect" class="form-control">
+            <label for="13">Telefon (Direkt)</label>
+            <input id="13" type="text" name="phoneDirect" class="form-control">
+            <label for="14">Mobile (Direkt)</label>
+            <input id="14" type="text" name="mobileDirect" class="form-control">
+            <label for="15">Notizen</label>
+            <textarea id="15" name="description" class="form-control" rows="3"></textarea>';
+    echo $data;
 }
 
 //Formular mit Platzhaltern um einen bestehenden Projekt-Adress-Eintrag zu bearbeiten
@@ -230,7 +237,7 @@ if(isset($_POST['edit'])){
                 <input id="14" type="text" name="mobileDirect" value="'.$mobileDirect.'" class="form-control">
                 <label for="15">Notizen</label>
                 <textarea id="15" name="description" class="form-control" rows="3">'.$description.'</textarea>';
-                echo $data;
+        echo $data;
     }
 }
 
@@ -399,8 +406,6 @@ if(isset($_POST['delIMG'])){
 
 //Ermittlung des Usertyps
 if(isset($_POST['getUserTyp'])){
-    //2= Architekt
-    //3= Bauherr
     $usertyp= $_SESSION['UserType'];
     echo $usertyp;
 }
@@ -439,7 +444,7 @@ if(isset($_POST['eventEdit'])){
                 <label for="location">Ort*</label>
                 <input id="location" type="text" name="location" class="form-control" value="'.$location.'">';
 
-                echo $data;
+        echo $data;
     }
 
 }
@@ -489,7 +494,7 @@ if(isset($_POST['deadlineEdit'])){
                 <label for="description">Beschreibung</label>
                 <textarea id="description" name="description" class="form-control" rows="5">'.$description.'</textarea>';
 
-                echo $data;
+        echo $data;
     }
 
 }
@@ -541,7 +546,6 @@ if(isset($_POST['deadlineShow'])){
                 <label for="description">Beschreibung</label>
                 <p id="description">'.$description.'</p>';
 
-                echo $data;
+        echo $data;
     }
-
 }

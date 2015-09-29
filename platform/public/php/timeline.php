@@ -1,9 +1,14 @@
+<!--
+*   Unicircuit Plattform
+*   «Chronik (Modul)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/security.inc.php');
 
 $link= connectDB();
-
 
 //Speichert einen neuen Eintrag in DB
 if(isset($_POST['submit'])){
@@ -16,17 +21,12 @@ if(isset($_POST['submit'])){
     
     // Fehler im Eingabefeld?
     if (empty($title) || strlen($title) < 5) {
-      $errorTitle = true;
-      $error = true;
+        $error = true;
     }
-    
     if(empty($content) || strlen($content) < 5){
-        $errorContent=true;
         $error=true;
     }
-    
     if(empty($visible)){
-        $errorVisible=true;
         $error=true;
     }
     
@@ -42,60 +42,60 @@ if(isset($_POST['submit'])){
         //Bildupload
         if(!empty($_FILES['userfile']['name'])){       
 
-        $tempna= $_FILES['userfile']['tmp_name'];
-        $orgname= $_FILES['userfile']['name'];
-        $size= $_FILES['userfile']['size'];
-        $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
-        $extension= strrchr($_FILES['userfile']['name'],'.');
-        $file= $filename.$extension;
+            $tempna= $_FILES['userfile']['tmp_name'];
+            $orgname= $_FILES['userfile']['name'];
+            $size= $_FILES['userfile']['size'];
+            $filename= sha1(time().mt_rand().$_FILES['userfile']['name']);
+            $extension= strrchr($_FILES['userfile']['name'],'.');
+            $file= $filename.$extension;
 
-        //Dateipfad mit Dateinamen zusammensetzen
-        $uploadfile= $uploaddir.basename($file);
+            //Dateipfad mit Dateinamen zusammensetzen
+            $uploadfile= $uploaddir.basename($file);
 
-        //Ermittle Bildgrösse
-        $image_attributes = getimagesize($tempna); 
-        $image_width_old = $image_attributes[0];
-        $image_height_old = $image_attributes[1];
+            //Ermittle Bildgrösse
+            $image_attributes = getimagesize($tempna); 
+            $image_width_old = $image_attributes[0];
+            $image_height_old = $image_attributes[1];
 
-        //Überprüft Dateityp
-        if(!checkImageType($file)){
-            header('Location: index.php?id=2&status=6&project='.$projectID);
-            exit();
-        }
-
-        //Überprüft Dateigrösse
-        if($size > 4100000){
-            header('Location: index.php?id=2&status=7&project='.$projectID);
-            exit();
-        }
-
-        //Verkleinert Bilder über 800px Seitenlänge und speichert diese im verzeichnis,
-        //Bilder unter 800px Seitenlänge werden direkt ins Verzeichnis gespeichert
-        if($image_width_old>800 || $image_height_old>800){
-            if(resizeImage($tempna, $uploadfile, 800)){
-                $statusUpload=true;
-            }else{
-                $statusUpload=false;
+            //Überprüft Dateityp
+            if(!checkImageType($file)){
+                header('Location: index.php?id=2&status=6&project='.$projectID);
+                exit();
             }
-        }else{
-            if(move_uploaded_file($tempna, $uploadfile)){
-                $statusUpload=true;
-            }else{
-                $statusUpload=false;
+
+            //Überprüft Dateigrösse
+            if($size > 4100000){
+                header('Location: index.php?id=2&status=7&project='.$projectID);
+                exit();
             }
-        }
 
-        if($statusUpload){
-            //Erfolgreich gespeichert --> Speichert DB Eintrag
-            $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
-            $status= mysqli_query($link, $sql);
+            //Verkleinert Bilder über 800px Seitenlänge und speichert diese im verzeichnis,
+            //Bilder unter 800px Seitenlänge werden direkt ins Verzeichnis gespeichert
+            if($image_width_old>800 || $image_height_old>800){
+                if(resizeImage($tempna, $uploadfile, 800)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;
+                }
+            }else{
+                if(move_uploaded_file($tempna, $uploadfile)){
+                    $statusUpload=true;
+                }else{
+                    $statusUpload=false;
+                }
+            }
 
-            header('Location: index.php?id=2&status=0&project='.$projectID);
-            exit();
-        }else{
-            header('Location: index.php?id=2&status=1&project='.$projectID);
-            exit();
-        }
+            if($statusUpload){
+                //Erfolgreich gespeichert --> Speichert DB Eintrag
+                $sql= addPostwithIMG($projectID, $visible, $file, $orgname, $uploaddir, $title, $content, $date, $time);
+                $status= mysqli_query($link, $sql);
+
+                header('Location: index.php?id=2&status=0&project='.$projectID);
+                exit();
+            }else{
+                header('Location: index.php?id=2&status=1&project='.$projectID);
+                exit();
+            }
 
         }else{
             $uploaddir= '../img/';
@@ -115,10 +115,7 @@ if(isset($_POST['submit'])){
     }else{
         header('Location: index.php?id=2&status=3&project='.$projectID);
         exit();
-    }
-    
-    
-    
+    } 
 }
 
 //Updated einen bestehenden Eintrag in DB
@@ -137,20 +134,14 @@ if(isset($_POST['edit'])){
     
     // Fehler im Eingabefeld?
     if (empty($title) || strlen($title) < 5) {
-      $errorTitle = true;
       $error = true;
     }
-    
     if(empty($content) || strlen($content) < 5){
-        $errorContent=true;
         $error=true;
     }
-    
     if(empty($visible)){
-        $errorVisible=true;
         $error=true;
     }
-    
     
     if(!isset($error)){
         //Erzeugt Pfad für Bildupload
@@ -232,91 +223,85 @@ if(isset($_POST['edit'])){
     }else{
         header('Location: index.php?id=2&status=1&project='.$projectID);
         exit();
-    }
-    
-    
-    
+    }   
 }
-
 
 //Löschfunktion
 if(isset($_POST['delete'])){
 
     if(!empty($_POST['postID'])){
-            $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
-            $id=$_POST['postID'];
-            $link= connectDB();
-            $sql= selectPostIMG($id);
-            $result = mysqli_query($link, $sql);
-            $row = mysqli_fetch_array($result);
-            $fina=$row['HashName'];
-            $path= $row['Path'];
-            
-            //Erzeugt Pfad für Bildupload
-            $sql= getNameCust($projectID);
-            $result= mysqli_query($link, $sql);
-            $row= mysqli_fetch_array($result);
-            $idArch= $row['Fk_IdArchitect'];
+        $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
+        $id=$_POST['postID'];
+        $link= connectDB();
+        $sql= selectPostIMG($id);
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_array($result);
+        $fina=$row['HashName'];
+        $path= $row['Path'];
 
-            $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/' ;
-            
-            //Überprüfung ob das Platzhalter Bild eingestzt ist
-            if($fina == 'placeholder.png'){
+        //Erzeugt Pfad für Bildupload
+        $sql= getNameCust($projectID);
+        $result= mysqli_query($link, $sql);
+        $row= mysqli_fetch_array($result);
+        $idArch= $row['Fk_IdArchitect'];
+
+        $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/' ;
+
+        //Überprüfung ob das Platzhalter Bild eingestzt ist
+        if($fina == 'placeholder.png'){
+            $sql2= deletePost($id);
+            $status= mysqli_query($link, $sql2);
+            if($status == true){
+                header('Location: index.php?id=2&status=4&project='.$projectID);
+                exit();
+            }else{
+                header('Location: index.php?id=2&status=2&project='.$projectID);
+                exit();
+            }
+        }else{
+            if(unlink($path.$fina)){
                 $sql2= deletePost($id);
                 $status= mysqli_query($link, $sql2);
                 if($status == true){
                     header('Location: index.php?id=2&status=4&project='.$projectID);
+                    exit();
                 }else{
                     header('Location: index.php?id=2&status=2&project='.$projectID);
+                    exit();
                 }
             }else{
-                if(unlink($path.$fina)){
-                    $sql2= deletePost($id);
-                    $status= mysqli_query($link, $sql2);
-                    if($status == true){
-                        header('Location: index.php?id=2&status=4&project='.$projectID);
-                    }else{
-                        header('Location: index.php?id=2&status=2&project='.$projectID);
-                    }
-                }else{
-                    header('Location: index.php?id=2&status=2&project='.$projectID);
-                }
+                header('Location: index.php?id=2&status=2&project='.$projectID);
+                exit();
             }
-                
+        }    
     }
-    
 }
-
-
-
-
 
 ?>
 
-
 <div class="col-xs-12">
-<!--Lightboxen (Modals)-->
-<div class="container modalgroup">
-<?php
-    $sql=getStatusProject($projectID);
-    $result=  mysqli_query($link, $sql);
-    $row=  mysqli_fetch_array($result);
-    $statusStorage=$row['Storage'];
-    if($usertyp==2 && $statusStorage!=1){ 
-        echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
-    } 
-?> 
-    <!-- Modal Global-->
-    <div class="modal" id="newPost" role="dialog">
-        <div class="modal-dialog">
+    <!--Lightboxen (Modals)-->
+    <div class="container modalgroup">
+    <?php
+        $sql=getStatusProject($projectID);
+        $result=  mysqli_query($link, $sql);
+        $row=  mysqli_fetch_array($result);
+        $statusStorage=$row['Storage'];
+        if($usertyp==2 && $statusStorage!=1){ 
+            echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPost"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
+        } 
+    ?> 
+        <!-- Modal Global-->
+        <div class="modal" id="newPost" role="dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form enctype="multipart/form-data" action="timeline.php" method="POST">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Chronikbeitrag hinzufügen</h4>
-                    </div>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form enctype="multipart/form-data" action="timeline.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Chronikbeitrag hinzufügen</h4>
+                        </div>
                         <div class="modal-body">
                             <div id="input_container">
                                 <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
@@ -339,34 +324,29 @@ if(isset($_POST['delete'])){
                                 </div>
                                 <label for="upload">Bildupload</label>
                                 <input id="upload" type="file" name="userfile"/>
-
-
                             </div>
                         </div>
-                    <div class="modal-footer">
-                        <input type="submit" name="submit" value="Speichern" class="btn btn-default"/>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-                    </div>
-              </form>
+                        <div class="modal-footer">
+                            <input type="submit" name="submit" value="Speichern" class="btn btn-default"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                        </div>
+                  </form>
+                </div>
 
             </div>
-
         </div>
-    </div>
 
+        <!-- Modal Global-->
+        <div class="modal" id="editPost" role="dialog">
+            <div class="modal-dialog">
 
-
-    <!-- Modal Global-->
-    <div class="modal" id="editPost" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form enctype="multipart/form-data" action="timeline.php" method="POST">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Chronikbeitrag bearbeiten</h4>
-                    </div>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form enctype="multipart/form-data" action="timeline.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Chronikbeitrag bearbeiten</h4>
+                        </div>
                         <div class="modal-body">
                             <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                             <div id="editContainer">
@@ -375,17 +355,16 @@ if(isset($_POST['delete'])){
 
                             </div>       
                         </div>
-                    <div class="modal-footer">
-                        <input type="submit" name="delete" value="Löschen" class="btn btn-default"/>
-                        <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-                    </div>
-              </form>
+                        <div class="modal-footer">
+                            <input type="submit" name="delete" value="Löschen" class="btn btn-default"/>
+                            <input type="submit" name="edit" value="Speichern" class="btn btn-default"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                        </div>
+                  </form>
+                </div>
 
             </div>
-
         </div>
-    </div>
 
 </div>
 
@@ -393,8 +372,8 @@ if(isset($_POST['delete'])){
     if(isset($_GET['status'])){
         $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
         //Rückgabemeldung für Event-Handling Timeline
-               $stat = checkEventTimeline($response);
-               echo $stat;
+        $stat = checkEventTimeline($response);
+        echo $stat;
     }
 ?>
 
@@ -416,18 +395,18 @@ while($row= mysqli_fetch_array($result)){
             $lock='';
         }
         echo'<div class="post row">';            
-            echo'<div class="col-xs-4 col-sm-3 col-md-2 imgLiquidFill imgLiquid">';
-                echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img class="post-img" alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
-            echo'</div>';
-            echo'<div class="col-xs-8 col-sm-9 col-md-10">';
-                echo'<h3 class="post-title">';
-                if($statusStorage!=1){
-                    echo'<button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>';
-                }
-                echo $row['Title'].'  '.$lock.'</h3>';  
-                echo'<p class="post-date">'.$date.', '.$time.'</p>';
-                echo'<p>'.$row['Description'].'</p>';
-            echo'</div>';
+        echo'<div class="col-xs-4 col-sm-3 col-md-2 imgLiquidFill imgLiquid">';
+        echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img class="post-img" alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
+        echo'</div>';
+        echo'<div class="col-xs-8 col-sm-9 col-md-10">';
+        echo'<h3 class="post-title">';
+        if($statusStorage!=1){
+            echo'<button type="button" class="btn_postEdit" data-toggle="modal" data-target="#editPost" value="'.$row['IdTimeline'].'"><i class="fa fa-pencil-square-o"></i></button>';
+        }
+        echo $row['Title'].'  '.$lock.'</h3>';  
+        echo'<p class="post-date">'.$date.', '.$time.'</p>';
+        echo'<p>'.$row['Description'].'</p>';
+        echo'</div>';
         echo'</div>';
     
     //Bauherr sieht nur Einträge für ihn    
@@ -435,21 +414,17 @@ while($row= mysqli_fetch_array($result)){
         $date = date('d.m.Y', strtotime($row['Date']));
         $time= substr($row['Time'],0,5);
         echo'<div class="post row">';            
-            echo'<div class="col-xs-4 col-sm-3 col-md-2 imgLiquidFill imgLiquid">';
-                echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img class="post-img" alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
-            echo'</div>';
-            echo'<div class="col-xs-8 col-sm-9 col-md-10">';
-                echo'<h3 class="post-title">'.$row['Title'].'</h3>';  
-                echo'<p class="post-date">'.$date.', '.$time.'</p>';
-                echo'<p>'.$row['Description'].'</p>';
-            echo'</div>';
+        echo'<div class="col-xs-4 col-sm-3 col-md-2 imgLiquidFill imgLiquid">';
+        echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img class="post-img" alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
         echo'</div>';
-    }
-    
+        echo'<div class="col-xs-8 col-sm-9 col-md-10">';
+        echo'<h3 class="post-title">'.$row['Title'].'</h3>';  
+        echo'<p class="post-date">'.$date.', '.$time.'</p>';
+        echo'<p>'.$row['Description'].'</p>';
+        echo'</div>';
+        echo'</div>';
+    }   
 }
 echo'</div>';
 echo'</div>';
 ?>
-
-
-

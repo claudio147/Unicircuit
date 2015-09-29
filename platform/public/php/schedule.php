@@ -1,10 +1,13 @@
+<!--
+*   Unicircuit Plattform
+*   «Terminplan (Modul)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 require_once ('../../../library/public/database.inc.php');
 
 $link= connectDB();
-
-
-
 
 //Upload und Überprüfung ob es ein PDF ist
 if(isset($_POST['submit'])){
@@ -45,31 +48,31 @@ if(isset($_POST['submit'])){
                     if($status){
                         //Erfolgreich hochgeladen
                         header('Location: index.php?id=3&status=0&project='.$projectID);
+                        exit();
                     }else{
                         //Übermittlungsfehler
                         header('Location: index.php?id=3&status=1&project='.$projectID);
+                        exit();
                     }
                 }else{
                     //Übermittlungsfehler
                     header('Location: index.php?id=3&status=1&project='.$projectID);
-                }
-                
-                
-                
-                
-                
-                
+                    exit();
+                }   
             }else{
                 //zu grosses PDF
                 header('Location: index.php?id=3&status=3&project='.$projectID);
+                exit();
             }  
         }else{
             //kein PDF
             header('Location: index.php?id=3&status=2&project='.$projectID);
+            exit();
         }
     }else{
         //Übermittlungsfehler
         header('Location: index.php?id=3&status=1&project='.$projectID);
+        exit();
     }
 }
 ?>
@@ -100,23 +103,21 @@ if(isset($_POST['submit'])){
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Terminplan hochladen</h4>
                         </div>
-                            <div class="modal-body">
-                                <div id="input_container">
-                                    <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
-                                    <label for="scheduleUpload">Terminplan*</label>                                    
-                                    <input id="scheduleUpload" type="file" name="schedule" >
-                                    <p>(PDF Format)</p><br/>
-                                    <label for="comment">Kommentar</label>
-                                    <textarea id="comment" rows="3" name="comment" class="form-control"></textarea>                              
-
-                                </div>
+                        <div class="modal-body">
+                            <div id="input_container">
+                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                                <label for="scheduleUpload">Terminplan*</label>                                    
+                                <input id="scheduleUpload" type="file" name="schedule" >
+                                <p>(PDF Format)</p><br/>
+                                <label for="comment">Kommentar</label>
+                                <textarea id="comment" rows="3" name="comment" class="form-control"></textarea>                              
                             </div>
+                        </div>
                         <div class="modal-footer">
                             <input type="submit" name="submit" value="Terminplan hochladen" class="btn btn-default"/>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
                         </div>
                   </form>
-
                 </div>
 
             </div>
@@ -124,12 +125,12 @@ if(isset($_POST['submit'])){
 
     </div>
     
-    <?php  
+<?php  
     if(isset($_GET['status'])){
         $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
         //Rückgabemeldung für Event-Handling Schedule
-               $stat = checkEventSchedule($response);
-               echo $stat;
+        $stat = checkEventSchedule($response);
+        echo $stat;
     }
     
     $sql= showAllSchedule($projectID);
@@ -137,13 +138,9 @@ if(isset($_POST['submit'])){
     
     $row= mysqli_fetch_array($result);
     $pdfSchedule= $row['HashName'];
-    
-    
-    ?>
+        
+?>
         
     <object id="schedule-pdf" data="<?php echo $pdfSchedule; ?>" type="application/pdf"></object>
-
-
-
 
 </div>

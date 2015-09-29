@@ -341,3 +341,23 @@ function checkEventTimeline($response) {
         }
         return $stat;
 }
+
+//Event-Handling für Timeline
+function checkRegistration($response) {
+    $x= $response;
+    switch ($x) {
+        case 0:
+            $stat = '<br/><div class="alert alert-success col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Besten Dank für Ihre Registrierung! Wir benachrichtigen Sie bei Freischaltung.</div>';
+            break;
+        case 1:
+            $stat = '<br/><div class="alert alert-danger col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Registration fehlgeschlagen!</div>';
+            break;
+        case 2:
+            $stat = '<br/><div class="alert alert-danger col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie sind bereits registriert. Bitte warten Sie auf Ihre Freigabe.</div>';
+            break;
+        case 3:
+            $stat = '<br/><div class="alert alert-danger col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Registration fehlgeschlagen. Bitte eingaben überprüfen.</div>';
+            break;
+        }
+        return $stat;
+}

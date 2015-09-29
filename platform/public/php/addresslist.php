@@ -1,7 +1,12 @@
+<!--
+*   Unicircuit Plattform
+*   «Adressliste (Modul)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/mail.inc.php');
-
 
 $link= connectDB();
 
@@ -12,7 +17,6 @@ if(isset($projectID)){
     $sql2=allGlobalAddress();
     $result2= mysqli_query($link, $sql2);
 }
-
 
 if(isset($_POST['submit'])){
     $error=false;
@@ -35,55 +39,39 @@ if(isset($_POST['submit'])){
     $emailDirect = filter_input(INPUT_POST, 'emailDirect', FILTER_SANITIZE_STRING);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
 
-    // Fehler im Eingabefeld?
+    //Überprüfung Eingabefelder
     if (empty($bkp) || strlen($bkp) > 3) {
         $errorBKP = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($company) || strlen($company) < 4) {
         $errorCompany = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($addressline1) || strlen($addressline1) < 5) {
         $errorAddressline1 = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($zip) || strlen($zip) < 4) {
         $errorZIP = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($city) || strlen($city) < 4) {
         $errorCity = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($country)) {
         $errorCountry = true;
         $error = true;
     }
-
-    // Mailadresse korrekt?
     if (!checkMailFormat($email)) {
         $errorEmail = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($phoneNumber) || strlen($phoneNumber) < 10) {
         $errorPhoneNumber = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($homepage) || strlen($homepage) < 10) {
         $errorHomepage = true;
         $error = true;
@@ -112,7 +100,6 @@ if(isset($_POST['submit'])){
             }
         }else if(isset($_POST['idGlobalAddress'])){
             $idGlobal = filter_input(INPUT_POST, 'idGlobalAddress', FILTER_SANITIZE_NUMBER_INT);
-            //echo $idGlobal;
             $statusGlobal=true;
         }else{
             $statusGlobal=true;
@@ -130,14 +117,11 @@ if(isset($_POST['submit'])){
             //Insert Into Projekt- Adressliste (Neuer Eintrag wird erstellt)
             $sql= newProjectAddress($projectID, $idGlobal, $projectCoordinator, $phoneDirect, $mobileDirect,
             $emailDirect, $description);
-            //echo$sql;
-            //echo$statusGlobal;
             $statusProject= mysqli_query($link, $sql);
         }
 
 
         if($statusGlobal==true && $statusProject==true){
-            //header('Location: index.php?id=6&project='.$projectID);
             header('Location: index.php?id=6&status=1&project='.$projectID);
             exit();
         }else{
@@ -185,15 +169,12 @@ if(isset($_POST['update'])){
         exit();
     }
 }
-
 ?>
-
 
 <div class="col-xs-12">
 
-
-<!--Lightboxen (Modals)-->
-<div class="container modalgroup">
+    <!--Lightboxen (Modals)-->
+    <div class="container modalgroup">
     
 <?php
     $sql3=getStatusProject($projectID);
@@ -204,168 +185,151 @@ if(isset($_POST['update'])){
         echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" id="btn_new_address"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
     } 
 ?> 
-  <!-- Modal Global-->
-  <div class="modal" id="myModal" role="dialog">
-      <div class="modal-dialog">
+        <!-- Modal Global-->
+        <div class="modal" id="myModal" role="dialog">
+            <div class="modal-dialog">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-          <form action="addresslist.php" method="POST">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Handwerker hinzufügen</h4>
-        </div>
-              <div class="modal-body">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form action="addresslist.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Handwerker hinzufügen</h4>
+                        </div>
+                        <div class="modal-body">
 
-            <div id="input_container">
-            <h4>Adressdatenbank</h4>
-                <?php
+                            <div id="input_container">
+                                <h4>Adressdatenbank</h4>
+                                <?php
+                                    echo'<table class="table order hover" id="globalAddress">';
+                                    echo'<thead>';
+                                    echo'<tr>';
+                                    echo'<th>BKP</th>';
+                                    echo'<th>Firma</th>';
+                                    echo'<th>PLZ</th>';
+                                    echo'<th>Ort</th>';
+                                    echo'<th></th>';
+                                    echo'</tr>';
+                                    echo'</thead>';
+                                    echo'<tbody>';
 
-                    echo'<table class="table order hover" id="globalAddress">';
-                    echo'<thead>';
-                    echo'<tr>';
-                    echo'<th>BKP</th>';
-                    echo'<th>Firma</th>';
-                    echo'<th>PLZ</th>';
-                    echo'<th>Ort</th>';
-                    echo'<th></th>';
-                    echo'</tr>';
-                    echo'</thead>';
-                    echo'<tbody>';
+                                    while($row= mysqli_fetch_array($result2)){
+                                        echo'<tr>';
+                                        echo'<td>'.$row['BKP'].'</td>';
+                                        echo'<td><a href="http://'.$row['Homepage'].'/" target="_blank">'.$row['Company'].'</a></td>';
+                                        echo'<td>'.$row['ZIP'].'</td>';
+                                        echo'<td>'.$row['City'].'</td>';
+                                        echo'<td><button type="button" class="btn btn-default btn_add" data-toggle="modal" data-target="#modalSearch" data-dismiss="modal" value="'.$row['IdGlobalAddress'].'">hinzufügen</button></td>';
+                                        echo'</tr>';
+                                    }
+                                    echo'</tbody>';
+                                    echo'</table>';
+                                    ?>
+                                <button type="button" class="btn btn-default btn_new" data-toggle="modal" data-target="#modalSearch" data-dismiss="modal">Neue Adresse</button>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                        </div>
+                    </form>
 
-                    while($row= mysqli_fetch_array($result2)){
-                        echo'<tr>';
-                        echo'<td>'.$row['BKP'].'</td>';
-                        echo'<td><a href="http://'.$row['Homepage'].'/" target="_blank">'.$row['Company'].'</a></td>';
-                        echo'<td>'.$row['ZIP'].'</td>';
-                        echo'<td>'.$row['City'].'</td>';
-                        echo'<td><button type="button" class="btn btn-default btn_add" data-toggle="modal" data-target="#modalSearch" data-dismiss="modal" value="'.$row['IdGlobalAddress'].'">hinzufügen</button></td>';
-                        echo'</tr>';
-                    }
-                    echo'</tbody>';
-                    echo'</table>';
-                    ?>
-                <button type="button" class="btn btn-default btn_new" data-toggle="modal" data-target="#modalSearch" data-dismiss="modal">Neue Adresse</button>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-        </div>
-        </form>
-
-      </div>
-
-    </div>
-  </div>
-
-
-  <!-- Modal Hinzufügen-->
-  <div class="modal" id="modalSearch" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-          <form action="addresslist.php" method="POST" name="createAddress" onsubmit="return addressCheck()">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal">&times;</button>
-          <h4 class="modal-title">Handwerker hinzufügen</h4>
-        </div>
-        <div class="modal-body">
-            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
-            <div id="newAddress">
-                
-               <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
+                </div>
 
             </div>
         </div>
-        <div class="modal-footer">
-            <input type="submit" name="submit" value="Speichern" class="btn btn-default">
-          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">Zurück</button>
-        </div>
-        </form>
+        <!-- Modal End -->
+        
+        <!-- Modal Hinzufügen-->
+        <div class="modal" id="modalSearch" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form action="addresslist.php" method="POST" name="createAddress" onsubmit="return addressCheck()">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal">&times;</button>
+                            <h4 class="modal-title">Handwerker hinzufügen</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                            <div id="newAddress">
 
-      </div>
+                            <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
 
-    </div>
-  </div>
-  <!-- Modal End -->
-
-
-   <!-- Modal Edit -->
-  <div class="modal" id="modalEdit" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-          <form action="addresslist.php" method="POST">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
-          <h4 class="modal-title">Handwerker bearbeiten</h4>
-        </div>
-              <div class="modal-body">
-            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
-            <div id="editAddress">
-
-                <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
-
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" name="submit" value="Speichern" class="btn btn-default">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#myModal">Zurück</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <input type="submit" name="update" value="Speichern" class="btn btn-default">
-            <input type="submit" name="delete" value="Löschen" class="btn btn-default">
-          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
-        </div>
-        </form>
+        <!-- Modal End -->
 
-      </div>
+        <!-- Modal Edit -->
+        <div class="modal" id="modalEdit" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form action="addresslist.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
+                            <h4 class="modal-title">Handwerker bearbeiten</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                            <div id="editAddress">
 
-    </div>
-  </div>
-  <!-- Modal End -->
+                                <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" name="update" value="Speichern" class="btn btn-default">
+                            <input type="submit" name="delete" value="Löschen" class="btn btn-default">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+       </div>
+       <!-- Modal End -->
 
   
-   <!-- Modal Details -->
-  <div class="modal" id="modalDetails" role="dialog">
-    <div class="modal-dialog">
+        <!-- Modal Details -->
+        <div class="modal" id="modalDetails" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
+                        <h4 class="modal-title">Handwerker Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="detailAddress">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-          
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" data-toggle="modal">&times;</button>
-          <h4 class="modal-title">Handwerker Details</h4>
-        </div>
-              <div class="modal-body">
-            
-            <div id="detailAddress">
+                        <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
 
-                <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
-
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
-        </div>
-       
-
-      </div>
-
+        <!-- Modal End -->
+  
     </div>
-  </div>
-  <!-- Modal End -->
-  
-  
-</div>
-
 <?php
 
 if(isset($_GET['status'])){
-        $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
-        //Rückgabemeldung für Event-Handling Addresslist
-               $stat = checkEventAddresslist($response);
-               echo $stat;
-        
-    }
+    $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
+    //Rückgabemeldung für Event-Handling Addresslist
+    $stat = checkEventAddresslist($response);
+    echo $stat;     
+}
     
     
 echo'<table class="table order hover" id="localAddress">';
@@ -395,16 +359,11 @@ while($row= mysqli_fetch_array($result)){
     }else{
         echo'<td><button type="button" class="btn btn-default btn_details" data-toggle="modal" data-target="#modalDetails" value="'.$row['IdProjectAddress'].'">Details</button></td>';
     }
-    
     echo'</tr>';
 }
+
 echo'</tbody>';
 echo'</table>';
 echo'</div>';
 
- 
-    
-
 ?>
-
-

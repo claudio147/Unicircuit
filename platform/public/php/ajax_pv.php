@@ -1,3 +1,9 @@
+<!--
+*   Unicircuit Plattform
+*   «Ajax Loader (für Projektverwaltung)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 
 //Einbindung Librarys
@@ -6,17 +12,12 @@ require_once ('../../../library/public/database.inc.php');
 $link = connectDB();
 
 //Formular mit Platzhaltern für das Editieren eines Projekt-Beitrags
-if (isset($_POST['postEdit'])) {
+if (isset($_POST['postEdit'])){
     $data = '';
 
     //Post ID
     $id = filter_input(INPUT_POST, 'postEdit', FILTER_SANITIZE_NUMBER_INT);
-    //$sql= selectProjectById($id);
-    $sql = 'SELECT p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
-        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname AS FirstnameBh, u.Lastname AS LastnameBh,
-        u.Addressline1 AS Addressline1Bh, u.Addressline2 AS Addressline2Bh, u.ZIP AS ZIPBh,
-        u.City AS CityBh, u.Country AS CountryBh, u.Email, u.PhoneNumber, u.MobileNumber FROM Project as p JOIN User
-        as u on p.Fk_IdBauherr = u.IdUser WHERE IdProject = '.$id;
+    $sql= selectProjectById($id);
     $result = mysqli_query($link, $sql);
     
     while ($row = mysqli_fetch_array($result)) {
@@ -43,23 +44,24 @@ if (isset($_POST['postEdit'])) {
         $bhMoNu = $row['MobileNumber'];
 
         //Auswahl Länderliste aus DB
-     $sql = "SELECT Country FROM Countries";
-     $resultC = mysqli_query($link, $sql);
- $countries = '';
- $countriesBh='';
-                while($rowC= mysqli_fetch_array($resultC)){
-                    if($rowC['Country'] == $country) {
-                    $countries .= '<option value="'.$rowC['Country'].'" selected = "selected">'.$rowC['Country'].'</option>';
-                    }else {
-                    $countries .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
-                    }
-                    
-                    if($rowC['Country'] == $bhCountry) {
-                    $countriesBh .= '<option value="'.$rowC['Country'].'" selected = "selected">'.$rowC['Country'].'</option>';
-                    }else {
-                    $countriesBh .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
-                    }
-                }
+        $sql = "SELECT Country FROM Countries";
+        $resultC = mysqli_query($link, $sql);
+        $countries = '';
+        $countriesBh='';
+        
+        while($rowC= mysqli_fetch_array($resultC)){
+            if($rowC['Country'] == $country) {
+                $countries .= '<option value="'.$rowC['Country'].'" selected = "selected">'.$rowC['Country'].'</option>';
+            }else {
+                $countries .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
+            }
+
+            if($rowC['Country'] == $bhCountry) {
+                $countriesBh .= '<option value="'.$rowC['Country'].'" selected = "selected">'.$rowC['Country'].'</option>';
+            }else {
+                $countriesBh .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
+            }
+        }
                
 
                 
@@ -134,12 +136,7 @@ if (isset($_POST['postStorage'])) {
 
     //Post ID
     $id = filter_input(INPUT_POST, 'postStorage', FILTER_SANITIZE_NUMBER_INT);
-    //$sql= selectProjectById($id);
-    $sql = 'SELECT p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
-        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname AS FirstnameBh, u.Lastname AS LastnameBh,
-        u.Addressline1 AS Addressline1Bh, u.Addressline2 AS Addressline2Bh, u.ZIP AS ZIPBh,
-        u.City AS CityBh, u.Country AS CountryBh, u.Email, u.PhoneNumber, u.MobileNumber FROM Project as p JOIN User
-        as u on p.Fk_IdBauherr = u.IdUser WHERE IdProject ='.$id;
+    $sql= selectProjectById($id);
     $result = mysqli_query($link, $sql);
     
     while ($row = mysqli_fetch_array($result)) {
@@ -312,7 +309,5 @@ if(isset($_POST['userSettings'])) {
                 <input id="10" class="form-control" type="password" name="password2">';
                 
        
-        echo $data;
-    
-    
+        echo $data;   
 }

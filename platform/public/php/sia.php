@@ -1,16 +1,20 @@
+<!--
+*   Unicircuit Plattform
+*   «SIA Baujournal (Modul)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 
 require('../../../library/public/fpdf17/fpdf.php');
-require_once ('../../../library/public/database.inc.php');
+require_once('../../../library/public/database.inc.php');
 
+//Variablendefinition
 $zip;
 $country;
 
 $link=connectDB();
-
-
-    
-    
+ 
 //PDF Generator
 if(isset($_POST['submit']) && isset($_POST['date'])){
     
@@ -51,17 +55,11 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
         $zip= $row['ZIP'];
         $country= $row['Country'];
     }
-    
-
-    
-
-
 
     //fontfamily
     $font='Times';
     $font2='Arial';
 
-    
     //Generator PDF
     $pdf = new FPDF();
     $pdf->AliasNbPages();
@@ -70,7 +68,6 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
 
     //Logo
     $pdf->Image($logo,140,10,50,15);
-
 
     //1. Abschnitt
     $pdf->SetFont($font,'B',18);
@@ -94,30 +91,27 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
     $pdf->Cell(30,8,'Anwesende:',0,0,'L');
     $pdf->SetFont($font,'',12);
     
-
     //Alle Kontaktdaten
     if(isset($present)){
-       foreach ($present as $key => $value) {
+        foreach ($present as $key => $value) {
         
-        $sql=getProjectAddress($value);        
-        $result= mysqli_query($link, $sql);
-       
-        while($row= mysqli_fetch_array($result)){
-            //UTF8 Kodierung der Werte aus der DB (Firma und Name)
-            $cp= iconv('UTF-8', 'windows-1252', $row['Company']);
-            $nm= iconv('UTF-8', 'windows-1252', $row['ProjectCoordinator']);
-            
-            if(!empty($nm)){
-               $pdf->Cell(140,8,'- '.$nm.', '.$cp ,0,1,'L');
-               $pdf->Cell(30,8,'',0,0,'L'); 
-            }else{
-                $pdf->Cell(140,8, '- '.$cp ,0,1,'L');
-                $pdf->Cell(30,8,'',0,0,'L'); 
+            $sql=getProjectAddress($value);        
+            $result= mysqli_query($link, $sql);
+
+            while($row= mysqli_fetch_array($result)){
+                //UTF8 Kodierung der Werte aus der DB (Firma und Name)
+                $cp= iconv('UTF-8', 'windows-1252', $row['Company']);
+                $nm= iconv('UTF-8', 'windows-1252', $row['ProjectCoordinator']);
+
+                if(!empty($nm)){
+                   $pdf->Cell(140,8,'- '.$nm.', '.$cp ,0,1,'L');
+                   $pdf->Cell(30,8,'',0,0,'L'); 
+                }else{
+                    $pdf->Cell(140,8, '- '.$cp ,0,1,'L');
+                    $pdf->Cell(30,8,'',0,0,'L'); 
+                }
             }
-            
         }
-    }
-    
     }else{
         $pdf->SetFont($font,'I',12);
         $pdf->Cell(140,8,'keine Anwesenden'.$cp ,0,1,'L');
@@ -125,11 +119,9 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
     }
     $pdf->ln(); 
     
-
     //4.Abschnitt - Ereignisse
     $pdf->SetFont($font,'B',12);
     $pdf->Cell(30,8,'Ereignisse:',0,0,'L');
-    
     
     if(!empty($date)){
         $sql=selectPostbyDate($projectID, $date);
@@ -220,7 +212,6 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
             $y= $y+$image_height+15;
         }
         
-
     }else{
         $error = iconv('UTF-8', 'windows-1252', 'kein Datum ausgewählt');
         $pdf->SetFont($font,'I',12);
@@ -230,10 +221,9 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
     }
 
     //6.Abschnitt Wetter
-    
-        $pdf->SetY($y);
-        $pdf->SetFont($font,'B',12);
-        $pdf->Cell(30,8,'Wetter:',0,0,'L');
+    $pdf->SetY($y);
+    $pdf->SetFont($font,'B',12);
+    $pdf->Cell(30,8,'Wetter:',0,0,'L');
     
     if(!empty($date)){
         $max= $_POST['maxTemp'];
@@ -245,9 +235,7 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
         $minTemp = iconv('UTF-8', 'windows-1252', $min.'°C');
         $humidity = iconv('UTF-8', 'windows-1252', $humidity.'%');
         $desc = iconv('UTF-8', 'windows-1252', $desc);
-        //$icon = iconv('UTF-8', 'windows-1252', 'sonnig');
 
-        
         $pdf->SetFont($font2,'B',18);
         $pdf->Cell(30,4,$maxTemp,0,0,'C');
         $pdf->Cell(30,4,$minTemp,0,0,'C');
@@ -270,8 +258,6 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
         $pdf->ln();
     }
  
-
-
     //7. Abschnitt - Notizen
     $pdf->SetFont($font,'B',12);
     $pdf->Cell(30,5,'Notizen:',0,0,'L');
@@ -284,11 +270,8 @@ if(isset($_POST['submit']) && isset($_POST['date'])){
         $pdf->MultiCell(140,5,$error,0,1,'');
     }
     
-
     //Download
     $pdf->Output('Baujournal_'.$date.'.pdf', 'D');
-
-    
 }
 
 //Alle Projektdaten holen
@@ -333,12 +316,12 @@ while ($row = mysqli_fetch_array($result)) {
             <input class="btn btn-default createPDF" type="submit" name="submit" value="SIA Baujournal herunterladen"/>
         </form>
         
-        <?php  
+    <?php  
         if(isset($_GET['status'])){
-        $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
-        //Rückgabemeldung für Event-Handling SIA
-               $stat = checkEventSia($response);
-               echo $stat;
-    }
-        ?>
+            $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
+            //Rückgabemeldung für Event-Handling SIA
+            $stat = checkEventSia($response);
+            echo $stat;
+        }
+    ?>
     </div>

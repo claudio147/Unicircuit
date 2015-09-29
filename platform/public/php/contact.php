@@ -1,3 +1,9 @@
+<!--
+*   Unicircuit Plattform
+*   «Kontaktformular für Bauherr (Modul)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/mail.inc.php');
@@ -36,26 +42,18 @@ if(isset($_POST['submit'])){
     }
     
     
-    //check mail
+    //Überprüfung auf Fehleingaben
     if(!checkMailFormat($emArch)){
-        //echo'error email architekt';
         $error=true;
-    }
-    
+    }    
     if(!checkMailFormat($emCust)){
-        //echo'error email bauherr';
         $error=true;
     }
-    
-    // Fehler im Eingabefeld?
     if (empty($subject) || strlen($subject) < 4) {
-        //echo 'error subject';
         $errorSJ = true;
         $error = true;
-    }
-    
+    }   
     if (empty($message) || strlen($message) < 10) {
-        //echo 'error message';
         $errorME = true;
         $error = true;
     }
@@ -74,9 +72,7 @@ if(isset($_POST['submit'])){
     }
     
 }
-
 ?>
-
 
 <div class="col-xs-12 col-md-6">
     <form method="POST" action="contact.php">
@@ -92,8 +88,8 @@ if(isset($_POST['submit'])){
     if(isset($_GET['sent'])){
         $response = filter_input(INPUT_GET, 'sent', FILTER_SANITIZE_NUMBER_INT);
         //Rückgabemeldung für Event-Handling Contact
-               $stat = checkEventContact($response);
-               echo $stat;
+        $stat = checkEventContact($response);
+        echo $stat;
     }
     ?>
 </div>

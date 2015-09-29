@@ -1,3 +1,9 @@
+<!--
+*   Unicircuit Plattform
+*   «Events (Modul)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 require_once ('../../../library/public/database.inc.php');
 
@@ -14,6 +20,7 @@ if(isset($_POST['submit'])){
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
     $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
     
+    //Überprüfung auf Fehleingaben
     if(empty($date) || $date== 0000-00-00){
         $error=true;
     }
@@ -26,7 +33,6 @@ if(isset($_POST['submit'])){
     if(empty($location) || strlen($location)<3){
         $error=true;
     }
-    
     
     if(!isset($error)){
         $sql= newEvent($projectID, $date, $time, $title, $description, $location);
@@ -56,6 +62,7 @@ if(isset($_POST['update'])){
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
     $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
     
+    //Überprüfung auf Fehleingaben
     if(empty($date) || $date== 0000-00-00){
         $error=true;
     }
@@ -69,17 +76,19 @@ if(isset($_POST['update'])){
         $error=true;
     }
     
-    
     if(!isset($error)){
         $sql= updateEvent($eventID, $date, $time, $title, $description, $location);
         $status= mysqli_query($link, $sql);
         if($status){
             header('Location: index.php?id=4&status=2&project='.$projectID);
+            exit();
         }else{
             header('Location: index.php?id=4&status=3&project='.$projectID);
+            exit();
         }
     }else{
         header('Location: index.php?id=4&status=3&project='.$projectID);
+        exit();
     }
 }
 
@@ -95,11 +104,14 @@ if(isset($_POST['delete'])){
         $status = mysqli_query($link, $sql);
         if($status){
             header('Location: index.php?id=4&status=4&project='.$projectID);
+            exit();
         }else{
             header('Location: index.php?id=4&status=5&project='.$projectID);
+            exit();
         }
     }else{
         header('Location: index.php?id=4&status=5&project='.$projectID);
+        exit();
     }
     
 }
@@ -108,8 +120,8 @@ if(isset($_POST['delete'])){
 ?>
 <div class="col-xs-12">
 
-<!--Lightboxen (Modals)-->
-<div class="container modalgroup">
+    <!--Lightboxen (Modals)-->
+    <div class="container modalgroup">
 
     <!-- Trigger the modal with a button -->
 <?php
@@ -121,17 +133,17 @@ if(isset($_POST['delete'])){
         echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newEvent"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
     }
 ?>
-    <!-- Modal Global-->
-    <div class="modal" id="newEvent" role="dialog">
-        <div class="modal-dialog">
+        <!-- Modal Global-->
+        <div class="modal" id="newEvent" role="dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form enctype="multipart/form-data" action="events.php" method="POST">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Event hinzufügen</h4>
-                    </div>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form enctype="multipart/form-data" action="events.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Event hinzufügen</h4>
+                        </div>
                         <div class="modal-body">
                             <div id="input_container">
                                 <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
@@ -141,7 +153,7 @@ if(isset($_POST['delete'])){
                                 <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
                                     <input type="text" name="time" class="form-control" value="08:00">
                                     <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-time"></span>
+                                        <span class="glyphicon glyphicon-time"></span>
                                     </span>
                                 </div>
                                 <label for="title">Titel*</label>
@@ -150,33 +162,30 @@ if(isset($_POST['delete'])){
                                 <textarea id="description" name="description" class="form-control" rows="3"></textarea>
                                 <label for="location">Ort*</label>
                                 <input id="location" type="text" name="location" class="form-control">
-
-
                             </div>
                         </div>
-                    <div class="modal-footer">
-                        <input type="submit" name="submit" value="Speichern" class="btn btn-default"/>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <input type="submit" name="submit" value="Speichern" class="btn btn-default"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                        </div>
+                    </form>
+                </div>
 
             </div>
-
         </div>
-    </div>
     
     
-    <!-- Modal Global-->
-    <div class="modal" id="editEvent" role="dialog">
-        <div class="modal-dialog">
+        <!-- Modal Global-->
+        <div class="modal" id="editEvent" role="dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form enctype="multipart/form-data" action="events.php" method="POST">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Event bearbeiten</h4>
-                    </div>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form enctype="multipart/form-data" action="events.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Event bearbeiten</h4>
+                        </div>
                         <div class="modal-body">
                             <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                             <div id="eventEditContainer">
@@ -185,21 +194,18 @@ if(isset($_POST['delete'])){
 
                             </div>
                         </div>
-                    <div class="modal-footer">
-                        <input type="submit" name="delete" value="Löschen" class="btn btn-default"/>
-                        <input type="submit" name="update" value="Speichern" class="btn btn-default"/>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <input type="submit" name="delete" value="Löschen" class="btn btn-default"/>
+                            <input type="submit" name="update" value="Speichern" class="btn btn-default"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                        </div>
+                    </form>
+                </div>
 
             </div>
-
         </div>
-    </div>
-    
 
-    
-</div>
+    </div>
 
 
 <!-- Fehlermeldungen / Erfolgsmeldungen -->
@@ -207,8 +213,8 @@ if(isset($_POST['delete'])){
     if(isset($_GET['status'])){
         $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
         //Rückgabemeldung für Event-Handling Events
-               $stat = checkEventEvents($response);
-               echo $stat;
+        $stat = checkEventEvents($response);
+        echo $stat;
     }
         
     
@@ -282,20 +288,20 @@ if(isset($_POST['delete'])){
         }
         
         echo'<div class="col-xs-4 col-md-3 event-container">';
-            echo'<div class="event-front">';
-                echo'<p class="event-day">'.$day.'</p>';
-                echo'<p class="event-month">'.$m.'</p>';
-                echo'<p class="event-title">'.$title.'</p>';
-            echo'</div>';
-            echo'<div class="event-back">';
-                echo'<p class="event-desc-title">'.$title.'</p>';
-                echo'<p class="event-desc-date">'.$day.'.'.$month.'.'.$year.', '.$time.' Uhr</p>';
-                echo'<p class="event-desc-address">'.$location.'</p>';
-                echo'<p class="event-desc-desc">'.$description.'</p>';
-                if($usertyp==2 && $statusStorage!=1){
-                    echo'<button type="button" class="btn btn-default btn_event_edit" data-toggle="modal" data-target="#editEvent" value="'.$id.'"><i class="fa fa-pencil-square-o"></i></button>';
-                }
-            echo'</div>';
+        echo'<div class="event-front">';
+        echo'<p class="event-day">'.$day.'</p>';
+        echo'<p class="event-month">'.$m.'</p>';
+        echo'<p class="event-title">'.$title.'</p>';
+        echo'</div>';
+        echo'<div class="event-back">';
+        echo'<p class="event-desc-title">'.$title.'</p>';
+        echo'<p class="event-desc-date">'.$day.'.'.$month.'.'.$year.', '.$time.' Uhr</p>';
+        echo'<p class="event-desc-address">'.$location.'</p>';
+        echo'<p class="event-desc-desc">'.$description.'</p>';
+        if($usertyp==2 && $statusStorage!=1){
+            echo'<button type="button" class="btn btn-default btn_event_edit" data-toggle="modal" data-target="#editEvent" value="'.$id.'"><i class="fa fa-pencil-square-o"></i></button>';
+        }
+        echo'</div>';
         echo'</div>';
 
     }
@@ -305,20 +311,15 @@ if(isset($_POST['delete'])){
         $count++;
         
         echo'<div class="col-xs-4 col-md-3 event-container">';
-            echo'<div class="event-front">';
-                echo'<p class="event-day"></p>';
-                echo'<p class="event-month"></p>';
-                echo'<p class="event-title"></p>';
-            echo'</div>';
+        echo'<div class="event-front">';
+        echo'<p class="event-day"></p>';
+        echo'<p class="event-month"></p>';
+        echo'<p class="event-title"></p>';
+        echo'</div>';
         echo'</div>';
     }
-    
-    echo'</div>';
-
-
+   
+echo'</div>';
 ?>
-
-
-
 
 </div><!-- End include page-->

@@ -1,3 +1,9 @@
+<!--
+*   Unicircuit Plattform
+*   «Galerie (Modul)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/security.inc.php');
@@ -20,7 +26,6 @@ if(isset($_POST['submit'])){
         $idArch= $row['Fk_IdArchitect'];
 
         $uploaddir = '../architects/architect_'.$idArch.'/project_'.$projectID.'/';
-        
         
         //Schlaufe durch alle ausgewählten Files
         for($i=0; $i<$fileCount; $i++){
@@ -45,7 +50,6 @@ if(isset($_POST['submit'])){
             
             $saveS=false;
             $saveL=false;
-            
             
             if($size > 4100000){
                 header('Location: index.php?id=7&status=3&project='.$projectID);
@@ -78,7 +82,6 @@ if(isset($_POST['submit'])){
                     $saveS=false;
                 }
             }
-            
             
             if($image_width_old>1920 || $image_height_old>1920){
                 //Verkleinert das Originalbild auf eine Länge von 1920px
@@ -118,7 +121,7 @@ if(isset($_POST['submit'])){
 
 <div class="col-xs-12 col-md-12">
     
-        <!--Lightboxen (Modals)-->
+    <!--Lightboxen (Modals)-->
     <div class="container modalgroup">
         
         <?php
@@ -142,63 +145,58 @@ if(isset($_POST['submit'])){
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Fotos hochladen</h4>
                         </div>
-                            <div class="modal-body">
-                                <div id="input_container">
-                                    
-                                    <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
-                                    <label for="imgupload">Bildupload</label>                                    
-                                    <input id="imgupload" type="file" name="my_file[]" multiple >
-                                    <p>(Multi-upload möglich, max. 4mb/ Foto)</p><br/>
-                                    <label for="visibility">Sichtbarkeit*</label>
-                                    <div id="visibility" class="radio near">
-                                        <label class="near">
-                                            <input type="radio" name="visible" value="1" checked="checked"/>
-                                            Nur Architekt
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label class="near">
-                                            <input type="radio" name="visible" value="2"/>
-                                            Architekt und Bauherr
-                                        </label>
-                                    </div>
-                                    <label for="comment">Kommentar</label>
-                                    <textarea id="comment" rows="3" name="comment" class="form-control" maxlength="20"></textarea>                              
-
+                        <div class="modal-body">
+                            <div id="input_container">
+                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                                <label for="imgupload">Bildupload</label>                                    
+                                <input id="imgupload" type="file" name="my_file[]" multiple >
+                                <p>(Multi-upload möglich, max. 4mb/ Foto)</p><br/>
+                                <label for="visibility">Sichtbarkeit*</label>
+                                <div id="visibility" class="radio near">
+                                    <label class="near">
+                                        <input type="radio" name="visible" value="1" checked="checked"/>
+                                        Nur Architekt
+                                    </label>
                                 </div>
+                                <div class="radio">
+                                    <label class="near">
+                                        <input type="radio" name="visible" value="2"/>
+                                        Architekt und Bauherr
+                                    </label>
+                                </div>
+                                <label for="comment">Kommentar</label>
+                                <textarea id="comment" rows="3" name="comment" class="form-control" maxlength="20"></textarea>
                             </div>
+                        </div>
                         <div class="modal-footer">
                             <input type="submit" name="submit" value="Bilder hochladen" class="btn btn-default"/>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
                         </div>
                   </form>
-
                 </div>
 
             </div>
         </div>
-
+        
     </div>
         
-    <?php  
+<?php  
     if(isset($_GET['status'])){
         $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
         //Rückgabemeldung für Event-Handling Gallery
-               $stat = checkEventGallery($response);
-               echo $stat;
-        
+        $stat = checkEventGallery($response);
+        echo $stat;
     }
-    ?>
+?>
 
 
     <div id="nanoGallery3">
-    <?php //$projectID=2;
+    <?php
         if($usertyp==2){
             $sql=showAllIMG($projectID);
         }else{
             $sql=showIMG($projectID, 2);
         }
-        //echo $sql;
         $result= mysqli_query($link, $sql);
         while($row= mysqli_fetch_array($result)){
             $imgL= $row['HashNameL'];

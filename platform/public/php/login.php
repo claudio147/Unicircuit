@@ -1,7 +1,10 @@
+<!--
+*   Unicircuit Plattform
+*   «Login (Weiterleitung von Usern)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
-/*
- *  Programmpunkt 1.0 Login / Login für Admin, Architekten und Bauherren
- */
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
@@ -17,90 +20,81 @@ if (isset($_COOKIE[session_name()])) {
   header('Location: login.php'); // Spring zurück auf login.php
 }
 
-
 if (isset($_POST['submit'])) {
-  // Es wird untersucht, ob in der Datenbank ein entsprechender User eingetragen ist, ansonsten wird eine Fehlermeldung 
-  // ausgegeben
-  if (isset($_POST['email']) && isset($_POST['password'])) {
-    // Hole die Benutzer-ID aus der Tabelle user
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
-    $pw = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+    // Es wird untersucht, ob in der Datenbank ein entsprechender User eingetragen ist, ansonsten wird eine Fehlermeldung 
+    // ausgegeben
+    if (isset($_POST['email']) && isset($_POST['password'])) {
+        // Hole die Benutzer-ID aus der Tabelle user
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $pw = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
-    
-    
-    $sql = selectUser($email, $pw);
-    $result = mysqli_query($link, $sql);
-    $row = mysqli_fetch_array($result);
-    if($row['Active'] !=3 && !empty($row['IdUser'])) {
-        $status=0;
-        //Wenn User gesperrt ist
-        
+        $sql = selectUser($email, $pw);
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_array($result);
+
+        //Überprüfung auf Sperrung
+        if($row['Active'] !=3 && !empty($row['IdUser'])) {
+            $status=0;
+        }
+        // Konnte eine ID aufgrund der Login-Daten ermittelt werden?
+        else if(!empty($row['IdUser'])) {
+            // Hier wird die Session das erste Mal initialisiert
+            session_start();
+            // Speichere den PK des Users in der Session
+            $_SESSION['IdUser'] = $row['IdUser'];
+            // Speicher den Username (email) in der Session
+            $_SESSION['UserName'] = $email;
+            //Speichere den entsprechenden Usertype in der Session
+            $_SESSION['UserType'] = $row['Fk_IdUserType'];
+            //Vorbereitung für Speicherung der ProjektId
+            $_SESSION['IdProject'] = '';
+
+            // Beschaffung User Daten
+            $date = date("Y:m:d");
+            $time = date("H:i:s");
+            $sessionId = session_id();
+            $browserTyp = substr($_SERVER['HTTP_USER_AGENT'], 0, 250);
+            $datensatz = $row['IdUser'];
+
+            // Es wird ein Update durchgeführt, da die Benutzdaten stimmen
+            $sql = updateUser($date, $time, $sessionId, $browserTyp, $datensatz);
+            $result = mysqli_query($link, $sql);
+
+
+            // Anhand des UserTyps auf die entsprechende Seite weiterleinten.
+            //1= Archconsulting //2= Architekt //3= Bauherr
+            switch($row['Fk_IdUserType']) {
+                case 1:
+                    header('Location: ../../../rms/public/php/index.php');
+                    break;
+                case 2:
+                    header('Location: projektverwaltung.php');
+                    break;
+                case 3:
+                    //Holt die entsprechende ProjektId des Bauherren
+                    $sql = getProjectId($datensatz);
+                    $result = mysqli_query($link, $sql);
+                    $row = mysqli_fetch_array($result);
+                    //Fügt die Projekt ID der Session hinzu
+                    $_SESSION['IdProject'] = $row['IdProject'];
+
+                    if(!empty($row['IdProject'])) {
+                    header('Location: index.php');
+                    }
+                    break;
+            }
+        } else {
+            $status=1;
+        }  
     }
-    // Konnte eine ID aufgrund der Login-Daten ermittelt werden?
-    else if(!empty($row['IdUser'])) {
-      
-      // Hier wird die Session das erste Mal initialisiert
-      session_start();
-      // Speichere den PK des Users in der Session
-      $_SESSION['IdUser'] = $row['IdUser'];
-      // Speicher den Username (email) in der Session
-      $_SESSION['UserName'] = $email;
-      //Speichere den entsprechenden Usertype in der Session
-      $_SESSION['UserType'] = $row['Fk_IdUserType'];
-      //Vorbereitung für Speicherung der ProjektId
-      $_SESSION['IdProject'] = '';
-      
-      // Beschaffung User Daten
-      $date = date("Y:m:d");
-      $time = date("H:i:s");
-      $sessionId = session_id();
-      $browserTyp = substr($_SERVER['HTTP_USER_AGENT'], 0, 250);
-      $datensatz = $row['IdUser'];
-      
-
-      // Es wird ein Update durchgeführt, da die Benutzdaten stimmen
-      $sql = updateUser($date, $time, $sessionId, $browserTyp, $datensatz);
-      $result = mysqli_query($link, $sql);
-      
-
-      // Anhand des UserTyps auf die entsprechende Seite weiterleinten.
-      //1= Archconsulting //2= Architekt //3= Bauherr
-      switch($row['Fk_IdUserType']) {
-          case 1:
-              header('Location: ../../../rms/public/php/index.php');
-              break;
-          case 2:
-              header('Location: projektverwaltung.php');
-              break;
-          case 3:
-              //Holt die entsprechende ProjektId des Bauherren
-              $sql = getProjectId($datensatz);
-              $result = mysqli_query($link, $sql);
-              $row = mysqli_fetch_array($result);
-              //echo $sql;
-              //Fügt die Projekt ID der Session hinzu
-              $_SESSION['IdProject'] = $row['IdProject'];
-              
-              if(!empty($row['IdProject'])) {
-              header('Location: index.php');
-              }
-              break;
-          
-      }
-      
-    } else {
-        $status=1;
-      //echo '<p style="font-color:red; font-weight:bold">Falscher Benutzername oder Password!</p>';
-    }  
-  }
 }
 
 
 //Funktion wenn User auf Passwort vergessen klickt
 if ($_GET['forgotten'] == 1) {
-    $forgotten = true;
-        
+    $forgotten = true;       
 }
+
 //Passwort Renew eines Users
 if(isset($_POST['pwRenew'])) {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
@@ -115,12 +109,11 @@ if(isset($_POST['pwRenew'])) {
             $sql = updatePassword($newPwHash, $email);
             $result = mysqli_query($link, $sql);
             $sendMail =  createResetPw($email, $fn, $ln, $newPw);
-                if($sendMail == true) {
-                    $status = 2;
-                } else {
-                    $status = 0;
-                }
-        
+            if($sendMail == true) {
+                $status = 2;
+            } else {
+                $status = 0;
+            }
         }   
 }
 ?>
@@ -136,8 +129,8 @@ if(isset($_POST['pwRenew'])) {
         
         <title>Login Unicircuit</title>
         
-        <!-- CSS 3rd Party -->
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <!--CSS 3rd Party-->
+        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <style>
             body{
@@ -193,38 +186,36 @@ if(isset($_POST['pwRenew'])) {
         <div class="container">
             <div class="row">
                 <?php
-                //Ausgabe Login normal
-                if(!isset($forgotten)) {
-                echo '<form action="login.php" method="post">';
-                echo    '<h1 class="brand">Unicircuit</h1>';
-                echo    '<div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4 login-container">';
-                echo       '<h2 class="login-title">Login</h2>';
-                echo        '<label for="1">Email</label>';
-                echo        '<input id="1" type="email" name="email" class="form-control email"/>';
-                echo       ' <label for="2">Passwort</label>';
-                echo        '<input id="2" type="password" name="password" class="form-control"/>';
-                echo        '<div id="signin-btn"><input type="submit" value="Anmelden" name="submit" class="btn btn-default"/><a href="login.php?forgotten=1">Passwort vergessen?</a></div>';
-                echo    '</div>';
-                echo '</form>';  
-                //Ausgabe Passwort vergessen Funktion falls flag(forgotten) auf true ist.
-                } else if($forgotten == true) {
-                echo '<form action="login.php" method="post">';
-                echo    '<h1 class="brand">Unicircuit</h1>';
-                echo    '<div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4 login-container">';
-                echo       '<h2 class="login-title">Passwort Vergessen</h2>';
-                echo        '<label for="1">Email</label>';
-                echo        '<input id="1" type="email" name="email" class="form-control email"/>';
-                echo        '<div id="signin-btn"><input type="submit" value="Passwort zurücksetzen" name="pwRenew" class="btn btn-default"/></div>';
-                echo    '</div>';
-                echo '</form>';  
-                
-                }
-                
-                
+                    //Ausgabe Login normal
+                    if(!isset($forgotten)) {
+                        echo'<form action="login.php" method="post">';
+                        echo'<h1 class="brand">Unicircuit</h1>';
+                        echo'<div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4 login-container">';
+                        echo'<h2 class="login-title">Login</h2>';
+                        echo'<label for="1">Email</label>';
+                        echo'<input id="1" type="email" name="email" class="form-control email"/>';
+                        echo' <label for="2">Passwort</label>';
+                        echo'<input id="2" type="password" name="password" class="form-control"/>';
+                        echo'<div id="signin-btn"><input type="submit" value="Anmelden" name="submit" class="btn btn-default"/><a href="login.php?forgotten=1">Passwort vergessen?</a></div>';
+                        echo'</div>';
+                        echo'</form>';  
+                    //Ausgabe Passwort vergessen Funktion falls flag(forgotten) auf true ist.
+                    } else if($forgotten == true) {
+                        echo'<form action="login.php" method="post">';
+                        echo'<h1 class="brand">Unicircuit</h1>';
+                        echo'<div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4 login-container">';
+                        echo'<h2 class="login-title">Passwort Vergessen</h2>';
+                        echo'<label for="1">Email</label>';
+                        echo'<input id="1" type="email" name="email" class="form-control email"/>';
+                        echo'<div id="signin-btn"><input type="submit" value="Passwort zurücksetzen" name="pwRenew" class="btn btn-default"/></div>';
+                        echo'</div>';
+                        echo'</form>';  
+                    }
                  ?>
             </div>
+            
             <?php
-            if(isset($status)){
+                if(isset($status)){
                     $status;
                     if($status==0){
                         echo'<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie sind noch nicht aktiviert oder gesperrt.<br/>Bitte wenden Sie sich an die Hotline der Archconsulting.</div>';
@@ -234,13 +225,12 @@ if(isset($_POST['pwRenew'])) {
                         echo'<br/><div class="alert alert-success col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie erhalten eine Email mit Ihrem neuen Passwort</div>';
                     }
                 }
-
             ?>
         </div>
         
-        <!-- JS 3rd Party -->
-        <script src="../js/jquery-1.11.1.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
+        <!--JS 3rd Party-->
+        <script src="../js/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
         <script>
             function resizer(){
             var cw = $('.login-container').width();
@@ -253,4 +243,3 @@ if(isset($_POST['pwRenew'])) {
         </script>
     </body>
 </html>
-

@@ -40,6 +40,11 @@ function getCountriesDe() {
     return $sql;
 }
 
+function getCountries(){
+    $sql = "SELECT Country FROM Countries";
+    return $sql;
+}
+
 /*
  * Userverwaltung
  */
@@ -878,6 +883,18 @@ function deleteBauherr($idBauherr){
     
     return $sql;
 }
+
+function selectProjectById($id){
+    $id=filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    $sql = 'SELECT p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
+        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname AS FirstnameBh, u.Lastname AS LastnameBh,
+        u.Addressline1 AS Addressline1Bh, u.Addressline2 AS Addressline2Bh, u.ZIP AS ZIPBh,
+        u.City AS CityBh, u.Country AS CountryBh, u.Email, u.PhoneNumber, u.MobileNumber FROM Project as p JOIN User
+        as u on p.Fk_IdBauherr = u.IdUser WHERE IdProject = '.$id;
+    
+    return $sql;
+}
+
 /*
  * Galerie - Plattform
  */

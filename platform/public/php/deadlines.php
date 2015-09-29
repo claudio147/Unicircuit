@@ -1,3 +1,9 @@
+<!--
+*   Unicircuit Plattform
+*   «Deadlines (Modul)»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+-->
 <?php
 require_once ('../../../library/public/database.inc.php');
 
@@ -45,13 +51,13 @@ if(isset($_POST['update'])){
     $idCraftsman = filter_input(INPUT_POST, 'craftsman', FILTER_SANITIZE_NUMBER_INT);
     $deadlineID= filter_input(INPUT_POST, 'deadlineID', FILTER_SANITIZE_NUMBER_INT);
     
+    //Überprüfung auf Fehleingaben
     if(empty($date) || $date== 0000-00-00){
         $error=true;
     }
     if(empty($title) || strlen($title)<4){
         $error=true;
     }
-    
     
     if(!isset($error)){
         $sql= updateDeadline($deadlineID, $date, $title, $description, $idCraftsman);
@@ -89,7 +95,6 @@ if(isset($_POST['delete'])){
 ?>
 
 <div class="col-xs-12">
-    
     <!--Lightboxen (Modals)-->
     <div class="container modalgroup">
 
@@ -103,17 +108,17 @@ if(isset($_POST['delete'])){
         echo'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newDeadline"><i class="fa fa-plus-circle"></i> hinzufügen</button>';
     } 
 ?>    
-    <!-- Modal Global-->
-    <div class="modal" id="newDeadline" role="dialog">
-        <div class="modal-dialog">
+        <!-- Modal Global-->
+        <div class="modal" id="newDeadline" role="dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form enctype="multipart/form-data" action="deadlines.php" method="POST">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Deadline hinzufügen</h4>
-                    </div>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form enctype="multipart/form-data" action="deadlines.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Deadline hinzufügen</h4>
+                        </div>
                         <div class="modal-body">
                             <div id="input_container">
                                 <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
@@ -137,32 +142,28 @@ if(isset($_POST['delete'])){
                                 </select>
                                 <label for="description">Beschreibung</label>
                                 <textarea id="description" name="description" class="form-control" rows="5"></textarea>
-
                             </div>
                         </div>
-                    <div class="modal-footer">
-                        <input type="submit" name="submit" value="Speichern" class="btn btn-default"/>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-                    </div>
-                </form>
-
+                        <div class="modal-footer">
+                            <input type="submit" name="submit" value="Speichern" class="btn btn-default"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
         </div>
-    </div>
 
 
-    <!-- Modal Global-->
-    <div class="modal" id="editDeadline" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form enctype="multipart/form-data" action="deadlines.php" method="POST">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Deadline bearbeiten</h4>
-                    </div>
+        <!-- Modal Global-->
+        <div class="modal" id="editDeadline" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form enctype="multipart/form-data" action="deadlines.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Deadline bearbeiten</h4>
+                        </div>
                         <div class="modal-body">
                             <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                             <div id="deadlineEditContainer">
@@ -171,29 +172,26 @@ if(isset($_POST['delete'])){
 
                             </div>
                         </div>
-                    <div class="modal-footer">
-                        <input type="submit" name="delete" value="Löschen" class="btn btn-default"/>
-                        <input type="submit" name="update" value="Speichern" class="btn btn-default"/>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-                    </div>
-                </form>
-
+                        <div class="modal-footer">
+                            <input type="submit" name="delete" value="Löschen" class="btn btn-default"/>
+                            <input type="submit" name="update" value="Speichern" class="btn btn-default"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
         </div>
-    </div>
     
     
-    <!-- Modal Global-->
-    <div class="modal" id="showDeadline" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Deadline Details</h4>
-                    </div>
+        <!-- Modal Global-->
+        <div class="modal" id="showDeadline" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Deadline Details</h4>
+                        </div>
                         <div class="modal-body">
                             <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                             <div id="deadlineShowContainer">
@@ -202,35 +200,27 @@ if(isset($_POST['delete'])){
 
                             </div>
                         </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-                    </div>
-
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                        </div>
+                </div>
             </div>
-
         </div>
+        
     </div>
-
-
-
-</div>
  
 <?php
 if(isset($_GET['status'])){
-        $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
-        //Rückgabemeldung für Event-Handling Deadlines
-               $stat = checkEventDeadlines($response);
-               echo $stat;
-    }
-    
+    $response = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_NUMBER_INT);
+    //Rückgabemeldung für Event-Handling Deadlines
+    $stat = checkEventDeadlines($response);
+    echo $stat;
+} 
 ?>
-    
-    
-    
+
     <div class="row deadline-wrapper">
         
-        <?php
-        
+    <?php
         $sql= getAllDeadlines($projectID);
         $result= mysqli_query($link, $sql);
 
@@ -258,7 +248,6 @@ if(isset($_GET['status'])){
                 $class='';
             }
             
-            
             //SQL Abfrage nach Handwerker Name, Firma
             if(!empty($idCraftsman)){
                 $sql2= getProjectAddress($idCraftsman);
@@ -270,24 +259,20 @@ if(isset($_GET['status'])){
                 $company='';
             }
             
-
             if($usertyp==2 && $statusStorage!=1){
                 echo'<button type="button" class="btn btn-default deadline-btn-edit" data-toggle="modal" data-target="#editDeadline" value="'.$id.'">';
             }else{
                 echo'<button type="button" class="btn btn-default deadline-btn-show" data-toggle="modal" data-target="#showDeadline" value="'.$id.'">';
             }
             echo'<div class="col-xs-12 deadline-row '.$class.'">';
-                echo'<div class="deadline-date">'.$date.'</div>';
-                echo'<div class="deadline-title">'.$title.'</div>';
-                echo'<div class="deadline-description hidden-sm hidden-xs">'.$company.'</div>';
-                echo'<i class="fa fa-pencil-square-o"></i>';
+            echo'<div class="deadline-date">'.$date.'</div>';
+            echo'<div class="deadline-title">'.$title.'</div>';
+            echo'<div class="deadline-description hidden-sm hidden-xs">'.$company.'</div>';
+            echo'<i class="fa fa-pencil-square-o"></i>';
             echo'</div> '; 
             echo'</button>';
-        }
-        
-        ?>          
-        
-        
-    </div>
-       
+        }  
+    ?>          
+ 
+    </div>     
 </div><!-- End Include Teil -->
