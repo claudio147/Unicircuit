@@ -1,16 +1,21 @@
 /*
-*** Timeline
+*   Unicircuit Onepager
+*   «script.js / Script für Projektdarstellung»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
 */
+
 window.onresize= dynamicResizer;
 window.onload= dynamicResizer;
 
+//Bildgrössen dynamisch
 function dynamicResizer(){
     var cw = $('.imgLiquid').width();
     cw +=30;
     $('.imgLiquid').css({'height':cw+'px'});
-    //console.log(cw);
 } 
 
+//Formularvalidierung
 function addressCheck() {
     var error = true;
     //überprüft ob das Feld leer ist oder nicht, dementsprechend ändert es die class des eltern div.
@@ -96,20 +101,14 @@ function addressCheck() {
     
     return error;
     }
-    
-    
-    
-// DOCUMENT READY     
+       
 $(document).ready(function(){
-    
 
-     
-
-    
     /* ---------------------------------------------- /*
-    * Touchevents für iOS
+     * Allgemein
     /* ---------------------------------------------- */
-
+    
+    //Touchevents
     $('.event-container').on('touchstart', function(){
         $(this).addClass('select');
     }).on('.event-container', function(){
@@ -133,9 +132,9 @@ $(document).ready(function(){
     today = dd+'/'+mm+'/'+yyyy;
 
     
-    /*
-    ******************* Adressliste
-    */
+    /* ---------------------------------------------- /*
+     * Adressliste
+    /* ---------------------------------------------- */
 
     //Lokale Adressliste (mit Export-Funktion)
     $('#localAddress').DataTable({
@@ -198,8 +197,6 @@ $(document).ready(function(){
         });
     });
     
-    
-
     //Styling Tabellen Buttons (PDF,Excel, CSV)
     $('.dt-button').addClass('btn btn-default btn-xs');
 
@@ -232,13 +229,10 @@ $(document).ready(function(){
         })
     });
 
-    
-    
-   
 
-    /*
-    ******************* Timeline *******
-    */
+    /* ---------------------------------------------- /*
+     * Chronik / Timeline
+    /* ---------------------------------------------- */
 
     //Ajax Loader für Inhalt in Lightbox bei bearbeiten
     $('.btn_postEdit').click(function(){
@@ -248,20 +242,12 @@ $(document).ready(function(){
         }) 
     });   
 
-
-
     //Anzeige von Vorschau- Bildern in Timeline
-    
-
-        function dynamicResizer(){
-            var cw = $('.imgLiquid').width();
-            cw +=30;
-            $('.imgLiquid').css({'height':cw+'px'});
-        } 
-
-        //window.onresize= dynamicResizer, dynamicResizerEvent;
-        //window.onload= dynamicResizer, dynamicResizerEvent;
-
+    function dynamicResizer(){
+        var cw = $('.imgLiquid').width();
+        cw +=30;
+        $('.imgLiquid').css({'height':cw+'px'});
+    } 
 
     //Anzeige der Vorschaubilder mittig ohne Verzerrung
     $(".imgLiquidFill").imgLiquid({
@@ -270,17 +256,10 @@ $(document).ready(function(){
         verticalAlign: "top"
     });
 
-  
-    /*
-     ******************** MAINPAGE ******
-     */
-    
 
-   
-
-    /*
-    ***************** GALLERY ************
-     */
+    /* ---------------------------------------------- /*
+     * Galerie
+    /* ---------------------------------------------- */
     
     function myImgToolbarCustDisplay($elements, item, data) {
         //Ermittlung Usertyp und anzeige von Löschfunktion bei Architekt
@@ -298,14 +277,9 @@ $(document).ready(function(){
                         }) 
                     })
                 }
-            }) 
-        
-        
-        
+            })    
     }
-    
-    
-    
+
     //Darstellung Bildergalerie (Nanogallery- Plugin)
     $("#nanoGallery3").nanoGallery({
         colorScheme: 'none',
@@ -323,9 +297,10 @@ $(document).ready(function(){
     });
     
     
-    /*
-     * ****** Events
-     */
+    /* ---------------------------------------------- /*
+     * Events
+    /* ---------------------------------------------- */
+    
     function dynamicResizerEvent(){
         var cw = $('.col-xs-4').width();
         $('.event-container').css({'height':cw+'px'});
@@ -339,16 +314,10 @@ $(document).ready(function(){
         }) 
     }); 
 
-
-
     
-    
-    
-    
-    
-    /*
-     * ******** Deadlines
-     */
+    /* ---------------------------------------------- /*
+     * Deadlines
+    /* ---------------------------------------------- */
     
     //Ajax Loader für Inhalt in Lightbox bei bearbeiten (Deadlines)
     $('.deadline-btn-edit').click(function(){
@@ -380,9 +349,10 @@ $(document).ready(function(){
     $('.clockpicker').clockpicker();
 
 
-
-
-    //Terminplan
+    /* ---------------------------------------------- /*
+     * Terminplan
+    /* ---------------------------------------------- */
+    
     function setheightSchedule(){
         var height = $( window ).height();
         height= height-200;
@@ -391,9 +361,10 @@ $(document).ready(function(){
 
 
     
-    /*
+    /* ---------------------------------------------- /*
      * Dashboard
-     */
+    /* ---------------------------------------------- */
+    
     function dynamicResizerDashboard(){
         var height = $(window).height();
         
@@ -425,44 +396,34 @@ $(document).ready(function(){
         }
         
     
-
+    //Galerie-Mini
     function dynamicResizerDashGallery(){
-            var gw = $('.dash-gallery').width();
-            var gh = $('.dash-gallery').height();
-            gw=gw-30;
-            gh=gh-30;
-            $('.dash-slick-img').css({'height':gh+'px'});
-            $('.dash-slick-img').css({'width':gw+'px'});
-            
-            var slides=0;
-            if($(window).width()<=768){
-                var slides=1;
-            }else if($(window).width()<=1024){
-                var slides=2;
-            }else{
-                var slides=3;
-            }
-            //Gallery-mini
-            $('.dash-slick-gallery').slick({
-                            slidesToShow: slides,
-                            slidesToScroll: 1,
-                            dots: false,
-                            infinite: false,
-                            arrows: false,
-                            autoplay: true,
-                            autoplaySpeed: 4000,
-                            lazyLoad: 'progressive'
-                        });
+        var gw = $('.dash-gallery').width();
+        var gh = $('.dash-gallery').height();
+        gw=gw-30;
+        gh=gh-30;
+        $('.dash-slick-img').css({'height':gh+'px'});
+        $('.dash-slick-img').css({'width':gw+'px'});
+
+        var slides=0;
+        if($(window).width()<=768){
+            var slides=1;
+        }else if($(window).width()<=1024){
+            var slides=2;
+        }else{
+            var slides=3;
         }
-
-
-
-
-
-
-
-
-
+        $('.dash-slick-gallery').slick({
+                        slidesToShow: slides,
+                        slidesToScroll: 1,
+                        dots: false,
+                        infinite: false,
+                        arrows: false,
+                        autoplay: true,
+                        autoplaySpeed: 4000,
+                        lazyLoad: 'progressive'
+        });
+    }
 
     // Diese Teil löst bei Resize und Onload mehrere Funktionen auf die Quadratische Darstellungen ermöglichen
     window.onresize= resize;
@@ -477,9 +438,9 @@ $(document).ready(function(){
         dynamicResizerDashGallery(); 
     }
     
-    /*
-     * User Settings
-     */
+    /* ---------------------------------------------- /*
+     * User Einstellungen
+    /* ---------------------------------------------- */
     
     //Ajax Loader für User Settings in Lightbox bei bearbeiten
     $('.btn_userSettings').click(function(){
@@ -487,10 +448,5 @@ $(document).ready(function(){
         $.post('../php/ajax_pv.php', {"userSettings":id},function(data){
             $('#editContainer_User').html(data);
         })      
-    });
-    
-    
-    
+    });   
 })//--> END document Ready
-
-

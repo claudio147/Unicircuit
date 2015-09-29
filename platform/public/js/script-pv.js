@@ -1,102 +1,106 @@
 /*
- ******************** Projektverwaltung *******
+*   Unicircuit Onepager
+*   «script-pv.js / Script für Projektverwaltung»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
 */
 
-    function formCheck() {
-        var error = true;
-        //überprüft ob das Feld leer ist oder nicht, dementsprechend ändert es die class des eltern div.
-      if (document.createProject.ProjectNumber.value === "") {
-           var element = document.getElementById("ProNumb");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      }  else {
-          var element = document.getElementById("ProNumb");
-          element.className = "";
-      }
-      if (document.createProject.Title.value === "") {
-           var element = document.getElementById("Title");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      }  else {
-          var element = document.getElementById("Title");
-          element.className = "";
-      }
-      if (document.createProject.ZIP.value === "") {
-          var element = document.getElementById("ZIP");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      } else {
-          var element = document.getElementById("ZIP");
-          element.className = "";
-      }
-      if (document.createProject.City.value === "") {
-          var element = document.getElementById("City");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      } else {
-          var element = document.getElementById("City");
-          element.className = "";
-      }
-      if (document.createProject.BhFirstname.value === "") {
-          var element = document.getElementById("BhFn");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      } else {
-          var element = document.getElementById("BhFn");
-          element.className = "";
-      }
-      if (document.createProject.BhLastname.value === "") {
-          var element = document.getElementById("BhLn");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      } else {
-          var element = document.getElementById("BhLn");
-          element.className = "";
-      }
-      if (document.createProject.BhAddressline1.value === "") {
-          var element = document.getElementById("BhAddress1");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      } else {
-          var element = document.getElementById("BhAddress1");
-          element.className = "";
-      }
-      if (document.createProject.BhZIP.value === "") {
-          var element = document.getElementById("BhZIP");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      } else {
-          var element = document.getElementById("BhZIP");
-          element.className = "";
-      }
-      if (document.createProject.BhCity.value === "") {
-          var element = document.getElementById("BhCity");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      } else {
-          var element = document.getElementById("BhCity");
-          element.className = "";
-      }
-      if (document.createProject.BhEmail.value === "") {
-          var element = document.getElementById("BhEmail");
-            element.classList.add("form-group");
-            element.classList.add("has-error");
-          var error = false;
-      } else {
-          var element = document.getElementById("BhEmail");
-          element.className = "";
-      }
-      return error;
-    }
+//Formularvalidierung
+function formCheck() {
+    var error = true;
+    //überprüft ob das Feld leer ist oder nicht, dementsprechend ändert es die class des eltern div.
+  if (document.createProject.ProjectNumber.value === "") {
+       var element = document.getElementById("ProNumb");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  }  else {
+      var element = document.getElementById("ProNumb");
+      element.className = "";
+  }
+  if (document.createProject.Title.value === "") {
+       var element = document.getElementById("Title");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  }  else {
+      var element = document.getElementById("Title");
+      element.className = "";
+  }
+  if (document.createProject.ZIP.value === "") {
+      var element = document.getElementById("ZIP");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  } else {
+      var element = document.getElementById("ZIP");
+      element.className = "";
+  }
+  if (document.createProject.City.value === "") {
+      var element = document.getElementById("City");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  } else {
+      var element = document.getElementById("City");
+      element.className = "";
+  }
+  if (document.createProject.BhFirstname.value === "") {
+      var element = document.getElementById("BhFn");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  } else {
+      var element = document.getElementById("BhFn");
+      element.className = "";
+  }
+  if (document.createProject.BhLastname.value === "") {
+      var element = document.getElementById("BhLn");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  } else {
+      var element = document.getElementById("BhLn");
+      element.className = "";
+  }
+  if (document.createProject.BhAddressline1.value === "") {
+      var element = document.getElementById("BhAddress1");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  } else {
+      var element = document.getElementById("BhAddress1");
+      element.className = "";
+  }
+  if (document.createProject.BhZIP.value === "") {
+      var element = document.getElementById("BhZIP");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  } else {
+      var element = document.getElementById("BhZIP");
+      element.className = "";
+  }
+  if (document.createProject.BhCity.value === "") {
+      var element = document.getElementById("BhCity");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  } else {
+      var element = document.getElementById("BhCity");
+      element.className = "";
+  }
+  if (document.createProject.BhEmail.value === "") {
+      var element = document.getElementById("BhEmail");
+        element.classList.add("form-group");
+        element.classList.add("has-error");
+      var error = false;
+  } else {
+      var element = document.getElementById("BhEmail");
+      element.className = "";
+  }
+  return error;
+}
 
 
 $(document).ready(function(){
@@ -104,12 +108,14 @@ $(document).ready(function(){
     //Darstellung Teaserbild
     $(".imgLiquidFill").imgLiquid();
    
+   //Bildgrösse Vorschaubild
    function resizerTeaserIMG(){
             var cw = $('.pv-container').width();
             cw = (cw/4)*3;
             $('.project-img-cont').css({'height':cw+'px'});
         }
-        
+    
+    //Ausrichtung Titel Projektverwaltung
     function marginTitlePV(){
         var cw = $('.wrapper-pv').width();
         var cont= $('.container-pv').width();
@@ -120,9 +126,8 @@ $(document).ready(function(){
         }else{
             $('.navbar-text').css({'margin-left':15+'px'});
         }
-        
-        //alert(w);
     }
+    
     window.onresize= resize;
     window.onload= resize;
     
@@ -130,10 +135,7 @@ $(document).ready(function(){
         resizerTeaserIMG();
         marginTitlePV(); 
     }
-   
-        
-        
-        
+  
     //Ajax Loader für Inhalt in Lightbox bei bearbeiten
     $('.btn_postEdit_pv').click(function(){
         var id= $(this).val();
@@ -158,10 +160,8 @@ $(document).ready(function(){
         })      
     });
     
-    
     //Warnmeldung beim Löschen
-    $(function(){       
-        // jQuery UI Dialog   
+    $(function(){         
                  
         $('#dialog').dialog({
             autoOpen: false,
@@ -179,21 +179,11 @@ $(document).ready(function(){
             }
         });
         
-         
         $('form#deleteProject').submit(function(e){
             e.preventDefault();
- 
-            //$("p#dialog-email").html($("input#emailJQ").val());
+
             $('#dialog').dialog('moveToTop');
             $('#dialog').dialog('open');
-            
         });
     });
-    
-
-    
-    
-
 });
-
-

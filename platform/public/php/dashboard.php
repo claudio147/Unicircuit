@@ -49,12 +49,12 @@
                         $date = date('d.m.Y', strtotime($row['Date']));
                         $time= substr($row['Time'],0,5);
                         echo'<div class="post row post-dash">';
-                        echo'<h3>'.$row['Title'].'</h3>';
-                        echo'<p class="date">'.$date.', '.$time.'</p>';
-                        echo'<div class="col-xs-3 imgLiquidFill imgLiquid dash-timeline-img">';
+                        echo'<div class="col-xs-12 col-sm-4 imgLiquidFill imgLiquid dash-timeline-img">';
                         echo'<a href="#" data-featherlight="'.$row['Path'].$row['HashName'].'"><img alt="" src="'.$row['Path'].$row['HashName'].'"/></a>';
                         echo'</div>';
-                        echo'<div class="col-xs-9">';
+                        echo'<div class="col-xs-12 col-sm-8 post-content">';
+                        echo'<h3 class="post-title">'.$row['Title'].'</h3>';
+                        echo'<p class="post-date">'.$date.', '.$time.'</p>';
                         echo'<p>'.$row['Description'].'</p>';
                         echo'</div>';
                         echo'</div>';

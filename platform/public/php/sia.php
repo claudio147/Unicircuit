@@ -1,11 +1,11 @@
-<!--
+<?php
+/*
 *   Unicircuit Plattform
 *   «SIA Baujournal (Modul)»
 *   Version 1.0, 28.09.2015
 *   Verfasser Claudio Schäpper & Luca Signoroni
--->
-<?php
-
+*/
+        
 require('../../../library/public/fpdf17/fpdf.php');
 require_once('../../../library/public/database.inc.php');
 
