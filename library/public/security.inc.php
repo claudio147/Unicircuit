@@ -361,3 +361,30 @@ function checkRegistration($response) {
         }
         return $stat;
 }
+
+//Event-Handling Login Seite
+function checkLogin($response) {
+    $x = $response;
+    switch ($x) {
+        case 5:
+            $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>
+                    Sie sind noch nicht aktiviert oder gesperrt.<br/>Bitte wenden Sie sich an die Hotline der Archconsulting.</div>';
+            break;
+        case 1:
+            $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Falscher Benutzername oder Passwort!</div>';
+            break;
+        case 2:
+            $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie erhalten eine Email mit Ihrem neuen Passwort</div>';
+            break;
+        case 3:
+            $stat = '<br/><div class="alert alert-success col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie wurden erfolgreich aktiviert. Bitte Login Sie sich über den Login ein.</div>';
+            break;
+        case 4:
+            $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>
+                    Entschulding, leider ist die Registration fehlgeschlagen<br>Setzen Sie sich mit unserem Helpdesk in Verbindung.</div>';
+            break;
+            
+    }
+        return $stat;
+}
+                    

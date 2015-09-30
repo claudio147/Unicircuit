@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 
         //Überprüfung auf Sperrung
         if($row['Active'] !=3 && !empty($row['IdUser'])) {
-            $status=0;
+            $response= 5;
         }
         // Konnte eine ID aufgrund der Login-Daten ermittelt werden?
         else if(!empty($row['IdUser'])) {
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
                     break;
             }
         } else {
-            $status=1;
+            $response=1;
         }  
     }
 }
@@ -110,11 +110,21 @@ if(isset($_POST['pwRenew'])) {
             $result = mysqli_query($link, $sql);
             $sendMail =  createResetPw($email, $fn, $ln, $newPw);
             if($sendMail == true) {
-                $status = 2;
+                $response = 2;
             } else {
-                $status = 0;
+                $response = 5;
             }
         }   
+}
+//Ausgabe für Aktivierungsmeldung
+if(isset($_GET['reg'])) {
+    //Setzt Status für Eventhandling
+    $reg = filter_input(INPUT_GET, 'reg', FILTER_SANITIZE_NUMBER_INT);
+    if($reg == 1) {
+        $response = 3;
+    } else {
+        $response = 4;
+    }
 }
 ?>
 
@@ -215,16 +225,9 @@ if(isset($_POST['pwRenew'])) {
             </div>
             
             <?php
-                if(isset($status)){
-                    $status;
-                    if($status==0){
-                        echo'<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie sind noch nicht aktiviert oder gesperrt.<br/>Bitte wenden Sie sich an die Hotline der Archconsulting.</div>';
-                    }else if($status==1){
-                        echo'<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Falscher Benutzername oder Passwort!</div>';
-                    }else if($status==2){
-                        echo'<br/><div class="alert alert-success col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie erhalten eine Email mit Ihrem neuen Passwort</div>';
-                    }
-                }
+                //Login Event-Handling
+                $stat = checkLogin($response);
+                echo $stat;
             ?>
         </div>
         
