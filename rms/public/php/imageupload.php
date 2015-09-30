@@ -54,14 +54,14 @@ if(isset($_POST['upload'])){
         $status= mysqli_query($link, $sql);
 
         if($status){
-            header('Location: index.php?nav=2&statusSave=0');
+            header('Location: index.php?nav=2&statusSave=0&select='.$select);
             exit();
         }else{
-            header('Location: index.php?nav=2&statusSave=1');
+            header('Location: index.php?nav=2&statusSave=1&select='.$select);
             exit();
         }
     }else{
-        header('Location: index.php?nav=2&statusSave=1');
+        header('Location: index.php?nav=2&statusSave=1&select='.$select);
         exit();
     }
 }
@@ -70,6 +70,7 @@ if(isset($_POST['upload'])){
 //Löschfunktion
 if(isset($_POST['delete'])){
     if(!empty($_POST['id'])){
+        $select= $_POST['select'];
         $id=$_POST['id'];
             $link= connectDB();
             $sql= selectFilename($id);
@@ -82,14 +83,14 @@ if(isset($_POST['delete'])){
                 $sql2= deleteImage($id);
                 $status= mysqli_query($link, $sql2);
                 if($status){
-                    header('Location: index.php?nav=2&statusSave=2');
+                    header('Location: index.php?nav=2&statusSave=2&select='.$select);
                     exit();
                 }else{
-                    header('Location: index.php?nav=2&statusSave=3');
+                    header('Location: index.php?nav=2&statusSave=3&select='.$select);
                     exit();
                 }
             }else{
-                header('Location: index.php?nav=2&statusSave=3');
+                header('Location: index.php?nav=2&statusSave=3&select='.$select);
                 exit();
             }
     }
@@ -97,6 +98,7 @@ if(isset($_POST['delete'])){
 
 //Speicherfunktion
 if(isset($_POST['save'])){
+    $select= $_POST['select'];
     $idHTML= $_POST['idHTML'];
     if($idHTML==2 || $idHTML==3){
         $id= $_POST['active'];
@@ -109,7 +111,7 @@ if(isset($_POST['save'])){
         }
         
         if($status2){
-            header('Location: index.php?nav=2&statusSave=0');
+            header('Location: index.php?nav=2&statusSave=0&select='.$select);
             exit();
         }
         
@@ -124,7 +126,7 @@ if(isset($_POST['save'])){
         $status2 = mysqli_query($link, $sql2);
         
         if($status1 && $status2){
-            header('Location: index.php?nav=2&statusSave=0');
+            header('Location: index.php?nav=2&statusSave=0&select='.$select);
             exit();
         }
     }  
@@ -137,6 +139,7 @@ if(isset($_POST['save'])){
     <div class="row">
         <div class="col-xs-12 col-md-6 img-upload">
             <form action="imageupload.php" method="POST" >
+                <input type="hidden" name="select" value="<?php echo $select; ?>"/>
                 <label for="select1">Auswahl Selektion:</label>
                 <select id="select1" class="form-control" name="Selection" onchange="this.form.submit()">
                 <?php
@@ -155,7 +158,7 @@ if(isset($_POST['save'])){
 
             <!--Bildupload-->
             <form enctype="multipart/form-data" action="imageupload.php" method="POST">
-                <input type="hidden" name="select" value="<?php echo $select ?>"/>
+                <input type="hidden" name="select" value="<?php echo $select; ?>"/>
                 <!-- Anzeige des Datei Choosers-->
                 <label for="upload1">Dateiupload auf Server</label>
                 <input id="upload1" name="userfile" type="file"/>
@@ -185,6 +188,7 @@ if(isset($_POST['save'])){
         $result = mysqli_query($link, $sql);
     
        echo'<form action="imageupload.php" method="POST" style="margin-top:15px;">';
+       echo'<input type="hidden" name="select" value="'.$select.'"/>';
        echo'<table class="table table-hover">';
        echo'<tr>';
        echo'<th>Aktiv</th>';
@@ -209,6 +213,7 @@ if(isset($_POST['save'])){
                 echo'<td><input type="radio" name="active" value="'.$row['ID'].'" '.$check.'</td>';
             }
             echo'<form action="imageupload.php" method="POST">';
+            echo'<input type="hidden" name="select" value="'.$select.'"/>';
             echo'<input type="hidden" name="id" value="'.$row['ID'].'"/>';
             echo'<td>'.$row['Date'].'</td>';
             echo'<td>'.$row['Time'].'</td>';

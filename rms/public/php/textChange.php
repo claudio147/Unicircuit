@@ -44,10 +44,10 @@ if(isset($_POST['save'])){
     }
     
     if($error){
-        header('Location: index.php?nav=1&statusSave=0');
+        header('Location: index.php?nav=1&statusSave=0&select='.$select);
         exit();
     }else{
-        header('Location: index.php?nav=1&statusSave=1');
+        header('Location: index.php?nav=1&statusSave=1&select='.$select);
         exit();
     }
 }

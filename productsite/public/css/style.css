@@ -734,7 +734,7 @@ ol li:before {
     counter-increment: item;
     position: absolute;
     margin-right: 100%;
-    right: 10px;//Abstand zwischen Text und Nummer
+    right: 10px;
 }
 
 
@@ -748,7 +748,7 @@ ol li:before {
     color: #FFF;
     font-family: 'HelveticaNeueLTStd-Lt';
     font-size: 12px;
-    line-height: 8px;
+    line-height: 10px;
     margin-top: 20px;
 }
 
@@ -1013,7 +1013,6 @@ ol li:before {
         letter-spacing: 1px;
     }
 
-    //Titel Module
     .modulinhalt>h3{
         font-size: 14px;
         margin-top: 40px;
@@ -1062,7 +1061,6 @@ ol li:before {
     .animation600{
         display: block;
     }
-
 }
 
 @media (max-width: 767px) {
@@ -1190,7 +1188,6 @@ ol li:before {
         transition: 0.6s;
     }
 
-    //Disturber Button
     .disturber{
         display: none;
     }
@@ -1221,7 +1218,6 @@ ol li:before {
         display: block;
         text-align: center;
     }
-
 }
 
 @media (max-width: 480px) {

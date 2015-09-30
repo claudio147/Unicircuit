@@ -1,10 +1,10 @@
-<!--
+<?php
+/*
 *   Unicircuit Onepager
 *   «impressum.php»
 *   Version 1.0, 28.09.2015
 *   Verfasser Claudio Schäpper & Luca Signoroni
--->
-<?php
+*/
 require_once '../../library/public/contentLoaderProductsite.inc.php';
 ?>
 
@@ -37,7 +37,7 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
 <body>
     <!--START Navigation-->
     <header class="header-fix">
-        <nav class="navbar navbar-custom" role="navigation">
+        <nav class="navbar navbar-custom">
             <div class="container">
                 <div class="navbar-header">				
                     <a class="navbar-brand" href="index.php"><?php echo $NA_productName ?></a>
