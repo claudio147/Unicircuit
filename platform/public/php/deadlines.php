@@ -126,7 +126,7 @@ if(isset($_POST['delete'])){
                                 <label for="title">Titel*</label>
                                 <input id="title" type="text" name="title" class="form-control" maxlength="25">
                                 <label for="date">Datum*</label>
-                                <input id="date" type="" name="date" class="form-control datepicker">
+                                <input id="date" type="" name="date" class="form-control datepickerOpen">
                                 <label for="craftsman">Partner</label>
                                 <select name="craftsman" class="form-control" id="craftsman">
                                     <option value="">kein Handwerker</option>

@@ -1,11 +1,16 @@
 <?php
+/*
+*   Redaktionssystem
+*   «addresslist.php / Zeigt Handwerkerliste (Global) an»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/mail.inc.php');
 
 $link= connectDB();
-
 
 if(isset($_POST['submit'])){
     $error=false;
@@ -23,57 +28,32 @@ if(isset($_POST['submit'])){
     $homepage = filter_input(INPUT_POST, 'homepage', FILTER_SANITIZE_STRING);
 
 
-    // Fehler im Eingabefeld?
+    //Fehlerüberpürfung in Eingabefeldern
     if (empty($bkp) || strlen($bkp) > 3) {
-        $errorBKP = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($company) || strlen($company) < 4) {
-        $errorCompany = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($addressline1) || strlen($addressline1) < 5) {
-        $errorAddressline1 = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($zip) || strlen($zip) < 4) {
-        $errorZIP = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($city) || strlen($city) < 4) {
-        $errorCity = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($country)) {
-        $errorCountry = true;
         $error = true;
     }
-
-    // Mailadresse korrekt?
     if (!checkMailFormat($email)) {
-        $errorEmail = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($phone) || strlen($phone) < 10) {
-        $errorPhoneNumber = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($homepage) || strlen($homepage) < 10) {
-        $errorHomepage = true;
         $error = true;
     }
 
@@ -101,9 +81,9 @@ if(isset($_POST['submit'])){
             exit();
         }
     }else{
-            //Update Error
-            header('Location: index.php?nav=4&statusSave=1');
-            exit();
+        //Update Error
+        header('Location: index.php?nav=4&statusSave=1');
+        exit();
     }
 }
 
@@ -145,7 +125,6 @@ if(isset($_POST['save'])){
     $error=false;
     
     $idGlobal;
-
     $bkp = filter_input(INPUT_POST, 'bkp', FILTER_SANITIZE_NUMBER_INT);
     $company = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING);
     $addressline1 = filter_input(INPUT_POST, 'addressline1', FILTER_SANITIZE_STRING);
@@ -158,57 +137,32 @@ if(isset($_POST['save'])){
     $homepage = filter_input(INPUT_POST, 'homepage', FILTER_SANITIZE_STRING);
 
 
-    // Fehler im Eingabefeld?
+    //Fehler in Eingabefeldern abfangen
     if (empty($bkp) || strlen($bkp) > 3) {
-        $errorBKP = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($company) || strlen($company) < 4) {
-        $errorCompany = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($addressline1) || strlen($addressline1) < 5) {
-        $errorAddressline1 = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($zip) || strlen($zip) < 4) {
-        $errorZIP = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($city) || strlen($city) < 4) {
-        $errorCity = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($country)) {
-        $errorCountry = true;
         $error = true;
     }
-
-    // Mailadresse korrekt?
     if (!checkMailFormat($email)) {
-        $errorEmail = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($phoneNumber) || strlen($phoneNumber) < 10) {
-        $errorPhoneNumber = true;
         $error = true;
     }
-
-    // Fehler im Eingabefeld?
     if (empty($homepage) || strlen($homepage) < 10) {
-        $errorHomepage = true;
         $error = true;
     }
 
@@ -240,76 +194,73 @@ if(isset($_POST['save'])){
 ?>
 
 <div class="col-xs-12">
-	<h2 class="modul-title">Adressdatenbank (Handwerker)</h2>
+    <h2 class="modul-title">Adressdatenbank (Handwerker)</h2>
         
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newGlobalAdd">+ Hinzufügen</button>
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newGlobalAdd">+ Hinzufügen</button>
 
 
         <!-- Modal Hinzufügen-->
-          <div class="modal" id="newGlobalAdd" role="dialog">
+        <div class="modal" id="newGlobalAdd" role="dialog">
             <div class="modal-dialog">
 
-              <!-- Modal content-->
-              <div class="modal-content">
-                  <form action="addresslist.php" method="POST">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal">&times;</button>
-                  <h4 class="modal-title">Globale Adresse hinzufügen</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="newAddress">
-                        
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form action="addresslist.php" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#myModal">&times;</button>
+                            <h4 class="modal-title">Globale Adresse hinzufügen</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="newAddress">
 
-                        <h4>Firmendaten</h4>
-                        <label for="1">BKP*</label>
-                        <input id="1" type="text" name="bkp" class="form-control" maxlength="3">
-                        <label for="2">Firma*</label>
-                        <input id="2" type="text" name="company" class="form-control">
-                        <label for="3">Adresszeile 1*</label>
-                        <input id="3" type="text" name="addressline1" class="form-control">
-                        <label for="4">Adresszeile 2</label>
-                        <input id="4" type="text" name="addressline2" class="form-control">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <label for="5" >PLZ*</label>
-                                <input id="5" type="text" name="zip" class="form-control" maxlength="4">
-                            </div>
-                            <div class="col-xs-10">
-                                <label for="6">Ort*</label>
-                                <input id="6" type="text" name="city" class="form-control">
+                                <h4>Firmendaten</h4>
+                                <label for="1">BKP*</label>
+                                <input id="1" type="text" name="bkp" class="form-control" maxlength="3">
+                                <label for="2">Firma*</label>
+                                <input id="2" type="text" name="company" class="form-control">
+                                <label for="3">Adresszeile 1*</label>
+                                <input id="3" type="text" name="addressline1" class="form-control">
+                                <label for="4">Adresszeile 2</label>
+                                <input id="4" type="text" name="addressline2" class="form-control">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <label for="5" >PLZ*</label>
+                                        <input id="5" type="text" name="zip" class="form-control" maxlength="4">
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <label for="6">Ort*</label>
+                                        <input id="6" type="text" name="city" class="form-control">
+                                    </div>
+                                </div>
+                                <label for="7">Land*</label>
+                                <select id="7" name="country" class="form-control">
+                                <?php
+                                    //Auswahl Länderliste aus DB und erstellt die Dropdown Liste.
+                                    $sql = getCountries();
+                                    $resultC = mysqli_query($link, $sql);
+                                    while($rowC= mysqli_fetch_array($resultC)){
+                                        echo'<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
+                                    }
+                                ?>
+                                </select>
+                                <label for="8">Email (Hauptadresse)*</label>
+                                <input id="8" type="email" name="email" class="form-control">
+                                <label for="9">Telefon (Hauptnummer)*</label>
+                                <input id="9" type="text" name="phoneNumber" class="form-control">
+                                <label for="10">Homepage*</label>
+                                <input id="10" type="text" name="homepage" class="form-control">
+
                             </div>
                         </div>
-                        <label for="7">Land*</label>
-                        <select id="7" name="country" class="form-control">
-                        <?php
-                            //Auswahl Länderliste aus DB und erstellt die Dropdown Liste.
-                            $sql = "SELECT Country FROM Countries";
-                            $resultC = mysqli_query($link, $sql);
-                            while($rowC= mysqli_fetch_array($resultC)){
-                                echo'<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>';
-                            }
-                        ?>
-                        </select>
-                        <label for="8">Email (Hauptadresse)*</label>
-                        <input id="8" type="email" name="email" class="form-control">
-                        <label for="9">Telefon (Hauptnummer)*</label>
-                        <input id="9" type="text" name="phoneNumber" class="form-control">
-                        <label for="10">Homepage*</label>
-                        <input id="10" type="text" name="homepage" class="form-control">
-
-                    </div>
+                        <div class="modal-footer">
+                            <input type="submit" name="save" value="Speichern" class="btn btn-default">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <input type="submit" name="save" value="Speichern" class="btn btn-default">
-                  <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Schliessen</button>
-                </div>
-                </form>
-
-              </div>
-
             </div>
-          </div>
-          <!-- Modal End -->
+        </div>
+        <!-- Modal End -->
 
 
         <!-- Modal Hinzufügen-->
@@ -326,7 +277,7 @@ if(isset($_POST['save'])){
                         <div class="modal-body">
                             <div id="address-ajax">
 
-                            <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
+                                <!-- Platzhalter für Inhalt aus Ajax Methode (ajax.php) -->
 
                             </div>
                         </div>
@@ -401,8 +352,6 @@ if(isset($_POST['save'])){
     echo'</tbody>';
     echo'</table>';
 
-
     ?>
-
 
 </div>

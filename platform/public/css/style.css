@@ -1,3 +1,9 @@
+/*
+*   Unicircuit Plattform
+*   «style.css / Stylesheet für gesamte Plattform»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
 @font-face { font-family: 'HelveticaNeueLTStd-Lt';
              src: url('../fonts/HelveticaNeueLTStd-Lt.otf') format('opentype'); }
 @font-face { font-family: 'HelveticaNeueLTStd-Bd';
@@ -830,10 +836,17 @@ button.deadline-btn-show:focus{
 }
 
 .event-front-dash>.event-day{
-    font-size: 50px;
+    font-size: 80px;
     margin-bottom: 0px;
     margin-top: -10px;
     line-height: 1.4;
+}
+
+@media (max-width: 1750px){
+    .event-front-dash>.event-day{
+        font-size: 45px;
+        margin-top: -15px;
+    }
 }
 
 .event-front-dash>.event-month{
@@ -863,6 +876,11 @@ button.deadline-btn-show:focus{
 
 
 @media (max-width: 1024px) {
+    
+    .event-front-dash>.event-day{
+        font-size: 50px;
+    }
+
     .navbar-header {
         float: none;
     }

@@ -1,4 +1,10 @@
 <?php
+/*
+*   Redaktionssystem
+*   «textChange.php / Modul ist für die Verwaltung von Texten auf der Homepage zuständig»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
@@ -9,16 +15,13 @@ $sections= array(1=>'Landing page', 2=>'Header Navigation', 3=>'Animation',
         8=>'Über Uns', 9=>'Kontakt', 10=>'Footer Navigation', 11=>'Impressum',
         12=>'AGB');
 
-
 if (isset($_POST['Selection'])){
     $select=$_POST['Selection'];
-    
     header('Location: index.php?nav=1&select='.$select);
     exit(); 
 }else if(!isset($select)){
     $select=1;
 }
-
 
 if(isset($_POST['save'])){
     $select= $_POST['select'];
@@ -39,6 +42,7 @@ if(isset($_POST['save'])){
             $error=true; 
         }
     }
+    
     if($error){
         header('Location: index.php?nav=1&statusSave=0');
         exit();
@@ -56,7 +60,7 @@ if(isset($_POST['save'])){
     <form action="textChange.php" method="POST" >
         <label for="select1">Auswahl Selektion:</label>
         <select id="select1" name="Selection" onchange="this.form.submit()" class="form-control">
-            <?php
+        <?php
             foreach ($sections as $key => $value) {
                 if($key==$select){
                     echo'<option value='.$key.' selected="selected">'.$value.'</option>';
@@ -64,7 +68,7 @@ if(isset($_POST['save'])){
                     echo'<option value='.$key.'>'.$value.'</option>';
                 }
             }
-            ?>
+        ?>
         </select>
     </form>
     <hr/>
@@ -81,13 +85,12 @@ if(isset($_POST['save'])){
     ?>
     
     <form action="textChange.php" method="POST">
-        <?php
+    <?php
         if (isset($select)){
-            //Datenbankverbindung
             
+            //Datenbankverbindung
             $sql= allContentOfIdHTML($select);
             $result = mysqli_query($link, $sql);
-            
             
             while($row = mysqli_fetch_array($result)){
                 $date= $row['Date'];
@@ -105,13 +108,8 @@ if(isset($_POST['save'])){
             }
             echo'<p>Letzte Änderung: '.$date.', '.$time.'</p>';
         }
-        ?>
-        <input type="hidden" name="select" value="<?php echo $select ?>" />
-        <br /><input type="submit" name="save" value="Speichern" class="btn btn-default"/>
+    ?>
+        <input type="hidden" name="select" value="<?php echo $select ?>" /><br />
+        <input type="submit" name="save" value="Speichern" class="btn btn-default"/>
     </form>
-    
-
-
 </div>
-
-

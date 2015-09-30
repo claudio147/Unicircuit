@@ -1,3 +1,10 @@
+/*
+*   Redaktionssystem
+*   «script.js / Custom JS für Redaktionssystem»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
+
 // DOCUMENT READY
 $(document).ready(function(){
 
@@ -12,7 +19,6 @@ $(document).ready(function(){
             infoFiltered: "(User gesamt: _MAX_)"
         },
     });
-
 
     //Adressliste (mit Export-Funktion)
     $('#addresslist-rms').DataTable({
@@ -62,9 +68,4 @@ $(document).ready(function(){
         width: 600,
         min_height: 300,
     });
-
-
-
-
-
 })

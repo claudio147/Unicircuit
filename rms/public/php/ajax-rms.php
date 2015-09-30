@@ -1,4 +1,11 @@
 <?php
+/*
+*   Redaktionssystem
+*   «ajax-rms.php / Ajax Lader fürs Redaktionssystem»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
+
 session_start();
 require_once ('../../../library/public/database.inc.php');
 
@@ -15,37 +22,37 @@ if(isset($_POST['showUserDetails'])){
 
     while($row= mysqli_fetch_array($result)){
     	switch($row['Fk_IdUserType']){
-    		case 1:
-    			$typ= 'Administrator';
-    			break;
-    		case 2:
-    			$typ= 'Architekt';
-    			break;
-    		case 3:
-    			$typ= 'Bauherr';
-    			break;
-    		default:
-    			$typ= 'Undefiniert';
+            case 1:
+                $typ= 'Administrator';
+                break;
+            case 2:
+                $typ= 'Architekt';
+                break;
+            case 3:
+                $typ= 'Bauherr';
+                break;
+            default:
+                $typ= 'Undefiniert';
     	}
 
     	switch($row['Active']){
-    		case 1:
-    			$status= '<a href="userverwaltung.php?id='.$id.'">aktivieren</a>';
-    			break;
-    		case 2:
-    			$status= 'Aktivierungs Mail verschickt';
-    			$blocked= 'warning';
-    			break;
-    		case 3:
-    			$status= 'Aktiv';
-    			$blocked= 'success';
-    			break;
-    		case 4:
-    			$status= 'User gesperrt';
-    			$blocked= 'danger';
-    			break;
-    		default:
-    			$status= 'Undefiniert';
+            case 1:
+                $status= '<a href="userverwaltung.php?id='.$id.'">aktivieren</a>';
+                break;
+            case 2:
+                $status= 'Aktivierungs Mail verschickt';
+                $blocked= 'warning';
+                break;
+            case 3:
+                $status= 'Aktiv';
+                $blocked= 'success';
+                break;
+            case 4:
+                $status= 'User gesperrt';
+                $blocked= 'danger';
+                break;
+            default:
+                $status= 'Undefiniert';
     	}
 
     	$fn= $row['Firstname'];
@@ -183,7 +190,13 @@ if(isset($_POST['showAddressDetails'])){
         $row2=mysqli_fetch_array($result2);
         $count=$row2['COUNT(*)'];
 
-
+        $sql = "SELECT Country FROM Countries";
+        $resultC = mysqli_query($link, $sql);
+        $countries = '';
+            while($rowC= mysqli_fetch_array($resultC)){
+                    $countries .= '<option value="'.$rowC['Country'].'">'.$rowC['Country'].'</option>'; 
+        }
+    
         $data.= '<input type="hidden" name="idGlobalAddress" value="'.$id.'">
                 <h4>Firmendaten</h4>
                 <label for="1">BKP*</label>
@@ -205,12 +218,9 @@ if(isset($_POST['showAddressDetails'])){
                     </div>
                 </div>
                 <label for="7">Land*</label>
-                <select id="7" name="country" class="form-control">
-                    <option value="Schweiz" selected="selected">Schweiz</option>
-                    <option value="Deutschland">Deutschland</option>
-                    <option value="Österreich">Österreich</option>
-                    <option value="Lichtenstein">Lichtenstein</option>
-                </select>
+                <select id="7" name="country" class="form-control">';
+                $data .= $countries;
+                $data.='</select>
                 <label for="8">Email (Hauptadresse)*</label>
                 <input id="8" type="email" name="email" value="'.$email.'" class="form-control">
                 <label for="9">Telefon (Hauptnummer)*</label>

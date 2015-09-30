@@ -1,4 +1,11 @@
 <?php
+/*
+*   Funktionsbibliothek
+*   «contentLoaderProductsite.inc.php / Holt alle Daten (Content) aus der DB via DB-lib und speichert diese in Variablen»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
+
 require_once 'database.inc.php';
 
 $link=  connectDB();
@@ -12,14 +19,10 @@ while($row = mysqli_fetch_array($result)){
     $data[$row['Title']] = $row['Content'];
 }
 
-
-
-
 /*
  * Setzt alle Inhalte aus DB in die variablen, 
  * welche auf der index.php verwendet werden.
  */
-
 //Landing page
 $LP_company= $data['LP_company'];
 $LP_productName= $data['LP_productName'];

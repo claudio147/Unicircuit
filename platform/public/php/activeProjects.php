@@ -141,7 +141,7 @@ if(isset($_POST['submit'])) {
                     $error1=true;
                 }
                 //Überprüft Dateigrösse
-                if($size > 2100000){
+                if($size > 4100000){
                     $error2=true;
                 }
 
@@ -299,7 +299,7 @@ if(isset($_POST['edit'])) {
             }
 
             //Überprüft Dateigrösse
-            if($size > 2100000){
+            if($size > 4100000){
                 $error2=true;
             }
 

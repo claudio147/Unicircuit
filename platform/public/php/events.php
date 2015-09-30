@@ -149,7 +149,7 @@ if(isset($_POST['delete'])){
                             <div id="input_container">
                                 <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
                                 <label for="date">Datum*</label>
-                                <input id="date" name="date" class="form-control datepicker">
+                                <input id="date" name="date" class="form-control datepickerOpen">
                                 <label for="time">Zeit*</label>
                                 <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
                                     <input type="text" name="time" class="form-control" value="08:00">

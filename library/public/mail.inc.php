@@ -1,14 +1,15 @@
 <?php
 /*
- * Library mit allen Funktionen für E-Mail Versand und Überprüfung
- */
+*   Funktionsbibliothek
+*   «mail.inc.php / Regelt den gesamten Mailversand der Plattform und des Onepagers»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
 
 
 //Einbindung Librarys
 require_once('PHPMailerAutoload.php');
-
 require_once('class.phpmailer.php');
-
 
 
 $mail = new PHPMailer(); // Erstellen eines Objektes PHPMailer
@@ -57,9 +58,6 @@ function checkMailFormat($email) {
   return false;
   }
 }
-
-
-
 
 //Erstellt und versendet Aktivierungsmail
 //Link steht auf Localhost! Muss noch geändert werden
@@ -115,7 +113,6 @@ function createArchRegMail($fn, $ln, $em) {
         }
 }
 
-
 // Erstellt und versendet Kontaktmail von Plattform
 function sendMailtoArch($emArch, $emCust, $fnCust, $lnCust, $subject, $message, $projectNr, $projectName) {
     global $mail;
@@ -148,7 +145,6 @@ function sendMailtoArch($emArch, $emCust, $fnCust, $lnCust, $subject, $message, 
         return true;
         }
 }
-
 
 // Erstellt und versendet Aktivierungsmail für Bauherr
 function createBauhMail($bhEmail, $BhFn, $BhLn, $BhPw, $title) {
@@ -205,7 +201,38 @@ function createBauhResetPw($bhEmail, $bhFn, $bhLn, $BhPw, $title) {
         }
 }
 
-//Mails Onepager
+//Mail für Paswort Reset eines Users
+function createResetPw($email, $fn, $ln, $newPw) {
+    global $mail;
+    $mail ->Subject = 'Passwort Reset ihres Unicircuit Accounts';
+    $address = $email;
+    $mail ->addAddress($address, $fn.' '.$ln);
+        //Nachricht erstellen
+    $mail->msgHTML("
+            <html><head>
+            <title> Passwort Rücksetzunh</title>
+            </head>
+            <body>
+            <p> Guten Tag $Fn $Ln</p>
+            <p> Ihr Passwort für <b>UNICIRCUIT </b> wurde zurückgesetzt,. </p>
+            <p> Sie können sich unter <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/login.php\">Login</a> direkt einloggen mit dem neuen Passwort</p>
+            <p> Ihr Passwort lautet: <b>$newPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
+               <p> Viel Spass wünscht <b> Archconsulting</b> </p>");
+    
+    // Mail an Benutzer/in senden.
+      if(!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+        return false;
+        } else {
+        return true;
+        }
+}
+
+
+
+/***********************************************
+ * MAILS ONEPAGER
+ ***********************************************/
 // Erstellt und versendet Mail an Kunden als Auto-response
 function sendMailCustomer($na, $em) {
     global $mail;
@@ -278,34 +305,3 @@ function sendMailArchcon($na2, $em2, $me, $emCust){
             return true;
         }
 }
-
-//Mail für Paswort Reset eines Users
-function createResetPw($email, $fn, $ln, $newPw) {
-    global $mail;
-    $mail ->Subject = 'Passwort Reset ihres Unicircuit Accounts';
-    $address = $email;
-    $mail ->addAddress($address, $fn.' '.$ln);
-        //Nachricht erstellen
-    $mail->msgHTML("
-            <html><head>
-            <title> Passwort Rücksetzunh</title>
-            </head>
-            <body>
-            <p> Guten Tag $Fn $Ln</p>
-            <p> Ihr Passwort für <b>UNICIRCUIT </b> wurde zurückgesetzt,. </p>
-            <p> Sie können sich unter <a href=\"http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/login.php\">Login</a> direkt einloggen mit dem neuen Passwort</p>
-            <p> Ihr Passwort lautet: <b>$newPw</b> Bitte ändern Sie dieses in ihren Einstellungen nach dem Login </p>
-               <p> Viel Spass wünscht <b> Archconsulting</b> </p>");
-    
-    // Mail an Benutzer/in senden.
-      if(!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
-        return false;
-        } else {
-        return true;
-        }
-}
-
-
-
-

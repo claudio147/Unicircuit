@@ -429,7 +429,7 @@ if(isset($_POST['eventEdit'])){
 
         $data.= '<input type="hidden" name="eventID" value="'.$id.'">
                 <label for="date">Datum*</label>
-                <input id="date" type="date" name="date" class="form-control datepicker" value="'.$dateOrg.'">
+                <input id="date" type="date" name="date" class="form-control datepickerOpen" value="'.$dateOrg.'">
                 <label for="time">Zeit*</label>
                 <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
                     <input type="text" name="time" class="form-control" value="'.$time.'">
@@ -484,7 +484,7 @@ if(isset($_POST['deadlineEdit'])){
                 <label for="title">Titel*</label>
                 <input id="title" type="text" name="title" class="form-control" maxlength="25" value="'.$title.'">
                 <label for="date">Datum*</label>
-                <input id="date" type="date" name="date" class="form-control datepicker" value="'.$dateOrg.'">
+                <input id="date" type="date" name="date" class="form-control datepickerOpen" value="'.$dateOrg.'">
                 <label for="craftsman">Partner</label>
                 <select name="craftsman" class="form-control" id="craftsman">
                     <option value="">kein Handwerker</option>

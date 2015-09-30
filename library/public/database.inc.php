@@ -1,17 +1,18 @@
 <?php
-
-/* 
- * Funktionsbibliothek mit allen Datenbank Abfragen und Änderungen.
- */
-
+/*
+*   Funktionsbibliothek
+*   «database.inc.php / Regelt alle SQL Abfragen der gesamten Plattform / Onepager und RMS»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
 
 /*
+ * Zugangsdaten Server:
  * BN: user04websrv02
  * PW: cfADs12P
  * DB: user04websrv02
  */
-
-        
+      
 function connectDB() {
     $host = 'localhost';
     $user = 'root' ;

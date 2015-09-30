@@ -1,13 +1,13 @@
 <?php
-
 /*
- * Funktionsbibliothek mit Sicherheitsrelevanten funktionen
- *
- */
+*   Funktionsbibliothek
+*   «security.inc.php / Beinhaltet alle externen Funktionen der Plattform und des RMS»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
 
 //Funktion generiert ein Passwort
 function generatePassword() {
-
 
     $alpha = "abcdefghikmnopqrstuvqxyz";
 

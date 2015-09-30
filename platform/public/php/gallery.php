@@ -15,6 +15,7 @@ if(isset($_POST['submit'])){
     $projectID= filter_input(INPUT_POST, 'projectID', FILTER_SANITIZE_NUMBER_INT);
     //Überprüfung ob mind. 1 File ausgewählt wurde
     if($_FILES['my_file']['error'][0]!=4){ 
+        
         $files= $_FILES['my_file'];
         $fileCount= count($files['name']);
         $comment= filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
@@ -126,7 +127,7 @@ if(isset($_POST['submit'])){
     <div class="container modalgroup">
         
         <?php
-            $sql=getStatusProject($projectID);
+            $sql= getStatusProject($projectID);
             $result=  mysqli_query($link, $sql);
             $row=  mysqli_fetch_array($result);
             $statusStorage=$row['Storage'];

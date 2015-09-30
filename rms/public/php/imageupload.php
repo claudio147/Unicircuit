@@ -1,4 +1,10 @@
 <?php
+/*
+*   Redaktionssystem
+*   «imageupload.php / Modul für die Bildverwaltung auf der Homepage»
+*   Version 1.0, 28.09.2015
+*   Verfasser Claudio Schäpper & Luca Signoroni
+*/
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
@@ -121,10 +127,7 @@ if(isset($_POST['save'])){
             header('Location: index.php?nav=2&statusSave=0');
             exit();
         }
-    }
-    
-    
-    
+    }  
 }
 ?>
 
@@ -152,8 +155,6 @@ if(isset($_POST['save'])){
 
             <!--Bildupload-->
             <form enctype="multipart/form-data" action="imageupload.php" method="POST">
-                <!-- Grössenbegrenzung seitens HTML. NICHT SICHER!!!-->
-                <input type="hidden" name="MAX_FILE_SIZE" value="2100000"/>
                 <input type="hidden" name="select" value="<?php echo $select ?>"/>
                 <!-- Anzeige des Datei Choosers-->
                 <label for="upload1">Dateiupload auf Server</label>
@@ -164,7 +165,8 @@ if(isset($_POST['save'])){
             </form>
         </div>
     </div>
-    <?php  
+
+<?php  
     
     if(isset($status)){
         if($status==1){
@@ -221,6 +223,5 @@ if(isset($_POST['save'])){
         echo'<input type="submit" name="save" value="Speichern" class="btn btn-default"/>';
         echo'</form>';
     }
-    ?>
-    
+?>  
 </div>
