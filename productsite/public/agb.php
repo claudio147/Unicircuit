@@ -88,8 +88,8 @@ require_once '../../library/public/contentLoaderProductsite.inc.php';
                 </div>
                 <div class="col-sm-3">
                     <p class="footer-title">Unicircuit</p>
-                    <p><a href="">Login</a></p>
-                    <p><a href="">Registration</a></p>		
+                    <p><a href="http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/login.php" target="_blank">Login</a></p>
+                    <p><a href="http://palmers.dynathome.net:8024/diplomarbeit/platform/public/php/registration.php" target="_blank">Registration</a></p>		
                 </div>
                 <div class="col-sm-3">
                     <p class="footer-title">Rechtliches</p>

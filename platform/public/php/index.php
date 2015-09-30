@@ -1,10 +1,10 @@
-<!--
+<?php
+/*
 *   Unicircuit Plattform
 *   «Index (Controller)»
 *   Version 1.0, 28.09.2015
 *   Verfasser Claudio Schäpper & Luca Signoroni
--->
-<?php
+*/
 
 //Session starten oder wiederaufnehmen
  session_start();

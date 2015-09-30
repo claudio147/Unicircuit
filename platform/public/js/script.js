@@ -264,11 +264,11 @@ $(document).ready(function(){
     function myImgToolbarCustDisplay($elements, item, data){
         //Ermittlung Usertyp und anzeige von Löschfunktion bei Architekt
         $.post('../php/ajax.php', {"getUserTyp":'2'},function(usertyp){
-                if(usertyp!=2){
+                if(usertyp==2){
                     // Custom Element mit Lösch-Button
                     $elements.html('<i id="delIMG" data-img="'+item.GetID()+'" class="fa fa-trash-o fa-2x"></i>');
                     
-                    //Funktion die Bilder löscht (in DB und in Verzeichnis
+                    //Funktion die Bilder löscht (in DB und in Verzeichnis)
                     $('#delIMG').click(function(){
                         var id= $(this).attr('data-img');
                         $.post('../php/ajax.php', {"delIMG":id},function(projectID){
@@ -337,6 +337,9 @@ $(document).ready(function(){
     
     $('.datepicker').datepicker({
         dateFormat: "dd.mm.yy",
+        firstDay: 1,
+        minDate: '-60d',
+        maxDate: '0',
         monthNames: ['Januar','Februar','März','April','Mai','Juni',
         'Juli','August','September','Oktober','November','Dezember'],
         monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',

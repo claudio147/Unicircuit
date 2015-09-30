@@ -1,10 +1,11 @@
-<!--
+<?php
+/*
 *   Unicircuit Plattform
 *   «Deadlines (Modul)»
 *   Version 1.0, 28.09.2015
 *   Verfasser Claudio Schäpper & Luca Signoroni
--->
-<?php
+*/
+        
 require_once ('../../../library/public/database.inc.php');
 
 $link= connectDB();

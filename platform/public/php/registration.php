@@ -1,10 +1,10 @@
-<!--
+<?php
+/*
 *   Unicircuit Plattform
 *   «Registration»
 *   Version 1.0, 28.09.2015
 *   Verfasser Claudio Schäpper & Luca Signoroni
--->
-<?php
+*/
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
@@ -34,6 +34,7 @@ if (isset($_POST['submit'])) {
     $em = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $p1 = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
     $p2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
+    $agb= filter_input(INPUT_POST, 'agb', FILTER_SANITIZE_NUMBER_INT);
 
     //Fehlerüberprüfung
     if (empty($fn) || strlen($fn) < 2) {
@@ -75,6 +76,10 @@ if (isset($_POST['submit'])) {
     if (($p1 != $p2) || (strlen($p1) < 8)) {
         $errorPW = true;
         $error = true;
+    }
+    if($agb!=1){
+        $errorAGB=true;
+        $error=true;
     }
 
     // Prüfen, ob ein Fehler im Eingabeformular seitens Benutzer/in erkannt wurde
@@ -199,27 +204,27 @@ if (isset($_POST['submit'])) {
                     <div class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 registration-container">
                         <h2 class="registration-title">Registration</h2>
 
-                        <label for="1">Vorname</label>
+                        <label for="1">Vorname*</label>
                         <input id="1" class="form-control" type="text" name="firstname" value="<?php echo $fn; ?>">
-                        <label for="2">Nachname</label>
+                        <label for="2">Nachname*</label>
                         <input id="2" class="form-control" type="text" name="lastname" value="<?php echo $ln; ?>">
-                        <label for="3">Firma</label>
+                        <label for="3">Firma*</label>
                         <input id="3" class="form-control" type="text" name="company" value="<?php echo $co; ?>">
-                        <label for="4">Strasse und Nr.</label>
+                        <label for="4">Strasse und Nr.*</label>
                         <input id="4" class="form-control" type="text" name="adressline1" value="<?php echo $a1; ?>">
                         <label for="5">Adresszusatz</label>
                         <input id="5" class="form-control" type="text" name="adressline2" value="<?php echo $a2; ?>">
                         <div class="row">
                           <div class="col-xs-2">
-                            <label for="6">PLZ</label>
+                            <label for="6">PLZ*</label>
                             <input id="6" type="text" name="zip" value="<?php echo $zip; ?>" class="form-control">
                           </div>
                           <div class="col-xs-10">
-                            <label for="7">Ort</label>
+                            <label for="7">Ort*</label>
                             <input id="7" type="text" name="city" value="<?php echo $ci; ?>" class="form-control">
                           </div>
                         </div>
-                        <label for="8">Land</label>
+                        <label for="8">Land*</label>
                         <select id="8" name="country" class="form-control">
                             <?php 
                                 $link=connectDB();
@@ -231,17 +236,18 @@ if (isset($_POST['submit'])) {
                                 }
                             ?>
                         </select>
-                        <label for="9">Email</label>
+                        <label for="9">Email*</label>
                         <input id="9" class="form-control" type="text" name="email" value="<?php echo $em; ?>">
-                        <label for="10">Telefon</label>
+                        <label for="10">Telefon*</label>
                         <input id="10" class="form-control" type="text" name="PhoneNumber" value="<?php echo $pn; ?>">
                         <label for="11">Mobil</label>
                         <input id="11" class="form-control" type="text" name="MobileNumber" value="<?php echo $mn; ?>">
-                        <label for="12">Passwort</label>
+                        <label for="12">Passwort*</label>
                         <input id="12" class="form-control" type="password" name="password1" id="p1" value="<?php echo $p1; ?>">
-                        <label for="13">Passwort wiederholen</label>
+                        <label for="13">Passwort wiederholen*</label>
                         <input id="13" class="form-control" type="password" name="password2" id="p2" value="<?php echo $p2; ?>">
-                        <br/><input id="btn-reg" class="btn btn-default" type="submit" name="submit">
+                        <input type="checkbox" name="agb" value="1" <?php if($agb==1){echo'checked="checked"';} ?>> AGB's gelesen und akzeptiert (<a href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/agb.php" target="_blank">link agb</a>)
+                        <br/><br/><input id="btn-reg" class="btn btn-default" type="submit" name="submit">
                     </div>
                 </form>    
             </div>
