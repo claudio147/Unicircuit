@@ -800,7 +800,7 @@ ol li:before {
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-nav > li > a,
 .navbar-custom .navbar-nav .dropdown-menu > li > a {
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 2px;
     color: #fff;
     padding-bottom: 0px;
@@ -994,7 +994,6 @@ ol li:before {
  * Media Queries
 /* ---------------------------------------------- */
 @media (min-width: 993px) and (max-width: 1200px){
-
     .modulinhalt>h3{
         font-size: 14px !important;
         margin-top: 20px;
@@ -1006,8 +1005,15 @@ ol li:before {
 
 }
 
+@media (min-width: 993px){
+    .intro>h1 {
+        font-size: 80px !important;
+    }
+}
+
 @media (min-width: 768px) and (max-width: 992px){
     .navbar-custom .navbar-nav > li > a{
+        font-size: 12px;
         padding-left: 10px;
         padding-right: 10px;
         letter-spacing: 1px;
@@ -1071,21 +1077,22 @@ ol li:before {
 
     .navbar-custom .navbar-nav > li > a,
     .navbar-custom .navbar-nav .dropdown-menu > li > a {
-        padding-bottom: 10px;
-        padding-top: 10px;
-        background-color: #f0f0f0;
-        color: #000;
+        padding-bottom: 15px;
+        padding-top: 15px;
+        background-color: #373d42;
+        color: #f0f0f0;
     }
 
     .navbar-custom .nav li.active,
     .navbar-custom .nav li a:hover,
     .navbar-custom .nav li a:focus,
     .navbar-custom .navbar-nav > li.active a {
-        background: #f0f0f0;
+        background: #9fcd35;
+        color: #000;
     }
 
     div #custom-colapse .collapse .navbar-collapse{
-        background-color: #f0f0f0;
+        background-color: #373d42;
     }
 
     .navbar-nav{
@@ -1093,7 +1100,7 @@ ol li:before {
     }
 
     .navbar-collapse{
-        border-top: 0px;
+        border-top: 1px solid #666;
     }
 
     .navbar-toggle{
@@ -1221,6 +1228,10 @@ ol li:before {
 }
 
 @media (max-width: 480px) {
+        
+    .pfblock {
+    padding: 70px 0 90px;
+    }
 
     h1 {
         font-size: 48px;
@@ -1268,6 +1279,7 @@ ol li:before {
 
     .modul-description>p{
         font-size: 12px;
+        margin-top: 20px;
     }
 
 }

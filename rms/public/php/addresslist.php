@@ -331,7 +331,7 @@ if(isset($_POST['save'])){
     echo'<th>Telefon</th>';
     echo'<th>Email</th>';
     echo'<th>Homepage</th>';
-    echo'<th></th>';
+    echo'<th class="all"></th>';
     echo'</tr>';
     echo'</thead>';
     echo'<tbody>';

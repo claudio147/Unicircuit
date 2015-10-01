@@ -189,9 +189,11 @@ $lnCust=$row['Lastname'];
     <script src="../js/bootstrap.min.js" type="text/javascript"></script>
     <script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="//cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js" type="text/javascript"></script>
     <script src="//cdn.datatables.net/buttons/1.0.0/js/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="//cdn.datatables.net/buttons/1.0.0/js/buttons.html5.min.js" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js" type="text/javascript"></script>
+    <script src="../js/jquery.nicescroll.min.js" type="text/javascript"></script>
 
     <!--JS Custom-->
     <script type="text/javascript" src="../js/script.js"></script>

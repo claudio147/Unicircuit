@@ -274,7 +274,7 @@ if(isset($_POST['edit'])) {
     if(!isset($error)){
         //Update wenn auch ein neues Bild hochgeladen wurde
         if(!empty($_FILES['userfile']['name'])){
-
+            
             $uploaddir = '../architects/architect_'.$id.'/project_'.$proId2.'/' ;
             $tempna= $_FILES['userfile']['tmp_name'];
             $orgname= $_FILES['userfile']['name'];
@@ -462,7 +462,7 @@ if(isset($_POST['editUser'])) {
         }
 
         //Überprüft Dateigrösse
-        if($size > 2100000){
+        if($size > 4100000){
             $error2=true;
         }
 

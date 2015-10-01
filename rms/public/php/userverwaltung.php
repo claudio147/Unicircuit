@@ -227,7 +227,7 @@ echo'<th>PLZ</th>';
 echo'<th>Land</th>';
 echo'<th>Email</th>';
 echo'<th>Status</th>';
-echo'<th></th>';
+echo'<th class="all"></th>';
 echo'</tr>';
 echo'</thead>';
 
