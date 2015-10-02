@@ -6,6 +6,22 @@
 *   Verfasser Claudio Schäpper & Luca Signoroni
 */
 
+require_once ('../../../library/public/database.inc.php');
+
+//Funktion zur Session Überprüfüng, liefert true oder false zurück
+function checkSessionId($idUser, $sessionId) {
+    $link = connectDB();
+    $sql = getSessionId($idUser);
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    
+    if($sessionId == $row['SessionId']) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 //Funktion generiert ein Passwort
 function generatePassword() {
 
