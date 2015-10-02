@@ -478,7 +478,7 @@ function checkRMSUser($response) {
         return $stat;
 }
 
-//Event-Handling RMS Userverwaltung
+//Event-Handling RMS Bildverwaltung
 function checkRMSimg($response) {
     $x = $response;
     switch ($x) {
@@ -498,7 +498,7 @@ function checkRMSimg($response) {
         return $stat;
 }
 
-//Event-Handling RMS Userverwaltung
+//Event-Handling RMS Textverwaltung
 function checkRMStext($response) {
     $x = $response;
     switch ($x) {
