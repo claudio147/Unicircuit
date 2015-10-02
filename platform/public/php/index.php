@@ -46,6 +46,18 @@ if(isset($_SESSION['UserType'])){
     }else if($usertyp==3){
         if(isset($_SESSION['IdProject'])){
             $projectID= $_SESSION['IdProject'];
+            
+            if(!isset($_POST['nav'])){//Bei einem Refresh über den Browser wird die Navigation 1 (Home) aufgerufen
+                if(isset($_SESSION['LastNav'])){
+                    $_POST['nav']=$_SESSION['LastNav'];
+                }else{
+                    $_POST['nav']=1;
+                    //Setzt Menüpunkt Home auf aktiv
+                    $active1='active';
+                    //Collapse Menü (Termine: geschlossen)
+                    $collapse='collapse';
+                }
+            }
         }else{
             //keine Projekt ID = kein Zugriff
             header('Location: login.php?denied=1');
@@ -208,7 +220,6 @@ if(isset($_POST['goto'])){//Architekt (1. Aufruf)
     }else if (isset($_SESSION['LastProjectID'])){
         $projectID=$_SESSION['LastProjectID'];
     }
-    
     
     //Überprüf welcher Menüpunkt ausgewählt ist
     if(isset($_POST['nav'])){
