@@ -38,47 +38,48 @@ if (isset($_POST['submit'])) {
 
     //Fehlerüberprüfung
     if (empty($fn) || strlen($fn) < 2) {
-        $errorFN = true;
+        $errorFN = 'has-error';
         $error = true;
     }
     if (empty($ln) || strlen($ln) < 2) {
-        $errorLN = true;
+        $errorLN = 'has-error';
         $error = true;
     }
     if (empty($co) || strlen($co) < 2) {
-        $errorCO = true;
+        $errorCO = 'has-error';
         $error = true;
     }
     if (empty($a1) || strlen($a1) < 5) {
-        $errorA1 = true;
+        $errorA1 = 'has-error';
         $error = true;
     }
     if (empty($zip) || strlen($zip) < 4) {
-        $errorZIP = true;
+        $errorZIP = 'has-error';
         $error = true;
     }
     if (empty($ci) || strlen($ci) < 4) {
-        $errorCi = true;
+        $errorCi = 'has-error';
         $error = true;
     }
     if (empty($cn) || strlen($cn) < 2) {
-        $errorCn = true;
+        $errorCn = 'has-error';
         $error = true;
     }
     if (empty($pn) || strlen($pn) < 2) {
-        $errorPN = true;
+        $errorPN = 'has-error';
         $error = true;
     }
     if (!checkMailFormat($em)) {
-        $errorEM = true;
+        $errorEM = 'has-error';
         $error = true;
     }
     if (($p1 != $p2) || (strlen($p1) < 8)) {
-        $errorPW = true;
+        $errorPW = 'has-error';
+        $pwmessage='<br/><span id="helpBlock" class="help-block">Das Passwort muss aus mind. 8 Zeichen bestehen</span>';
         $error = true;
     }
     if($agb!=1){
-        $errorAGB=true;
+        $errorAGB= 'has-error';
         $error=true;
     }
 
@@ -203,28 +204,37 @@ if (isset($_POST['submit'])) {
                     ?>
                     <div class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 registration-container">
                         <h2 class="registration-title">Registration</h2>
-
-                        <label for="1">Vorname*</label>
+                        
+                        <div class="<?php echo $errorFN; ?>">
+                        <label for="1" class="control-label">Vorname*</label>
                         <input id="1" class="form-control" type="text" name="firstname" value="<?php echo $fn; ?>">
-                        <label for="2">Nachname*</label>
+                        </div>
+                        <div class="<?php echo $errorLN; ?>">
+                        <label for="2" class="control-label">Nachname*</label>
                         <input id="2" class="form-control" type="text" name="lastname" value="<?php echo $ln; ?>">
-                        <label for="3">Firma*</label>
+                        </div>
+                        <div class="<?php echo $errorCO; ?>">
+                        <label for="3" class="control-label">Firma*</label>
                         <input id="3" class="form-control" type="text" name="company" value="<?php echo $co; ?>">
-                        <label for="4">Strasse und Nr.*</label>
+                        </div>
+                        <div class="<?php echo $errorA1; ?>">
+                        <label for="4" class="control-label">Strasse und Nr.*</label>
                         <input id="4" class="form-control" type="text" name="adressline1" value="<?php echo $a1; ?>">
-                        <label for="5">Adresszusatz</label>
+                        </div>
+                        <label for="5" class="control-label">Adresszusatz</label>
                         <input id="5" class="form-control" type="text" name="adressline2" value="<?php echo $a2; ?>">
                         <div class="row">
-                          <div class="col-xs-2">
-                            <label for="6">PLZ*</label>
+                          <div class="col-xs-2 <?php echo $errorZIP; ?>">
+                            <label for="6" class="control-label">PLZ*</label>
                             <input id="6" type="text" name="zip" value="<?php echo $zip; ?>" class="form-control">
                           </div>
-                          <div class="col-xs-10">
-                            <label for="7">Ort*</label>
+                          <div class="col-xs-10 <?php echo $errorCi; ?>">
+                            <label for="7" class="control-label">Ort*</label>
                             <input id="7" type="text" name="city" value="<?php echo $ci; ?>" class="form-control">
                           </div>
                         </div>
-                        <label for="8">Land*</label>
+                        <div>
+                        <label for="8" class="control-label">Land*</label>
                         <select id="8" name="country" class="form-control">
                             <?php 
                                 $link=connectDB();
@@ -236,17 +246,31 @@ if (isset($_POST['submit'])) {
                                 }
                             ?>
                         </select>
-                        <label for="9">Email*</label>
+                        </div>
+                        <div class="<?php echo $errorEM; ?>">
+                        <label for="9" class="control-label">Email*</label>
                         <input id="9" class="form-control" type="text" name="email" value="<?php echo $em; ?>">
-                        <label for="10">Telefon*</label>
+                        </div>
+                        <div class="<?php echo $errorPN; ?>">
+                        <label for="10" class="control-label">Telefon*</label>
                         <input id="10" class="form-control" type="text" name="PhoneNumber" value="<?php echo $pn; ?>">
-                        <label for="11">Mobil</label>
+                        </div>
+                        <div>
+                        <label for="11" class="control-label">Mobil</label>
                         <input id="11" class="form-control" type="text" name="MobileNumber" value="<?php echo $mn; ?>">
-                        <label for="12">Passwort*</label>
+                        </div>
+                        <div class="<?php echo $errorPW; ?>">
+                        <?php echo $pwmessage; ?>
+                        <label for="12" class="control-label">Passwort*</label>
                         <input id="12" class="form-control" type="password" name="password1" id="p1" value="<?php echo $p1; ?>">
-                        <label for="13">Passwort wiederholen*</label>
-                        <input id="13" class="form-control" type="password" name="password2" id="p2" value="<?php echo $p2; ?>">
-                        <input type="checkbox" name="agb" value="1" <?php if($agb==1){echo'checked="checked"';} ?>> AGB's gelesen und akzeptiert (<a href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/agb.php" target="_blank">link agb</a>)
+                        </div>
+                        <div class="<?php echo $errorPW; ?>">
+                        <label for="13" class="control-label">Passwort wiederholen*</label>
+                        <input id="13" class="form-control" type="password" name="password2" id="p2" value="<?php echo $p2; ?>" aria-describedby="helpBlock"><br/>
+                        </div>
+                        <div class="<?php echo $errorAGB; ?>">
+                        <input id="14" type="checkbox" name="agb" value="1" <?php if($agb==1){echo'checked="checked"';} ?>>  <label for="14" class="control-label"> AGB's gelesen und akzeptiert</label> (<a href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/agb.php" target="_blank">link agb</a>)
+                        </div>
                         <br/><br/><input id="btn-reg" class="btn btn-default" type="submit" name="submit">
                     </div>
                 </form>    

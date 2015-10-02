@@ -73,26 +73,30 @@ if(isset($_POST['block'])){
 
 //Reaktiviert einen User der gesperrt ist
 if(isset($_POST['activate'])){
-  $stat= $_POST['status'];
-  $usID= $_POST['userID'];
-  if($stat==4){
-    //User aktivieren
-    $sql= reactivateUser($usID);
-    $status= mysqli_query($link, $sql);
-    if($status){
-      //Aktivieren erfolgreich
-      header('Location: index.php?nav=3&statusSave=0');
-      exit();
+    $stat= $_POST['status'];
+    $usID= $_POST['userID'];
+    if($stat==4){
+        //User aktivieren
+        $sql= reactivateUser($usID);
+        $status= mysqli_query($link, $sql);
+        if($status){
+          //Aktivieren erfolgreich
+          header('Location: index.php?nav=3&statusSave=0');
+          exit();
+        }else{
+          //Aktivieren fehlgeschlagen
+          header('Location: index.php?nav=3&statusSave=5');
+          exit();
+        }
+    }else if($stat==1){
+        //Aktivieren fehlgeschlagen
+        header('Location: userverwaltung.php?id='.$usID);
+        exit();
     }else{
-      //Aktivieren fehlgeschlagen
-      header('Location: index.php?nav=3&statusSave=5');
-      exit();
+        //Fehlermeldung: User ist nicht gesperrt
+        header('Location: index.php?nav=3&statusSave=6');
+        exit();
     }
-  }else{
-    //Fehlermeldung: User ist nicht gesperrt
-    header('Location: index.php?nav=3&statusSave=6');
-    exit();
-  }
 }
 
 //Löscht einen User
