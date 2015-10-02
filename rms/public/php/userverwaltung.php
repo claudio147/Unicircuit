@@ -110,8 +110,8 @@ if(isset($_POST['delete'])){
         $sql=getAllProjectsByArch($usID);
         $result=mysqli_query($link, $sql);
         while($row=  mysqli_fetch_array($result)){
-            $proID=$row['IdProject'];
-            $idBauherr=$row['Fk_IdBauherr'];
+            $proID= $row['IdProject'];
+            $idBauherr= $row['Fk_IdBauherr'];
             $path = '../../../platform/public/architects/architect_'.$usID.'/project_'.$proID.'/';
             
             //Funtkion zum Löschen des Ordners mit Inhalt des Projektes
@@ -119,7 +119,7 @@ if(isset($_POST['delete'])){
             if($handle){
                 while ( false !== ($file = readdir($handle))){
                     if ( $file != "." and $file != ".." ){
-                         unlink($path.$file);
+                        unlink($path.$file);
                     }
                 }   
             }
@@ -137,6 +137,19 @@ if(isset($_POST['delete'])){
         }
         //Überprüfung ob etwas fehlgeschlagen hat
         if(!isset($error)){
+            $path = '../../../platform/public/architects/architect_'.$usID.'/';
+            
+            //Funtkion zum Löschen des Ordners mit Inhalt des Projektes
+            $handle = opendir($path);
+            if($handle){
+                while ( false !== ($file = readdir($handle))){
+                    if ( $file != "." and $file != ".." ){
+                        unlink($path.$file);
+                    }
+                }   
+            }
+            rmdir($path);
+            
             //Löschen des Architekten-Users
             $sql=deleteBauherr($usID);
             $status=mysqli_query($link, $sql);

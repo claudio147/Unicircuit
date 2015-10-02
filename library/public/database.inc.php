@@ -865,7 +865,7 @@ function getAllProjectsByArch($id){
     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     
     $sql = 'SELECT p.IdProject, p.ProjectNumber, p.Title, p.Addressline1, p.Addressline2, p.ZIP, p.City,
-        p.Country, p.Description, p.Picture, u.IdUser, u.Firstname, u.Lastname FROM Project as p JOIN User
+        p.Country, p.Description, p.Picture, p.Fk_IdBauherr, u.IdUser, u.Firstname, u.Lastname FROM Project as p JOIN User
         as u on p.Fk_IdBauherr = u.IdUser WHERE Fk_IdArchitect = '.$id;
     return $sql;
 }

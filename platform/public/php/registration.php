@@ -269,7 +269,7 @@ if (isset($_POST['submit'])) {
                         <input id="13" class="form-control" type="password" name="password2" id="p2" value="<?php echo $p2; ?>" aria-describedby="helpBlock"><br/>
                         </div>
                         <div class="<?php echo $errorAGB; ?>">
-                        <input id="14" type="checkbox" name="agb" value="1" <?php if($agb==1){echo'checked="checked"';} ?>>  <label for="14" class="control-label"> AGB's gelesen und akzeptiert</label> (<a href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/agb.php" target="_blank">link agb</a>)
+                        <input id="14" type="checkbox" name="agb" value="1" <?php if($agb==1){echo'checked="checked"';} ?>>  <label for="14" class="control-label"> AGB's gelesen und akzeptiert</label> (<a href="http://palmers.dynathome.net:8024/diplomarbeit/productsite/public/agb.php" target="_blank">zu den agb's</a>)
                         </div>
                         <br/><br/><input id="btn-reg" class="btn btn-default" type="submit" name="submit">
                     </div>

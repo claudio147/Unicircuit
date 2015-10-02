@@ -389,7 +389,7 @@ function checkLogin($response) {
             $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie erhalten eine Email mit Ihrem neuen Passwort</div>';
             break;
         case 3:
-            $stat = '<br/><div class="alert alert-success col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie wurden erfolgreich aktiviert. Bitte Login Sie sich über den Login ein.</div>';
+            $stat = '<br/><div class="alert alert-success col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" role="alert"><i class="fa fa-exclamation-triangle"></i>Sie wurden erfolgreich aktiviert. Bitte loggen Sie sich hier mit Ihren Zugangsdaten ein.</div>';
             break;
         case 4:
             $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>
