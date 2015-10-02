@@ -22,8 +22,8 @@ require_once ('../../../library/public/mail.inc.php');
  //Stimmt SessionID und SessionId aus DB nicht überein wird der User zum Login
  //weitergeleitet.
  if($valide == false) {
-    header('Location: login.php?denied=1');
-    exit(); 
+    header('Location: login.php?denied=1.php');
+    die();
  }
  
  

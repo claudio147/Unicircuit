@@ -10,6 +10,21 @@
         <div class="col-xs-6 dash-left">
             <div class="row">
             <?php
+            
+            require_once ('../../../library/public/security.inc.php');
+            //Session starten oder wiederaufnehmen
+            session_start();
+             //User wird anhand Session ID Überprüft
+            $idUser = $_SESSION['IdUser'];
+            $sessionId = session_id();
+            $valide = checkSessionId($idUser, $sessionId);
+            //Stimmt SessionID und SessionId aus DB nicht überein wird der User zum Login
+            //weitergeleitet.
+            if($valide == false) {
+               header('Location: login.php?denied=1');
+               exit(); 
+            }
+            
                 echo'<div class="col-xs-12">';
                 echo'<div class="row dash-row">';
                 echo'<a class="dash-link" href="index.php?id=2">';
