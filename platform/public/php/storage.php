@@ -18,6 +18,16 @@
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/security.inc.php');
 
+ $idUser = $_SESSION['IdUser'];
+ $sessionId = session_id();
+ $valide = checkSessionId($idUser, $sessionId);
+ //Stimmt SessionID und SessionId aus DB nicht überein wird der User zum Login
+ //weitergeleitet.
+ if($valide == false) {
+    header('Location: login.php?denied=1');
+    exit(); 
+ }
+ 
 //Holt Architekten User Daten
 $id = $_SESSION['IdUser'];
 //DB Verbindung herstellen

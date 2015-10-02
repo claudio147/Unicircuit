@@ -1096,3 +1096,15 @@ function showAllSchedule($idProject){
     $sql= "SELECT IdSchedule, HashName, Orgname, Path, Comment, Date, Time FROM Schedule WHERE Fk_IdProject = '$idProject' ORDER BY Date DESC, Time DESC";
     return $sql;
 }
+
+/*
+ ******* Security
+ */
+
+function getSessionId($idUser) {
+    global $link;
+    $idUser = filter_var($idUser, FILTER_SANITIZE_NUMBER_INT);
+    
+    $sql = "SELECT SessionId FROM User WHERE IdUser = '$idUser'";
+    return $sql;
+}
