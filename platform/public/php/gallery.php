@@ -9,6 +9,22 @@
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/security.inc.php');
 
+//Session starten oder wiederaufnehmen
+session_start();
+
+ //User wird anhand Session ID Überprüft
+ 
+ $idUser = $_SESSION['IdUser'];
+ $sessionId = session_id();
+ $valide = checkSessionId($idUser, $sessionId);
+ //Stimmt SessionID und SessionId aus DB nicht überein wird der User zum Login
+ //weitergeleitet.
+ if($valide == false) {
+    header('Location: login.php?denied=1');
+    exit(); 
+ }
+
+
 $link= connectDB();
 
 if(isset($_POST['submit'])){
