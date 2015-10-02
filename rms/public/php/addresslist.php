@@ -9,6 +9,7 @@
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/mail.inc.php');
+require_once ('../../../library/public/security.inc.php');
 
 $link= connectDB();
 
@@ -297,25 +298,12 @@ if(isset($_POST['save'])){
   
     <?php
     
-    
+    //Ausgabe der Erfolgs- bzw. Fehlermeldungen
     if(isset($status)){
-        if($status==1){
-            echo'<div class="alert alert-danger" role="alert">Update fehlgeschlagen!</div>';
-        }else if($status==0){
-            echo'<div class="alert alert-success" role="alert">Update erfolgreich</div>';
-        }else if($status==2){
-            echo'<div class="alert alert-success" role="alert">Adresse erfolgreich gelöscht</div>';
-        }else if($status==3){
-            echo'<div class="alert alert-danger" role="alert">Löschen fehlgeschlagen!</div>';
-        }else if($status==4){
-            echo'<div class="alert alert-success" role="alert">Adresse erfolgreich hinzugefügt</div>';
-        }else if($status==5){
-            echo'<div class="alert alert-danger" role="alert">Adresse hinzufügen fehlgeschlagen!</div>';
-        }else if($status==6){
-            echo'<div class="alert alert-danger" role="alert">Adresse schon vorhanden!</div>';
-        }
+        //Rückgabemeldung für Event-Handling Deadlines
+        $stat = checkRMSAddress($status);
+        echo $stat;
     }
-    
     
     $sql=allGlobalAddress();
     $result= mysqli_query($link, $sql);

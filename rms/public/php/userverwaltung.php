@@ -9,6 +9,7 @@
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
 require_once ('../../../library/public/mail.inc.php');
+require_once ('../../../library/public/security.inc.php');
 
 //Datenbankverbindung
 $link = connectDB();
@@ -190,29 +191,12 @@ if(isset($_POST['delete'])){
     <!-- Modal End -->
 
 <?php
-//Statusmeldungen
+
+//Ausgabe der Erfolgs- bzw. Fehlermeldungen
 if(isset($status)){
-    if($status==1){
-        echo'<div class="alert alert-warning" role="alert">User aktivierung fehlgeschlagen!</div>';
-    }else if($status==0){
-        echo'<div class="alert alert-success" role="alert">User erfolgreich aktiviert</div>';
-    }else if($status==2){
-        echo'<div class="alert alert-success" role="alert">User erfolgreich gesperrt</div>';
-    }else if($status==3){
-        echo'<div class="alert alert-warning" role="alert">User sperren fehlgeschlagen</div>';
-    }else if($status==4){
-        echo'<div class="alert alert-warning" role="alert">User ist bereits gesperrt oder inaktiv.</div>';
-    }else if($status==5){
-        echo'<div class="alert alert-warning" role="alert">User reaktivierung fehlgeschlagen!</div>';
-    }else if($status==6){
-        echo'<div class="alert alert-warning" role="alert">User die nicht gesperrt sind können nicht reaktiviert werden.</div>';
-    }else if($status==7){
-        echo'<div class="alert alert-success" role="alert">User erfolgreich gelöscht.</div>';
-    }else if($status==8){
-        echo'<div class="alert alert-warning" role="alert">User löschen fehlgeschlagen!</div>';
-    }else if($status==9){
-        echo'<div class="alert alert-warning" role="alert">Das Löschen ist nur für User des Typs «Architekt» zulässig!</div>';
-    }
+    //Rückgabemeldung für Event-Handling Deadlines
+    $stat = checkRMSUser($status);
+    echo $stat;
 }
 
 //Erstellen der Anzeige mit den Usern

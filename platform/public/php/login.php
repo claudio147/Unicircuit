@@ -89,6 +89,13 @@ if (isset($_POST['submit'])) {
     }
 }
 
+if(isset($_GET['denied'])){
+    //Setzt Status für Eventhandling
+    $den = filter_input(INPUT_GET, 'denied', FILTER_SANITIZE_NUMBER_INT);
+    if($den == 1) {
+        $response = 7;
+    }
+}
 
 //Funktion wenn User auf Passwort vergessen klickt
 if ($_GET['forgotten'] == 1) {
@@ -114,6 +121,8 @@ if(isset($_POST['pwRenew'])) {
             } else {
                 $response = 5;
             }
+        }else{
+            $response = 6;
         }   
 }
 //Ausgabe für Aktivierungsmeldung

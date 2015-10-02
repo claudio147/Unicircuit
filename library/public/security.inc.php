@@ -366,10 +366,6 @@ function checkRegistration($response) {
 function checkLogin($response) {
     $x = $response;
     switch ($x) {
-        case 5:
-            $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>
-                    Sie sind noch nicht aktiviert oder gesperrt.<br/>Bitte wenden Sie sich an die Hotline der Archconsulting.</div>';
-            break;
         case 1:
             $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>Falscher Benutzername oder Passwort!</div>';
             break;
@@ -383,8 +379,119 @@ function checkLogin($response) {
             $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>
                     Entschulding, leider ist die Registration fehlgeschlagen<br>Setzen Sie sich mit unserem Helpdesk in Verbindung.</div>';
             break;
-            
+        case 5:
+            $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>
+                    Sie sind noch nicht aktiviert oder gesperrt.<br/>Bitte wenden Sie sich an die Hotline der Archconsulting.</div>';
+            break;
+        case 6:
+            $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>
+                    Ihre Email Adresse wurde nicht in unserer Datenbank gefunden. Bitte Eingaben überprüfen.</div>';
+            break; 
+        case 7:
+            $stat = '<br/><div class="alert alert-danger col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" role="alert"><i class="fa fa-exclamation-triangle"></i>
+                    ERROR! – Sie haben keine Berechtigung für diese Seite!</div>';
+            break; 
     }
         return $stat;
 }
-                    
+
+//Event-Handling RMS Adressliste
+function checkRMSAddress($response) {
+    $x = $response;
+    switch ($x) {
+        case 0:
+            $stat = '<div class="alert alert-success" role="alert">Update erfolgreich</div>';
+            break;
+        case 1:
+            $stat = '<div class="alert alert-danger" role="alert">Update fehlgeschlagen!</div>';
+            break;
+        case 2:
+            $stat = '<div class="alert alert-success" role="alert">Adresse erfolgreich gelöscht</div>';
+            break;
+        case 3:
+            $stat = '<div class="alert alert-danger" role="alert">Löschen fehlgeschlagen!</div>';
+            break;
+        case 4:
+            $stat = '<div class="alert alert-success" role="alert">Adresse erfolgreich hinzugefügt</div>';
+            break;
+        case 5:
+            $stat = '<div class="alert alert-danger" role="alert">Adresse hinzufügen fehlgeschlagen!</div>';
+            break;
+        case 6:
+            $stat = '<div class="alert alert-danger" role="alert">Adresse schon vorhanden!</div>';
+            break; 
+    }
+        return $stat;
+}
+
+//Event-Handling RMS Userverwaltung
+function checkRMSUser($response) {
+    $x = $response;
+    switch ($x) {
+        case 0:
+            $stat = '<div class="alert alert-success" role="alert">User erfolgreich aktiviert</div>';
+            break;
+        case 1:
+            $stat = '<div class="alert alert-warning" role="alert">User aktivierung fehlgeschlagen!</div>';
+            break;
+        case 2:
+            $stat = '<div class="alert alert-success" role="alert">User erfolgreich gesperrt</div>';
+            break;
+        case 3:
+            $stat = '<div class="alert alert-warning" role="alert">User sperren fehlgeschlagen</div>';
+            break;
+        case 4:
+            $stat = '<div class="alert alert-warning" role="alert">User ist bereits gesperrt oder inaktiv.</div>';
+            break;
+        case 5:
+            $stat = '<div class="alert alert-warning" role="alert">User reaktivierung fehlgeschlagen!</div>';
+            break;
+        case 6:
+            $stat = '<div class="alert alert-warning" role="alert">User die nicht gesperrt sind können nicht reaktiviert werden.</div>';
+            break;
+        case 7:
+            $stat = '<div class="alert alert-success" role="alert">User erfolgreich gelöscht.</div>';
+            break; 
+        case 8:
+            $stat = '<div class="alert alert-warning" role="alert">User löschen fehlgeschlagen!</div>';
+            break; 
+        case 9:
+            $stat = '<div class="alert alert-warning" role="alert">Das Löschen ist nur für User des Typs «Architekt» zulässig!</div>';
+            break; 
+    }
+        return $stat;
+}
+
+//Event-Handling RMS Userverwaltung
+function checkRMSimg($response) {
+    $x = $response;
+    switch ($x) {
+        case 0:
+            $stat = '<div class="alert alert-success" role="alert">Update erfolgreich</div>';
+            break;
+        case 1:
+            $stat = '<div class="alert alert-warning" role="alert">Update fehlgeschlagen!</div>';
+            break;
+        case 2:
+            $stat = '<div class="alert alert-success" role="alert">Löschen erfolgreich.</div>';
+            break;
+        case 3:
+            $stat = '<div class="alert alert-warning" role="alert">Löschen fehlgeschlagen.</div>';
+            break; 
+    }
+        return $stat;
+}
+
+//Event-Handling RMS Userverwaltung
+function checkRMStext($response) {
+    $x = $response;
+    switch ($x) {
+        case 0:
+            $stat = '<div class="alert alert-warning" role="alert">Update fehlgeschlagen!</div>';
+            break;
+        case 1:
+            $stat = '<div class="alert alert-success" role="alert">Update erfolgreich</div>';
+            break; 
+    }
+        return $stat;
+}

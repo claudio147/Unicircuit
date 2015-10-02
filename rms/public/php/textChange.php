@@ -8,6 +8,8 @@
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
+require_once ('../../../library/public/security.inc.php');
+
 $link = connectDB();
 
 $sections= array(1=>'Landing page', 2=>'Header Navigation', 3=>'Animation', 
@@ -75,12 +77,11 @@ if(isset($_POST['save'])){
     
     
     <?php  
+    //Ausgabe der Erfolgs- bzw. Fehlermeldungen
     if(isset($status)){
-        if($status==0){
-            echo'<div class="alert alert-warning" role="alert">Update fehlgeschlagen!</div>';
-        }else if($status==1){
-            echo'<div class="alert alert-success" role="alert">Update erfolgreich</div>';
-        }
+        //Rückgabemeldung für Event-Handling Deadlines
+        $stat = checkRMStext($status);
+        echo $stat;
     }
     ?>
     

@@ -8,6 +8,7 @@
 
 //Einbindung Librarys
 require_once ('../../../library/public/database.inc.php');
+require_once ('../../../library/public/security.inc.php');
 
 $sections= array(1=>'Landing page (2365 x 1744px)', 2=>'Slider Mobile (483 x 353px)', 3=>'Slider Desktop (502 x 301px)', 
         4=>'Über Uns Links (210 x 140px)', 5=>'Über Uns Rechts (210 x 140px)');
@@ -171,17 +172,13 @@ if(isset($_POST['save'])){
 
 <?php  
     
+//Ausgabe der Erfolgs- bzw. Fehlermeldungen
     if(isset($status)){
-        if($status==1){
-            echo'<div class="alert alert-warning" role="alert">Update fehlgeschlagen!</div>';
-        }else if($status==0){
-            echo'<div class="alert alert-success" role="alert">Update erfolgreich</div>';
-        }else if($status==2){
-            echo'<div class="alert alert-success" role="alert">Löschen erfolgreich.</div>';
-        }else if($status==3){
-            echo'<div class="alert alert-warning" role="alert">Löschen fehlgeschlagen.</div>';
-        }
+        //Rückgabemeldung für Event-Handling Deadlines
+        $stat = checkRMSimg($status);
+        echo $stat;
     }
+    
 
     if (isset($select)){
         $sql= allImagesOfIdHTML($select);
